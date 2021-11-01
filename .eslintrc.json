@@ -1,0 +1,14 @@
+{
+  "extends": ["next/core-web-vitals", "airbnb", "prettier"],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": "off",
+    "no-undef": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "import/no-extraneous-dependencies": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off",
+    "arrow-body-style": "off",
+    "no-underscore-dangle": "off"
+  }
+}
