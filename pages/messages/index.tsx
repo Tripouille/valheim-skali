@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 function NewsPage() {
   const onClick = async () => {
     const response = await fetch('/api/my-route', {
@@ -10,8 +8,8 @@ function NewsPage() {
         Accept: 'application/json',
       },
     });
-    // const data = await response.json();
-    console.log(response);
+    // eslint-disable-next-line no-unused-vars
+    const data = await response.json();
   };
   return (
     <>
