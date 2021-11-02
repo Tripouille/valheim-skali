@@ -1,5 +1,5 @@
 module.exports = {
-  branches: 'master',
+  branches: 'main',
   repositoryUrl: 'https://github.com/Tripouille/valheim-skali',
   plugins: [
     '@semantic-release/commit-analyzer',
