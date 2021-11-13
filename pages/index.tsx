@@ -1,6 +1,6 @@
 // import { FormEventHandler, useState } from 'react';
 // import useSWR from 'swr';
-import List from "components/List";
+import List from 'components/List';
 
 const HomePage: React.FC = () => {
   // const { data } = useSWR('/api/messages', args => fetch(args).then(res => res.json()));

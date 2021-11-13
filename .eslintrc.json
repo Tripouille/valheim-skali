@@ -11,5 +11,8 @@
     "arrow-body-style": "off",
     "no-underscore-dangle": "off",
     "import/extensions": [2, { "ts": "never" }]
+  },
+  "parserOptions": {
+    "project": ["./tsconfig.json"]
   }
 }

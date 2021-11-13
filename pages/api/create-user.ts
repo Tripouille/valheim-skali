@@ -12,7 +12,6 @@ const handler: NextApiHandler = async (req, res) => {
     const collection = db.collection('users');
     const result = await collection.insertOne(data);
     client.close();
-    console.log('result', result);
     const status = result.acknowledged ? 200 : 501;
     res.status(status).json({ message: 'OKI DOKI!' });
   }

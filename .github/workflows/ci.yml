@@ -19,9 +19,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: npm ci
-      - run: npm run format:check
-      - run: npm lint
-      - run: npm run jest
-      - run: npm run build
-      - run: npm run cypress
+      - run: yarn
+      - run: yarn format:check
+      - run: yarn lint
+      - run: yarn jest
+      - run: yarn build
+      - run: yarn cypress
