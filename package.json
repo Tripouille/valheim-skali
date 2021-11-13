@@ -2,7 +2,8 @@
   "name": "valheim-skali",
   "private": true,
   "workspaces": [
-    "components"
+    "components",
+    "store"
   ],
   "scripts": {
     "dev": "next dev",
@@ -19,11 +20,16 @@
     "@chakra-ui/react": "^1.6.10",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
+    "@reduxjs/toolkit": "^1.6.2",
+    "axios": "^0.24.0",
     "framer-motion": "^4.1.17",
     "mongodb": "^4.1.3",
     "next": "12.0.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-redux": "^7.2.6",
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^1.1.3",
     "sass": "^1.43.4",
     "swr": "^1.0.1"
   },
@@ -39,6 +45,7 @@
     "cypress": "^8.7.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-typescript": "^15.0.0",
     "eslint-config-next": "12.0.2",
     "eslint-config-prettier": "^8.3.0",
     "husky": "^7.0.4",
