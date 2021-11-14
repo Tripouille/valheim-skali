@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from '@redux-saga/core';
-import { logger } from 'redux-logger';
+import { createLogger } from 'redux-logger';
 
 import { all } from 'redux-saga/effects';
 import { State as usersState } from './users/type';
@@ -19,6 +19,7 @@ export interface State {
   users: usersState;
 }
 
+const logger = createLogger({ collapsed: true });
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
   reducer,
