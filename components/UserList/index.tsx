@@ -9,11 +9,12 @@ import { Button, Flex, List, Heading, ListItem, Input, Center } from '@chakra-ui
 
 export interface UserListProps {
   users: User[];
-  onAddUser: (user: UserWithoutId) => void;
   pullUsers: () => void;
+  onAddUser: (user: UserWithoutId) => void;
+  onRemoveUser: (user: User) => void;
 }
 
-const UserList: React.FC<UserListProps> = ({ users, onAddUser, pullUsers }) => {
+const UserList: React.FC<UserListProps> = ({ users, pullUsers, onAddUser, onRemoveUser }) => {
   const [input, setInput] = useState('');
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const UserList: React.FC<UserListProps> = ({ users, onAddUser, pullUsers }) => {
                 <Center width="100%" justifyContent="left">
                   {user.name}
                 </Center>
-                <Button backgroundColor="red.200" ml={3}>
+                <Button backgroundColor="red.200" ml={3} onClick={() => onRemoveUser(user)}>
                   Remove
                 </Button>
               </Flex>
@@ -67,8 +68,9 @@ const mapStateToProps = (state: State) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    onAddUser: (user: UserWithoutId) => dispatch(actions.addRequest(user)),
     pullUsers: () => dispatch(actions.pullRequest()),
+    onAddUser: (user: UserWithoutId) => dispatch(actions.addRequest(user)),
+    onRemoveUser: (user: User) => dispatch(actions.removeRequest(user)),
   };
 };
 
