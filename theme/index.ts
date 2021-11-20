@@ -1,9 +1,14 @@
 import { extendTheme } from '@chakra-ui/react';
 
-const config = {
-  initialColorMode: 'dark',
+const options = {
+  config: {
+    initialColorMode: 'dark',
+  },
+  sizes: {
+    header: '4rem',
+  },
 };
 
-const theme = extendTheme({ config });
+const theme = extendTheme(options);
 
 export default theme;
