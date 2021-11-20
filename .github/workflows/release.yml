@@ -23,3 +23,7 @@ jobs:
         run: yarn semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_TOKEN }}
+      - name: Upload Coverage
+        run: yarn codecov
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
