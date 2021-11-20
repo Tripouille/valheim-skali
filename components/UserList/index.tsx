@@ -23,7 +23,7 @@ const UserList: React.FC<UserListProps> = ({ users, pullUsers, onAddUser, onRemo
 
   return (
     <Flex height="100vh" alignItems="center" justifyContent="center">
-      <List direction="column" backgroundColor="blue.200" p={12} rounded={6}>
+      <List direction="column" borderWidth="3px" p={12} rounded={6}>
         <Heading m={6} textAlign="center" border="3px black solid" p={3}>
           User List
         </Heading>
