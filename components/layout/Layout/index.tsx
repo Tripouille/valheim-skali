@@ -3,7 +3,11 @@ import Header from '../Header';
 
 const Layout: React.FC = ({ children }) => {
   return (
-    <Box bgImage="/images/valheim-background.png" bgAttachment="fixed" bgPos="bottom">
+    <Box
+      bgImage="/images/valheim-background.png"
+      bgAttachment="fixed"
+      bgSize="cover"
+      bgPos="bottom">
       <Header />
       <Box h="calc(100vh - var(--chakra-sizes-header))" overflow="auto">
         {children}
