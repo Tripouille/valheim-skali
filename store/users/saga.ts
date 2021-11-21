@@ -21,6 +21,7 @@ export function* addRequestHandler({ payload }: ReturnType<typeof actions.addReq
 
   try {
     const response: AxiosResponse<AddResponse> = yield call(request, payload);
+
     yield put(actions.addSuccess({ ...payload, _id: response.data._id }));
   } catch (error) {
     yield put(actions.addFailure());
