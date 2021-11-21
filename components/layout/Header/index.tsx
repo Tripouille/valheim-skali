@@ -2,22 +2,11 @@ import { chakra, IconButton } from '@chakra-ui/react';
 import { Center, Wrap, WrapItem } from '@chakra-ui/layout';
 import { GiVikingHelmet } from 'react-icons/gi';
 import NavItem from '../NavItem';
-
-const fontDefinition = {
-  '@font-face': {
-    fontFamily: 'Norse',
-    src: 'url("./fonts/Norse.otf")',
-  },
-};
+import fonts from '../../../utils/fonts';
 
 const Header: React.FC = () => {
   return (
-    <chakra.header
-      height="header"
-      bgColor="blue.500"
-      opacity={0.7}
-      sx={fontDefinition}
-      fontFamily="Norse">
+    <chakra.header height="header" bgColor="blue.500" opacity={0.7} sx={fonts} fontFamily="Norse">
       <Center justifyContent="space-between" h="full">
         <chakra.nav ms="2">
           <Wrap spacing="4">
