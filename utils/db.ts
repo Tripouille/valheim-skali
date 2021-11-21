@@ -1,15 +1,9 @@
 import { ObjectId } from 'bson';
 import { Db, MongoClient, OptionalId } from 'mongodb';
 
-if (
-  !process.env.MONGODB_DOMAIN ||
-  !process.env.MONGODB_USER ||
-  !process.env.MONGODB_PWD ||
-  !process.env.MONGODB_DB
-)
-  throw new Error('Missing environment variables to connect to database.');
-
-const uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PWD}@${process.env.MONGODB_DOMAIN}/${process.env.MONGODB_DB}?retryWrites=true&w=majority`;
+if (!process.env.MONGODB_URI)
+  throw new Error('Missing environment variable to connect to database.');
+const uri = process.env.MONGODB_URI;
 
 let cachedDb: Db;
 
