@@ -3,12 +3,9 @@ import db from '../../../utils/db';
 
 const removeHandler = async (req: Req, res: Res) => {
   const { id } = req.query as { id: string };
-  try {
-    await db.remove('users', id);
-    res.status(204).end();
-  } catch (error) {
-    res.status(500).json({ error: 'Server error' });
-  }
+
+  await db.remove('users', id);
+  res.status(204).end();
 };
 
 const handler: NextApiHandler = async (req, res) => {

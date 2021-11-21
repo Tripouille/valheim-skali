@@ -8,24 +8,16 @@ export type AddResponse = { _id: string };
 const collectionName = 'users';
 
 const pullAllHandler = async (req: Req, res: Res) => {
-  try {
-    const response = await db.find<User>(collectionName);
-    res.status(200).json(response);
-  } catch (error) {
-    res.status(500).json({ error: 'Server error' });
-  }
+  const response = await db.find<User>(collectionName);
+  res.status(200).json(response);
 };
 
 const addHandler = async (req: Req, res: Res) => {
   const { name, age }: UserWithoutId = req.body;
 
-  try {
-    const newId = await db.insert<UserWithoutId>(collectionName, { name, age });
-    const response: AddResponse = { _id: newId };
-    res.status(201).json(response);
-  } catch (error) {
-    res.status(500).json({ error: 'Server error' });
-  }
+  const newId = await db.insert<UserWithoutId>(collectionName, { name, age });
+  const response: AddResponse = { _id: newId };
+  res.status(201).json(response);
 };
 
 const handler: NextApiHandler = async (req, res) => {
