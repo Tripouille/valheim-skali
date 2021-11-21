@@ -1,11 +1,5 @@
-import UserList from 'components/UserList';
-
 const HomePage: React.FC = () => {
-  return (
-    <>
-      <UserList />
-    </>
-  );
+  return <></>;
 };
 
 export default HomePage;
