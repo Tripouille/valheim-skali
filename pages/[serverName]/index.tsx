@@ -7,7 +7,7 @@ const ServerHomePage = () => {
 
   // TODO: Check that the server exists
 
-  return <Box />;
+  return <Box>Server home page</Box>;
 };
 
 export default ServerHomePage;
