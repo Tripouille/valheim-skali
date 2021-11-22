@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { chakra, IconButton } from '@chakra-ui/react';
 import { Center, Wrap, WrapItem } from '@chakra-ui/layout';
 import { GiVikingHelmet } from 'react-icons/gi';
@@ -5,16 +6,19 @@ import NavItem from '../NavItem';
 import fonts from '../../../utils/fonts';
 
 const Header: React.FC = () => {
+  const router = useRouter();
+  const { serverName } = router.query;
+
   return (
     <chakra.header height="header" bgColor="blue.500" opacity={0.7} sx={fonts} fontFamily="Norse">
       <Center justifyContent="space-between" h="full">
         <chakra.nav ms="2">
           <Wrap spacing="4">
             <WrapItem>
-              <NavItem href="/" label="règlement" />
+              <NavItem href={`/${serverName}/rules`} label="règlement" />
             </WrapItem>
             <WrapItem>
-              <NavItem href="/" label="événements" />
+              <NavItem href={`/${serverName}/events`} label="événements" />
             </WrapItem>
           </Wrap>
         </chakra.nav>
