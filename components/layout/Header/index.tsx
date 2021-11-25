@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router';
 import { chakra, IconButton } from '@chakra-ui/react';
 import { Center, Wrap, WrapItem } from '@chakra-ui/layout';
+import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/menu';
 import { GiVikingHelmet } from 'react-icons/gi';
+import { BiChevronDown } from 'react-icons/bi';
+import { MdLogout } from 'react-icons/md';
 import NavItem from '../NavItem';
 import fonts from '../../../utils/fonts';
 
@@ -22,12 +25,21 @@ const Header: React.FC = () => {
             </WrapItem>
           </Wrap>
         </chakra.nav>
-        <IconButton
-          aria-label="Gestion du compte"
-          icon={<GiVikingHelmet />}
-          fontSize="1.5rem"
-          me="2"
-        />
+        <Menu id="account-menu" isLazy>
+          <MenuButton
+            as={IconButton}
+            aria-label="Gérer mon compte"
+            title="Gérer mon compte"
+            icon={<GiVikingHelmet />}
+            fontSize="2xl"
+            me="2"
+            p="2"
+            rightIcon={<BiChevronDown />}
+          />
+          <MenuList>
+            <MenuItem icon={<MdLogout size="20" />}>Se déconnecter</MenuItem>
+          </MenuList>
+        </Menu>
       </Center>
     </chakra.header>
   );
