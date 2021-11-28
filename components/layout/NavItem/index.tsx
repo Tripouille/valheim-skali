@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Button } from '@chakra-ui/button';
+import { Button } from '@chakra-ui/react';
 import { NavRoutes } from 'store/routes';
 import { NavRoutesToLabel } from '../../../utils/constants';
 
