@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/layout';
+import { Box, Flex } from '@chakra-ui/react';
 import Header from '../Header';
 
 const Layout: React.FC = ({ children }) => {
@@ -9,9 +9,13 @@ const Layout: React.FC = ({ children }) => {
       bgSize="cover"
       bgPos="bottom">
       <Header />
-      <Box h="calc(100vh - var(--chakra-sizes-header))" overflow="auto">
+      <Flex
+        h="calc(100vh - var(--chakra-sizes-header))"
+        overflow="auto"
+        justify="center"
+        align="center">
         {children}
-      </Box>
+      </Flex>
     </Box>
   );
 };
