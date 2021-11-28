@@ -1,11 +1,12 @@
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { Button, Center, Flex, Heading, List, ListItem, Input } from '@chakra-ui/react';
 import { State } from 'store';
 import selectUsers from 'store/users/selectors';
 import { actions } from 'store/users/slice';
 import { User, UserWithoutId } from 'store/users/type';
-import { Button, Flex, List, Heading, ListItem, Input, Center } from '@chakra-ui/react';
 
 export interface UserListProps {
   users: User[];
@@ -31,6 +32,7 @@ const UserList: React.FC<UserListProps> = ({ users, pullUsers, onAddUser, onRemo
           return (
             <ListItem key={user._id}>
               <Flex justifyContent="space-between" mb="3">
+                <Image src={user.image} width="100" height="100" />
                 <Center width="100%" justifyContent="left">
                   {user.name}
                 </Center>
@@ -48,7 +50,7 @@ const UserList: React.FC<UserListProps> = ({ users, pullUsers, onAddUser, onRemo
               backgroundColor="green.200"
               ml={3}
               onClick={() => {
-                onAddUser({ name: input, age: 0 });
+                onAddUser({ name: input, email: '', image: '' });
                 setInput('');
               }}>
               Add

@@ -1,7 +1,8 @@
 export interface User {
   _id: string;
   name: string;
-  age: number;
+  email: string;
+  image: string;
 }
 
 export type UserWithoutId = Omit<User, '_id'>;
