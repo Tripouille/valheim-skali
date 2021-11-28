@@ -1,0 +1,14 @@
+import { chakra } from '@chakra-ui/react';
+import Card from 'components/Card/Card';
+
+const NotFoundPage: React.FC = () => {
+  return (
+    <Card w="xl" h="3xs">
+      <chakra.h1 fontSize="xl">
+        404 - La page que vous recherchez n&apos;existe pas ¯\_(ツ)_/¯
+      </chakra.h1>
+    </Card>
+  );
+};
+
+export default NotFoundPage;
