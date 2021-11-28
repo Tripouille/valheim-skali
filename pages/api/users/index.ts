@@ -14,8 +14,8 @@ const pullAllHandler = async (req: Req, res: Res) => {
 };
 
 const addHandler = async (req: Req, res: Res) => {
-  const { name, age }: UserWithoutId = req.body;
-  const newId = await db.insert<UserWithoutId>(collectionName, { name, age });
+  const { name, email, image }: UserWithoutId = req.body;
+  const newId = await db.insert<UserWithoutId>(collectionName, { name, email, image });
   const response: AddResponse = { _id: newId };
 
   res.status(201).json(response);
