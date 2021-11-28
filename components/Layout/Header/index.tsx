@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import {
   chakra,
   Center,
@@ -7,15 +7,14 @@ import {
   IconButton,
   Menu,
   MenuButton,
-  MenuItem,
   MenuList,
 } from '@chakra-ui/react';
 import { GiVikingHelmet } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
-import { MdLogin, MdLogout } from 'react-icons/md';
 import { NavRoutes } from 'store/routes';
 import NavItem from '../NavItem';
 import fonts from '../../../utils/fonts';
+import SignInOut from './SignInOut';
 
 const Header: React.FC = () => {
   const { data: session } = useSession();
@@ -45,15 +44,7 @@ const Header: React.FC = () => {
             rightIcon={<BiChevronDown />}
           />
           <MenuList>
-            {session ? (
-              <MenuItem icon={<MdLogout size="20" />} onClick={() => signOut()}>
-                Se déconnecter
-              </MenuItem>
-            ) : (
-              <MenuItem icon={<MdLogin size="20" />} onClick={() => signIn('discord')}>
-                Se connecter
-              </MenuItem>
-            )}
+            <SignInOut isConnected={Boolean(session)} />
           </MenuList>
         </Menu>
       </Center>

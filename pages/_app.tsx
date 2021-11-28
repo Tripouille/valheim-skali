@@ -3,7 +3,7 @@ import { SessionProvider } from 'next-auth/react';
 import { Provider } from 'react-redux';
 import store from 'store';
 import { ChakraProvider } from '@chakra-ui/react';
-import Layout from 'components/layout/Layout';
+import Layout from 'components/Layout';
 import theme from '../theme';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
