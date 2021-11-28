@@ -1,7 +1,7 @@
-import { Box } from '@chakra-ui/layout';
+import Card from 'components/Card/Card';
 
 const RulesPage = () => {
-  return <Box>Règlement</Box>;
+  return <Card>Règlement</Card>;
 };
 
 export default RulesPage;

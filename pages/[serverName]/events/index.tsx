@@ -1,7 +1,7 @@
-import { Box } from '@chakra-ui/layout';
+import Card from 'components/Card/Card';
 
 const EventsPage = () => {
-  return <Box>Evénements</Box>;
+  return <Card>Evénements</Card>;
 };
 
 export default EventsPage;
