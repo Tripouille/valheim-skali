@@ -7,14 +7,20 @@ const uri = process.env.MONGODB_URI;
 
 let cachedDb: Db;
 
-async function connectToCollection<T>(collectionName: string) {
+async function connectToDb(): Promise<Db> {
   if (!cachedDb) {
     const client = await MongoClient.connect(uri);
 
-    cachedDb = await client.db();
+    cachedDb = client.db();
   }
 
-  return cachedDb.collection<T>(collectionName);
+  return cachedDb;
+}
+
+async function connectToCollection<T>(collectionName: string) {
+  const db = await connectToDb();
+
+  return db.collection<T>(collectionName);
 }
 
 async function find<T>(collectionName: string): Promise<T[]> {
@@ -39,6 +45,7 @@ async function remove<T>(collectionName: string, id: string) {
 }
 
 export default {
+  connectToDb,
   find,
   insert,
   remove,
