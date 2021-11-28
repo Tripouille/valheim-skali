@@ -1,5 +1,5 @@
 // import { useRouter } from 'next/router';
-import { Box } from '@chakra-ui/layout';
+import Card from 'components/Card/Card';
 
 const ServerHomePage = () => {
   // const router = useRouter();
@@ -7,7 +7,7 @@ const ServerHomePage = () => {
 
   // TODO: Check that the server exists
 
-  return <Box>Server home page</Box>;
+  return <Card>Page d&apos;accueil du serveur</Card>;
 };
 
 export default ServerHomePage;
