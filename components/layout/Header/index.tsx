@@ -5,6 +5,7 @@ import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/menu';
 import { GiVikingHelmet } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
 import { MdLogout } from 'react-icons/md';
+import { NavRoutes } from 'store/routes';
 import NavItem from '../NavItem';
 import fonts from '../../../utils/fonts';
 
@@ -18,10 +19,10 @@ const Header: React.FC = () => {
         <chakra.nav ms="2">
           <Wrap spacing="4">
             <WrapItem>
-              <NavItem href={`/${serverName}/rules`} label="règlement" />
+              <NavItem root={`/${serverName}`} navRoute={NavRoutes.RULES} />
             </WrapItem>
             <WrapItem>
-              <NavItem href={`/${serverName}/events`} label="événements" />
+              <NavItem root={`/${serverName}`} navRoute={NavRoutes.EVENTS} />
             </WrapItem>
           </Wrap>
         </chakra.nav>

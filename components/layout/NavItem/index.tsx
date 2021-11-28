@@ -1,16 +1,18 @@
 import Link from 'next/link';
 import { Button } from '@chakra-ui/button';
+import { NavRoutes } from 'store/routes';
+import { NavRoutesToLabel } from '../../../utils/constants';
 
 export interface NavItemProps {
-  href: string;
-  label: string;
+  root: string;
+  navRoute: NavRoutes;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ href, label }) => {
+const NavItem: React.FC<NavItemProps> = ({ root, navRoute }) => {
   return (
     <Button fontSize="3xl">
-      <Link href={href}>
-        <a>{label}</a>
+      <Link href={`${root}/${navRoute}`}>
+        <a>{NavRoutesToLabel[navRoute]}</a>
       </Link>
     </Button>
   );

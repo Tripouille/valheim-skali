@@ -1,5 +1,10 @@
-enum Routes {
+enum APIRoutes {
   USERS = '/api/users',
 }
 
-export default Routes;
+enum NavRoutes {
+  RULES = 'rules',
+  EVENTS = 'events',
+}
+
+export { APIRoutes, NavRoutes };
