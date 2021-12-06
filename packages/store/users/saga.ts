@@ -1,9 +1,10 @@
+/* eslint-disable no-underscore-dangle */
 import axios, { AxiosResponse } from 'axios';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { AddResponse, PullAllResponse } from 'api/users';
+import { AddResponse, PullAllResponse } from '@skali/api/users';
 import { actions } from './slice';
 import { UserWithoutId } from './type';
-import { APIRoutes } from '../routes';
+import { APIRoutes } from '../../utils/routes';
 
 export function* pullRequestHandler() {
   const request = () => axios.get<PullAllResponse>(APIRoutes.USERS);

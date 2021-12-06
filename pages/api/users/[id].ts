@@ -1,5 +1,5 @@
 import { NextApiHandler, NextApiRequest as Req, NextApiResponse as Res } from 'next';
-import db from '../../../utils/db';
+import db from '../../../packages/utils/db';
 
 const removeHandler = async (req: Req, res: Res) => {
   const { id } = req.query as { id: string };

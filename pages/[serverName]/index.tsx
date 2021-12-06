@@ -1,13 +1,11 @@
 // import { useRouter } from 'next/router';
-import Card from 'components/Card/Card';
+import React from 'react';
+import Card from '@skali/components/Card';
 
-const ServerHomePage = () => {
-  // const router = useRouter();
-  // const serverName = router.query.serverName as string;
+// const router = useRouter();
+// const serverName = router.query.serverName as string;
 
-  // TODO: Check that the server exists
-
-  return <Card>Page d&apos;accueil du serveur</Card>;
-};
+// TODO: Check that the server exists
+const ServerHomePage = () => <Card>Page d&apos;accueil du serveur</Card>;
 
 export default ServerHomePage;

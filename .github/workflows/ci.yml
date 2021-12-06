@@ -24,4 +24,4 @@ jobs:
       - run: yarn lint
       - run: yarn jest
       - run: yarn build
-      - run: yarn cypress
+      # - run: yarn cypress

@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import db from '../../../utils/db';
+import db from '../../../packages/utils/db';
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   const nextAuth = NextAuth(req, res, {

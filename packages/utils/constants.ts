@@ -1,4 +1,4 @@
-import { NavRoutes } from 'store/routes';
+import { NavRoutes } from './routes';
 
 /** Maps navigation routes to displayed labels (in header for example) */
 export const NavRoutesToLabel: Record<NavRoutes, string> = {
