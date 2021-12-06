@@ -1,12 +1,13 @@
+/* eslint-disable no-underscore-dangle */
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Button, Center, Flex, Heading, List, ListItem, Input } from '@chakra-ui/react';
-import { State } from 'store';
-import selectUsers from 'store/users/selectors';
-import { actions } from 'store/users/slice';
-import { User, UserWithoutId } from 'store/users/type';
+import { State } from '@skali/store';
+import selectUsers from '@skali/store/users/selectors';
+import { actions } from '@skali/store/users/slice';
+import { User, UserWithoutId } from '@skali/store/users/type';
 
 export interface UserListProps {
   users: User[];
@@ -28,21 +29,19 @@ const UserList: React.FC<UserListProps> = ({ users, pullUsers, onAddUser, onRemo
         <Heading m={6} textAlign="center" border="3px black solid" p={3}>
           User List
         </Heading>
-        {users.map(user => {
-          return (
-            <ListItem key={user._id}>
-              <Flex justifyContent="space-between" mb="3">
-                <Image src={user.image} width="100" height="100" />
-                <Center width="100%" justifyContent="left">
-                  {user.name}
-                </Center>
-                <Button backgroundColor="red.200" ml={3} onClick={() => onRemoveUser(user)}>
-                  Remove
-                </Button>
-              </Flex>
-            </ListItem>
-          );
-        })}
+        {users.map(user => (
+          <ListItem key={user._id}>
+            <Flex justifyContent="space-between" mb="3">
+              <Image src={user.image} width="100" height="100" />
+              <Center width="100%" justifyContent="left">
+                {user.name}
+              </Center>
+              <Button backgroundColor="red.200" ml={3} onClick={() => onRemoveUser(user)}>
+                Remove
+              </Button>
+            </Flex>
+          </ListItem>
+        ))}
         <ListItem textAlign="center">
           <Flex textAlign="center" justifyContent="space-between">
             <Input width="100%" value={input} p={0} onChange={e => setInput(e.target.value)} />
@@ -62,19 +61,15 @@ const UserList: React.FC<UserListProps> = ({ users, pullUsers, onAddUser, onRemo
   );
 };
 
-const mapStateToProps = (state: State) => {
-  return {
-    users: selectUsers(state),
-  };
-};
+const mapStateToProps = (state: State) => ({
+  users: selectUsers(state),
+});
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
-    pullUsers: () => dispatch(actions.pullRequest()),
-    onAddUser: (user: UserWithoutId) => dispatch(actions.addRequest(user)),
-    onRemoveUser: (user: User) => dispatch(actions.removeRequest(user)),
-  };
-};
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  pullUsers: () => dispatch(actions.pullRequest()),
+  onAddUser: (user: UserWithoutId) => dispatch(actions.addRequest(user)),
+  onRemoveUser: (user: User) => dispatch(actions.removeRequest(user)),
+});
 
 const ConnectedUserList = connect(mapStateToProps, mapDispatchToProps)(UserList);
 

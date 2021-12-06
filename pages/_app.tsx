@@ -1,10 +1,12 @@
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
 import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 import { Provider } from 'react-redux';
-import store from 'store';
+import store from '@skali/store';
 import { ChakraProvider } from '@chakra-ui/react';
-import Layout from 'components/Layout';
-import theme from '../theme';
+import Layout from '@skali/components/Layout';
+import theme from '@skali/theme';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (

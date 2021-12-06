@@ -1,20 +1,19 @@
 {
+  "parser": "@typescript-eslint/parser",
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "parserOptions": {
+        "project": ["./tsconfig.json"]
+      }
+    }
+  ],
   "extends": ["next/core-web-vitals", "airbnb", "airbnb-typescript", "prettier"],
   "rules": {
-    "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": "off",
-    "no-undef": "off",
-    "react/jsx-one-expression-per-line": "off",
     "import/no-extraneous-dependencies": "off",
-    "react/jsx-props-no-spreading": "off",
-    "react/prop-types": "off",
-    "arrow-body-style": "off",
-    "no-underscore-dangle": "off",
-    "jsx-a11y/anchor-is-valid": "off",
-    "import/extensions": [2, { "ts": "never" }]
+    "jsx-a11y/anchor-is-valid": "off"
   },
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": ["./tsconfig.json"]
+  "env": {
+    "jest": true
   }
 }

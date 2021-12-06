@@ -1,6 +1,6 @@
 import { NextApiHandler, NextApiRequest as Req, NextApiResponse as Res } from 'next';
-import { User, UserWithoutId } from 'store/users/type';
-import db from '../../../utils/db';
+import { User, UserWithoutId } from '@skali/store/users/type';
+import db from '@skali/utils/db';
 
 export type PullAllResponse = User[];
 export type AddResponse = { _id: string };

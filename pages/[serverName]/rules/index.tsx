@@ -1,7 +1,6 @@
-import Card from 'components/Card/Card';
+import React from 'react';
+import Card from '@skali/components/Card';
 
-const RulesPage = () => {
-  return <Card>Règlement</Card>;
-};
+const RulesPage = () => <Card>Règlement</Card>;
 
 export default RulesPage;
