@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import store from '@skali/store';
 import { ChakraProvider } from '@chakra-ui/react';
 import Layout from '@skali/components/Layout';
+import Fonts from '@skali/components/Fonts';
 import theme from '@skali/theme';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
@@ -13,6 +14,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     <SessionProvider session={session}>
       <ChakraProvider theme={theme}>
         <Provider store={store}>
+          <Fonts />
           <Layout>
             <Component {...pageProps} />
           </Layout>
