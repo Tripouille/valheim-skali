@@ -1,3 +1,4 @@
+import React from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import {
@@ -13,7 +14,6 @@ import { GiVikingHelmet } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
 import { NavRoutes } from '@skali/utils/routes';
 import NavItem from '../NavItem';
-import fonts from '../../../utils/fonts';
 import SignInOut from './SignInOut';
 
 const Header: React.FC = () => {
@@ -23,7 +23,7 @@ const Header: React.FC = () => {
   const { serverName } = router.query;
 
   return (
-    <chakra.header height="header" bgColor="blue.500" opacity={0.7} sx={fonts} fontFamily="Norse">
+    <chakra.header height="header" bgColor="blue.500" opacity={0.7} fontFamily="Norse">
       <Center justifyContent="space-between" h="full">
         <chakra.nav ms="2">
           <ButtonGroup variant="ghost">
