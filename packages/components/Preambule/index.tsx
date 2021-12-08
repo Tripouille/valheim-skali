@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Accordion,
   AccordionItem,
@@ -6,7 +7,6 @@ import {
   AccordionPanel,
 } from '@chakra-ui/accordion';
 import { Box } from '@chakra-ui/layout';
-import React from 'react';
 import LongVersion from './LongVersion';
 import ShortVersion from './ShortVersion';
 

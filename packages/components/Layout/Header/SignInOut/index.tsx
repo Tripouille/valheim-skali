@@ -1,3 +1,4 @@
+import React from 'react';
 import { signIn, signOut } from 'next-auth/react';
 import { MenuItem } from '@chakra-ui/react';
 import { MdLogin, MdLogout } from 'react-icons/md';

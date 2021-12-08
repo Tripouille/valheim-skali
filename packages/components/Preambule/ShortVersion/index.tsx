@@ -1,5 +1,5 @@
-import { Box, Heading, VStack } from '@chakra-ui/layout';
 import React from 'react';
+import { Box, Heading, VStack } from '@chakra-ui/layout';
 import { MdCancel, MdCheckCircle } from 'react-icons/md';
 import RulesList from '../../RulesList';
 
