@@ -1,3 +1,4 @@
+import React from 'react';
 import { Flex, chakra, useStyleConfig } from '@chakra-ui/react';
 import { CardSize, CardVariant } from '@skali/theme/components/Card';
 
