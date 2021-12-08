@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, VStack } from '@chakra-ui/react';
 
 const LongVersion: React.FC = () => (
-  <VStack align="left">
+  <VStack align="start">
     <Text>
       Bienvenue sur le Discord communautaire du serveur Valhabba, vous trouverez ci-dessous
       l’ensemble de nos règlements répartis en plusieurs parties : règles “Discord”, règles “En
@@ -35,8 +35,8 @@ const LongVersion: React.FC = () => (
 
     <Text>
       Nous préférons bien plus jouer avec nos personnages non-admins, organiser des événements pour
-      l&apos;ensemble de la communauté et travailler à étendre les possibilités du jeu par la
-      sélection et l’équilibrage de mods.
+      l’ensemble de la communauté et travailler à étendre les possibilités du jeu par la sélection
+      et l’équilibrage de mods.
     </Text>
 
     <Text>

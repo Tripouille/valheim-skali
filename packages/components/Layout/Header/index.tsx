@@ -23,7 +23,7 @@ const Header: React.FC = () => {
   const { serverName } = router.query;
 
   return (
-    <chakra.header height="header" bgColor="blue.500" opacity={0.7} fontFamily="Norse">
+    <chakra.header height="header" bgColor="rgba(49, 130, 206, 0.7)" fontFamily="Norse">
       <Center justifyContent="space-between" h="full">
         <chakra.nav ms="2">
           <ButtonGroup variant="ghost">

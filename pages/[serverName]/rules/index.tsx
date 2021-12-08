@@ -1,7 +1,7 @@
 import React from 'react';
-import Background from '@skali/components/Background';
 import { Heading, VStack } from '@chakra-ui/layout';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import Background from '@skali/components/Background';
 import Preambule from '@skali/components/Preambule';
 
 const RulesPage = () => (

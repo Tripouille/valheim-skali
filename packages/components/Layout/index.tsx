@@ -5,7 +5,6 @@ import Header from './Header';
 const Layout: React.FC = ({ children }) => (
   <Box
     h="100vh"
-    overflow="hidden"
     bgImage="/images/valheim-background.png"
     bgAttachment="fixed"
     bgSize="cover"
