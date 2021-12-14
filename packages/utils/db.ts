@@ -23,7 +23,7 @@ async function connectToCollection<T>(collectionName: string) {
   return db.collection<T>(collectionName);
 }
 
-async function find<T>(collectionName: string): Promise<T[]> {
+async function find<T>(collectionName: string) {
   const collection = await connectToCollection<T>(collectionName);
   const result = await collection.find().toArray();
 
