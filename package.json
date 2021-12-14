@@ -14,8 +14,7 @@
     "format:write": "npx prettier -w **/*.{js,jsx,ts,tsx,yml,yaml,json,css,scss,md}",
     "jest": "npx jest --coverage",
     "cypress": "npx cypress run",
-    "gen:theme-typings": "chakra-cli tokens theme/index.ts",
-    "prepare": "husky install"
+    "gen:theme-typings": "chakra-cli tokens theme/index.ts"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.7.1",
@@ -63,7 +62,6 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4",
-    "husky": "^7.0.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.3.1",
     "prettier": "^2.4.1",
