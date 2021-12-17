@@ -3,6 +3,7 @@ import { Heading, VStack } from '@chakra-ui/layout';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import Background from '@skali/components/Background';
 import Preambule from '@skali/components/Preambule';
+import DiscordRules from '@skali/components/DiscordRules';
 
 const RulesPage = () => (
   <Background>
@@ -13,11 +14,15 @@ const RulesPage = () => (
       <Tabs w="full">
         <TabList>
           <Tab>Préambule</Tab>
+          <Tab>Règles discord</Tab>
         </TabList>
 
         <TabPanels textAlign="justify">
           <TabPanel>
             <Preambule />
+          </TabPanel>
+          <TabPanel>
+            <DiscordRules />
           </TabPanel>
         </TabPanels>
       </Tabs>

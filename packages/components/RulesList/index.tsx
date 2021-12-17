@@ -13,7 +13,7 @@ const RulesList: React.FC<RulesListProps> = ({ contents, icon, iconColor }) => (
     {contents.map((content: string, index: number) => (
       // eslint-disable-next-line react/no-array-index-key
       <ListItem key={index} display="flex" alignItems="center">
-        <ListIcon as={icon} color={iconColor} boxSize="1.5em" />
+        <ListIcon as={icon} color={iconColor} boxSize="1.2em" />
         {content}
       </ListItem>
     ))}
