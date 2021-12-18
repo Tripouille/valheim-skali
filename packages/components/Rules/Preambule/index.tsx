@@ -12,7 +12,7 @@ import ShortVersion from './ShortVersion';
 
 const Preambule: React.FC = () => (
   <Accordion defaultIndex={[0, 1]} allowMultiple>
-    <AccordionItem>
+    <AccordionItem id="preambuleAccordion1">
       <h2>
         <AccordionButton>
           <Box flex="1" textAlign="left">
@@ -26,7 +26,7 @@ const Preambule: React.FC = () => (
       </AccordionPanel>
     </AccordionItem>
 
-    <AccordionItem>
+    <AccordionItem id="preambuleAccordion2">
       <h2>
         <AccordionButton>
           <Box flex="1" textAlign="left">
