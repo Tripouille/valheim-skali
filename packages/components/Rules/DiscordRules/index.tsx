@@ -21,7 +21,7 @@ const discordRules = [
 
 const DiscordRules: React.FC = () => (
   <>
-    <Heading size="sm" mb="5">
+    <Heading size="l" mb="5">
       Tu es sur internet, sois-y un bon exemple !
     </Heading>
     <RulesList contents={discordRules} icon={FaArrowCircleRight} iconColor="blue.200" />
