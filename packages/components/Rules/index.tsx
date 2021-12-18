@@ -3,6 +3,7 @@ import { Heading, VStack, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakr
 import Background from '@skali/components/Background';
 import Preambule from './Preambule';
 import DiscordRules from './DiscordRules';
+import GameRules from './GameRules';
 
 const Rules = () => (
   <Background>
@@ -14,6 +15,7 @@ const Rules = () => (
         <TabList>
           <Tab>Préambule</Tab>
           <Tab>Règles discord</Tab>
+          <Tab>Règles de jeu</Tab>
         </TabList>
 
         <TabPanels textAlign="justify">
@@ -22,6 +24,9 @@ const Rules = () => (
           </TabPanel>
           <TabPanel>
             <DiscordRules />
+          </TabPanel>
+          <TabPanel>
+            <GameRules />
           </TabPanel>
         </TabPanels>
       </Tabs>
