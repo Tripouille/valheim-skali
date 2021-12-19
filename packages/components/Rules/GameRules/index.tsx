@@ -1,6 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
-import { Accordion, Box, Heading, Text, Flex } from '@chakra-ui/react';
+import { Accordion, Box, Heading, Flex, Icon } from '@chakra-ui/react';
+import { MdComputer } from 'react-icons/md';
+import { GiPig, GiVillage, GiWarPick } from 'react-icons/gi';
 import RuleAccordionItem from './RuleAccordionItem';
 import RuleMultipleText from './RuleMultipleText';
 import ItemIcon from './RuleAccordionItem/ItemIcon';
@@ -20,35 +22,57 @@ const effortRule = [
 ];
 
 const instanceRule = {
-  introduction: `Ce serveur est un monde multijoueur ... et le jeu n’est pas encore complètement optimisé pour ça. Quand vous modifiez un endroit de notre monde, en y faisant une base par exemple, tous les joueurs qui passeront par là verront et subiront cette modification. Leur ordinateur devra recevoir l’information qu’un objet a été placé, que le terrain a été modifié (creusé, surélevé, aplati) ou encore qu’un troupeau vit ici. Puis leur ordinateur devra calculer tous les impacts que cette information a sur le reste de l’environnement. Ce qui entraîne rapidement des ralentissements du jeu, pour vous comme pour les autres.
-
-	Pour mitiger ça, nous avons donc des règles concernant :`,
+  introduction: [
+    `Ce serveur est un monde multijoueur ... et le jeu n’est pas encore complètement optimisé pour ça.`,
+    `Quand vous modifiez un endroit de notre monde, en y faisant une base par exemple, tous les joueurs qui passeront par là verront et subiront cette modification. Leur ordinateur devra recevoir l’information qu’un objet a été placé, que le terrain a été modifié (creusé, surélevé, aplati) ou encore qu’un troupeau vit ici. Puis leur ordinateur devra calculer tous les impacts que cette information a sur le reste de l’environnement. Ce qui entraîne rapidement des ralentissements du jeu, pour vous comme pour les autres.`,
+    `Pour mitiger ça, nous avons donc des règles concernant :`,
+  ],
   categories: [
     {
-      title: '💻 Les instances',
-      text: `Pour mesurer le risque de ralentissements, il suffit de connaître le nombre d’éléments que votre ordinateur doit prendre en compte autour de vous. Pour cela, il suffit d’appuyer sur F2 en jeu pour ouvrir un panneau d’information et d’y lire la ligne ’instances’. Dans une prairie, il sera typiquement entre 3000 et 5000. 
-Au Valhabba, quelle que soit votre installation, vous devez rester en dessous de 9500 instances. Au-delà de ça, l’équipe d’administration viendra “retirer” arbitrairement vos installations pour ramener ce chiffre à 9500.
-Le terraformage de confort est autorisé dans l'enceinte de sa base principale uniquement.
-Il est interdit d'ériger des murailles de terre ou des tranchées contre les monstres. Vous êtes des vikings nom d'Odin !`,
+      title: 'Les instances',
+      icon: MdComputer,
+      iconColor: 'teal.100',
+      text: [
+        `Pour mesurer le risque de ralentissements, il suffit de connaître le nombre d’éléments que votre ordinateur doit prendre en compte autour de vous. Pour cela, il suffit d’appuyer sur F2 en jeu pour ouvrir un panneau d’information et d’y lire la ligne ’instances’. Dans une prairie, il sera typiquement entre 3000 et 5000.`,
+        `Au Valhabba, quelle que soit votre installation, vous devez rester en dessous de 9500 instances. Au-delà de ça, l’équipe d’administration viendra “retirer” arbitrairement vos installations pour ramener ce chiffre à 9500.`,
+        `Le terraformage de confort est autorisé dans l'enceinte de sa base principale uniquement.
+				Il est interdit d'ériger des murailles de terre ou des tranchées contre les monstres. Vous êtes des vikings nom d'Odin !`,
+      ],
     },
     {
-      title: '🐖 Les bêtes',
-      text: `Les animaux apprivoisés entraînant également des calculs supplémentaires, leur nombre est limité. Cela nous permet aussi de réguler l’économie du serveur. Tout joueur ou regroupement de joueurs jouant ensemble, ne peut avoir, quel que soit l’emplacement de ses bêtes, qu’un maximum de 40 têtes, réparties en : 
-    15 sangliers, 
-    10 loups,  
-    10 ours
-    et 5 lox.`,
+      title: 'Les bêtes',
+      icon: GiPig,
+      iconColor: 'pink.300',
+      text: [
+        `Les animaux apprivoisés entraînant également des calculs supplémentaires, leur nombre est limité. Cela nous permet aussi de réguler l’économie du serveur. Tout joueur ou regroupement de joueurs jouant ensemble, ne peut avoir, quel que soit l’emplacement de ses bêtes, qu’un maximum de 40 têtes, réparties en :`,
+        `- 15 sangliers,`,
+        `- 10 loups,`,
+        `- 10 ours,`,
+        `- 5 lox.`,
+      ],
     },
     {
-      title: '🏛️ La taille des bases',
-      text: `Dans la même idée, avoir une base géante gênera immanquablement les autres joueurs, c’est donc interdit. La taille des bases est limitée à 3 balises (de 32 mètres de rayon chacune !) et seuls 3 avant-postes peuvent être balisés, avec une et une seule balise chacun. Cela concerne chaque joueur ou chaque regroupement de joueurs ; se mettre à plusieurs ne donne PAS plus de droits terriens. De même, limitez la taille de vos jardins à maximum 75 m².`,
+      title: 'La taille des bases',
+      icon: GiVillage,
+      iconColor: 'orange.600',
+      text: [
+        `Dans la même idée, avoir une base géante gênera immanquablement les autres joueurs, c’est donc interdit.`,
+        `La taille des bases est limitée à 3 balises (de 32 mètres de rayon chacune !) et seuls 3 avant-postes peuvent être balisés, avec une et une seule balise chacun. Cela concerne chaque joueur ou chaque regroupement de joueurs ; se mettre à plusieurs ne donne PAS plus de droits terriens.`,
+        `De même, limitez la taille de vos jardins à maximum 75 m².`,
+      ],
     },
     {
-      title: '⛏️ Le minage',
-      text: `Enfin, comme les  modifications du terrain comptent également comme des instances°, le minage sauvage contribue aussi à ralentir le jeu des autres joueurs, en plus de rendre la carte hideuse.
-Au Valhabba, il est donc interdit de miner afin de récolter le minerai qui se trouve sous vos pieds, contentez-vous de celui qu’il y a en surface. La limite n'est PAS à -15 mètres ni à -5 mètres, elle est à 0 mètre.
-La seule exception étant pour l’argent. Dans ce cas, nous vous demandons de réduire la taille du minage au strict minimum.
-(° : reboucher votre trou ne fera même qu’amplifier le problème, car le jeu chargera votre trou, puis chargera son rebouchement.) `,
+      title: 'Le minage',
+      icon: GiWarPick,
+      iconColor: 'silver',
+      text: [
+        `Enfin, comme les  modifications du terrain comptent également comme des instances°, le minage sauvage contribue aussi à ralentir le jeu des autres joueurs, en plus de rendre la carte hideuse.`,
+        ` Au Valhabba, il est donc interdit de miner afin de récolter le minerai qui se trouve sous vos pieds, contentez-vous de celui qu’il y a en surface. La limite n'est PAS à -15 mètres ni à -5 mètres, elle est à 0 mètre.`,
+        `La seule exception étant pour l’argent. Dans ce cas, nous vous demandons de réduire la taille du minage au strict minimum.`,
+      ],
+      notes: [
+        `(° : reboucher votre trou ne fera même qu’amplifier le problème, car le jeu chargera votre trou, puis chargera son rebouchement.) `,
+      ],
     },
   ],
 };
@@ -81,23 +105,42 @@ const nameRule = [
 Par exemple : “[Loky] Gyda Selordotir” si le joueur fait partie du clan des Lokysons, “Gyda Selordotir, la chasseuse” si tel est son titre d'aventurier réputé ou encore “[Loky] Gyda Selordotir, la chasseuse” si le joueur fait partie du clan des Lokysons et est aventurier réputé.`,
 ];
 
-const streamerRule = [
-  `La seule condition que nous mettons aux streams en direct est ... LE CONSENTEMENT DE CEUX QUI SERONT ENREGISTRÉS.`,
-  `Concrètement si vous souhaitez streamer, ça se passe comme ça : Vous streamez quand vous voulez, et où vous voulez, dès lors que :`,
-  `1/ Tous les joueurs qui apparaissent à votre écran vous ont donné leur accord.`,
-  `Si vous tombez sur quelqu'un de manière inattendue vous devez lui mettre dans le chat du jeu un message du style “Je streame en direct mon jeu, est ce que ça te dérange d'y apparaître ?”. 
+const streamerRule = {
+  introduction: [
+    `La seule condition que nous mettons aux streams en direct est ... LE CONSENTEMENT DE CEUX QUI SERONT ENREGISTRÉS.`,
+    `Concrètement si vous souhaitez streamer, ça se passe comme ça : vous streamez quand vous voulez, et où vous voulez, dès lors que :`,
+  ],
+  categories: [
+    {
+      title: `1/ Tous les joueurs qui apparaissent à votre écran vous ont donné leur accord.`,
+      text: [
+        `Si vous tombez sur quelqu'un de manière inattendue vous devez lui mettre dans le chat du jeu un message du style “Je streame en direct mon jeu, est ce que ça te dérange d'y apparaître ?”. 
 À vous de trouver votre propre formule, mais elle doit dire clairement et sans ambigüité que vous enregistrez. Si la personne vous dit oui, nickel, amusez-vous 🤗
 Si elle vous dit non, c’est à vous de vous éloigner du joueur afin qu'il n'apparaisse plus dans votre stream.`,
-  `2/ Si vous êtes souhaitez streamer vos échanges vocaux dans notre discord, vous devez impérativement être dans le canal vocal "Stream en direct"`,
-  `Lorsqu’une personne vous y rejoint, vous devez la prévenir que vous enregistrez. En revanche, si ça ne plaît pas à celle-ci, c'est à elle de quitter le salon vocal.
+      ],
+    },
+    {
+      title: `2/ Si vous êtes souhaitez streamer vos échanges vocaux dans notre discord, vous devez impérativement être dans le canal vocal "Stream en direct"`,
+      text: [
+        `Lorsqu’une personne vous y rejoint, vous devez la prévenir que vous enregistrez. En revanche, si ça ne plaît pas à celle-ci, c'est à elle de quitter le salon vocal.
 
 De cette manière, ceux qui vous rejoignent seront doublement prévenus que leur voix est enregistrée (le nom du salon + votre annonce à chaque arrivée).`,
-  `3/ Quand vous streamez, changez votre pseudo discord et accolez-lui le préfixe :  [stream : 🟢]`,
-  `Afin d'être encore plus clair vis-à-vis des autres,  changez votre pseudo Discord et accolez-lui le préfix :  [stream : 🟢 ] (clic droit, changez le pseudo etc).
+      ],
+    },
+    {
+      title: `3/ Quand vous streamez, changez votre pseudo discord et accolez-lui le préfixe :`,
+      text: [
+        `Afin d'être encore plus clair vis-à-vis des autres,  changez votre pseudo Discord et accolez-lui le préfix :  [stream : 🟢 ] (clic droit, changez le pseudo etc).
 
 Exemple : si l’admin Gyda Selordotyr voulait streamer, il passerait du pseudo, “Gyda Selordotyr”, à  “[stream : 🟢] Gyda Selordotyr”.`,
-  `4/ Vous ne montrez pas le contenu du discord ni votre écran de connexion (et donc de l'IP du serveur).`,
-];
+      ],
+    },
+    {
+      title: `4/ Vous ne montrez pas le contenu du discord ni votre écran de connexion (et donc de l'IP du serveur).`,
+      text: [],
+    },
+  ],
+};
 
 const GameRules: React.FC = () => (
   <>
@@ -115,12 +158,16 @@ const GameRules: React.FC = () => (
         <RuleMultipleText content={effortRule} />
       </RuleAccordionItem>
       <RuleAccordionItem index="3" title="“Respectez le terrain et les FPS des autres joueurs”">
-        <Text mb="4">{instanceRule.introduction}</Text>
-        {instanceRule.categories.map(({ title, text }) => (
-          <div key={title}>
-            <Heading size="xs">{title}</Heading>
-            <Text mb="2">{text}</Text>
-          </div>
+        <RuleMultipleText content={instanceRule.introduction} />
+        {instanceRule.categories.map(({ icon, iconColor, title, text, notes }) => (
+          <Box key={title} mb="4">
+            <Heading size="s" display="flex" alignItems="center" color={iconColor}>
+              <Icon as={icon} w="2em" h="2em" me="3" color={iconColor} />
+              {title}
+            </Heading>
+            <RuleMultipleText content={text} />
+            {notes && <RuleMultipleText content={notes} fontSize="xs" />}
+          </Box>
         ))}
         <figure>
           <figcaption>Voici typiquement ce qu’on veut éviter !</figcaption>
@@ -153,7 +200,33 @@ const GameRules: React.FC = () => (
         <RuleMultipleText content={nameRule} />
       </RuleAccordionItem>
       <RuleAccordionItem index="8" title="Règles pour les streamers">
-        <RuleMultipleText content={streamerRule} />
+        <RuleMultipleText content={streamerRule.introduction} />
+        <Box mb="4">
+          <Heading size="s" display="flex" alignItems="center">
+            {streamerRule.categories[0].title}
+          </Heading>
+          <RuleMultipleText content={streamerRule.categories[0].text} />
+        </Box>
+        <Box mb="4">
+          <Heading size="s" display="flex" alignItems="center">
+            {streamerRule.categories[1].title}
+          </Heading>
+          <RuleMultipleText content={streamerRule.categories[1].text} />
+        </Box>
+        <Box mb="4">
+          <Heading size="s" display="flex" alignItems="center">
+            {streamerRule.categories[2].title}
+            <Box as="span" bgColor="gray.800" ms="2" fontWeight="normal">
+              [stream : 🟢]
+            </Box>
+          </Heading>
+          <RuleMultipleText content={streamerRule.categories[2].text} />
+        </Box>
+        <Box mb="4">
+          <Heading size="s" display="flex" alignItems="center">
+            {streamerRule.categories[3].title}
+          </Heading>
+        </Box>
       </RuleAccordionItem>
     </Accordion>
     <h2>
