@@ -6,6 +6,13 @@ import DiscordRules from './DiscordRules';
 import GameRules from './GameRules';
 import GameGuides from './GameGuides';
 
+const ruleParts: Record<string, JSX.Element> = {
+  Préambule: <Preambule />,
+  'Règles discord': <DiscordRules />,
+  'Règles de jeu': <GameRules />,
+  'Guides de jeu': <GameGuides />,
+};
+
 const Rules = () => (
   <Background>
     <VStack spacing="5" w="full">
@@ -14,25 +21,14 @@ const Rules = () => (
       </Heading>
       <Tabs w="full" id="rulesTabs">
         <TabList>
-          <Tab>Préambule</Tab>
-          <Tab>Règles discord</Tab>
-          <Tab>Règles de jeu</Tab>
-          <Tab>Guides de jeu</Tab>
+          {Object.keys(ruleParts).map(title => (
+            <Tab>{title}</Tab>
+          ))}
         </TabList>
-
         <TabPanels textAlign="justify">
-          <TabPanel>
-            <Preambule />
-          </TabPanel>
-          <TabPanel>
-            <DiscordRules />
-          </TabPanel>
-          <TabPanel>
-            <GameRules />
-          </TabPanel>
-          <TabPanel>
-            <GameGuides />
-          </TabPanel>
+          {Object.values(ruleParts).map(content => (
+            <TabPanel>{content}</TabPanel>
+          ))}
         </TabPanels>
       </Tabs>
     </VStack>
