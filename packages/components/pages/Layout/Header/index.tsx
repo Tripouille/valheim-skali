@@ -28,6 +28,7 @@ const Header: React.FC = () => {
       <Center justifyContent="space-between" h="full">
         <chakra.nav ms="2">
           <ButtonGroup variant="ghost">
+            <NavItem root={`/${serverName}`} navRoute={NavRoutes.HOME} />
             <NavItem root={`/${serverName}`} navRoute={NavRoutes.RULES} />
             <NavItem root={`/${serverName}`} navRoute={NavRoutes.EVENTS} />
           </ButtonGroup>
