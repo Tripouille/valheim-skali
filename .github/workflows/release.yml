@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable --immutable-cache
       - name: Create a release
         run: yarn semantic-release
         env:

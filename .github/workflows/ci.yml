@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --immutable --immutable-cache
       # - run: yarn format:check
       # - run: yarn lint
       # - run: yarn jest
