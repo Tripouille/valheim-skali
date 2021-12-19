@@ -3,8 +3,9 @@ enum APIRoutes {
 }
 
 enum NavRoutes {
-  RULES = 'rules',
-  EVENTS = 'events',
+  HOME = '/',
+  RULES = '/rules',
+  EVENTS = '/events',
 }
 
 export { APIRoutes, NavRoutes };

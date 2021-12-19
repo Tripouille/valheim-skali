@@ -11,7 +11,7 @@ export interface NavItemProps {
 
 const NavItem: React.FC<NavItemProps> = ({ root, navRoute }) => (
   <Button fontSize="3xl">
-    <Link href={`${root}/${navRoute}`}>
+    <Link href={`${root}${navRoute}`}>
       <a>{NavRoutesToLabel[navRoute]}</a>
     </Link>
   </Button>
