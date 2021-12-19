@@ -4,15 +4,15 @@ import { Text, VStack } from '@chakra-ui/react';
 const LongVersion: React.FC = () => (
   <VStack align="start">
     <Text>
-      Bienvenue sur le Discord communautaire du serveur Valhabba, vous trouverez ci-dessous
-      l’ensemble de nos règlements répartis en plusieurs parties : règles “Discord”, règles “En
-      Jeu”, guides ainsi que diverses informations utiles.
+      Bienvenue sur le site du serveur Valhabba, vous trouverez ci-après l’ensemble de nos
+      règlements répartis en plusieurs parties : règles “Discord”, règles “En Jeu”, guides ainsi que
+      diverses informations utiles. Vous retrouverez toutes ces informations sur le discord.
     </Text>
 
     <Text>
-      L’ensemble du règlement ci-dessous, a été réfléchi et établi pour permettre à tous les joueurs
-      de vivre une expérience aussi agréable que possible. Les respecter revient à respecter les
-      autres joueurs et à être respectable en retour.
+      L’ensemble du règlement a été réfléchi et établi pour permettre à tous les joueurs de vivre
+      une expérience aussi agréable que possible. Les respecter revient à respecter les autres
+      joueurs et à être respectable en retour.
     </Text>
 
     <Text>

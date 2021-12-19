@@ -4,14 +4,15 @@ import { Box } from '@chakra-ui/react';
 const ItemIcon: React.FC = ({ children }) => (
   <Box
     textAlign="center"
-    mt="0.2em"
+    mt="1px"
     me="2"
-    borderWidth="3px"
-    borderColor="teal.500"
-    borderStyle="outset"
-    w="1.4em"
-    h="1.4em"
-    lineHeight="0.9em">
+    bgColor="teal.600"
+    borderWidth="1px"
+    borderColor="teal.300"
+    borderRadius="50%"
+    minW="22px"
+    h="22px"
+    lineHeight="19px">
     {children}
   </Box>
 );
