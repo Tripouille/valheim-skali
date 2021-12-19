@@ -38,6 +38,9 @@ const instanceRule = {
         `Le terraformage de confort est autorisé dans l'enceinte de sa base principale uniquement.
 				Il est interdit d'ériger des murailles de terre ou des tranchées contre les monstres. Vous êtes des vikings nom d'Odin !`,
       ],
+      image: {
+        src: 'https://cdn.discordapp.com/attachments/879308268034482176/880074813027278868/znBWtv2T9-oQtxWHbxpNuyZePd6R8suR2axEDgXkAnyfzueO-tSDtYY-MWTJnqjGazbfM9U4_yZ2q0b3ZQdLrB2P_FrqgCP4yjpr.png',
+      },
     },
     {
       title: 'Les bêtes',
@@ -73,6 +76,10 @@ const instanceRule = {
       notes: [
         `(° : reboucher votre trou ne fera même qu’amplifier le problème, car le jeu chargera votre trou, puis chargera son rebouchement.) `,
       ],
+      image: {
+        legend: 'Voici typiquement ce qu’on veut éviter !',
+        src: 'https://cdn.discordapp.com/attachments/879308268034482176/880075448187498496/7SbpNZOU8PFVmknCFk_g45ENGtjFaoopyVdENgivvJi2V3nXG4IOrT2YTgm6qCPth7EgKdtZqXz-P_LZNnXzPUMAHLZhvxUQ8AEl.png',
+      },
     },
   ],
 };
@@ -114,25 +121,22 @@ const streamerRule = {
     {
       title: `1/ Tous les joueurs qui apparaissent à votre écran vous ont donné leur accord.`,
       text: [
-        `Si vous tombez sur quelqu'un de manière inattendue vous devez lui mettre dans le chat du jeu un message du style “Je streame en direct mon jeu, est ce que ça te dérange d'y apparaître ?”. 
-À vous de trouver votre propre formule, mais elle doit dire clairement et sans ambigüité que vous enregistrez. Si la personne vous dit oui, nickel, amusez-vous 🤗
-Si elle vous dit non, c’est à vous de vous éloigner du joueur afin qu'il n'apparaisse plus dans votre stream.`,
+        `Si vous tombez sur quelqu'un de manière inattendue vous devez lui mettre dans le chat du jeu un message du style “Je streame en direct mon jeu, est ce que ça te dérange d'y apparaître ?”. À vous de trouver votre propre formule, mais elle doit dire clairement et sans ambigüité que vous enregistrez.`,
+        `Si la personne vous dit oui, nickel, amusez - vous 🤗 Si elle vous dit non, c’est à vous de vous éloigner du joueur afin qu'il n'apparaisse plus dans votre stream.`,
       ],
     },
     {
       title: `2/ Si vous êtes souhaitez streamer vos échanges vocaux dans notre discord, vous devez impérativement être dans le canal vocal "Stream en direct"`,
       text: [
-        `Lorsqu’une personne vous y rejoint, vous devez la prévenir que vous enregistrez. En revanche, si ça ne plaît pas à celle-ci, c'est à elle de quitter le salon vocal.
-
-De cette manière, ceux qui vous rejoignent seront doublement prévenus que leur voix est enregistrée (le nom du salon + votre annonce à chaque arrivée).`,
+        `Lorsqu’une personne vous y rejoint, vous devez la prévenir que vous enregistrez. En revanche, si ça ne plaît pas à celle-ci, c'est à elle de quitter le salon vocal.`,
+        `De cette manière, ceux qui vous rejoignent seront doublement prévenus que leur voix est enregistrée (le nom du salon + votre annonce à chaque arrivée).`,
       ],
     },
     {
       title: `3/ Quand vous streamez, changez votre pseudo discord et accolez-lui le préfixe :`,
       text: [
-        `Afin d'être encore plus clair vis-à-vis des autres,  changez votre pseudo Discord et accolez-lui le préfix :  [stream : 🟢 ] (clic droit, changez le pseudo etc).
-
-Exemple : si l’admin Gyda Selordotyr voulait streamer, il passerait du pseudo, “Gyda Selordotyr”, à  “[stream : 🟢] Gyda Selordotyr”.`,
+        `Afin d'être encore plus clair vis-à-vis des autres,  changez votre pseudo Discord et accolez-lui le préfix :  [stream : 🟢 ] (clic droit, changez le pseudo etc).`,
+        `Exemple : si l’admin Gyda Selordotyr voulait streamer, il passerait du pseudo, “Gyda Selordotyr”, à  “[stream : 🟢] Gyda Selordotyr”.`,
       ],
     },
     {
@@ -159,7 +163,7 @@ const GameRules: React.FC = () => (
       </RuleAccordionItem>
       <RuleAccordionItem index="3" title="“Respectez le terrain et les FPS des autres joueurs”">
         <RuleMultipleText content={instanceRule.introduction} />
-        {instanceRule.categories.map(({ icon, iconColor, title, text, notes }) => (
+        {instanceRule.categories.map(({ icon, iconColor, title, text, notes, image }) => (
           <Box key={title} mb="4">
             <Heading size="s" display="flex" alignItems="center" color={iconColor}>
               <Icon as={icon} w="2em" h="2em" me="3" color={iconColor} />
@@ -167,19 +171,16 @@ const GameRules: React.FC = () => (
             </Heading>
             <RuleMultipleText content={text} />
             {notes && <RuleMultipleText content={notes} fontSize="xs" />}
+            {image && (
+              <figure>
+                {image.legend && <figcaption>{image.legend}</figcaption>}
+                <Box height="200px" maxWidth="550px" position="relative" textAlign="left">
+                  <Image src={image.src} layout="fill" objectFit="cover" objectPosition="top" />
+                </Box>
+              </figure>
+            )}
           </Box>
         ))}
-        <figure>
-          <figcaption>Voici typiquement ce qu’on veut éviter !</figcaption>
-          <Box height="200px" maxWidth="550px" position="relative" textAlign="left">
-            <Image
-              src="https://cdn.discordapp.com/attachments/879308268034482176/880075448187498496/7SbpNZOU8PFVmknCFk_g45ENGtjFaoopyVdENgivvJi2V3nXG4IOrT2YTgm6qCPth7EgKdtZqXz-P_LZNnXzPUMAHLZhvxUQ8AEl.png"
-              layout="fill"
-              objectFit="cover"
-              objectPosition="top"
-            />
-          </Box>
-        </figure>
       </RuleAccordionItem>
       <RuleAccordionItem
         index="4"
