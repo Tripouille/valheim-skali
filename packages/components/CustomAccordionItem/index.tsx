@@ -15,19 +15,17 @@ export interface CustomAccordionItemProps {
 
 const CustomAccordionItem: React.FC<CustomAccordionItemProps> = ({ title, subtitle, children }) => (
   <AccordionItem id={title}>
-    <h2>
-      <AccordionButton>
-        <Heading size="l" flex="1" textAlign="left">
-          {title}
-          {subtitle && (
-            <Box as="span" fontWeight="normal" fontSize="xs" ms="2">
-              {subtitle}
-            </Box>
-          )}
-        </Heading>
-        <AccordionIcon />
-      </AccordionButton>
-    </h2>
+    <AccordionButton>
+      <Heading size="l" flex="1" textAlign="left">
+        {title}
+        {subtitle && (
+          <Box as="span" fontWeight="normal" fontSize="xs" ms="2">
+            {subtitle}
+          </Box>
+        )}
+      </Heading>
+      <AccordionIcon />
+    </AccordionButton>
     <AccordionPanel pb={4}>{children}</AccordionPanel>
   </AccordionItem>
 );
