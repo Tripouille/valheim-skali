@@ -37,16 +37,16 @@ const validRules = [
 const ShortVersion: React.FC = () => (
   <VStack align="left" spacing="5">
     <Box>
-      <Heading size="l" pb="2">
+      <Heading as="h3" size="l" pb="2">
         Avant toute chose, ce serveur n’est PAS pour vous si :
       </Heading>
-      <RulesList contents={invalidRules} icon={MdCancel} iconColor="red.400" />
+      <RulesList list={invalidRules} icon={MdCancel} iconColor="red.400" />
     </Box>
     <Box>
-      <Heading size="l" pb="2">
+      <Heading as="h3" size="l" pb="2">
         Ceci étant dit, vous êtes peut-être au bon endroit, si vous cherchez un serveur :
       </Heading>
-      <RulesList contents={validRules} icon={MdCheckCircle} iconColor="green.400" />
+      <RulesList list={validRules} icon={MdCheckCircle} iconColor="green.400" />
     </Box>
   </VStack>
 );

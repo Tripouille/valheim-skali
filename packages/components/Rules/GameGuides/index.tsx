@@ -1,13 +1,7 @@
 import React from 'react';
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionIcon,
-  AccordionPanel,
-  Heading,
-} from '@chakra-ui/react';
+import { Accordion } from '@chakra-ui/react';
 import { MdCircle } from 'react-icons/md';
+import CustomAccordionItem from '@skali/components/CustomAccordionItem';
 import RulesList from '../RulesList';
 
 const forbidden = [
@@ -52,50 +46,18 @@ Par ailleurs il paraîtrait qu'un gué au Nord-Est permettrait de quitter l'île
 
 const GameGuides: React.FC = () => (
   <Accordion defaultIndex={[0, 1, 2, 3]} allowMultiple>
-    <AccordionItem id="gameGuidesAccordion1">
-      <AccordionButton>
-        <Heading size="l" flex="1" textAlign="left">
-          Exemples de comportements strictement interdits :
-        </Heading>
-        <AccordionIcon />
-      </AccordionButton>
-      <AccordionPanel pb={4}>
-        <RulesList contents={forbidden} icon={MdCircle} iconColor="red.400" />
-      </AccordionPanel>
-    </AccordionItem>
-    <AccordionItem id="gameGuidesAccordion2">
-      <AccordionButton>
-        <Heading size="l" flex="1" textAlign="left">
-          Exemples de comportements peu appréciés, mais pas strictement interdits :
-        </Heading>
-        <AccordionIcon />
-      </AccordionButton>
-      <AccordionPanel pb={4}>
-        <RulesList contents={toAvoid} icon={MdCircle} iconColor="orange.400" />
-      </AccordionPanel>
-    </AccordionItem>
-    <AccordionItem id="gameGuidesAccordion3">
-      <AccordionButton>
-        <Heading size="l" flex="1" textAlign="left">
-          Exemples de comportements tout à fait appréciés :
-        </Heading>
-        <AccordionIcon />
-      </AccordionButton>
-      <AccordionPanel pb={4}>
-        <RulesList contents={appreciated} icon={MdCircle} iconColor="green.400" />
-      </AccordionPanel>
-    </AccordionItem>
-    <AccordionItem id="gameGuidesAccordion4">
-      <AccordionButton>
-        <Heading size="l" flex="1" textAlign="left">
-          Conseils
-        </Heading>
-        <AccordionIcon />
-      </AccordionButton>
-      <AccordionPanel pb={4}>
-        <RulesList contents={advice} icon={MdCircle} iconColor="blue.400" />
-      </AccordionPanel>
-    </AccordionItem>
+    <CustomAccordionItem title="Exemples de comportements strictement interdits :">
+      <RulesList list={forbidden} icon={MdCircle} iconColor="red.400" />
+    </CustomAccordionItem>
+    <CustomAccordionItem title="Exemples de comportements peu appréciés, mais pas strictement interdits :">
+      <RulesList list={toAvoid} icon={MdCircle} iconColor="orange.400" />
+    </CustomAccordionItem>
+    <CustomAccordionItem title="Exemples de comportements tout à fait appréciés :">
+      <RulesList list={appreciated} icon={MdCircle} iconColor="green.400" />
+    </CustomAccordionItem>
+    <CustomAccordionItem title="Conseils">
+      <RulesList list={advice} icon={MdCircle} iconColor="blue.400" />
+    </CustomAccordionItem>
   </Accordion>
 );
 
