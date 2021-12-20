@@ -22,12 +22,12 @@ const Rules = () => (
       <Tabs w="full" id="rulesTabs">
         <TabList>
           {Object.keys(ruleParts).map(title => (
-            <Tab>{title}</Tab>
+            <Tab key={title}>{title}</Tab>
           ))}
         </TabList>
         <TabPanels textAlign="justify">
-          {Object.values(ruleParts).map(content => (
-            <TabPanel>{content}</TabPanel>
+          {Object.entries(ruleParts).map(([title, content]) => (
+            <TabPanel key={title}>{content}</TabPanel>
           ))}
         </TabPanels>
       </Tabs>
