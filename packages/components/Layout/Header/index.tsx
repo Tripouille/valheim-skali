@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import {
   chakra,
@@ -19,8 +19,9 @@ import SignInOut from './SignInOut';
 const Header: React.FC = () => {
   const { data: session } = useSession();
 
-  const router = useRouter();
-  const { serverName } = router.query;
+  // const router = useRouter();
+  // const { serverName } = router.query;
+  const serverName = 'valhabba';
 
   return (
     <chakra.header height="header" bgColor="rgba(49, 130, 206, 0.7)" fontFamily="Norse">
