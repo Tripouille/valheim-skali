@@ -30,6 +30,7 @@ const InstanceRules = () => (
         imagePosition="top"
         height="200px"
         maxW="550px"
+        alt="Instance"
       />
     </Box>
     <Box mb="4">
@@ -75,6 +76,7 @@ const InstanceRules = () => (
         legend="Voici typiquement ce qu’on veut éviter !"
         height="200px"
         maxW="550px"
+        alt="Mining"
       />
     </Box>
   </>

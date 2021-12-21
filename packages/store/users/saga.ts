@@ -2,9 +2,9 @@
 import axios, { AxiosResponse } from 'axios';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { AddResponse, PullAllResponse } from '@packages/api/users';
+import { APIRoutes } from '@packages/utils/routes';
 import { actions } from './slice';
 import { UserWithoutId } from './type';
-import { APIRoutes } from '../../utils/routes';
 
 export function* pullRequestHandler() {
   const request = () => axios.get<PullAllResponse>(APIRoutes.USERS);

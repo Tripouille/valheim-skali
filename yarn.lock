@@ -2086,6 +2086,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/redux-logger@npm:^3.0.9":
+  version: 3.0.9
+  resolution: "@types/redux-logger@npm:3.0.9"
+  dependencies:
+    redux: ^4.0.0
+  checksum: c41fdc09198fae2d62ff7d6bd029ccae1fed655e6a7abd40614a8db5d6e01adbe565881b2c8d398789804a48259e3399af3939f994a532c11904ba2021799275
+  languageName: node
+  linkType: hard
+
 "@types/retry@npm:^0.12.0":
   version: 0.12.1
   resolution: "@types/retry@npm:0.12.1"
@@ -9554,6 +9563,7 @@ __metadata:
     "@emotion/styled": ^11
     "@next-auth/mongodb-adapter": ^0.0.2-next.285
     "@reduxjs/toolkit": ^1.6.2
+    "@types/redux-logger": ^3.0.9
     "@typescript-eslint/eslint-plugin": ^5.8.0
     axios: ^0.24.0
     bson: ^4.6.0

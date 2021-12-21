@@ -8,7 +8,8 @@ const Layout: React.FC = ({ children }) => (
     bgImage="/images/valheim-background.png"
     bgAttachment="fixed"
     bgSize="cover"
-    bgPos="bottom">
+    bgPos="bottom"
+  >
     <Header />
     <Flex h="calc(100vh - var(--chakra-sizes-header))" overflow="auto" justify="center" p="2">
       {children}

@@ -32,7 +32,7 @@ const UserList: React.FC<UserListProps> = ({ users, pullUsers, onAddUser, onRemo
         {users.map(user => (
           <ListItem key={user._id}>
             <Flex justifyContent="space-between" mb="3">
-              <Image src={user.image} width="100" height="100" />
+              <Image src={user.image} width="100" height="100" alt="user avatar" />
               <Center width="100%" justifyContent="left">
                 {user.name}
               </Center>
@@ -51,7 +51,8 @@ const UserList: React.FC<UserListProps> = ({ users, pullUsers, onAddUser, onRemo
               onClick={() => {
                 onAddUser({ name: input, email: '', image: '' });
                 setInput('');
-              }}>
+              }}
+            >
               Add
             </Button>
           </Flex>

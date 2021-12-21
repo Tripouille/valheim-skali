@@ -9,7 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --dir pages --dir packages",
     "format:w": "yarn prettier -w '**/*.{ts,tsx,yml,json,md}'",
     "format:c": "yarn prettier -c '**/*.{ts,tsx,yml,json,md}'"
   },
@@ -33,6 +33,7 @@
     "redux-saga": "^1.1.3"
   },
   "devDependencies": {
+    "@types/redux-logger": "^3.0.9",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "eslint": "^8.5.0",
     "eslint-config-airbnb": "^19.0.2",
