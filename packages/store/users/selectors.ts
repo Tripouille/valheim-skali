@@ -1,4 +1,4 @@
-import { State } from '@skali/store';
+import { State } from '@packages/store';
 
 const selectUsers = (state: State) => state.users;
 

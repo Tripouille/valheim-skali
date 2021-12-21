@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { GiVikingHelmet } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
-import { NavRoutes } from '@skali/utils/routes';
+import { NavRoutes } from '@packages/utils/routes';
 import NavItem from '../NavItem';
 import SignInOut from './SignInOut';
 

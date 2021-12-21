@@ -1,5 +1,5 @@
 import React from 'react';
-import Rules from '@skali/components/Rules';
+import Rules from '@packages/components/Rules';
 
 const RulesPage = () => <Rules />;
 
