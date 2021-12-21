@@ -1,6 +1,6 @@
 import React from 'react';
 import { Heading, VStack, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
-import Background from '@skali/components/Background';
+import Background from '@packages/components/Background';
 import Preambule from './Preambule';
 import DiscordRules from './DiscordRules';
 import GameRules from './GameRules';

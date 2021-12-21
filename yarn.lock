@@ -1705,6 +1705,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@packages/api@workspace:pages/api":
+  version: 0.0.0-use.local
+  resolution: "@packages/api@workspace:pages/api"
+  languageName: unknown
+  linkType: soft
+
+"@packages/components@workspace:packages/components":
+  version: 0.0.0-use.local
+  resolution: "@packages/components@workspace:packages/components"
+  languageName: unknown
+  linkType: soft
+
+"@packages/store@workspace:packages/store":
+  version: 0.0.0-use.local
+  resolution: "@packages/store@workspace:packages/store"
+  languageName: unknown
+  linkType: soft
+
+"@packages/theme@workspace:packages/theme":
+  version: 0.0.0-use.local
+  resolution: "@packages/theme@workspace:packages/theme"
+  languageName: unknown
+  linkType: soft
+
+"@packages/utils@workspace:packages/utils":
+  version: 0.0.0-use.local
+  resolution: "@packages/utils@workspace:packages/utils"
+  languageName: unknown
+  linkType: soft
+
 "@panva/hkdf@npm:^1.0.0":
   version: 1.0.1
   resolution: "@panva/hkdf@npm:1.0.1"
@@ -1943,36 +1973,6 @@ __metadata:
   checksum: 0237e7e6ebf41b7c6a72eea704b007442cfd05910ded7059235a5684a0e4a233b2ca3c3e39923901131e7f0a4dcb5e95737af469081529acc393223c04715505
   languageName: node
   linkType: hard
-
-"@skali/api@workspace:pages/api":
-  version: 0.0.0-use.local
-  resolution: "@skali/api@workspace:pages/api"
-  languageName: unknown
-  linkType: soft
-
-"@skali/components@workspace:packages/components":
-  version: 0.0.0-use.local
-  resolution: "@skali/components@workspace:packages/components"
-  languageName: unknown
-  linkType: soft
-
-"@skali/store@workspace:packages/store":
-  version: 0.0.0-use.local
-  resolution: "@skali/store@workspace:packages/store"
-  languageName: unknown
-  linkType: soft
-
-"@skali/theme@workspace:packages/theme":
-  version: 0.0.0-use.local
-  resolution: "@skali/theme@workspace:packages/theme"
-  languageName: unknown
-  linkType: soft
-
-"@skali/utils@workspace:packages/utils":
-  version: 0.0.0-use.local
-  resolution: "@skali/utils@workspace:packages/utils"
-  languageName: unknown
-  linkType: soft
 
 "@tootallnate/once@npm:1":
   version: 1.1.2

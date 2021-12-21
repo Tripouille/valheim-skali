@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@chakra-ui/react';
-import { NavRoutes } from '@skali/utils/routes';
+import { NavRoutes } from '@packages/utils/routes';
 import { NavRoutesToLabel } from '../../../utils/constants';
 
 export interface NavItemProps {

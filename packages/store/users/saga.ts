@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import axios, { AxiosResponse } from 'axios';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { AddResponse, PullAllResponse } from '@skali/api/users';
+import { AddResponse, PullAllResponse } from '@packages/api/users';
 import { actions } from './slice';
 import { UserWithoutId } from './type';
 import { APIRoutes } from '../../utils/routes';

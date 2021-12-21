@@ -4,10 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Button, Center, Flex, Heading, List, ListItem, Input } from '@chakra-ui/react';
-import { State } from '@skali/store';
-import selectUsers from '@skali/store/users/selectors';
-import { actions } from '@skali/store/users/slice';
-import { User, UserWithoutId } from '@skali/store/users/type';
+import { State } from '@packages/store';
+import selectUsers from '@packages/store/users/selectors';
+import { actions } from '@packages/store/users/slice';
+import { User, UserWithoutId } from '@packages/store/users/type';
 
 export interface UserListProps {
   users: User[];
