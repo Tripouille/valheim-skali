@@ -1,12 +1,12 @@
 import React from 'react';
-import { chakra, Flex } from '@chakra-ui/react';
+import { chakra, Box } from '@chakra-ui/react';
 
 export interface BackgroundProps {
   className?: string;
 }
 
 const Background: React.FC<BackgroundProps> = ({ children, className }) => (
-  <Flex
+  <Box
     bgColor="blue.700"
     h="min-content"
     minH="full"
@@ -14,12 +14,10 @@ const Background: React.FC<BackgroundProps> = ({ children, className }) => (
     opacity="0.95"
     borderRadius="xl"
     p={[2, 4, 6, 8, 10]}
-    flexDir="column"
-    alignItems="center"
     className={className}
   >
     {children}
-  </Flex>
+  </Box>
 );
 
 export default chakra(Background);
