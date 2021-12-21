@@ -10,6 +10,7 @@ export interface CardProps {
 
 const Card: React.FC<CardProps> = ({ children, className, size, variant }) => {
   const styles = useStyleConfig('Card', { size, variant });
+  const lol = 1;
 
   return (
     <Flex
