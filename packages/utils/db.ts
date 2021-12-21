@@ -44,6 +44,7 @@ async function remove<T>(collectionName: string, id: string) {
   await collection.deleteOne({ _id: new ObjectId(id) });
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   connectToDb,
   find,

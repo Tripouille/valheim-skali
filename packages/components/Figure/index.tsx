@@ -3,23 +3,22 @@ import { chakra, Box } from '@chakra-ui/react';
 import Image from 'next/image';
 
 export interface FigureProps {
+  /**  Url of the image */
   src: string;
+  /**  Object-position (css attribute) of the img, ex. "50% 50%", "top" */
   imagePosition?: string;
+  /**  Will be displayed above the image */
   legend?: string;
+  /**  For chakra style props, mainly */
   className?: string;
+  alt: string;
 }
 
-/** To display an image, loaded smartly by next
- * @param {string} src Url of the image
- * @param {string | undefined} imagePosition Object-position (css attribute) of the img, ex. "50% 50%", "top"
- * @param {string | undefined} legend Will be displayed above the image
- * @param {string | undefined} className For chakra style props, mainly
- */
-const Figure: React.FC<FigureProps> = ({ src, imagePosition, legend, className }) => (
+const Figure: React.FC<FigureProps> = ({ src, imagePosition, legend, className, alt }) => (
   <figure>
     {legend && <figcaption>{legend}</figcaption>}
     <Box className={className} position="relative">
-      <Image src={src} layout="fill" objectFit="cover" objectPosition={imagePosition} />
+      <Image src={src} layout="fill" objectFit="cover" objectPosition={imagePosition} alt={alt} />
     </Box>
   </figure>
 );

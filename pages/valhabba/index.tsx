@@ -1,5 +1,5 @@
 import React from 'react';
 
-const ServerHomePage = () => <></>;
+const ServerHomePage: React.FC = () => null;
 
 export default ServerHomePage;

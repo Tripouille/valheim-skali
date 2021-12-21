@@ -1,18 +1,14 @@
 {
   "parser": "@typescript-eslint/parser",
-  "overrides": [
-    {
-      "files": ["**/*.ts", "**/*.tsx"],
-      "parserOptions": {
-        "project": ["./tsconfig.json"]
-      }
-    }
-  ],
-  "extends": ["next", "prettier", "airbnb", "airbnb-typescript"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "extends": ["airbnb", "airbnb-typescript", "next", "prettier"],
   "rules": {
     "import/no-extraneous-dependencies": "off",
     "react/function-component-definition": "off",
-    "react/jsx-no-useless-fragment": "warn"
+    "jsx-a11y/anchor-is-valid": "off",
+    "jsx-a11y/alt-text": "error"
   },
   "env": {
     "jest": true

@@ -16,7 +16,8 @@ const Background: React.FC<BackgroundProps> = ({ children, className }) => (
     p={[2, 4, 6, 8, 10]}
     flexDir="column"
     alignItems="center"
-    className={className}>
+    className={className}
+  >
     {children}
   </Flex>
 );
