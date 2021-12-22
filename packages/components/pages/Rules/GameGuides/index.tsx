@@ -1,7 +1,7 @@
 import React from 'react';
 import { Accordion } from '@chakra-ui/react';
 import { MdCircle } from 'react-icons/md';
-import CustomAccordionItem from '@packages/components/CustomAccordionItem';
+import CustomAccordionItem from '@packages/components/core/CustomAccordionItem';
 import RulesList from '../RulesList';
 
 const forbidden = [

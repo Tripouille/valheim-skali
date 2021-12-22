@@ -2,9 +2,9 @@ import React from 'react';
 import { Box } from '@chakra-ui/react';
 import { MdComputer } from 'react-icons/md';
 import { GiPig, GiVillage, GiWarPick } from 'react-icons/gi';
-import CustomText from '@packages/components/CustomText';
-import IconTitle from '@packages/components/IconTitle';
-import Figure from '@packages/components/Figure';
+import CustomText from '@packages/components/core/CustomText';
+import IconTitle from '@packages/components/core/IconTitle';
+import Figure from '@packages/components/core/Figure';
 
 const InstanceRules = () => (
   <>

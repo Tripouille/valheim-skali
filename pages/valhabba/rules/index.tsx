@@ -1,5 +1,5 @@
 import React from 'react';
-import Rules from '@packages/components/Rules';
+import Rules from '@packages/components/pages/Rules';
 
 const RulesPage = () => <Rules />;
 
