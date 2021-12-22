@@ -16,7 +16,7 @@ const ruleParts: Record<string, JSX.Element> = {
 const Rules = () => (
   <Background>
     <VStack spacing="5" w="full">
-      <Heading as="h1" size="xl">
+      <Heading as="h1" size="xl" fontFamily="Norse">
         Règlement
       </Heading>
       <Tabs w="full" id="rulesTabs">
