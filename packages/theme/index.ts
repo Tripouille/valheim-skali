@@ -11,6 +11,10 @@ const options = {
   sizes: {
     header: '4rem',
   },
+  fonts: {
+    body: 'Lucida Sans',
+    heading: 'Lucida Sans',
+  },
 };
 
 const theme = extendTheme(options);
