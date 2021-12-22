@@ -5,25 +5,36 @@ on:
       - main
 
 jobs:
-  release:
+  # Install and cache npm dependencies
+  install-cache:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Cache node_modules
+      - name: Checkout Commit
+        uses: actions/checkout@v2
+      - name: Cache yarn dependencies
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-yarn-v1-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-v1
+      - name: Install dependencies if cache invalid
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn
+  # Release a new version
+  release:
+    runs-on: ubuntu-latest
+    needs: install-cache
+    steps:
+      - name: Checkout Commit
+        uses: actions/checkout@v2
+      - name: Restore yarn dependencies
         uses: actions/cache@v2
         with:
-          path: '~/.cache'
-          key: ${{ runner.os }}-cache-${{ hashFiles('**/yarn.lock') }}
-      - name: Use NodeJS
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-      - run: yarn install
+          path: node_modules
+          key: ${{ runner.os }}-yarn-v1-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-v1
       - name: Create a release
         run: yarn semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_TOKEN }}
-      - name: Upload Coverage
-        run: yarn codecov
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
