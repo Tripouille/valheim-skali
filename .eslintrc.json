@@ -1,9 +1,21 @@
 {
   "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
-  "extends": ["airbnb", "airbnb-typescript", "next", "prettier"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "parserOptions": {
+        "project": ["./tsconfig.json"]
+      }
+    },
+    {
+      "files": ["*.stories.ts", "*.stories.tsx"],
+      "rules": {
+        "react/jsx-props-no-spreading": "off",
+        "react/display-name": "off"
+      }
+    }
+  ],
+  "extends": ["airbnb", "airbnb-typescript", "plugin:storybook/recommended", "next", "prettier"],
   "rules": {
     "import/no-extraneous-dependencies": "off",
     "react/function-component-definition": "off",
