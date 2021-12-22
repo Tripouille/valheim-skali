@@ -1,7 +1,7 @@
 import React from 'react';
 import { Accordion, Heading } from '@chakra-ui/react';
-import CustomText from '@packages/components/CustomText';
-import CustomAccordionItem from '@packages/components/CustomAccordionItem';
+import CustomText from '@packages/components/core/CustomText';
+import CustomAccordionItem from '@packages/components/core/CustomAccordionItem';
 import InstanceRules from './InstanceRules';
 import StreamerRules from './StreamerRules';
 
