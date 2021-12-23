@@ -1,13 +1,9 @@
 import { chakra, HStack } from '@chakra-ui/react';
-import ZoomableImage from '../ZoomableImage';
-
-interface ImageType {
-  src: string;
-  alt: string;
-}
+import { ImageAttributes } from '@packages/utils/types';
+import ZoomableImage from '@packages/components/core/ZoomableImage';
 
 export interface CarouselProps {
-  images: ImageType[];
+  images: ImageAttributes[];
   carouselHeight: string;
   className?: string;
 }
