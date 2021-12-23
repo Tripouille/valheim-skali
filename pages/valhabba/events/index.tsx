@@ -1,7 +1,6 @@
 import React from 'react';
-// import { Button } from '@chakra-ui/button';
-import Background from '@packages/components/core/Background';
+import WorkInProgress from '@packages/components/core/WorkInProgress';
 
-const EventsPage = () => <Background>A venir dans une prochaine mise à jour !</Background>;
+const EventsPage = () => <WorkInProgress />;
 
 export default EventsPage;
