@@ -3725,6 +3725,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addon-a11y@npm:^6.4.9":
+  version: 6.4.9
+  resolution: "@storybook/addon-a11y@npm:6.4.9"
+  dependencies:
+    "@storybook/addons": 6.4.9
+    "@storybook/api": 6.4.9
+    "@storybook/channels": 6.4.9
+    "@storybook/client-logger": 6.4.9
+    "@storybook/components": 6.4.9
+    "@storybook/core-events": 6.4.9
+    "@storybook/csf": 0.0.2--canary.87bc651.0
+    "@storybook/theming": 6.4.9
+    axe-core: ^4.2.0
+    core-js: ^3.8.2
+    global: ^4.4.0
+    lodash: ^4.17.21
+    react-sizeme: ^3.0.1
+    regenerator-runtime: ^0.13.7
+    ts-dedent: ^2.0.0
+    util-deprecate: ^1.0.2
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0
+    react-dom: ^16.8.0 || ^17.0.0
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: b9e2be4aacf68e25d30774e3e1958526abaa8a7704a3d041cc2fa82c23014c487f83bba274b2f95f1df421c402a04a7db9612902daf280378096104c411d0fbb
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-actions@npm:6.4.9, @storybook/addon-actions@npm:^6.4.9":
   version: 6.4.9
   resolution: "@storybook/addon-actions@npm:6.4.9"
@@ -6277,7 +6309,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axe-core@npm:^4.3.5":
+"axe-core@npm:^4.2.0, axe-core@npm:^4.3.5":
   version: 4.3.5
   resolution: "axe-core@npm:4.3.5"
   checksum: 973c6a80f0aaa663820b209d4202de7a0c240a2dea2f3cff168b09c0f221b27179b1f0988f00ad11ed63cbc50535920f8ca779de1c60dc82090ab2d275f71fdd
@@ -18816,6 +18848,7 @@ __metadata:
     "@mdx-js/react": ^1.6.22
     "@next-auth/mongodb-adapter": ^0.0.2-next.285
     "@reduxjs/toolkit": ^1.6.2
+    "@storybook/addon-a11y": ^6.4.9
     "@storybook/addon-actions": ^6.4.9
     "@storybook/addon-docs": ^6.4.9
     "@storybook/addon-essentials": ^6.4.9

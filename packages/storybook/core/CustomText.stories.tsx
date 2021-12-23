@@ -11,3 +11,7 @@ const CustomTextTemplate = (props: CustomTextProps) => () => <CustomText {...pro
 
 export const OneLine = CustomTextTemplate({ paragraphs: ['line'] });
 export const MultipleLine = CustomTextTemplate({ paragraphs: ['line', 'line 2', 'line 3'] });
+export const MultipleLineWithMb = CustomTextTemplate({
+  paragraphs: ['line', 'line 2', 'line 3'],
+  mb: '12',
+});
