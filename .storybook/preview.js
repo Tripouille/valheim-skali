@@ -3,8 +3,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { Provider } from 'react-redux';
 import theme from '@packages/theme';
 import store from '@packages/store';
-import Fonts from '@packages/components/pages/Fonts';
-
+import Fonts from '@packages/components/Layout/Fonts';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
