@@ -11,7 +11,13 @@ const Layout: React.FC = ({ children }) => (
     bgPos="bottom"
   >
     <Header />
-    <Flex h="calc(100vh - var(--chakra-sizes-header))" overflow="auto" justify="center" p="2">
+    <Flex
+      as="main"
+      h="calc(100vh - var(--chakra-sizes-header))"
+      overflow="auto"
+      justify="center"
+      p="2"
+    >
       {children}
     </Flex>
   </Box>
