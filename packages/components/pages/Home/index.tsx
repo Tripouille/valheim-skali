@@ -5,7 +5,7 @@ import CustomText from '@packages/components/core/CustomText';
 import Carousel from '@packages/components/core/Carousel';
 
 const Home = () => (
-  <Background textAlign="justify" w="5xl">
+  <Background textAlign="justify">
     <Heading as="h1" size="xl" fontFamily="Norse" mb="5" textAlign="center">
       Bienvenue au Skali du Valhabba
     </Heading>
