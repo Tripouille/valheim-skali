@@ -20,6 +20,7 @@ const ZoomableImage: React.FC<ZoomableImageProps> = ({ imageAttributes, classNam
         src={imageAttributes.src}
         alt={imageAttributes.alt}
         cursor="pointer"
+        borderRadius="md"
         onClick={openImage}
         className={className}
       />
