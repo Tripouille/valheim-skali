@@ -6,8 +6,8 @@ import { SessionProvider } from 'next-auth/react';
 import { Provider } from 'react-redux';
 import store from '@packages/store';
 import { ChakraProvider } from '@chakra-ui/react';
-import Layout from '@packages/components/pages/Layout';
-import Fonts from '@packages/components/pages/Fonts';
+import Layout from '@packages/components/Layout';
+import Fonts from '@packages/components/Layout/Fonts';
 import theme from '@packages/theme';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
