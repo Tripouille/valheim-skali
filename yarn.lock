@@ -7264,6 +7264,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chromatic@npm:^6.3.3":
+  version: 6.3.3
+  resolution: "chromatic@npm:6.3.3"
+  bin:
+    chroma: bin/main.cjs
+    chromatic: bin/main.cjs
+    chromatic-cli: bin/main.cjs
+  checksum: 37aad4ac0d95634c23fec014d58c66740d8a7cc2364350afd07e48c385907457f63380ca432faf1876466bc2af8b1598c34e9dd9d3f8aac088ee4b9ef7bc6df2
+  languageName: node
+  linkType: hard
+
 "chrome-trace-event@npm:^1.0.2":
   version: 1.0.3
   resolution: "chrome-trace-event@npm:1.0.3"
@@ -18817,6 +18828,7 @@ __metadata:
     axios: ^0.24.0
     babel-loader: ^8.2.3
     bson: ^4.6.0
+    chromatic: ^6.3.3
     eslint: ^8.5.0
     eslint-config-airbnb: ^19.0.2
     eslint-config-airbnb-typescript: ^16.1.0
