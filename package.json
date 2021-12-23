@@ -13,7 +13,7 @@
     "format:w": "yarn prettier -w '**/*.{ts,tsx,yml,json,md}'",
     "format:c": "yarn prettier -c '**/*.{ts,tsx,yml,json,md}'",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build:storybook": "build-storybook"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.7.3",
@@ -47,6 +47,7 @@
     "@types/redux-logger": "^3.0.9",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "babel-loader": "^8.2.3",
+    "chromatic": "^6.3.3",
     "eslint": "^8.5.0",
     "eslint-config-airbnb": "^19.0.2",
     "eslint-config-airbnb-typescript": "^16.1.0",
