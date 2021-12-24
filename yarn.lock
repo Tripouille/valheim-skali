@@ -5389,7 +5389,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.0.0":
+"@typescript-eslint/parser@npm:^5.0.0, @typescript-eslint/parser@npm:^5.8.0":
   version: 5.8.0
   resolution: "@typescript-eslint/parser@npm:5.8.0"
   dependencies:
@@ -9006,23 +9006,6 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.0.0
     "@typescript-eslint/parser": ^5.0.0
   checksum: 65bb6763ab825c228d01c884ddb306001f3b5cbb5c138646f6629ac780acc68d388091844b3983aa9f8f138e4e972a2a1d5a23ce95bd7a217b4a917e4e2366dd
-  languageName: node
-  linkType: hard
-
-"eslint-config-airbnb@npm:^19.0.2":
-  version: 19.0.2
-  resolution: "eslint-config-airbnb@npm:19.0.2"
-  dependencies:
-    eslint-config-airbnb-base: ^15.0.0
-    object.assign: ^4.1.2
-    object.entries: ^1.1.5
-  peerDependencies:
-    eslint: ^7.32.0 || ^8.2.0
-    eslint-plugin-import: ^2.25.3
-    eslint-plugin-jsx-a11y: ^6.5.1
-    eslint-plugin-react: ^7.27.1
-    eslint-plugin-react-hooks: ^4.3.0
-  checksum: 668d91fee4d8e1b7ecefc3844caed6bb77a72b29521dd9595a14abaebb8651439b831da792614b51e7913bbe3b6d20df03e76f52287ccf511dee1982460d3f71
   languageName: node
   linkType: hard
 
@@ -18858,12 +18841,12 @@ __metadata:
     "@types/mdx-js__react": ^1
     "@types/redux-logger": ^3.0.9
     "@typescript-eslint/eslint-plugin": ^5.8.0
+    "@typescript-eslint/parser": ^5.8.0
     axios: ^0.24.0
     babel-loader: ^8.2.3
     bson: ^4.6.0
     chromatic: ^6.3.3
     eslint: ^8.5.0
-    eslint-config-airbnb: ^19.0.2
     eslint-config-airbnb-typescript: ^16.1.0
     eslint-config-next: ^12.0.7
     eslint-config-prettier: ^8.3.0
