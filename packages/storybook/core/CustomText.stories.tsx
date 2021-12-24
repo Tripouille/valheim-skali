@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import CustomText, { CustomTextProps } from '@packages/components/core/CustomText';
 
 export default {
@@ -7,11 +7,19 @@ export default {
   component: CustomText,
 } as ComponentMeta<typeof CustomText>;
 
-const CustomTextTemplate = (props: CustomTextProps) => () => <CustomText {...props} />;
+export const Template: ComponentStory<typeof CustomText> = (args: CustomTextProps) => (
+  <CustomText {...args} />
+);
 
-export const OneLine = CustomTextTemplate({ paragraphs: ['line'] });
-export const MultipleLine = CustomTextTemplate({ paragraphs: ['line', 'line 2', 'line 3'] });
-export const MultipleLineWithMb = CustomTextTemplate({
+export const Setup = (args: CustomTextProps) => {
+  const newTemplate = Template.bind({});
+  newTemplate.args = args;
+  return newTemplate;
+};
+
+export const OneLine = Setup({ paragraphs: ['line'] });
+export const MultipleLine = Setup({ paragraphs: ['line', 'line 2', 'line 3'] });
+export const MultipleLineWithMb = Setup({
   paragraphs: ['line', 'line 2', 'line 3'],
   mb: '12',
 });
