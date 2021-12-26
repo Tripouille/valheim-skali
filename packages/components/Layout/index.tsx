@@ -14,7 +14,8 @@ const Layout: React.FC = ({ children }) => (
     <Flex
       as="main"
       h="calc(100vh - var(--chakra-sizes-header))"
-      overflow="auto"
+      overflowX="hidden"
+      overflowY="auto"
       justify="center"
       p="2"
     >
