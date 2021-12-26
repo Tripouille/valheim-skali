@@ -14,10 +14,9 @@ const Layout: React.FC = ({ children }) => (
     <Flex
       as="main"
       h="calc(100vh - var(--chakra-sizes-header))"
-      overflowY="auto"
+      overflow="auto"
       justify="center"
       p="2"
-      sx={{ overflow: 'overlay' }}
     >
       {children}
     </Flex>
