@@ -1,4 +1,3 @@
-import List from '.';
 
 describe('ArticleResult - props', () => {
   // eslint-disable-next-line no-unused-vars
