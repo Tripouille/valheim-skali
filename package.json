@@ -12,9 +12,10 @@
     "lint": "next lint --dir pages --dir packages",
     "format:w": "yarn prettier -w '**/*.{ts,tsx,yml,json,md}'",
     "format:c": "yarn prettier -c '**/*.{ts,tsx,yml,json,md}'",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -c packages/storybook/config",
     "build:storybook": "build-storybook",
-    "chromatic": "chromatic --exit-zero-on-changes"
+    "chromatic": "chromatic --exit-zero-on-changes",
+    "jest": "jest --config packages/tests/jest/jest.config.js"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.7.3",
@@ -47,10 +48,12 @@
     "@storybook/addon-links": "^6.4.9",
     "@storybook/react": "^6.4.9",
     "@types/babel__core": "^7",
+    "@types/jest": "^27.0.3",
     "@types/mdx-js__react": "^1",
     "@types/redux-logger": "^3.0.9",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
+    "babel-jest": "^27.4.5",
     "babel-loader": "^8.2.3",
     "chromatic": "^6.3.3",
     "eslint": "^8.5.0",
@@ -58,6 +61,7 @@
     "eslint-config-next": "^12.0.7",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-storybook": "^0.5.5",
+    "jest": "^27.4.5",
     "prettier": "^2.5.1",
     "semantic-release": "^18.0.1",
     "typescript": "^4.5.4"
