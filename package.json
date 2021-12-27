@@ -37,6 +37,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",
+    "@chakra-ui/icons": "^1.1.1",
+    "@chakra-ui/storybook-addon": "^0.0.0-dev-2021119215843",
     "@mdx-js/react": "^1.6.22",
     "@storybook/addon-a11y": "^6.4.9",
     "@storybook/addon-actions": "^6.4.9",
