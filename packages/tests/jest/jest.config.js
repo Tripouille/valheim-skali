@@ -6,6 +6,7 @@ module.exports = {
   collectCoverageFrom: [
     'packages/**/*.{ts,tsx}',
     'pages/**/*.{ts,tsx}',
+    '!packages/storybook/**',
     '!**/*.d.ts',
     '!**/node_modules/**',
   ],

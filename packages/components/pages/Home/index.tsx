@@ -19,7 +19,7 @@ const Home = () => (
         cherchant tous l'aventure et des interactions "vikings" (échanges
         économiques, événements PvP, regroupements...). Incarne ton Viking et forge ta légende au
         sein de duels à la hache, de courses de karvs, de combats de forts, de compétitions de tir à
-        l'arc, de chasses etc. Tout cela sous le regards des dieux aux caractères changeants.`,
+        l'arc, de chasses etc. Tout cela sous le regard des dieux aux caractères changeants.`,
         ]}
       />
     </Box>

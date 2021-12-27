@@ -13,7 +13,7 @@
     "format:w": "yarn prettier -w '**/*.{ts,tsx,yml,json,md}'",
     "format:c": "yarn prettier -c '**/*.{ts,tsx,yml,json,md}'",
     "storybook": "start-storybook -p 6006 -c packages/storybook/config",
-    "build:storybook": "build-storybook",
+    "build:storybook": "build-storybook -c packages/storybook/config",
     "chromatic": "chromatic --exit-zero-on-changes",
     "jest": "jest --config packages/tests/jest/jest.config.js"
   },
