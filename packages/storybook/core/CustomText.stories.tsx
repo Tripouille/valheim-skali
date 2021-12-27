@@ -7,11 +7,11 @@ export default {
   component: CustomText,
 } as ComponentMeta<typeof CustomText>;
 
-export const Template: ComponentStory<typeof CustomText> = (args: CustomTextProps) => (
+const Template: ComponentStory<typeof CustomText> = (args: CustomTextProps) => (
   <CustomText {...args} />
 );
 
-export const Setup = (args: CustomTextProps) => {
+const Setup = (args: CustomTextProps) => {
   const newTemplate = Template.bind({});
   newTemplate.args = args;
   return newTemplate;

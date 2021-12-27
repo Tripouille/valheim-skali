@@ -3,6 +3,7 @@ import { chakra, Box } from '@chakra-ui/react';
 
 export interface BackgroundProps {
   className?: string;
+  children: React.ReactNode;
 }
 
 const Background: React.FC<BackgroundProps> = ({ children, className }) => (

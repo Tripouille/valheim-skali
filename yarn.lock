@@ -1834,6 +1834,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@chakra-ui/icons@npm:^1.1.1":
+  version: 1.1.2
+  resolution: "@chakra-ui/icons@npm:1.1.2"
+  dependencies:
+    "@chakra-ui/icon": 2.0.0
+    "@types/react": ^17.0.15
+  peerDependencies:
+    "@chakra-ui/system": ">=1.0.0"
+    react: ">=16.8.6"
+  checksum: 0c1f20594b9681cf7701e59925a0589e4d92541ae9a8cfa6abbb9b95efe4d367b5b7ec7c6eae1a0a791ff04fa91c0b074e693f0dcda6a35b8e9af03085b1010e
+  languageName: node
+  linkType: hard
+
 "@chakra-ui/image@npm:1.1.1":
   version: 1.1.1
   resolution: "@chakra-ui/image@npm:1.1.1"
@@ -2212,6 +2225,25 @@ __metadata:
     "@chakra-ui/system": ">=1.0.0"
     react: ">=16.8.6"
   checksum: f04884c5643f645aa2ebf7bad0d1215f17a092ab7abc231d0d0da812c6106c7be69f2bd55b852ba761387f89100c191234af3c131269389e88c0949d58c0f61f
+  languageName: node
+  linkType: hard
+
+"@chakra-ui/storybook-addon@npm:^0.0.0-dev-2021119215843":
+  version: 0.0.0-pr-2021112616030
+  resolution: "@chakra-ui/storybook-addon@npm:0.0.0-pr-2021112616030"
+  dependencies:
+    webpack-merge: ^5.0.0
+  peerDependencies:
+    "@chakra-ui/icons": 0.0.0-pr-2021112616030
+    "@chakra-ui/react": 0.0.0-pr-2021112616030
+    "@storybook/addons": 6.x
+    react: 16.x || 17.x
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 70b5430cf65c69aa63afa3a9cd906f9257b6b2cc177422f40dafa896ded0752d21ad2aeb7b8d96966d41f0219f07a72282e8a0006e7c06e2f11d30791c67ecb6
   languageName: node
   linkType: hard
 
@@ -5226,6 +5258,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react@npm:^17.0.15":
+  version: 17.0.38
+  resolution: "@types/react@npm:17.0.38"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 4079f4f959cd4a4bfaeda8b89fe8a1b1f8bdc9d87acfdc5f74a0b39cec9ec6a470724357c62778c0f063180b360c250e920c5a142f1dbcda67d9cc25a6d43a85
+  languageName: node
+  linkType: hard
+
 "@types/redux-logger@npm:^3.0.9":
   version: 3.0.9
   resolution: "@types/redux-logger@npm:3.0.9"
@@ -7850,7 +7893,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js-pure@npm:^3.8.1, core-js-pure@npm:^3.8.2":
+"core-js-pure@npm:^3.8.1":
+  version: 3.20.1
+  resolution: "core-js-pure@npm:3.20.1"
+  checksum: b985feaf1c7399a9966fc20b8b94e0e98f29ded1b476a6fd4634225fd19953e9c489b49c8e0f2f849fffa7f89ec6bf387c64816805a7d70242ec658c6a834939
+  languageName: node
+  linkType: hard
+
+"core-js-pure@npm:^3.8.2":
   version: 3.20.0
   resolution: "core-js-pure@npm:3.20.0"
   checksum: b5ae6601536104cad63bb91100477d9718442d348ac47dad22a60e22bd9c86ffe10ef5ea23ddaabb97a1492727e4f2bd4bb8848031271d5d1b2f31c860b4b362
@@ -18825,7 +18875,9 @@ __metadata:
   resolution: "valheim-skali@workspace:."
   dependencies:
     "@babel/core": ^7.16.5
+    "@chakra-ui/icons": ^1.1.1
     "@chakra-ui/react": ^1.7.3
+    "@chakra-ui/storybook-addon": ^0.0.0-dev-2021119215843
     "@emotion/react": ^11
     "@emotion/styled": ^11
     "@mdx-js/react": ^1.6.22
@@ -19094,6 +19146,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"webpack-merge@npm:^5.0.0":
+  version: 5.8.0
+  resolution: "webpack-merge@npm:5.8.0"
+  dependencies:
+    clone-deep: ^4.0.1
+    wildcard: ^2.0.0
+  checksum: 88786ab91013f1bd2a683834ff381be81c245a4b0f63304a5103e90f6653f44dab496a0768287f8531761f8ad957d1f9f3ccb2cb55df0de1bd9ee343e079da26
+  languageName: node
+  linkType: hard
+
 "webpack-sources@npm:^1.4.0, webpack-sources@npm:^1.4.1, webpack-sources@npm:^1.4.3":
   version: 1.4.3
   resolution: "webpack-sources@npm:1.4.3"
@@ -19246,6 +19308,13 @@ __metadata:
   dependencies:
     string-width: ^4.0.0
   checksum: 03db6c9d0af9329c37d74378ff1d91972b12553c7d72a6f4e8525fe61563fa7adb0b9d6e8d546b7e059688712ea874edd5ded475999abdeedf708de9849310e0
+  languageName: node
+  linkType: hard
+
+"wildcard@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "wildcard@npm:2.0.0"
+  checksum: 1f4fe4c03dfc492777c60f795bbba597ac78794f1b650d68f398fbee9adb765367c516ebd4220889b6a81e9626e7228bbe0d66237abb311573c2ee1f4902a5ad
   languageName: node
   linkType: hard
 
