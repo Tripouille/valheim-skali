@@ -1,5 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
+  "ignorePatterns": ["*.js"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx"],
