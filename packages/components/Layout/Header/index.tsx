@@ -22,13 +22,18 @@ import {
 import { GiVikingHelmet } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
 import { RiMenuLine } from 'react-icons/ri';
-import { NavRoutes } from '@packages/utils/routes';
+import { NAV_ROUTES_VALUES } from '@packages/utils/constants';
 import NavItem from '../NavItem';
 import SignInOut from './SignInOut';
 
+enum MenuType {
+  DRAWER,
+  HEADER,
+}
+
 const Header: React.FC = () => {
   const { data: session } = useSession();
-  const menuType = useBreakpointValue({ base: 'drawer', md: 'header' });
+  const menuType = useBreakpointValue({ base: MenuType.DRAWER, md: MenuType.HEADER });
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // const router = useRouter();
@@ -38,16 +43,16 @@ const Header: React.FC = () => {
   return (
     <chakra.header height="header" bgColor="rgba(49, 130, 206, 0.7)">
       <Center justifyContent="space-between" h="full">
-        {menuType === 'header' && (
+        {menuType === MenuType.HEADER && (
           <chakra.nav ms="2" fontFamily="Norse">
             <ButtonGroup variant="ghost">
-              <NavItem root={`/${serverName}`} navRoute={NavRoutes.HOME} />
-              <NavItem root={`/${serverName}`} navRoute={NavRoutes.RULES} />
-              <NavItem root={`/${serverName}`} navRoute={NavRoutes.EVENTS} />
+              {NAV_ROUTES_VALUES.map(route => (
+                <NavItem key={route} root={`/${serverName}`} navRoute={route} />
+              ))}
             </ButtonGroup>
           </chakra.nav>
         )}
-        {menuType === 'drawer' && (
+        {menuType === MenuType.DRAWER && (
           <>
             <IconButton
               aria-label="Open menu"
@@ -61,24 +66,17 @@ const Header: React.FC = () => {
             <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
               <DrawerOverlay />
               <DrawerContent bgColor="blue.700" fontFamily="Norse">
-                <DrawerBody>
-                  <chakra.nav ms="2" fontFamily="Norse">
+                <DrawerBody mt="2">
+                  <chakra.nav>
                     <VStack align="stretch">
-                      <NavItem
-                        root={`/${serverName}`}
-                        navRoute={NavRoutes.HOME}
-                        onClick={onClose}
-                      />
-                      <NavItem
-                        root={`/${serverName}`}
-                        navRoute={NavRoutes.RULES}
-                        onClick={onClose}
-                      />
-                      <NavItem
-                        root={`/${serverName}`}
-                        navRoute={NavRoutes.EVENTS}
-                        onClick={onClose}
-                      />
+                      {NAV_ROUTES_VALUES.map(route => (
+                        <NavItem
+                          key={route}
+                          root={`/${serverName}`}
+                          navRoute={route}
+                          onClick={onClose}
+                        />
+                      ))}
                     </VStack>
                   </chakra.nav>
                 </DrawerBody>
