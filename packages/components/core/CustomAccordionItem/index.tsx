@@ -7,10 +7,12 @@ import {
   Box,
   Heading,
 } from '@chakra-ui/react';
+import { Children } from '@packages/utils/types';
 
 export interface CustomAccordionItemProps {
   title: string;
   subtitle?: string;
+  children: Children;
 }
 
 const CustomAccordionItem: React.FC<CustomAccordionItemProps> = ({ title, subtitle, children }) => (
