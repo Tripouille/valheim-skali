@@ -1,9 +1,10 @@
 import React from 'react';
 import { chakra, Box } from '@chakra-ui/react';
+import { Children } from '@packages/utils/types';
 
 export interface BackgroundProps {
   className?: string;
-  children: React.ReactNode;
+  children: Children;
 }
 
 const Background: React.FC<BackgroundProps> = ({ children, className }) => (
