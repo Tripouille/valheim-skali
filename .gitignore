@@ -6,7 +6,7 @@
 .pnp.js
 
 # testing
-/coverage
+packages/tests/jest/coverage
 
 # next.js
 /.next/
