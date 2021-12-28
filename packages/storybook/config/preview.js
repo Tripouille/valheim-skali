@@ -17,7 +17,7 @@ export const parameters = {
 
 export const decorators = [
   Story => (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider theme={theme} colorModeManager>
       <Provider store={store}>
         <Fonts />
         <Story />
