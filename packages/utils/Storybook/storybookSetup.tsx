@@ -9,8 +9,8 @@ const createTitle = (storyCategory: StoryCategory, displayName?: string) => {
 
 export const storybookSetup = <Props,>(
   Component: React.ComponentType<Props>,
-  storyCategory: StoryCategory = StoryCategory.CORE,
   componentMeta?: ComponentMeta<typeof Component>,
+  storyCategory: StoryCategory = StoryCategory.CORE,
 ) => {
   const defaultExport: ComponentMeta<typeof Component> = {
     title: createTitle(storyCategory, Component.displayName),
@@ -19,7 +19,7 @@ export const storybookSetup = <Props,>(
   };
 
   const Template: ComponentStory<typeof Component> = (args: Props) => <Component {...args} />;
-  
+
   const StoryFactory = (args: Props) => {
     const newTemplate = Template.bind({});
     newTemplate.args = args;
