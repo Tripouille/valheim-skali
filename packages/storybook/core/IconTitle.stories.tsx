@@ -1,21 +1,14 @@
-import React from 'react';
 import IconTitle, { IconTitleProps } from '@packages/components/core/IconTitle';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { MdComputer } from 'react-icons/md';
+import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 
-export default {
-  title: 'core/IconTitle',
-  component: IconTitle,
-} as ComponentMeta<typeof IconTitle>;
+const { defaultExport, StoryFactory } = storybookSetup<IconTitleProps>(IconTitle);
 
-const Template: ComponentStory<typeof IconTitle> = (args: IconTitleProps) => (
-  <IconTitle {...args} />
-);
+export default defaultExport;
 
-const Setup = (args: IconTitleProps) => {
-  const newTemplate = Template.bind({});
-  newTemplate.args = args;
-  return newTemplate;
-};
-
-export const Default = Setup({ title: 'title', size: 'md', icon: MdComputer, iconColor: 'red' });
+export const Default = StoryFactory({
+  title: 'title',
+  size: 'md',
+  icon: MdComputer,
+  iconColor: 'red',
+});

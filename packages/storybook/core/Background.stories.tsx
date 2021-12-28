@@ -1,20 +1,8 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
 import Background, { BackgroundProps } from '@packages/components/core/Background';
+import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 
-export default {
-  title: 'core/Background',
-  component: Background,
-} as ComponentMeta<typeof Background>;
+const { defaultExport, StoryFactory } = storybookSetup<BackgroundProps>(Background);
 
-const Template: ComponentStory<typeof Background> = (args: BackgroundProps) => (
-  <Background {...args}>{args.children}</Background>
-);
+export default defaultExport;
 
-const Setup = (args: BackgroundProps) => {
-  const newTemplate = Template.bind({});
-  newTemplate.args = args;
-  return newTemplate;
-};
-
-export const Default = Setup({ children: <h1>Title</h1> });
+export const Default = StoryFactory({ children: <h1>Title</h1> });

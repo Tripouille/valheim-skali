@@ -9,3 +9,8 @@ export const NAV_ROUTES_TO_LABEL: Record<NavRoutes, string> = {
   [NavRoutes.RULES]: 'règlement',
   [NavRoutes.EVENTS]: 'événements',
 };
+
+export enum StoryCategory {
+  CORE = 'core',
+  PAGE = 'page',
+}

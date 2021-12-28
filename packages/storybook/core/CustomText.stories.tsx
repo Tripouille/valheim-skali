@@ -1,25 +1,13 @@
-import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
 import CustomText, { CustomTextProps } from '@packages/components/core/CustomText';
+import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 
-export default {
-  title: 'core/CustomText',
-  component: CustomText,
-} as ComponentMeta<typeof CustomText>;
+const { defaultExport, StoryFactory } = storybookSetup<CustomTextProps>(CustomText);
 
-const Template: ComponentStory<typeof CustomText> = (args: CustomTextProps) => (
-  <CustomText {...args} />
-);
+export default defaultExport;
 
-const Setup = (args: CustomTextProps) => {
-  const newTemplate = Template.bind({});
-  newTemplate.args = args;
-  return newTemplate;
-};
-
-export const OneLine = Setup({ paragraphs: ['line'] });
-export const MultipleLine = Setup({ paragraphs: ['line', 'line 2', 'line 3'] });
-export const MultipleLineWithMb = Setup({
+export const OneLine = StoryFactory({ paragraphs: ['line'] });
+export const MultipleLine = StoryFactory({ paragraphs: ['line', 'line 2', 'line 3'] });
+export const MultipleLineWithMb = StoryFactory({
   paragraphs: ['line', 'line 2', 'line 3'],
   mb: '12',
 });
