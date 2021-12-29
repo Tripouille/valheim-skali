@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { chakra, Image } from '@chakra-ui/react';
 import { ImageAttributes } from '@packages/utils/types';
-import ImageModal from './ImageModal';
+import ImageModal from '@packages/components/core/ImageModal';
 
 export interface ZoomableImageProps {
   imageAttributes: ImageAttributes;
