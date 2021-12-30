@@ -18,6 +18,7 @@ const Layout: React.FC = ({ children }) => (
       overflowY="auto"
       justify="center"
       p="2"
+      css={{ overflow: 'overlay' }}
     >
       {children}
     </Flex>
