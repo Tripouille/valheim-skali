@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { chakra, Image } from '@chakra-ui/react';
+import React from 'react';
+import { chakra, Image, useBoolean } from '@chakra-ui/react';
 import { ImageAttributes } from '@packages/utils/types';
 import ImageModal from '@packages/components/core/ImageModal';
 
@@ -9,10 +9,7 @@ export interface ZoomableImageProps {
 }
 
 const ZoomableImage: React.FC<ZoomableImageProps> = ({ imageAttributes, className }) => {
-  const [isZoomed, setZoomed] = useState(false);
-
-  const openImage = () => setZoomed(true);
-  const closeImage = () => setZoomed(false);
+  const [isZoomed, setZoomed] = useBoolean();
 
   return (
     <>
@@ -21,10 +18,10 @@ const ZoomableImage: React.FC<ZoomableImageProps> = ({ imageAttributes, classNam
         alt={imageAttributes.alt}
         cursor="pointer"
         borderRadius="md"
-        onClick={openImage}
+        onClick={setZoomed.on}
         className={className}
       />
-      {isZoomed && <ImageModal imageAttributes={imageAttributes} onClick={closeImage} />}
+      {isZoomed && <ImageModal imageAttributes={imageAttributes} onClick={setZoomed.off} />}
     </>
   );
 };
