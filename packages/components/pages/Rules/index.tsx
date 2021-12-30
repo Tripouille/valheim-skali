@@ -19,7 +19,7 @@ const Rules = () => (
       <Heading as="h1" size="xl" fontFamily="Norse">
         Règlement
       </Heading>
-      <Tabs w="full" id="rulesTabs" isFitted>
+      <Tabs w="full" id="rulesTabs" isFitted size="md">
         <TabList>
           {Object.keys(ruleParts).map(title => (
             <Tab key={title} fontSize={['2.8vw', 'md']}>
