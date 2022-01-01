@@ -12,12 +12,12 @@ const landscapeImage = {
 
 export const Default = StoryFactory({
   images: [{ src: '/images/valheim-background.png', alt: 'Valheim background' }, landscapeImage],
-  carouselHeight: '250px',
+  height: '250px',
 });
 
 export const WithNoImage = StoryFactory({
   images: [],
-  carouselHeight: '250px',
+  height: '250px',
 });
 
 export const WithManyImages = StoryFactory({
@@ -32,5 +32,5 @@ export const WithManyImages = StoryFactory({
     landscapeImage,
     landscapeImage,
   ],
-  carouselHeight: '250px',
+  height: '250px',
 });

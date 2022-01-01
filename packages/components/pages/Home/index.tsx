@@ -86,7 +86,7 @@ const Home = () => (
           alt: 'Des vikings sur un radeau',
         },
         {
-          src: 'https://images-ext-1.discordapp.net/external/4a2UjaVfoRthB9qxOC0KP1deaeAV0mVMto7gP_HIcqM/https/puu.sh/IkwCB/82b6c64a85.jpg',
+          src: 'https://puu.sh/IkwCB/82b6c64a85.jpg',
           alt: "Prisons d'événement",
         },
         {
@@ -94,7 +94,7 @@ const Home = () => (
           alt: 'Trônes de podium pour course de karv',
         },
       ]}
-      carouselHeight="200px"
+      height="200px"
     />
 
     <Heading as="h1" size="l" textAlign="left">
@@ -155,7 +155,7 @@ const Home = () => (
           alt: 'Vue dégagée depuis les montagnes',
         },
       ]}
-      carouselHeight="200px"
+      height="200px"
     />
 
     <Heading as="h1" size="l" textAlign="left">
@@ -180,7 +180,7 @@ const Home = () => (
           alt: "Quantité ramassée en 60 min. d'extermination statique sur des non étoilés",
         },
       ]}
-      carouselHeight="200px"
+      height="200px"
     />
 
     <Heading as="h1" size="l" mb="3" textAlign="left">
