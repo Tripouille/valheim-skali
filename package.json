@@ -42,7 +42,6 @@
     "@chakra-ui/storybook-addon": "^0.0.0-dev-2021119215843",
     "@mdx-js/react": "^1.6.22",
     "@storybook/addon-a11y": "^6.4.9",
-    "@storybook/addon-actions": "^6.4.9",
     "@storybook/addon-docs": "^6.4.9",
     "@storybook/addon-essentials": "^6.4.9",
     "@storybook/addon-links": "^6.4.9",
