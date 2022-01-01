@@ -9,7 +9,25 @@ import Fonts from '@packages/components/Layout/Fonts';
 
 Object.defineProperty(nextImage, 'default', {
   configurable: true,
-  value: props => <img {...props} />,
+  value: props => (
+    <img
+      {...Object.keys(props)
+        .filter(
+          prop =>
+            ![
+              'layout',
+              'objectFit',
+              'objectPosition',
+              'quality',
+              'placeholder',
+              'blurDataURL',
+              'loader',
+            ].includes(prop),
+        )
+        .reduce((obj, key) => ({ ...obj, [key]: props[key] }), {})}
+      style={{ objectFit: props.objectFit, objectPosition: props.objectPosition }}
+    />
+  ),
 });
 
 export const parameters = {
