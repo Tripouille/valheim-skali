@@ -1,6 +1,6 @@
 import React from 'react';
 import { chakra, Box } from '@chakra-ui/react';
-import Image from 'next/image';
+import NextImage from 'next/image';
 
 export interface FigureProps {
   /**  Url of the image */
@@ -18,7 +18,13 @@ const Figure: React.FC<FigureProps> = ({ src, imagePosition, legend, className, 
   <figure>
     {legend && <figcaption>{legend}</figcaption>}
     <Box className={className} position="relative">
-      <Image src={src} layout="fill" objectFit="cover" objectPosition={imagePosition} alt={alt} />
+      <NextImage
+        src={src}
+        layout="fill"
+        objectFit="cover"
+        objectPosition={imagePosition}
+        alt={alt}
+      />
     </Box>
   </figure>
 );

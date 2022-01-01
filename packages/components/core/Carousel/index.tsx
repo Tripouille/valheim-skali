@@ -1,23 +1,24 @@
-import { chakra, HStack } from '@chakra-ui/react';
+import { HStack } from '@chakra-ui/react';
 import { ImageAttributes } from '@packages/utils/types';
 import ZoomableImage from '@packages/components/core/ZoomableImage';
 
 export interface CarouselProps {
   images: ImageAttributes[];
-  carouselHeight: string;
-  className?: string;
+  height: string;
 }
 
-const Carousel: React.FC<CarouselProps> = ({ images, carouselHeight, className }) => (
-  <HStack spacing="4" mb="5" py="4" overflow="auto" className={className}>
+const Carousel: React.FC<CarouselProps> = ({ images, height }) => (
+  <HStack spacing="4" mb="5" py="4" overflow="auto">
     {images.map(imageAttributes => (
       <ZoomableImage
         key={imageAttributes.src}
         imageAttributes={imageAttributes}
-        maxH={carouselHeight}
-        cursor="pointer"
+        width={300}
+        height={height}
+        borderRadius="md"
       />
     ))}
   </HStack>
 );
-export default chakra(Carousel);
+
+export default Carousel;
