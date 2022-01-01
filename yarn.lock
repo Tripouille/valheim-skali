@@ -4030,7 +4030,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-actions@npm:6.4.9, @storybook/addon-actions@npm:^6.4.9":
+"@storybook/addon-actions@npm:6.4.9":
   version: 6.4.9
   resolution: "@storybook/addon-actions@npm:6.4.9"
   dependencies:
@@ -20133,7 +20133,6 @@ __metadata:
     "@next-auth/mongodb-adapter": ^0.0.2-next.285
     "@reduxjs/toolkit": ^1.6.2
     "@storybook/addon-a11y": ^6.4.9
-    "@storybook/addon-actions": ^6.4.9
     "@storybook/addon-docs": ^6.4.9
     "@storybook/addon-essentials": ^6.4.9
     "@storybook/addon-links": ^6.4.9
