@@ -5,7 +5,7 @@ import ImageModal, { ImageModalProps } from '@packages/components/core/ImageModa
 const { defaultExport, StoryFactory } = storybookSetup<ImageModalProps>(ImageModal, {
   decorators: [
     Story => (
-      <Box h="300px">
+      <Box h="500px">
         <Story />
       </Box>
     ),
@@ -15,5 +15,6 @@ const { defaultExport, StoryFactory } = storybookSetup<ImageModalProps>(ImageMod
 export default defaultExport;
 
 export const Default = StoryFactory({
-  imageAttributes: { src: '/images/valheim-background.png', alt: 'Alt' },
+  src: '/images/valheim-background.png',
+  alt: 'Valheim background',
 } as ImageModalProps);

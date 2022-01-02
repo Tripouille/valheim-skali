@@ -1,14 +1,16 @@
 import React from 'react';
+import { ImageProps as NextImageProps } from 'next/image';
 import { Portal, Center, Box } from '@chakra-ui/react';
-import { Callback, ImageAttributes } from '@packages/utils/types';
+import { Callback } from '@packages/utils/types';
 import Image from '@packages/components/core/Image';
 
 export interface ImageModalProps {
-  imageAttributes: ImageAttributes;
+  src: NextImageProps['src'];
+  alt: NextImageProps['alt'];
   onClick: Callback;
 }
 
-const ImageModal: React.FC<ImageModalProps> = ({ imageAttributes, onClick }) => (
+const ImageModal: React.FC<ImageModalProps> = ({ src, alt, onClick }) => (
   <Portal>
     <Center
       position="absolute"
@@ -20,13 +22,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ imageAttributes, onClick }) => 
       onClick={onClick}
     >
       <Box pos="relative" cursor="pointer" w="95%" h="95%">
-        <Image
-          layout="fill"
-          objectFit="contain"
-          src={imageAttributes.src}
-          alt={imageAttributes.alt}
-          borderRadius="xl"
-        />
+        <Image layout="fill" objectFit="contain" src={src} alt={alt} borderRadius="xl" />
       </Box>
     </Center>
   </Portal>

@@ -1,21 +1,26 @@
 import React from 'react';
 import { ImageProps as NextImageProps } from 'next/image';
 import { Box, chakra, shouldForwardProp, useBoolean } from '@chakra-ui/react';
-import { ImageAttributes } from '@packages/utils/types';
 import ImageModal from '@packages/components/core/ImageModal';
 import Image from '@packages/components/core/Image';
 
 export interface ZoomableImageProps {
-  imageAttributes: ImageAttributes;
-  width: NextImageProps['width'];
-  height: NextImageProps['height'];
+  src: NextImageProps['src'];
+  alt: NextImageProps['alt'];
+  width: number;
+  height: number;
+  objectFit?: NextImageProps['objectFit'];
+  objectPosition?: NextImageProps['objectPosition'];
   className?: string;
 }
 
 const ZoomableImage: React.FC<ZoomableImageProps> = ({
-  imageAttributes,
+  src,
+  alt,
   width,
   height,
+  objectFit,
+  objectPosition,
   className,
 }) => {
   const [isZoomed, setZoomed] = useBoolean();
@@ -24,22 +29,27 @@ const ZoomableImage: React.FC<ZoomableImageProps> = ({
     <>
       <Box pos="relative" cursor="pointer" minW={width} minH={height} onClick={setZoomed.on}>
         <Image
+          src={src}
+          alt={alt}
           width={width}
           height={height}
-          objectFit="cover"
-          src={imageAttributes.src}
-          alt={imageAttributes.alt}
+          objectFit={objectFit}
+          objectPosition={objectPosition}
           className={className}
         />
       </Box>
-      {isZoomed && <ImageModal imageAttributes={imageAttributes} onClick={setZoomed.off} />}
+      {isZoomed && <ImageModal src={src} alt={alt} onClick={setZoomed.off} />}
     </>
   );
 };
 
 export default chakra(ZoomableImage, {
   shouldForwardProp: prop => {
-    if (['width', 'height'].includes(prop) || shouldForwardProp(prop)) return true;
+    if (
+      ['width', 'height', 'objectFit', 'objectPosition'].includes(prop) ||
+      shouldForwardProp(prop)
+    )
+      return true;
     else return false;
   },
 });

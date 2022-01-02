@@ -5,6 +5,7 @@ import { GiPig, GiVillage, GiWarPick } from 'react-icons/gi';
 import CustomText from '@packages/components/core/CustomText';
 import IconTitle from '@packages/components/core/IconTitle';
 import Figure from '@packages/components/core/Figure';
+import ZoomableImage from '@packages/components/core/ZoomableImage';
 
 const InstanceRules = () => (
   <>
@@ -25,12 +26,13 @@ const InstanceRules = () => (
 				Il est interdit d'ériger des murailles de terre ou des tranchées contre les monstres. Vous êtes des vikings nom d'Odin !`,
         ]}
       />
-      <Figure
+      <ZoomableImage
         src="https://cdn.discordapp.com/attachments/879308268034482176/880074813027278868/znBWtv2T9-oQtxWHbxpNuyZePd6R8suR2axEDgXkAnyfzueO-tSDtYY-MWTJnqjGazbfM9U4_yZ2q0b3ZQdLrB2P_FrqgCP4yjpr.png"
-        imagePosition="top"
-        height="200px"
-        maxW="550px"
-        alt="Instance"
+        alt="Screenshot des instances"
+        height={200}
+        width={550}
+        objectFit="cover"
+        objectPosition="top"
       />
     </Box>
     <Box mb="4">
@@ -92,14 +94,16 @@ const InstanceRules = () => (
           `(° : reboucher votre trou ne fera même qu’amplifier le problème, car le jeu chargera votre trou, puis chargera son rebouchement.) `,
         ]}
       />
-      <Figure
-        src="https://cdn.discordapp.com/attachments/879308268034482176/880075448187498496/7SbpNZOU8PFVmknCFk_g45ENGtjFaoopyVdENgivvJi2V3nXG4IOrT2YTgm6qCPth7EgKdtZqXz-P_LZNnXzPUMAHLZhvxUQ8AEl.png"
-        imagePosition="top"
-        legend="Voici typiquement ce qu’on veut éviter !"
-        height="200px"
-        maxW="550px"
-        alt="Mining"
-      />
+      <Figure legend="Voici typiquement ce qu’on veut éviter !">
+        <ZoomableImage
+          src="https://cdn.discordapp.com/attachments/879308268034482176/880075448187498496/7SbpNZOU8PFVmknCFk_g45ENGtjFaoopyVdENgivvJi2V3nXG4IOrT2YTgm6qCPth7EgKdtZqXz-P_LZNnXzPUMAHLZhvxUQ8AEl.png"
+          alt="Minage abusif"
+          width={550}
+          height={200}
+          objectFit="cover"
+          objectPosition="top"
+        />
+      </Figure>
     </Box>
   </>
 );

@@ -1,10 +1,10 @@
 import { HStack } from '@chakra-ui/react';
 import { ImageAttributes } from '@packages/utils/types';
-import ZoomableImage from '@packages/components/core/ZoomableImage';
+import ZoomableImage, { ZoomableImageProps } from '@packages/components/core/ZoomableImage';
 
 export interface CarouselProps {
   images: ImageAttributes[];
-  height: string;
+  height: ZoomableImageProps['height'];
 }
 
 const Carousel: React.FC<CarouselProps> = ({ images, height }) => (
@@ -12,9 +12,11 @@ const Carousel: React.FC<CarouselProps> = ({ images, height }) => (
     {images.map(imageAttributes => (
       <ZoomableImage
         key={imageAttributes.src}
-        imageAttributes={imageAttributes}
+        src={imageAttributes.src}
+        alt={imageAttributes.alt}
         width={300}
         height={height}
+        objectFit="cover"
         borderRadius="md"
       />
     ))}

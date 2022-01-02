@@ -1,31 +1,18 @@
 import React from 'react';
-import { chakra, Box } from '@chakra-ui/react';
-import NextImage from 'next/image';
+import { chakra } from '@chakra-ui/react';
+import { Children } from '@packages/utils/types';
 
 export interface FigureProps {
-  /**  Url of the image */
-  src: string;
-  alt: string;
-  /**  Object-position (css attribute) of the img, ex. "50% 50%", "top" */
-  imagePosition?: string;
+  /**  Should contain the image */
+  children: Children;
   /**  Will be displayed above the image */
-  legend?: string;
-  /**  For chakra style props, mainly */
-  className?: string;
+  legend: string;
 }
 
-const Figure: React.FC<FigureProps> = ({ src, imagePosition, legend, className, alt }) => (
+const Figure: React.FC<FigureProps> = ({ legend, children }) => (
   <figure>
-    {legend && <figcaption>{legend}</figcaption>}
-    <Box className={className} position="relative">
-      <NextImage
-        src={src}
-        layout="fill"
-        objectFit="cover"
-        objectPosition={imagePosition}
-        alt={alt}
-      />
-    </Box>
+    <figcaption>{legend}</figcaption>
+    {children}
   </figure>
 );
 
