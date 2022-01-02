@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 import { MdComputer } from 'react-icons/md';
 import { GiPig, GiVillage, GiWarPick } from 'react-icons/gi';
 import CustomText from '@packages/components/core/CustomText';
@@ -50,8 +50,30 @@ const InstanceRules = () => (
       <CustomText
         paragraphs={[
           `Dans la même idée, avoir une base géante gênera immanquablement les autres joueurs, c’est donc interdit.`,
-          `La taille des bases est limitée à 3 balises (de 32 mètres de rayon chacune !) et seuls 3 avant-postes peuvent être balisés, avec une et une seule balise chacun. Cela concerne chaque joueur ou chaque regroupement de joueurs ; se mettre à plusieurs ne donne PAS plus de droits terriens.`,
-          `De même, limitez la taille de vos jardins à maximum 75 m².`,
+          `Voici les restrictions à respecter :`,
+        ]}
+      />
+      <Heading as="h3" size="l" mb="2">
+        Droits terriens des joueurs :
+      </Heading>
+      <strong>Joueur solo :</strong> 6 balises, trois maximum au même endroit
+      <CustomText fontSize="xs" paragraphs={[`(un endroit = un cercle de 200m de diamètre)`]} />
+      <strong>Groupe de joueurs</strong> hors d&quot;un village officiel : pareil, mais SANS droits
+      supplémentaires grâce au regroupement.
+      <CustomText
+        fontSize="xs"
+        paragraphs={[
+          `(c'est à dire 6 balises partagées par tout le groupe, et 3 max au même endroit)`,
+        ]}
+      />
+      <strong>Village :</strong> Un village a le droit au même endroit à autant de balises
+      qu&quot;il a de villageois (jusqu&quot;à 10 balises maximum). <br />
+      Cependant chaque villageois n&quot;a individuellement plus le droit qu&quot;à 2 balises hors
+      du village pour leur jeu personnel.
+      <CustomText
+        mt="4"
+        paragraphs={[
+          `En bref, chaque joueur peut occuper son propre terrain, mais pas trop de terrain, même si vous êtes plusieurs à jouer ensemble. Le seul moyen d'avoir plus de place est de constituer un village (voir les règles spécifiques des villages au Valhabba).`,
         ]}
       />
     </Box>
