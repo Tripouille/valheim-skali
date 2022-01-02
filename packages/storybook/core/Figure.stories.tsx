@@ -1,21 +1,14 @@
-import { Box } from '@chakra-ui/react';
+/* eslint-disable @next/next/no-img-element */
 import Figure, { FigureProps } from '@packages/components/core/Figure';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 
-const { defaultExport, StoryFactory } = storybookSetup<FigureProps>(Figure, {
-  decorators: [
-    Story => (
-      <Box maxH="100px" maxW="100px" minH="100px" minW="100px">
-        <Story height="200px" maxW="550px" />
-      </Box>
-    ),
-  ],
-});
+const { defaultExport, StoryFactory } = storybookSetup<FigureProps>(Figure);
 
 export default defaultExport;
 
 export const Default = StoryFactory({
-  src: '/images/valheim-background.png',
-  alt: 'Valheim background',
   legend: 'A legend',
+  children: (
+    <img src="/images/valheim-background.png" alt="Valheim background" width="500" height="300" />
+  ),
 });

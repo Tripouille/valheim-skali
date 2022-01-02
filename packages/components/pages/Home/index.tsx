@@ -94,7 +94,7 @@ const Home = () => (
           alt: 'Trônes de podium pour course de karv',
         },
       ]}
-      height="200px"
+      height={200}
     />
 
     <Heading as="h1" size="l" textAlign="left">
@@ -155,7 +155,7 @@ const Home = () => (
           alt: 'Vue dégagée depuis les montagnes',
         },
       ]}
-      height="200px"
+      height={200}
     />
 
     <Heading as="h1" size="l" textAlign="left">
@@ -180,7 +180,7 @@ const Home = () => (
           alt: "Quantité ramassée en 60 min. d'extermination statique sur des non étoilés",
         },
       ]}
-      height="200px"
+      height={200}
     />
 
     <Heading as="h1" size="l" mb="3" textAlign="left">

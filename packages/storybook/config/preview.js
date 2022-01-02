@@ -25,7 +25,12 @@ Object.defineProperty(nextImage, 'default', {
             ].includes(prop),
         )
         .reduce((obj, key) => ({ ...obj, [key]: props[key] }), {})}
-      style={{ objectFit: props.objectFit, objectPosition: props.objectPosition }}
+      style={{
+        maxHeight: '100%',
+        maxWidth: '100%',
+        objectFit: props.objectFit,
+        objectPosition: props.objectPosition,
+      }}
     />
   ),
 });
