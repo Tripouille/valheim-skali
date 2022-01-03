@@ -1,7 +1,7 @@
 import React from 'react';
 import { Accordion, Heading } from '@chakra-ui/react';
-import CustomText from '@packages/components/core/CustomText';
-import CustomAccordionItem from '@packages/components/core/CustomAccordionItem';
+import Paragraphs from '@packages/components/core/Paragraphs';
+import AccordionItem from '@packages/components/core/AccordionItem';
 import InstanceRules from './InstanceRules';
 import StreamerRules from './StreamerRules';
 
@@ -10,7 +10,7 @@ const gameRulesParts = [
     title: '“Toute action PvP est interdite, sauf quand elle est consensuelle”',
     subtitle: '[action PvP = action d’un joueur à l’encontre d’un autre joueur]',
     content: (
-      <CustomText
+      <Paragraphs
         paragraphs={[
           `Vis-à-vis des joueurs : 
 nous ne sommes PAS un serveur où on combat n’importe qui n’importe comment. Si un joueur ne souhaite pas combattre ou interagir avec vous, c’est son droit, vous devez le respecter. Vous avez néanmoins la possibilité de faire des duels ou des guerres avec d’autres joueurs, si vous avez leur accord AVANT. Dans le cas d’une guerre, vous devez même avoir l’accord préalable de l’équipe d’administration.`,
@@ -25,7 +25,7 @@ il est strictement interdit de voler, piéger ou détruire les bases des autres 
   {
     title: '“Tout gain de ressources sans effort est interdit”',
     content: (
-      <CustomText
+      <Paragraphs
         paragraphs={[
           `Vous êtes ici, dans le dixième royaume pour prouver votre valeur à Odin, tricher ne vous permettra pas d’atteindre ce but. Exploiter les mécaniques du jeu non plus. Au Valhabba il est strictement interdit de mettre en place des conditions vous permettant d’obtenir des ressources sans effort. Cela couvre, par exemple, les fermes automatiques (des constructions qui tuent les monstres automatiquement à leur apparition), et les abris d’observation en bordure de biomes (qui vous permettraient d’observer passivement la guerre que les monstres se livrent, pour récupérer ensuite les objets).`,
           `Plus généralement, si vous trouvez une “astuce”, demandez-vous et demandez-nous, si elle ne vous donne pas un avantage démesuré.`,
@@ -42,7 +42,7 @@ il est strictement interdit de voler, piéger ou détruire les bases des autres 
     subtitle:
       '[le terme “abusif” étant subjectif il sera soumis exclusivement à l’appréciation de l’équipe d’administration, si vous avez un doute, demandez !]',
     content: (
-      <CustomText
+      <Paragraphs
         paragraphs={[
           `Rappelez-vous que vous êtes là pour convaincre Odin, pas Loky ! Nous ne forçons pas les joueurs à adopter un style de jeu très précis … tant que ceux-ci restent dans le style viking de la communauté (et donc de ce qu’autorise l’équipe d’administration). Ce n’est PAS parce que toutes les “astuces” possibles ne sont pas énumérées ici, qu’elles sont automatiquement autorisées. Dans le doute,  demandez à la communauté et demandez à l’équipe d’administration.`,
           `Par exemple, il est strictement interdit de se cacher, ou de cacher sa base, derrière une muraille de terre surélevée, derrière un fossé, ou derrière une construction boguée et invulnérable. En revanche si vous voulez construire en hauteur pas de problème ! La différence est que dans un cas, c’est une défense qui abuse d’une limitation du jeu, dans l’autre, c’est une défense “réaliste”. Dans le doute, demandez !`,
@@ -53,7 +53,7 @@ il est strictement interdit de voler, piéger ou détruire les bases des autres 
   {
     title: '“Désamorcez les conflits plutôt que de les alimenter”',
     content: (
-      <CustomText
+      <Paragraphs
         paragraphs={[
           `Notre communauté est variée et Valheim peut être un jeu long, nous l’avons même moddé pour en prolonger encore plus la durée. Ce qui veut dire que vous risquez de passer pas mal de temps avec plein de gens différents avec des caractères et des manières de s’exprimer différentes. Ça permet clairement de passer du bon temps, mais ça amène à se frotter rapidement à la sensibilité des autres joueurs, surtout quand la frustration s’y mêle. Contre ça, il n’y pas de recette magique, si ce n’est d’être compréhensif et bien intentionné.`,
           `Les disputes RP sont tout à fait autorisées et sont les bienvenues, ça met de l’ambiance. [RP = Role Play, ça veut simplement dire que tu agis et t’exprime comme le personnage qu’est censé être ton viking, et non comme un joueur gérant ce personnage].
@@ -66,7 +66,7 @@ Par contre, dès lors que vos échanges (RP ou non) affectent l’humeur de l’
   {
     title: "”La zone de départ (l'intérieur du premier cercle) n’est là … que pour votre départ”",
     content: (
-      <CustomText
+      <Paragraphs
         paragraphs={[
           `Tout le monde démarre au même endroit, mais si tout le monde y reste, plus personne ne pourra y vivre et s’y développer. Après dix jours sur le serveur, ou après que tu aies obtenu une armure de cuivre améliorée trois fois, tu dois quitter la zone de départ (l'intérieur du premier cercle). Ce n’est donc pas un endroit pour t’y établir définitivement.`,
           `Tu pourras bien sûr y revenir de temps en temps, mais juste pour y interagir avec les autres joueurs (dans le village communautaire par exemple), pas pour y récolter des ressources dans la nature.`,
@@ -78,7 +78,7 @@ Par contre, dès lors que vos échanges (RP ou non) affectent l’humeur de l’
   {
     title: '“Ton nom doit bien être ton nom”',
     content: (
-      <CustomText
+      <Paragraphs
         paragraphs={[
           `Votre pseudo sur le serveur Discord doit correspondre à votre nom de viking sur le serveur de jeu. Vous pouvez facilement modifier ce pseudo en faisant un clic droit sur votre avatar, dans la colonne de droite de la fenêtre Discord. Cela ne changera votre nom que sur notre serveur Discord et nulle part ailleurs.`,
           `Il va de soi qu’il est interdit de créer un personnage ayant volontairement le même nom qu’un autre joueur.`,
@@ -104,9 +104,9 @@ const GameRules: React.FC = () => (
     </Heading>
     <Accordion defaultIndex={Array.from(Array(gameRulesParts.length).keys())} allowMultiple>
       {gameRulesParts.map(({ title, subtitle, content }, index) => (
-        <CustomAccordionItem key={title} title={`${index + 1}. ${title}`} subtitle={subtitle}>
+        <AccordionItem key={title} title={`${index + 1}. ${title}`} subtitle={subtitle}>
           {content}
-        </CustomAccordionItem>
+        </AccordionItem>
       ))}
     </Accordion>
   </>

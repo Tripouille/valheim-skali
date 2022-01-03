@@ -1,9 +1,9 @@
-import CustomText, { CustomTextProps } from '@packages/components/core/CustomText';
+import Paragraphs, { ParagraphsProps } from '@packages/components/core/Paragraphs';
 import React from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const setup = (props: CustomTextProps) => {
-  return <CustomText {...props} />;
+const setup = (props: ParagraphsProps) => {
+  return <Paragraphs {...props} />;
 };
 describe('ArticleResult - props', () => {
   // eslint-disable-next-line no-unused-vars

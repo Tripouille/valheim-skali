@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heading, Box } from '@chakra-ui/react';
 import Background from '@packages/components/core/Background';
-import CustomText from '@packages/components/core/CustomText';
+import Paragraphs from '@packages/components/core/Paragraphs';
 import Carousel from '@packages/components/core/Carousel';
 
 const Home = () => (
@@ -10,7 +10,7 @@ const Home = () => (
       Bienvenue au Skali du Valhabba
     </Heading>
     <Box mb="5">
-      <CustomText
+      <Paragraphs
         paragraphs={[
           `Mis en ligne le 20 mai par plusieurs joueurs expérimentés, Valhabba est un serveur de jeu
         Valheim mêlant différents principes et mods pour étendre la durée et la difficulté du jeu en
@@ -186,7 +186,7 @@ const Home = () => (
     <Heading as="h1" size="l" mb="3" textAlign="left">
       Le Skali
     </Heading>
-    <CustomText
+    <Paragraphs
       paragraphs={[
         `Le Skali est un site permettant aux dieux et aux vikings de partager des informations et de
       s'organiser. Il est et sera toujours en développement. Par conséquent, les images

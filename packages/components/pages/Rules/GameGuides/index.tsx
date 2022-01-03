@@ -1,7 +1,7 @@
 import React from 'react';
 import { Accordion } from '@chakra-ui/react';
 import { MdCircle } from 'react-icons/md';
-import CustomAccordionItem from '@packages/components/core/CustomAccordionItem';
+import AccordionItem from '@packages/components/core/AccordionItem';
 import RulesList from '../RulesList';
 
 const forbidden = [
@@ -46,18 +46,18 @@ Par ailleurs il paraîtrait qu'un gué au Nord-Est permettrait de quitter l'île
 
 const GameGuides: React.FC = () => (
   <Accordion defaultIndex={[0, 1, 2, 3]} allowMultiple>
-    <CustomAccordionItem title="Exemples de comportements strictement interdits :">
+    <AccordionItem title="Exemples de comportements strictement interdits :">
       <RulesList list={forbidden} icon={MdCircle} iconColor="red.400" />
-    </CustomAccordionItem>
-    <CustomAccordionItem title="Exemples de comportements peu appréciés, mais pas strictement interdits :">
+    </AccordionItem>
+    <AccordionItem title="Exemples de comportements peu appréciés, mais pas strictement interdits :">
       <RulesList list={toAvoid} icon={MdCircle} iconColor="orange.400" />
-    </CustomAccordionItem>
-    <CustomAccordionItem title="Exemples de comportements tout à fait appréciés :">
+    </AccordionItem>
+    <AccordionItem title="Exemples de comportements tout à fait appréciés :">
       <RulesList list={appreciated} icon={MdCircle} iconColor="green.400" />
-    </CustomAccordionItem>
-    <CustomAccordionItem title="Conseils">
+    </AccordionItem>
+    <AccordionItem title="Conseils">
       <RulesList list={advice} icon={MdCircle} iconColor="blue.400" />
-    </CustomAccordionItem>
+    </AccordionItem>
   </Accordion>
 );
 

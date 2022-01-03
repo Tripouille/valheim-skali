@@ -1,7 +1,7 @@
-import CustomText, { CustomTextProps } from '@packages/components/core/CustomText';
+import Paragraphs, { ParagraphsProps } from '@packages/components/core/Paragraphs';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 
-const { defaultExport, StoryFactory } = storybookSetup<CustomTextProps>(CustomText);
+const { defaultExport, StoryFactory } = storybookSetup<ParagraphsProps>(Paragraphs);
 
 export default defaultExport;
 

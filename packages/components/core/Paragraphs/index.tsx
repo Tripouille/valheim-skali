@@ -1,7 +1,7 @@
 import React from 'react';
 import { chakra, Text, TextProps } from '@chakra-ui/react';
 
-export interface CustomTextProps {
+export interface ParagraphsProps {
   paragraphs: string[];
   /** margin bottom default is 2 */
   mb?: TextProps['mb'];
@@ -12,7 +12,7 @@ export interface CustomTextProps {
  * @param {string[]} paragraphs
  * @param {string | undefined} className For chakra style props, mainly
  */
-const CustomText: React.FC<CustomTextProps> = ({ paragraphs, className, mb = '2' }) => (
+const Paragraphs: React.FC<ParagraphsProps> = ({ paragraphs, className, mb = '2' }) => (
   <>
     {paragraphs.map((text, index) => (
       // eslint-disable-next-line react/no-array-index-key
@@ -23,4 +23,4 @@ const CustomText: React.FC<CustomTextProps> = ({ paragraphs, className, mb = '2'
   </>
 );
 
-export default chakra(CustomText);
+export default chakra(Paragraphs);

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  AccordionItem,
+  AccordionItem as ChakraAccordionItem,
   AccordionButton,
   AccordionIcon,
   AccordionPanel,
@@ -9,14 +9,14 @@ import {
 } from '@chakra-ui/react';
 import { Children } from '@packages/utils/types';
 
-export interface CustomAccordionItemProps {
+export interface AccordionItemProps {
   title: string;
   subtitle?: string;
   children: Children;
 }
 
-const CustomAccordionItem: React.FC<CustomAccordionItemProps> = ({ title, subtitle, children }) => (
-  <AccordionItem id={title}>
+const AccordionItem: React.FC<AccordionItemProps> = ({ title, subtitle, children }) => (
+  <ChakraAccordionItem id={title}>
     <AccordionButton>
       <Heading size="l" flex="1" textAlign="left">
         {title}
@@ -29,7 +29,7 @@ const CustomAccordionItem: React.FC<CustomAccordionItemProps> = ({ title, subtit
       <AccordionIcon />
     </AccordionButton>
     <AccordionPanel pb={4}>{children}</AccordionPanel>
-  </AccordionItem>
+  </ChakraAccordionItem>
 );
 
-export default CustomAccordionItem;
+export default AccordionItem;
