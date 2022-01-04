@@ -13,6 +13,7 @@ const Background: React.FC<BackgroundProps> = ({ children, className }) => (
     h="min-content"
     minH="full"
     w="8xl"
+    maxW="full"
     borderRadius="xl"
     p={[2, 4, 6, 8, 10]}
     className={className}
