@@ -3,11 +3,12 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Button, Center, Flex, Heading, List, ListItem, Input } from '@chakra-ui/react';
+import { Center, Flex, Heading, List, ListItem, Input } from '@chakra-ui/react';
 import { State } from '@packages/store';
 import selectUsers from '@packages/store/users/selectors';
 import { actions } from '@packages/store/users/slice';
 import { User, UserWithoutId } from '@packages/store/users/type';
+import Button from '@packages/components/core/Button';
 
 export interface UserListProps {
   users: User[];
@@ -36,7 +37,12 @@ const UserList: React.FC<UserListProps> = ({ users, pullUsers, onAddUser, onRemo
               <Center width="100%" justifyContent="left">
                 {user.name}
               </Center>
-              <Button backgroundColor="red.200" ml={3} onClick={() => onRemoveUser(user)}>
+              <Button
+                elementCategories={[]}
+                backgroundColor="red.200"
+                ml={3}
+                onClick={() => onRemoveUser(user)}
+              >
                 Remove
               </Button>
             </Flex>
@@ -46,6 +52,7 @@ const UserList: React.FC<UserListProps> = ({ users, pullUsers, onAddUser, onRemo
           <Flex textAlign="center" justifyContent="space-between">
             <Input width="100%" value={input} p={0} onChange={e => setInput(e.target.value)} />
             <Button
+              elementCategories={[]}
               backgroundColor="green.200"
               ml={3}
               onClick={() => {
