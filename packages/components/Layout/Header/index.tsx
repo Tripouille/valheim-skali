@@ -4,7 +4,6 @@ import { useSession } from 'next-auth/react';
 import {
   chakra,
   Center,
-  Button,
   ButtonGroup,
   IconButton,
   Menu,
@@ -26,6 +25,7 @@ import { NAV_ROUTES_VALUES } from '@packages/utils/constants';
 import NavItem from '../NavItem';
 import SignInOut from './SignInOut';
 import { createDataAttributes } from '@packages/utils/dataAttributes/createDataAttributes';
+import Button from '@packages/components/core/Button';
 
 enum MenuType {
   DRAWER,
@@ -52,7 +52,7 @@ const Header: React.FC = () => {
                   key={route}
                   root={`/${serverName}`}
                   navRoute={route}
-                  elementCategories={['nav_bar', 'nav_item', route]}
+                  elementCategories={['nav_bar_header', 'nav_item', route]}
                 />
               ))}
             </ButtonGroup>
@@ -81,14 +81,19 @@ const Header: React.FC = () => {
                           root={`/${serverName}`}
                           navRoute={route}
                           onClick={onClose}
-                          elementCategories={['nav_bar', 'nav_item', route]}
+                          elementCategories={['nav_bar_drawer', 'nav_item', route]}
                         />
                       ))}
                     </VStack>
                   </chakra.nav>
                 </DrawerBody>
                 <DrawerFooter>
-                  <Button fontSize="3xl" w="full" onClick={onClose}>
+                  <Button
+                    elementCategories={['nav_bar_drawer', 'nav_item', 'close']}
+                    fontSize="3xl"
+                    w="full"
+                    onClick={onClose}
+                  >
                     Fermer
                   </Button>
                 </DrawerFooter>
