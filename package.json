@@ -15,7 +15,8 @@
     "storybook": "start-storybook -p 6006 -c packages/storybook/config",
     "build:storybook": "build-storybook -c packages/storybook/config",
     "chromatic": "chromatic --exit-zero-on-changes",
-    "jest": "jest --config packages/tests/jest/jest.config.js"
+    "jest": "jest --config packages/tests/jest/jest.config.js",
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.7.3",

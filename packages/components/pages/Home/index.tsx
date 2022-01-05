@@ -28,6 +28,7 @@ const Home = () => (
       Quelques souvenirs
     </Heading>
     <Carousel
+      elementCategories={['home', 'memory']}
       images={[
         {
           src: 'https://media.discordapp.net/attachments/843884013122486352/919186234646097940/A8.png',
@@ -101,6 +102,7 @@ const Home = () => (
       Quelques paysages
     </Heading>
     <Carousel
+      elementCategories={['home', 'landscape']}
       images={[
         {
           src: 'https://media.discordapp.net/attachments/894670894012727357/916819870811815946/paysage_gd_nord.png',
@@ -162,6 +164,7 @@ const Home = () => (
       Quelques statistiques
     </Heading>
     <Carousel
+      elementCategories={['home', 'statistics']}
       images={[
         {
           src: 'https://media.discordapp.net/attachments/843884013122486352/917910351889170542/unknown.png',

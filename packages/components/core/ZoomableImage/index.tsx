@@ -3,8 +3,10 @@ import { ImageProps as NextImageProps } from 'next/image';
 import { Box, chakra, shouldForwardProp, useBoolean } from '@chakra-ui/react';
 import ImageModal from '@packages/components/core/ImageModal';
 import Image from '@packages/components/core/Image';
+import { ElementCategoriesProps } from '@packages/utils/types';
+import { createDataAttributes } from '@packages/utils/dataAttributes/createDataAttributes';
 
-export interface ZoomableImageProps {
+export interface ZoomableImageProps extends ElementCategoriesProps {
   src: NextImageProps['src'];
   alt: NextImageProps['alt'];
   width: number;
@@ -22,6 +24,7 @@ const ZoomableImage: React.FC<ZoomableImageProps> = ({
   objectFit,
   objectPosition,
   className,
+  elementCategories,
 }) => {
   const [isZoomed, setZoomed] = useBoolean();
 
@@ -36,9 +39,17 @@ const ZoomableImage: React.FC<ZoomableImageProps> = ({
           objectFit={objectFit}
           objectPosition={objectPosition}
           className={className}
+          {...createDataAttributes(elementCategories)}
         />
       </Box>
-      {isZoomed && <ImageModal src={src} alt={alt} onClick={setZoomed.off} />}
+      {isZoomed && (
+        <ImageModal
+          src={src}
+          alt={alt}
+          onClick={setZoomed.off}
+          elementCategories={elementCategories.concat('modal')}
+        />
+      )}
     </>
   );
 };
