@@ -91,6 +91,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_TOKEN }}
           buildScriptName: build:storybook
+          exitOnceUploaded: true
 
   build:
     runs-on: ubuntu-latest
