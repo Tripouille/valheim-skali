@@ -1,16 +1,17 @@
 import React from 'react';
 import { ImageProps as NextImageProps } from 'next/image';
 import { Portal, Center, Box } from '@chakra-ui/react';
-import { Callback } from '@packages/utils/types';
+import { Callback, ElementCategoriesProps } from '@packages/utils/types';
 import Image from '@packages/components/core/Image';
+import { createDataAttributes } from '@packages/utils/dataAttributes/createDataAttributes';
 
-export interface ImageModalProps {
+export interface ImageModalProps extends ElementCategoriesProps {
   src: NextImageProps['src'];
   alt: NextImageProps['alt'];
   onClick: Callback;
 }
 
-const ImageModal: React.FC<ImageModalProps> = ({ src, alt, onClick }) => (
+const ImageModal: React.FC<ImageModalProps> = ({ src, alt, onClick, elementCategories }) => (
   <Portal>
     <Center
       position="absolute"
@@ -22,7 +23,14 @@ const ImageModal: React.FC<ImageModalProps> = ({ src, alt, onClick }) => (
       onClick={onClick}
     >
       <Box pos="relative" cursor="pointer" w="95%" h="95%">
-        <Image layout="fill" objectFit="contain" src={src} alt={alt} borderRadius="xl" />
+        <Image
+          layout="fill"
+          objectFit="contain"
+          src={src}
+          alt={alt}
+          borderRadius="xl"
+          {...createDataAttributes(elementCategories)}
+        />
       </Box>
     </Center>
   </Portal>

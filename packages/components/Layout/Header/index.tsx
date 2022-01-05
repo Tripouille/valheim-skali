@@ -25,6 +25,7 @@ import { RiMenuLine } from 'react-icons/ri';
 import { NAV_ROUTES_VALUES } from '@packages/utils/constants';
 import NavItem from '../NavItem';
 import SignInOut from './SignInOut';
+import { createDataAttributes } from '@packages/utils/dataAttributes/createDataAttributes';
 
 enum MenuType {
   DRAWER,
@@ -47,7 +48,12 @@ const Header: React.FC = () => {
           <chakra.nav ms="2" fontFamily="Norse">
             <ButtonGroup variant="ghost">
               {NAV_ROUTES_VALUES.map(route => (
-                <NavItem key={route} root={`/${serverName}`} navRoute={route} />
+                <NavItem
+                  key={route}
+                  root={`/${serverName}`}
+                  navRoute={route}
+                  elementCategories={['nav_bar', 'nav_item', route]}
+                />
               ))}
             </ButtonGroup>
           </chakra.nav>
@@ -75,6 +81,7 @@ const Header: React.FC = () => {
                           root={`/${serverName}`}
                           navRoute={route}
                           onClick={onClose}
+                          elementCategories={['nav_bar', 'nav_item', route]}
                         />
                       ))}
                     </VStack>
@@ -91,6 +98,7 @@ const Header: React.FC = () => {
         )}
         <Menu id="account-menu" isLazy>
           <MenuButton
+            {...createDataAttributes(['nav_bar', 'account_menu', 'button'])}
             as={IconButton}
             variant="ghost"
             aria-label="Gérer mon compte"

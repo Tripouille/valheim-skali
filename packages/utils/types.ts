@@ -8,3 +8,12 @@ export interface ImageAttributes {
 export type Callback = () => void;
 
 export type Children = ReactNode;
+
+export interface DataAttributes {
+  /** Cypress */
+  'data-cy': string;
+}
+
+export interface ElementCategoriesProps {
+  elementCategories: string[];
+}
