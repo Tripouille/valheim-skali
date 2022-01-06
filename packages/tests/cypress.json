@@ -1,0 +1,20 @@
+{
+  "baseUrl": "http://localhost:4242",
+  "port": 4243,
+  "watchForFileChanges": true,
+
+  "defaultCommandTimeout": 1000,
+  "execTimeout": 6000,
+  "taskTimeout": 6000,
+  "pageLoadTimeout": 6000,
+  "requestTimeout": 6000,
+  "responseTimeout": 6000,
+
+  "testFiles": ["**/*.spec.ts"],
+  "screenshotOnRunFailure": false,
+  "video": false,
+  "videoUploadOnPasses": false,
+
+  "viewportWidth": 1920,
+  "viewportHeight": 1080
+}
