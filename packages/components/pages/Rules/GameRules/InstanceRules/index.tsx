@@ -27,6 +27,7 @@ const InstanceRules = () => (
         ]}
       />
       <ZoomableImage
+        elementCategories={[]}
         src="https://cdn.discordapp.com/attachments/879308268034482176/880074813027278868/znBWtv2T9-oQtxWHbxpNuyZePd6R8suR2axEDgXkAnyfzueO-tSDtYY-MWTJnqjGazbfM9U4_yZ2q0b3ZQdLrB2P_FrqgCP4yjpr.png"
         alt="Screenshot des instances"
         height={200}
@@ -96,6 +97,7 @@ const InstanceRules = () => (
       />
       <Figure legend="Voici typiquement ce qu’on veut éviter !">
         <ZoomableImage
+          elementCategories={[]}
           src="https://cdn.discordapp.com/attachments/879308268034482176/880075448187498496/7SbpNZOU8PFVmknCFk_g45ENGtjFaoopyVdENgivvJi2V3nXG4IOrT2YTgm6qCPth7EgKdtZqXz-P_LZNnXzPUMAHLZhvxUQ8AEl.png"
           alt="Minage abusif"
           width={550}

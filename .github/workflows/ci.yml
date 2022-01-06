@@ -22,7 +22,9 @@ jobs:
         uses: actions/cache@v2
         id: yarn-cache
         with:
-          path: node_modules
+          path: |
+            ~/.cache/Cypress
+            node_modules
           key: ${{ runner.os }}-yarn-v1-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-v1
       - name: Install dependencies if cache invalid
@@ -37,7 +39,9 @@ jobs:
       - name: Restore yarn dependencies
         uses: actions/cache@v2
         with:
-          path: node_modules
+          path: |
+            ~/.cache/Cypress
+            node_modules
           key: ${{ runner.os }}-yarn-v1-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-v1
       - run: yarn format:c
@@ -50,7 +54,9 @@ jobs:
       - name: Restore yarn dependencies
         uses: actions/cache@v2
         with:
-          path: node_modules
+          path: |
+            ~/.cache/Cypress
+            node_modules
           key: ${{ runner.os }}-yarn-v1-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-v1
       - run: yarn lint
@@ -63,7 +69,9 @@ jobs:
       - name: Restore yarn dependencies
         uses: actions/cache@v2
         with:
-          path: node_modules
+          path: |
+            ~/.cache/Cypress
+            node_modules
           key: ${{ runner.os }}-yarn-v1-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-v1
       - run: yarn jest
@@ -78,7 +86,9 @@ jobs:
       - name: Restore yarn dependencies
         uses: actions/cache@v2
         with:
-          path: node_modules
+          path: |
+            ~/.cache/Cypress
+            node_modules
           key: ${{ runner.os }}-yarn-v1-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-v1
       - name: Setup NodeJS
@@ -101,7 +111,9 @@ jobs:
       - name: Restore yarn dependencies
         uses: actions/cache@v2
         with:
-          path: node_modules
+          path: |
+            ~/.cache/Cypress
+            node_modules
           key: ${{ runner.os }}-yarn-v1-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-v1
       - name: Setup NodeJS
@@ -109,3 +121,51 @@ jobs:
         with:
           node-version: '14'
       - run: yarn build
+      - name: Save build folder
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          if-no-files-found: error
+          path: .next
+
+  cypress:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node14.17.0-chrome88-ff89
+    needs: build
+    strategy:
+      # when one test fails, DO NOT cancel the other
+      # containers, because this will kill Cypress processes
+      # leaving the Dashboard hanging ...
+      # https://github.com/cypress-io/github-action/issues/48
+      fail-fast: false
+      matrix:
+        # run copies of the current job in parallel
+        containers: [1, 2, 3, 4, 5]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download the build folders
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: .next
+
+      - name: 'UI Tests - Chrome'
+        uses: cypress-io/github-action@v2
+        with:
+          start: yarn start
+          wait-on: 'http://localhost:4242'
+          wait-on-timeout: 60
+          browser: chrome
+          record: true
+          parallel: true
+          group: 'UI - Chrome'
+          project: ./packages/tests
+        env:
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          # Recommended: pass the GitHub token lets this action correctly
+          # determine the unique run id necessary to re-run the checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
