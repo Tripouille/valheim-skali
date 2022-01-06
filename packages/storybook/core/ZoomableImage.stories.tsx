@@ -15,6 +15,7 @@ const { defaultExport, StoryFactory } = storybookSetup<ZoomableImageProps>(Zooma
 export default defaultExport;
 
 export const Default = StoryFactory({
+  elementCategories: [],
   src: '/images/valheim-background.png',
   alt: 'Alt',
   width: 400,

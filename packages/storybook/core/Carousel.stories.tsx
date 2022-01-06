@@ -11,16 +11,19 @@ const landscapeImage = {
 };
 
 export const Default = StoryFactory({
+  elementCategories: [],
   images: [{ src: '/images/valheim-background.png', alt: 'Valheim background' }, landscapeImage],
   height: 250,
 });
 
 export const WithNoImage = StoryFactory({
+  elementCategories: [],
   images: [],
   height: 250,
 });
 
 export const WithManyImages = StoryFactory({
+  elementCategories: [],
   images: [
     landscapeImage,
     landscapeImage,
