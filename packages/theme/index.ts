@@ -1,5 +1,6 @@
 import { extendTheme } from '@chakra-ui/react';
 import { Card } from './components/Card';
+import { Button } from './components/Button';
 
 const options = {
   styles: {
@@ -29,6 +30,7 @@ const options = {
   },
   components: {
     Card,
+    Button,
   },
   config: {
     initialColorMode: 'dark',
