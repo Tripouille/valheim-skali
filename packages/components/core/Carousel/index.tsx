@@ -8,7 +8,7 @@ export interface CarouselProps extends ElementCategoriesProps {
 }
 
 const Carousel: React.FC<CarouselProps> = ({ images, height, elementCategories }) => (
-  <HStack spacing="4" mb="5" py="4" overflow="auto">
+  <HStack spacing="4" py="4" overflow="auto">
     {images.map((imageAttributes, index) => (
       <ZoomableImage
         key={imageAttributes.src}

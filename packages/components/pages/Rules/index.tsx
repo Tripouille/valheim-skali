@@ -1,5 +1,6 @@
 import React from 'react';
-import { Heading, VStack, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { VStack, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import PageTitle from '@packages/components/core/PageTitle';
 import Background from '@packages/components/core/Background';
 import Preambule from './Preambule';
 import DiscordRules from './DiscordRules';
@@ -16,9 +17,7 @@ const ruleParts: Record<string, JSX.Element> = {
 const Rules = () => (
   <Background>
     <VStack spacing="5" w="full">
-      <Heading as="h1" size="xl" fontFamily="Norse">
-        Règlement
-      </Heading>
+      <PageTitle title="Règlement" />
       <Tabs w="full" id="rulesTabs" isFitted size="md">
         <TabList>
           {Object.keys(ruleParts).map(title => (
