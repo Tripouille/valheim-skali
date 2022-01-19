@@ -14,3 +14,8 @@ export enum StoryCategory {
   CORE = 'core',
   PAGE = 'page',
 }
+
+export const TagColors: Record<string, string> = {
+  PvE: 'darkred',
+  Continu: 'blue.300',
+};
