@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { ForwardRefRenderFunction } from 'react';
 import { Button as ChakraButton, ButtonProps as ChakraButtonProps } from '@chakra-ui/react';
 import { ElementCategoriesProps } from '@packages/utils/types';
 import { createDataAttributes } from '@packages/utils/dataAttributes/createDataAttributes';
 
 export type ButtonProps = ChakraButtonProps & ElementCategoriesProps;
 
-const Button: React.FC<ButtonProps> = ({ elementCategories, ...chakraButtonProps }) => (
-  <ChakraButton {...chakraButtonProps} {...createDataAttributes(elementCategories)}></ChakraButton>
+const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
+  { elementCategories, ...chakraButtonProps },
+  ref,
+) => (
+  <ChakraButton
+    {...chakraButtonProps}
+    {...createDataAttributes(elementCategories)}
+    ref={ref}
+  ></ChakraButton>
 );
 
-export default Button;
+export default React.forwardRef(Button);
