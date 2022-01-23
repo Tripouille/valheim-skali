@@ -16,4 +16,7 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
   ></ChakraButton>
 );
 
-export default React.forwardRef(Button);
+const ButtonWithRef = React.forwardRef(Button);
+ButtonWithRef.displayName = 'Button';
+
+export default ButtonWithRef;
