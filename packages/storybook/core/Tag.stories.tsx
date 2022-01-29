@@ -7,8 +7,14 @@ export default defaultExport;
 
 export const Default = StoryFactory({
   label: 'A tag label',
+  colorScheme: 'gray',
+  size: 'md',
+  variant: 'subtle',
 });
 
 export const DefinedColor = StoryFactory({
   label: 'Continu',
+  colorScheme: 'gray',
+  size: 'md',
+  variant: 'subtle',
 });

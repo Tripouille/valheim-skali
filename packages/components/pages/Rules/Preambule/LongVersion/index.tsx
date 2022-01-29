@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, VStack } from '@chakra-ui/react';
+import { VStack } from '@packages/components/core/Stack';
+import Text from '@packages/components/core/Text';
 
 const LongVersion: React.FC = () => (
   <VStack align="start">

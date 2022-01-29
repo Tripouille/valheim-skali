@@ -1,7 +1,7 @@
 import React from 'react';
-import { VStack } from '@chakra-ui/react';
 import PageTitle from '@packages/components/core/PageTitle';
 import Background from '@packages/components/core/Background';
+import { VStack } from '@packages/components/core/Stack';
 import EventCard from './EventCard';
 import { eventComp } from './utils';
 

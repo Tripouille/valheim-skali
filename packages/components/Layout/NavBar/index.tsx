@@ -1,38 +1,33 @@
 import React from 'react';
 // import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import {
-  chakra,
-  Center,
-  ButtonGroup,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuList,
-  Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerBody,
-  DrawerFooter,
-  VStack,
-  useDisclosure,
-  useBreakpointValue,
-} from '@chakra-ui/react';
+import { chakra, useDisclosure, useBreakpointValue } from '@chakra-ui/react';
 import { GiVikingHelmet } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
 import { RiMenuLine } from 'react-icons/ri';
 import { NAV_ROUTES_VALUES } from '@packages/utils/constants';
 import NavItem from '../NavItem';
 import SignInOut from './SignInOut';
-import { createDataAttributes } from '@packages/utils/dataAttributes/createDataAttributes';
 import Button from '@packages/components/core/Button';
+import Center from '@packages/components/core/Center';
+import ButtonGroup from '@packages/components/core/ButtonGroup';
+import IconButton from '@packages/components/core/IconButton';
+import { Menu, MenuButton, MenuList } from '@packages/components/core/Menu';
+import {
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerBody,
+  DrawerFooter,
+} from '@packages/components/core/Drawer';
+import { VStack } from '@packages/components/core/Stack';
 
 enum MenuType {
   DRAWER,
   HEADER,
 }
 
-const Header: React.FC = () => {
+const NavBar: React.FC = () => {
   const { data: session } = useSession();
   const menuType = useBreakpointValue({ base: MenuType.DRAWER, md: MenuType.HEADER });
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -61,6 +56,7 @@ const Header: React.FC = () => {
         {menuType === MenuType.DRAWER && (
           <>
             <IconButton
+              elementCategories={['nav_bar_drawer', 'open']}
               aria-label="Open menu"
               icon={<RiMenuLine />}
               onClick={onOpen}
@@ -103,7 +99,7 @@ const Header: React.FC = () => {
         )}
         <Menu id="account-menu" isLazy>
           <MenuButton
-            {...createDataAttributes(['nav_bar', 'account_menu', 'button'])}
+            elementCategories={['nav_bar', 'account_menu', 'button']}
             as={IconButton}
             variant="ghost"
             aria-label="Gérer mon compte"
@@ -123,4 +119,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default NavBar;

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box, Flex } from '@chakra-ui/react';
-import Header from './Header';
+import NavBar from './NavBar';
+import Flex from '@packages/components/core/Flex';
+import Box from '@packages/components/core/Box';
 
 const Layout: React.FC = ({ children }) => (
   <Box
@@ -10,7 +11,7 @@ const Layout: React.FC = ({ children }) => (
     bgSize="cover"
     bgPos="bottom"
   >
-    <Header />
+    <NavBar />
     <Flex
       as="main"
       h="calc(100vh - var(--chakra-sizes-header))"

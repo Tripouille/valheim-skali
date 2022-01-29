@@ -1,19 +1,26 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { StoryCategory } from '../constants';
 
-const createTitle = (storyCategory: StoryCategory, displayName?: string) => {
+const createTitle = (
+  storyCategory: StoryCategory,
+  storySubCategory?: string,
+  displayName?: string,
+) => {
   const match = displayName?.match(/Styled\((.*)\)/);
   const componentName = match?.length === 2 ? match[1] : displayName;
-  return `${storyCategory}/${componentName}`;
+  return storySubCategory
+    ? `${storyCategory}/${storySubCategory}/${componentName}`
+    : `${storyCategory}/${componentName}`;
 };
 
 export const storybookSetup = <Props,>(
   Component: React.ComponentType<Props>,
   componentMeta?: ComponentMeta<typeof Component>,
   storyCategory: StoryCategory = StoryCategory.CORE,
+  storySubCategory?: string,
 ) => {
   const defaultExport: ComponentMeta<typeof Component> = {
-    title: createTitle(storyCategory, Component.displayName),
+    title: createTitle(storyCategory, storySubCategory, Component.displayName),
     component: Component,
     ...componentMeta,
   };

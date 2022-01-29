@@ -1,6 +1,8 @@
 import React from 'react';
-import { Box, Heading, VStack } from '@chakra-ui/layout';
 import { MdCancel, MdCheckCircle } from 'react-icons/md';
+import Box from '@packages/components/core/Box';
+import Heading from '@packages/components/core/Heading';
+import { VStack } from '@packages/components/core/Stack';
 import RulesList from '../../RulesList';
 
 const invalidRules = [

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Accordion, Heading } from '@chakra-ui/react';
+import Heading from '@packages/components/core/Heading';
 import Paragraphs from '@packages/components/core/Paragraphs';
-import AccordionItem from '@packages/components/core/AccordionItem';
+import { Accordion, TitleAccordionItem } from '@packages/components/core/Accordion';
 import InstanceRules from './InstanceRules';
 import StreamerRules from './StreamerRules';
 
@@ -104,9 +104,14 @@ const GameRules: React.FC = () => (
     </Heading>
     <Accordion defaultIndex={Array.from(Array(gameRulesParts.length).keys())} allowMultiple>
       {gameRulesParts.map(({ title, subtitle, content }, index) => (
-        <AccordionItem key={title} title={`${index + 1}. ${title}`} subtitle={subtitle}>
+        <TitleAccordionItem
+          key={title}
+          id={`game-rules-${index}`}
+          title={`${index + 1}. ${title}`}
+          subtitle={subtitle}
+        >
           {content}
-        </AccordionItem>
+        </TitleAccordionItem>
       ))}
     </Accordion>
   </>

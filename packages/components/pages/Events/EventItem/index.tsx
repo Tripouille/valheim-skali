@@ -1,5 +1,9 @@
-import { Box, Flex, Heading, HStack, Stack, Text } from '@chakra-ui/react';
 import { Event } from '@packages/store/events/type';
+import Box from '@packages/components/core/Box';
+import Flex from '@packages/components/core/Flex';
+import Heading from '@packages/components/core/Heading';
+import Text from '@packages/components/core/Text';
+import { Stack, HStack } from '@packages/components/core/Stack';
 import Tag from '@packages/components/core/Tag';
 import DiscordButton from '@packages/components/core/DiscordButton';
 import { formatDateInterval } from '@packages/utils/format';

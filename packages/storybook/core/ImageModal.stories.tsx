@@ -1,3 +1,4 @@
+import { action } from '@storybook/addon-actions';
 import { Box } from '@chakra-ui/react';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 import ImageModal, { ImageModalProps } from '@packages/components/core/ImageModal';
@@ -18,5 +19,5 @@ export const Default = StoryFactory({
   elementCategories: [],
   src: '/images/valheim-background-q60.jpg',
   alt: 'Valheim background',
-  onClick: () => undefined,
+  onClick: action('clicked'),
 } as ImageModalProps);

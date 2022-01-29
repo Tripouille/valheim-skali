@@ -1,15 +1,15 @@
 import React from 'react';
+import { useDisclosure } from '@chakra-ui/react';
+import { Event } from '@packages/store/events/type';
+import { ElementCategoriesProps } from '@packages/utils/types';
 import {
-  Box,
-  useDisclosure,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
-} from '@chakra-ui/react';
-import { Event } from '@packages/store/events/type';
-import { ElementCategoriesProps } from '@packages/utils/types';
+} from '@packages/components/core/Modal';
+import Box from '@packages/components/core/Box';
 import { EventContext, isEventClosed } from '../utils';
 import EventItem from '../EventItem';
 
@@ -41,7 +41,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, elementCategories }) => {
           elementCategories={elementCategories.concat(['card'])}
         />
       </Box>
-      <Modal isOpen={isOpen} onClose={onClose} size="6xl">
+      <Modal isOpen={isOpen} onClose={onClose} size="6xl" scrollBehavior="inside" isCentered>
         <ModalOverlay bgColor="rgba(49, 130, 206,0.7)" />
         <ModalContent backgroundColor="blue.700" border="2px white solid">
           <ModalCloseButton />
