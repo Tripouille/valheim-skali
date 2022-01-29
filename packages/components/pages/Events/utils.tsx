@@ -7,7 +7,9 @@ export enum EventContext {
 
 const getEventEndDateFromStartDate = (startDate: string): Date => {
   const endDate = new Date(startDate);
-  endDate.setHours(endDate.getHours() + 6);
+  const noTime = endDate.toISOString().slice(11, -5) === '00:00:00';
+  if (noTime) endDate.setDate(endDate.getDate() + 1);
+  else endDate.setHours(endDate.getHours() + 6);
   return endDate;
 };
 

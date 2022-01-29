@@ -103,18 +103,18 @@ describe('Function eventComp', () => {
       { startDate: '2000-01-15T20:00:00Z', endDate: '2000-01-15T22:00:00Z' },
       { startDate: '2000-01-15T19:00:00Z', endDate: '2000-01-15T20:00:00Z' },
     );
-    expectComp({ startDate: '2000-01-15T20:00:00Z' }, { startDate: '2000-01-15T00:00:00Z' });
+    expectComp({ startDate: '2000-01-15T20:00:00Z' }, { startDate: '2000-01-15T10:00:00Z' });
     expectComp(
       { startDate: '2000-01-15T20:00:00Z' },
       { startDate: '2000-01-15T19:00:00Z', endDate: '2000-01-15T20:00:00Z' },
     );
     expectComp(
       { startDate: '2000-01-15T19:00:00Z', endDate: '2000-01-15T22:00:00Z' },
-      { startDate: '2000-01-15T00:00:00Z' },
+      { startDate: '2000-01-15T10:00:00Z' },
     );
     expectComp(
-      { startDate: '2000-01-15T00:00:00Z', endDate: '2000-01-15T22:00:00Z' },
-      { startDate: '2000-01-15T00:00:00Z' },
+      { startDate: '2000-01-15T10:00:00Z', endDate: '2000-01-15T22:00:00Z' },
+      { startDate: '2000-01-15T10:00:00Z' },
     );
     expectComp(
       { startDate: '2000-01-13', continuous: true },
