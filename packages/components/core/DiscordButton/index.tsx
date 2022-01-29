@@ -1,7 +1,8 @@
 import { IconButton, useBoolean } from '@chakra-ui/react';
+import { ElementCategoriesProps } from '@packages/utils/types';
 import { FaDiscord } from 'react-icons/fa';
 
-export interface DiscordButtonProps {
+export interface DiscordButtonProps extends ElementCategoriesProps {
   href: string;
 }
 
@@ -26,7 +27,6 @@ const DiscordButton: React.FC<DiscordButtonProps> = ({ href }) => {
          * -> the popup didn't appear -> the app is not installed
          * -> redirecting to https url
          */
-        console.log('opening https url');
         window.open(href);
       }
       window.removeEventListener('blur', onBlur);

@@ -6,8 +6,8 @@ export const NAV_ROUTES_VALUES = Object.values(NavRoutes);
 /** Maps navigation routes to displayed labels (in header for example) */
 export const NAV_ROUTES_TO_LABEL: Record<NavRoutes, string> = {
   [NavRoutes.HOME]: 'Skali',
-  [NavRoutes.RULES]: 'règlement',
-  [NavRoutes.EVENTS]: 'événements',
+  [NavRoutes.RULES]: 'Règlement',
+  [NavRoutes.EVENTS]: 'Événements',
 };
 
 export enum StoryCategory {
@@ -16,6 +16,7 @@ export enum StoryCategory {
 }
 
 export const TagColors: Record<string, string> = {
-  PvE: 'darkred',
-  Continu: 'blue.300',
+  PvP: 'darkred',
+  PvE: '#0047AB',
+  Continu: 'blue.400',
 };

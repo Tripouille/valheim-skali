@@ -3,12 +3,12 @@ export const autoBgColor = (label: string) => {
   for (let i = 0; i < label.length; i++) {
     hash = label.charCodeAt(i) + ((hash << 5) - hash);
   }
-  let colour = '#';
+  let color = '#';
   for (let i = 0; i < 3; i++) {
     const value = (hash >> (i * 8)) & 0xff;
-    colour += ('00' + value.toString(16)).slice(-2);
+    color += ('00' + value.toString(16)).slice(-2);
   }
-  return colour;
+  return color;
 };
 
 export const autoTextColor = (bgColor: string) => {

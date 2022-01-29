@@ -2,7 +2,7 @@ module.exports = {
   rootDir: '../../../',
   testMatch: ['<rootDir>/packages/tests/jest/**/*.test.(ts|tsx)'],
   collectCoverage: true,
-  coverageDirectory: 'coverage/',
+  coverageDirectory: 'packages/tests/jest/coverage',
   collectCoverageFrom: [
     'packages/**/*.{ts,tsx}',
     'pages/**/*.{ts,tsx}',

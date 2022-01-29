@@ -1,6 +1,6 @@
 import React from 'react';
-import WorkInProgress from '@packages/components/core/WorkInProgress';
+import Events from '@packages/components/pages/Events';
 
-const EventsPage = () => <WorkInProgress />;
+const EventsPage = () => <Events />;
 
 export default EventsPage;
