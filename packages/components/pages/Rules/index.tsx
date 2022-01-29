@@ -1,5 +1,6 @@
 import React from 'react';
-import { VStack, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@packages/components/core/Tabs';
+import { VStack } from '@packages/components/core/Stack';
 import PageTitle from '@packages/components/core/PageTitle';
 import Background from '@packages/components/core/Background';
 import Preambule from './Preambule';

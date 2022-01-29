@@ -1,4 +1,4 @@
-import { Heading } from '@chakra-ui/react';
+import Heading from '@packages/components/core/Heading';
 
 export interface PageTitleProps {
   title: string;

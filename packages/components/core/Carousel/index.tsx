@@ -1,6 +1,6 @@
-import { HStack } from '@chakra-ui/react';
 import { ImageAttributes, ElementCategoriesProps } from '@packages/utils/types';
 import ZoomableImage, { ZoomableImageProps } from '@packages/components/core/ZoomableImage';
+import { HStack } from '@packages/components/core/Stack';
 
 export interface CarouselProps extends ElementCategoriesProps {
   images: ImageAttributes[];

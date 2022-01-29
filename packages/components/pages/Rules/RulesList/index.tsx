@@ -1,6 +1,6 @@
 import React from 'react';
-import { List, ListIcon, ListItem } from '@chakra-ui/layout';
 import { IconType } from 'react-icons';
+import { List, ListIcon, ListItem } from '@packages/components/core/List';
 
 export interface RulesListProps {
   list: string[];

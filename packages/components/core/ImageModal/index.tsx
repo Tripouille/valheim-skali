@@ -1,9 +1,11 @@
 import React from 'react';
 import { ImageProps as NextImageProps } from 'next/image';
-import { Portal, Center, Box } from '@chakra-ui/react';
 import { Callback, ElementCategoriesProps } from '@packages/utils/types';
-import Image from '@packages/components/core/Image';
 import { createDataAttributes } from '@packages/utils/dataAttributes/createDataAttributes';
+import Portal from '@packages/components/core/Portal';
+import Box from '@packages/components/core/Box';
+import Center from '@packages/components/core/Center';
+import Image from '@packages/components/core/Image';
 
 export interface ImageModalProps extends ElementCategoriesProps {
   src: NextImageProps['src'];

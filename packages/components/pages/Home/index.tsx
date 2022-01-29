@@ -1,9 +1,11 @@
 import React from 'react';
-import { VStack, Heading, Box } from '@chakra-ui/react';
+import Heading from '@packages/components/core/Heading';
+import Box from '@packages/components/core/Box';
 import PageTitle from '@packages/components/core/PageTitle';
 import Background from '@packages/components/core/Background';
 import Paragraphs from '@packages/components/core/Paragraphs';
 import Carousel from '@packages/components/core/Carousel';
+import { VStack } from '@packages/components/core/Stack';
 
 const Home = () => (
   <Background textAlign="justify">

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Heading } from '@chakra-ui/react';
+import Box from '@packages/components/core/Box';
+import Heading from '@packages/components/core/Heading';
 import Paragraphs from '@packages/components/core/Paragraphs';
 
 const StreamerRules = () => (

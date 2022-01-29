@@ -3,12 +3,16 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Center, Flex, Heading, List, ListItem, Input } from '@chakra-ui/react';
+import { Input } from '@chakra-ui/react';
 import { State } from '@packages/store';
 import selectUsers from '@packages/store/users/selectors';
 import { actions } from '@packages/store/users/slice';
 import { User, UserWithoutId } from '@packages/store/users/type';
 import Button from '@packages/components/core/Button';
+import Center from '@packages/components/core/Center';
+import Flex from '@packages/components/core/Flex';
+import Heading from '@packages/components/core/Heading';
+import { List, ListItem } from '@packages/components/core/List';
 
 export interface UserListProps {
   users: User[];
@@ -26,7 +30,7 @@ const UserList: React.FC<UserListProps> = ({ users, pullUsers, onAddUser, onRemo
 
   return (
     <Flex height="full" alignItems="center" justifyContent="center">
-      <List direction="column" backgroundColor="blue.200" p={12} rounded={6}>
+      <List backgroundColor="blue.200" p={12} rounded={6}>
         <Heading m={6} textAlign="center" border="3px black solid" p={3}>
           User List
         </Heading>

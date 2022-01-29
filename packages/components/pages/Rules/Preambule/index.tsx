@@ -1,44 +1,16 @@
 import React from 'react';
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionIcon,
-  AccordionPanel,
-} from '@chakra-ui/accordion';
-import { Box } from '@chakra-ui/layout';
+import { Accordion, TitleAccordionItem } from '@packages/components/core/Accordion';
 import LongVersion from './LongVersion';
 import ShortVersion from './ShortVersion';
 
 const Preambule: React.FC = () => (
   <Accordion defaultIndex={[0, 1]} allowMultiple>
-    <AccordionItem id="preambuleAccordion1">
-      <h2>
-        <AccordionButton>
-          <Box flex="1" textAlign="left">
-            En très court :
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-      </h2>
-      <AccordionPanel pb={4}>
-        <ShortVersion />
-      </AccordionPanel>
-    </AccordionItem>
-
-    <AccordionItem id="preambuleAccordion2">
-      <h2>
-        <AccordionButton>
-          <Box flex="1" textAlign="left">
-            En un peu plus long :
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-      </h2>
-      <AccordionPanel pb={4}>
-        <LongVersion />
-      </AccordionPanel>
-    </AccordionItem>
+    <TitleAccordionItem id="preambule-short" title="En très court :">
+      <ShortVersion />
+    </TitleAccordionItem>
+    <TitleAccordionItem id="preambule-long" title="En un peu plus long :">
+      <LongVersion />
+    </TitleAccordionItem>
   </Accordion>
 );
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { signIn, signOut } from 'next-auth/react';
-import { MenuItem } from '@chakra-ui/react';
 import { MdLogin, MdLogout } from 'react-icons/md';
 import { createDataAttributes } from '@packages/utils/dataAttributes/createDataAttributes';
+import { MenuItem } from '@packages/components/core/Menu';
 
 export interface SignInOutProps {
   isConnected: boolean;

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Heading, Icon } from '@chakra-ui/react';
 import { IconType } from 'react-icons';
+import Heading from '@packages/components/core/Heading';
+import Icon from '@packages/components/core/Icon';
 
 export interface IconTitleProps {
   title: string;

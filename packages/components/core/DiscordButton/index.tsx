@@ -1,12 +1,13 @@
-import { IconButton, useBoolean } from '@chakra-ui/react';
-import { ElementCategoriesProps } from '@packages/utils/types';
+import { useBoolean } from '@chakra-ui/react';
 import { FaDiscord } from 'react-icons/fa';
+import IconButton from '@packages/components/core/IconButton';
+import { ElementCategoriesProps } from '@packages/utils/types';
 
 export interface DiscordButtonProps extends ElementCategoriesProps {
   href: string;
 }
 
-const DiscordButton: React.FC<DiscordButtonProps> = ({ href }) => {
+const DiscordButton: React.FC<DiscordButtonProps> = ({ elementCategories, href }) => {
   const [isLoading, setLoading] = useBoolean();
 
   const openLink = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,6 +38,7 @@ const DiscordButton: React.FC<DiscordButtonProps> = ({ href }) => {
 
   return (
     <IconButton
+      elementCategories={elementCategories}
       as="a"
       href={href}
       title="Ouvrir le message discord"

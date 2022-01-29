@@ -1,6 +1,7 @@
 import React from 'react';
-import { Center, Heading } from '@chakra-ui/react';
 import Background from '@packages/components/core/Background';
+import Center from '@packages/components/core/Center';
+import Heading from '@packages/components/core/Heading';
 
 const WorkInProgress: React.FC = () => (
   <Background h="full">

@@ -1,5 +1,6 @@
 import React from 'react';
-import { chakra, Text, TextProps } from '@chakra-ui/react';
+import { chakra } from '@chakra-ui/react';
+import Text, { TextProps } from '@packages/components/core/Text';
 
 export interface ParagraphsProps {
   paragraphs: string[];
@@ -8,10 +9,6 @@ export interface ParagraphsProps {
   className?: string;
 }
 
-/** Displays an array of text vertically with spacing
- * @param {string[]} paragraphs
- * @param {string | undefined} className For chakra style props, mainly
- */
 const Paragraphs: React.FC<ParagraphsProps> = ({ paragraphs, className, mb = '2' }) => (
   <>
     {paragraphs.map((text, index) => (

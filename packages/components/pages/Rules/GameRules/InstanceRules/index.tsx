@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Heading } from '@chakra-ui/react';
 import { MdComputer } from 'react-icons/md';
 import { GiPig, GiVillage, GiWarPick } from 'react-icons/gi';
+import Box from '@packages/components/core/Box';
+import Heading from '@packages/components/core/Heading';
 import Paragraphs from '@packages/components/core/Paragraphs';
 import IconTitle from '@packages/components/core/IconTitle';
 import Figure from '@packages/components/core/Figure';
