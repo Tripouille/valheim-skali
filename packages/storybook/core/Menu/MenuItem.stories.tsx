@@ -17,7 +17,7 @@ const { defaultExport, StoryFactory } = storybookSetup<MenuItemProps>(
     decorators: [
       Story => (
         <Menu>
-          <MenuButton elementCategories={[]} as={Button} rightIcon={<BiChevronDown />}>
+          <MenuButton dataCy="" as={Button} rightIcon={<BiChevronDown />}>
             Menu
           </MenuButton>
           <MenuList>
@@ -34,6 +34,7 @@ const { defaultExport, StoryFactory } = storybookSetup<MenuItemProps>(
 export default defaultExport;
 
 export const Default = StoryFactory({
+  dataCy: '',
   closeOnSelect: true,
   command: 'Ctrl+H',
   commandSpacing: 0,

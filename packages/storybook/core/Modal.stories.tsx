@@ -17,7 +17,7 @@ const { defaultExport, StoryFactory } = storybookSetup<ModalProps>(Modal, {
     Story => (
       <Box h="800px">
         <Story />
-        <Button elementCategories={['modal-story']}>Test button for focus</Button>
+        <Button dataCy="">Test button for focus</Button>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis praesentium voluptatum
           earum dignissimos reprehenderit magnam at asperiores corporis rem eius laudantium

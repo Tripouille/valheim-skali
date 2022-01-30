@@ -39,7 +39,7 @@ const baseProperties: MenuProps = {
   children: (
     <>
       <MenuButton
-        elementCategories={[]}
+        dataCy=""
         as={IconButton}
         variant="ghost"
         icon={<GiVikingHelmet />}
@@ -47,8 +47,10 @@ const baseProperties: MenuProps = {
         aria-label="Open menu"
       />
       <MenuList>
-        <MenuItem icon={<GiVikingHelmet />}>Item 1</MenuItem>
-        <MenuItem>Item 2</MenuItem>
+        <MenuItem dataCy="" icon={<GiVikingHelmet />}>
+          Item 1
+        </MenuItem>
+        <MenuItem dataCy="">Item 2</MenuItem>
       </MenuList>
     </>
   ),
@@ -60,20 +62,20 @@ export const WithOverflowingMenu = StoryFactory({
   ...baseProperties,
   children: (
     <>
-      <MenuButton elementCategories={[]} as={Button} rightIcon={<BiChevronDown />}>
+      <MenuButton dataCy="" as={Button} rightIcon={<BiChevronDown />}>
         Menu
       </MenuButton>
       <MenuList>
-        <MenuItem>Item 1</MenuItem>
-        <MenuItem>Item 2</MenuItem>
-        <MenuItem>Item 3</MenuItem>
-        <MenuItem>Item 4</MenuItem>
-        <MenuItem>Item 5</MenuItem>
-        <MenuItem>Item 6</MenuItem>
-        <MenuItem>Item 7</MenuItem>
-        <MenuItem>Item 8</MenuItem>
-        <MenuItem>Item 9</MenuItem>
-        <MenuItem>Item 10</MenuItem>
+        <MenuItem dataCy="">Item 1</MenuItem>
+        <MenuItem dataCy="">Item 2</MenuItem>
+        <MenuItem dataCy="">Item 3</MenuItem>
+        <MenuItem dataCy="">Item 4</MenuItem>
+        <MenuItem dataCy="">Item 5</MenuItem>
+        <MenuItem dataCy="">Item 6</MenuItem>
+        <MenuItem dataCy="">Item 7</MenuItem>
+        <MenuItem dataCy="">Item 8</MenuItem>
+        <MenuItem dataCy="">Item 9</MenuItem>
+        <MenuItem dataCy="">Item 10</MenuItem>
       </MenuList>
     </>
   ),

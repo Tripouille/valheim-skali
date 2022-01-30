@@ -25,10 +25,10 @@ export const MenuButton = forwardRef<MenuButtonProps, 'button'>((chakraMenuButto
 ));
 MenuButton.displayName = 'MenuButton';
 
-export type MenuItemProps = ChakraMenuItemProps;
+export type MenuItemProps = ChakraMenuItemProps & DataAttributes;
 
-export const MenuItem: React.FC<MenuItemProps> = chakraMenuItemProps => (
-  <ChakraMenuItem {...chakraMenuItemProps}></ChakraMenuItem>
+export const MenuItem: React.FC<MenuItemProps> = ({ dataCy, ...chakraMenuItemProps }) => (
+  <ChakraMenuItem {...chakraMenuItemProps} data-cy={dataCy}></ChakraMenuItem>
 );
 
 export type MenuListProps = ChakraMenuListProps;
