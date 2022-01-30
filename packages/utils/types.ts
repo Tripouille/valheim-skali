@@ -11,9 +11,5 @@ export type Children = ReactNode;
 
 export interface DataAttributes {
   /** Cypress */
-  'data-cy': string;
-}
-
-export interface ElementCategoriesProps {
-  elementCategories: string[];
+  dataCy: string;
 }

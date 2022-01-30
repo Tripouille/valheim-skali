@@ -1,12 +1,13 @@
 import React from 'react';
 import { ImageProps as NextImageProps } from 'next/image';
 import { chakra, shouldForwardProp, useBoolean } from '@chakra-ui/react';
+import { DataAttributes } from '@packages/utils/types';
+import { getDataValue } from '@packages/utils/dataAttributes';
 import ImageModal from '@packages/components/core/ImageModal';
 import Button from '@packages/components/core/Button';
 import Image from '@packages/components/core/Image';
-import { ElementCategoriesProps } from '@packages/utils/types';
 
-export interface ZoomableImageProps extends ElementCategoriesProps {
+export interface ZoomableImageProps extends DataAttributes {
   src: NextImageProps['src'];
   alt: NextImageProps['alt'];
   width: number;
@@ -17,6 +18,7 @@ export interface ZoomableImageProps extends ElementCategoriesProps {
 }
 
 const ZoomableImage: React.FC<ZoomableImageProps> = ({
+  dataCy,
   src,
   alt,
   width,
@@ -24,20 +26,20 @@ const ZoomableImage: React.FC<ZoomableImageProps> = ({
   objectFit,
   objectPosition,
   className,
-  elementCategories,
 }) => {
   const [isZoomed, setZoomed] = useBoolean();
 
   return (
     <>
       <Button
-        elementCategories={elementCategories}
+        dataCy={getDataValue(dataCy, 'button')}
         variant="unstyled"
         minW={width}
         minH={height}
         onClick={setZoomed.on}
       >
         <Image
+          dataCy={getDataValue(dataCy, 'image')}
           src={src}
           alt={alt}
           width={width}
@@ -49,10 +51,10 @@ const ZoomableImage: React.FC<ZoomableImageProps> = ({
       </Button>
       {isZoomed && (
         <ImageModal
+          dataCy={getDataValue(dataCy, 'modal')}
           src={src}
           alt={alt}
           onClick={setZoomed.off}
-          elementCategories={elementCategories.concat('modal')}
         />
       )}
     </>

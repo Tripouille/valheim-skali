@@ -1,4 +1,5 @@
 import React from 'react';
+import { getDataValue } from '@packages/utils/dataAttributes';
 import Heading from '@packages/components/core/Heading';
 import Box from '@packages/components/core/Box';
 import PageTitle from '@packages/components/core/PageTitle';
@@ -32,7 +33,7 @@ const Home = () => (
           Quelques souvenirs
         </Heading>
         <Carousel
-          elementCategories={['home', 'memory']}
+          dataCy={getDataValue('home', 'memory', 'carousel')}
           images={[
             {
               src: 'https://media.discordapp.net/attachments/843884013122486352/919186234646097940/A8.png',
@@ -108,7 +109,7 @@ const Home = () => (
           Quelques paysages
         </Heading>
         <Carousel
-          elementCategories={['home', 'landscape']}
+          dataCy={getDataValue('home', 'landscape', 'carousel')}
           images={[
             {
               src: 'https://media.discordapp.net/attachments/894670894012727357/916819870811815946/paysage_gd_nord.png',
@@ -172,7 +173,7 @@ const Home = () => (
           Quelques statistiques
         </Heading>
         <Carousel
-          elementCategories={['home', 'statistics']}
+          dataCy={getDataValue('home', 'statistics', 'carousel')}
           images={[
             {
               src: 'https://media.discordapp.net/attachments/843884013122486352/917910351889170542/unknown.png',

@@ -1,3 +1,5 @@
+import { DataAttributes } from '@packages/utils/types';
+import { getDataValue } from '@packages/utils/dataAttributes';
 import { Event } from '@packages/store/events/type';
 import Box from '@packages/components/core/Box';
 import Flex from '@packages/components/core/Flex';
@@ -7,21 +9,15 @@ import { Stack, HStack } from '@packages/components/core/Stack';
 import Tag from '@packages/components/core/Tag';
 import DiscordButton from '@packages/components/core/DiscordButton';
 import { formatDateInterval } from '@packages/utils/format';
-import { ElementCategoriesProps } from '@packages/utils/types';
 import { EventContext } from '../utils';
 
-export interface EventItemProps extends ElementCategoriesProps {
+export interface EventItemProps extends DataAttributes {
   event: Event;
   context: EventContext;
   eventIsClosed: boolean;
 }
 
-const EventItem: React.FC<EventItemProps> = ({
-  event,
-  context,
-  eventIsClosed,
-  elementCategories,
-}) => {
+const EventItem: React.FC<EventItemProps> = ({ dataCy, event, context, eventIsClosed }) => {
   const getContextualTextProps = (maxLineNb: number, maxHeight: string) =>
     context === EventContext.LIST
       ? {
@@ -35,10 +31,7 @@ const EventItem: React.FC<EventItemProps> = ({
       <Flex>
         <Box flex="1" textAlign="left">
           {event.href && (
-            <DiscordButton
-              href={event.href}
-              elementCategories={elementCategories.concat(['discord-button'])}
-            />
+            <DiscordButton dataCy={getDataValue(dataCy, 'discord_button')} href={event.href} />
           )}
         </Box>
         <Heading

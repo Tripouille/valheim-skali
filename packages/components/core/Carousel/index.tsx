@@ -1,16 +1,18 @@
-import { ImageAttributes, ElementCategoriesProps } from '@packages/utils/types';
+import { DataAttributes, ImageAttributes } from '@packages/utils/types';
+import { getDataValue } from '@packages/utils/dataAttributes';
 import ZoomableImage, { ZoomableImageProps } from '@packages/components/core/ZoomableImage';
 import { HStack } from '@packages/components/core/Stack';
 
-export interface CarouselProps extends ElementCategoriesProps {
+export interface CarouselProps extends DataAttributes {
   images: ImageAttributes[];
   height: ZoomableImageProps['height'];
 }
 
-const Carousel: React.FC<CarouselProps> = ({ images, height, elementCategories }) => (
+const Carousel: React.FC<CarouselProps> = ({ dataCy, images, height }) => (
   <HStack spacing="4" py="4" overflow="auto">
     {images.map((imageAttributes, index) => (
       <ZoomableImage
+        dataCy={getDataValue(dataCy, 'zoomable_image', index.toString())}
         key={imageAttributes.src}
         src={imageAttributes.src}
         alt={imageAttributes.alt}
@@ -18,11 +20,6 @@ const Carousel: React.FC<CarouselProps> = ({ images, height, elementCategories }
         height={height}
         objectFit="cover"
         borderRadius="md"
-        elementCategories={elementCategories.concat([
-          'carousel',
-          'zoomable_image',
-          index.toString(),
-        ])}
       />
     ))}
   </HStack>
