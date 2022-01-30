@@ -45,7 +45,7 @@ const Header: React.FC = () => {
     <chakra.header height="header" bgColor="rgba(49, 130, 206, 0.7)">
       <Center justifyContent="space-between" h="full">
         {menuType === MenuType.HEADER && (
-          <chakra.nav ms="2" fontFamily="Norse">
+          <chakra.nav ms="2" fontFamily="Norse, Lucida Sans">
             <ButtonGroup variant="ghost">
               {NAV_ROUTES_VALUES.map(route => (
                 <NavItem
@@ -71,7 +71,7 @@ const Header: React.FC = () => {
             />
             <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
               <DrawerOverlay />
-              <DrawerContent bgColor="blue.700" fontFamily="Norse">
+              <DrawerContent bgColor="blue.700" fontFamily="Norse, Lucida Sans">
                 <DrawerBody mt="2">
                   <chakra.nav>
                     <VStack align="stretch">

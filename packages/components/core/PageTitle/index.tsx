@@ -5,7 +5,7 @@ export interface PageTitleProps {
 }
 
 const PageTitle: React.FC<PageTitleProps> = ({ title }) => (
-  <Heading as="h1" size="2xl" fontFamily="Norse" textAlign="center">
+  <Heading as="h1" size="2xl" fontFamily="Norse, Lucida Sans" textAlign="center">
     {title}
   </Heading>
 );
