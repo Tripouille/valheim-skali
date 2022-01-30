@@ -26,17 +26,10 @@ export const WithNoImage = StoryFactory({
 });
 
 export const WithManyImages = StoryFactory({
-  elementCategories: [],
-  images: [
-    landscapeImage,
-    landscapeImage,
-    landscapeImage,
-    landscapeImage,
-    landscapeImage,
-    landscapeImage,
-    landscapeImage,
-    landscapeImage,
-    landscapeImage,
-  ],
+  dataCy: '',
+  images: Array.from(Array(10).keys()).map(i => ({
+    ...landscapeImage,
+    src: landscapeImage.src + '#'.repeat(i),
+  })),
   height: 250,
 });
