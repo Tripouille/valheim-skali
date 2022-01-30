@@ -16,7 +16,7 @@ export default defaultExport;
 
 export const Default = StoryFactory({
   elementCategories: [],
-  src: '/images/valheim-background.png',
+  src: '/images/valheim-background-q60.jpg',
   alt: 'Valheim background',
   onClick: () => undefined,
 } as ImageModalProps);

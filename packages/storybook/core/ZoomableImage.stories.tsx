@@ -16,7 +16,7 @@ export default defaultExport;
 
 export const Default = StoryFactory({
   elementCategories: [],
-  src: '/images/valheim-background.png',
+  src: '/images/valheim-background-q60.jpg',
   alt: 'Alt',
   width: 400,
   height: 200,
