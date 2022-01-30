@@ -9,6 +9,11 @@ export default defaultExport;
 export const Default = StoryFactory({
   legend: 'A legend',
   children: (
-    <img src="/images/valheim-background.png" alt="Valheim background" width="500" height="300" />
+    <img
+      src="/images/valheim-background-q60.jpg"
+      alt="Valheim background"
+      width="500"
+      height="300"
+    />
   ),
 });
