@@ -8,7 +8,7 @@ const { defaultExport, StoryFactory } = storybookSetup<IconButtonProps>(IconButt
 export default defaultExport;
 
 const baseProperties: IconButtonProps = {
-  elementCategories: [],
+  dataCy: '',
   'aria-label': 'Describes the button',
   colorScheme: 'gray',
   icon: <FaDiscord />,

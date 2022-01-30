@@ -9,7 +9,7 @@ const { defaultExport, StoryFactory } = storybookSetup<ButtonProps>(Button);
 export default defaultExport;
 
 const baseProperties: ButtonProps = {
-  elementCategories: ['category1'],
+  dataCy: 'button_story',
   children: 'Button label',
   colorScheme: 'gray',
   iconSpacing: '',
