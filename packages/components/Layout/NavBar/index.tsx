@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { chakra, useBreakpointValue } from '@chakra-ui/react';
 import { GiVikingHelmet } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
+import { getDataValue } from '@packages/utils/dataAttributes';
 import Center from '@packages/components/core/Center';
 import IconButton from '@packages/components/core/IconButton';
 import { Menu, MenuButton, MenuList } from '@packages/components/core/Menu';
@@ -31,7 +32,7 @@ const NavBar: React.FC = () => {
         {menuType === MenuType.DRAWER && <DrawerMenu serverName={serverName} />}
         <Menu id="account-menu" isLazy>
           <MenuButton
-            elementCategories={['nav_bar', 'account_menu', 'button']}
+            dataCy={getDataValue('nav_bar', 'account_menu', 'button')}
             as={IconButton}
             variant="ghost"
             aria-label="Gérer mon compte"
@@ -43,7 +44,10 @@ const NavBar: React.FC = () => {
             rightIcon={<BiChevronDown />}
           />
           <MenuList>
-            <SignInOut isConnected={Boolean(session)} />
+            <SignInOut
+              dataCy={getDataValue('nav_bar', 'account_menu', 'dropdown')}
+              isConnected={Boolean(session)}
+            />
           </MenuList>
         </Menu>
       </Center>

@@ -1,6 +1,7 @@
 import { chakra, useDisclosure } from '@chakra-ui/react';
 import { RiMenuLine } from 'react-icons/ri';
 import { NAV_ROUTES_VALUES } from '@packages/utils/constants';
+import { getDataValue } from '@packages/utils/dataAttributes';
 import IconButton from '@packages/components/core/IconButton';
 import Button from '@packages/components/core/Button';
 import { VStack } from '@packages/components/core/Stack';
@@ -23,7 +24,7 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ serverName }) => {
   return (
     <>
       <IconButton
-        elementCategories={['nav_bar_drawer', 'open']}
+        dataCy={getDataValue('nav_bar_drawer', 'open')}
         aria-label="Open menu"
         icon={<RiMenuLine />}
         onClick={onOpen}
@@ -40,11 +41,11 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ serverName }) => {
               <VStack align="stretch">
                 {NAV_ROUTES_VALUES.map(route => (
                   <NavItem
+                    dataCy={getDataValue('nav_bar_drawer', 'nav_item', route)}
                     key={route}
                     root={`/${serverName}`}
                     navRoute={route}
                     onClick={onClose}
-                    elementCategories={['nav_bar_drawer', 'nav_item', route]}
                   />
                 ))}
               </VStack>
@@ -52,7 +53,7 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ serverName }) => {
           </DrawerBody>
           <DrawerFooter>
             <Button
-              elementCategories={['nav_bar_drawer', 'nav_item', 'close']}
+              dataCy={getDataValue('nav_bar_drawer', 'nav_item', 'close')}
               fontSize="3xl"
               w="full"
               onClick={onClose}

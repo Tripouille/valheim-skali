@@ -1,4 +1,5 @@
 import React from 'react';
+import { getDataValue } from '@packages/utils/dataAttributes';
 import PageTitle from '@packages/components/core/PageTitle';
 import Background from '@packages/components/core/Background';
 import { VStack } from '@packages/components/core/Stack';
@@ -266,9 +267,9 @@ const Events = () => {
         <PageTitle title="Événements" />
         {events.map((event, index) => (
           <EventCard
+            dataCy={getDataValue('event', index.toString())}
             key={event.name}
             event={event}
-            elementCategories={['event', index.toString()]}
           />
         ))}
       </VStack>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { MdComputer } from 'react-icons/md';
 import { GiPig, GiVillage, GiWarPick } from 'react-icons/gi';
+import { getDataValue } from '@packages/utils/dataAttributes';
 import Box from '@packages/components/core/Box';
 import Heading from '@packages/components/core/Heading';
 import Paragraphs from '@packages/components/core/Paragraphs';
@@ -28,7 +29,7 @@ const InstanceRules = () => (
         ]}
       />
       <ZoomableImage
-        elementCategories={[]}
+        dataCy={getDataValue('instance_rules', 'zoomable_image', '0')}
         src="https://cdn.discordapp.com/attachments/879308268034482176/880074813027278868/znBWtv2T9-oQtxWHbxpNuyZePd6R8suR2axEDgXkAnyfzueO-tSDtYY-MWTJnqjGazbfM9U4_yZ2q0b3ZQdLrB2P_FrqgCP4yjpr.png"
         alt="Screenshot des instances"
         height={200}
@@ -98,7 +99,7 @@ const InstanceRules = () => (
       />
       <Figure legend="Voici typiquement ce qu’on veut éviter !">
         <ZoomableImage
-          elementCategories={[]}
+          dataCy={getDataValue('instance_rules', 'zoomable_image', '1')}
           src="https://cdn.discordapp.com/attachments/879308268034482176/880075448187498496/7SbpNZOU8PFVmknCFk_g45ENGtjFaoopyVdENgivvJi2V3nXG4IOrT2YTgm6qCPth7EgKdtZqXz-P_LZNnXzPUMAHLZhvxUQ8AEl.png"
           alt="Minage abusif"
           width={550}

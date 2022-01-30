@@ -1,24 +1,21 @@
 import React from 'react';
 import { signIn, signOut } from 'next-auth/react';
 import { MdLogin, MdLogout } from 'react-icons/md';
-import { createDataAttributes } from '@packages/utils/dataAttributes/createDataAttributes';
+import { DataAttributes } from '@packages/utils/types';
+import { getDataValue } from '@packages/utils/dataAttributes';
 import { MenuItem } from '@packages/components/core/Menu';
 
-export interface SignInOutProps {
+export interface SignInOutProps extends DataAttributes {
   isConnected: boolean;
 }
 
-const SignInOut: React.FC<SignInOutProps> = ({ isConnected }) => {
+const SignInOut: React.FC<SignInOutProps> = ({ dataCy, isConnected }) => {
   const icon = isConnected ? <MdLogout size="20" /> : <MdLogin size="20" />;
   const label = isConnected ? 'Se déconnecter' : 'Se connecter';
   const onClick = () => (isConnected ? signOut() : signIn('discord'));
 
   return (
-    <MenuItem
-      icon={icon}
-      onClick={onClick}
-      {...createDataAttributes(['nav_bar', 'account_menu', 'drop_down', 'sign_in_out'])}
-    >
+    <MenuItem icon={icon} onClick={onClick} data-cy={getDataValue(dataCy, 'sign_in_out')}>
       {label}
     </MenuItem>
   );

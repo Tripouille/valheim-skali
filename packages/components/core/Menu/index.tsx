@@ -10,7 +10,7 @@ import {
   MenuList as ChakraMenuList,
   MenuListProps as ChakraMenuListProps,
 } from '@chakra-ui/react';
-import { ElementCategoriesProps } from '@packages/utils/types';
+import { DataAttributes } from '@packages/utils/types';
 
 export type MenuProps = ChakraMenuProps;
 
@@ -18,10 +18,10 @@ export const Menu: React.FC<MenuProps> = chakraMenuProps => (
   <ChakraMenu {...chakraMenuProps}></ChakraMenu>
 );
 
-export type MenuButtonProps = ChakraMenuButtonProps & ElementCategoriesProps;
+export type MenuButtonProps = ChakraMenuButtonProps & DataAttributes;
 
-export const MenuButton = forwardRef<MenuButtonProps, 'button'>((props, ref) => (
-  <ChakraMenuButton {...props} ref={ref} />
+export const MenuButton = forwardRef<MenuButtonProps, 'button'>((chakraMenuButtonProps, ref) => (
+  <ChakraMenuButton {...chakraMenuButtonProps} ref={ref} />
 ));
 MenuButton.displayName = 'MenuButton';
 
