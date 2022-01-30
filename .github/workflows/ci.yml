@@ -167,7 +167,7 @@ jobs:
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           MONGODB_URI: ${{ secrets.CYPRESS_MONGODB_URI }}
-          SECRET: rB8/PF0BhZnHA6NerIZCoF2jlh4CIedVIUud+cYhikA=
+          SECRET: ${{ secrets.CYPRESS_SECRET }}
           # Recommended: pass the GitHub token lets this action correctly
           # determine the unique run id necessary to re-run the checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
