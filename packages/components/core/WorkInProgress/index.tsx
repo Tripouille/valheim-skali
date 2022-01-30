@@ -5,7 +5,7 @@ import Background from '@packages/components/core/Background';
 const WorkInProgress: React.FC = () => (
   <Background h="full">
     <Center h="full">
-      <Heading fontFamily="Norse">A venir dans une prochaine mise à jour !</Heading>
+      <Heading fontFamily="Norse, Lucida Sans">A venir dans une prochaine mise à jour !</Heading>
     </Center>
   </Background>
 );
