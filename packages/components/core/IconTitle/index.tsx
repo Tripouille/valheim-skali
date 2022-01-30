@@ -1,13 +1,13 @@
 import React from 'react';
 import { IconType } from 'react-icons';
-import Heading from '@packages/components/core/Heading';
-import Icon from '@packages/components/core/Icon';
+import Heading, { HeadingProps } from '@packages/components/core/Heading';
+import Icon, { IconProps } from '@packages/components/core/Icon';
 
 export interface IconTitleProps {
   title: string;
-  size: string;
+  size: HeadingProps['size'];
   icon: IconType;
-  iconColor: string;
+  iconColor: IconProps['color'];
 }
 
 const IconTitle: React.FC<IconTitleProps> = ({ title, size, icon, iconColor }) => (

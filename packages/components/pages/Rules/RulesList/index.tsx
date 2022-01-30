@@ -1,11 +1,11 @@
 import React from 'react';
 import { IconType } from 'react-icons';
-import { List, ListIcon, ListItem } from '@packages/components/core/List';
+import { List, ListIcon, ListIconProps, ListItem } from '@packages/components/core/List';
 
 export interface RulesListProps {
   list: string[];
   icon: IconType;
-  iconColor: string;
+  iconColor: ListIconProps['color'];
 }
 
 const RulesList: React.FC<RulesListProps> = ({ list, icon, iconColor }) => (
