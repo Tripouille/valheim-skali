@@ -3,9 +3,9 @@ import { ImageProps as NextImageProps } from 'next/image';
 import { chakra, shouldForwardProp, useBoolean } from '@chakra-ui/react';
 import { DataAttributes } from '@packages/utils/types';
 import { getDataValue } from '@packages/utils/dataAttributes';
-import ImageModal from '@packages/components/core/ImageModal';
-import Button from '@packages/components/core/Button';
-import Image from '@packages/components/core/Image';
+import ImageModal from '@packages/components/core/Overlay/ImageModal';
+import Button from '@packages/components/core/Interactive/Button';
+import Image from '@packages/components/core/Images/Image';
 
 export interface ZoomableImageProps extends DataAttributes {
   src: NextImageProps['src'];

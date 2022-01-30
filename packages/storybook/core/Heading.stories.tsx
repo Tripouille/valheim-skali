@@ -1,4 +1,4 @@
-import Heading, { HeadingProps } from '@packages/components/core/Heading';
+import Heading, { HeadingProps } from '@packages/components/core/Typography/Heading';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 
 const { defaultExport, StoryFactory } = storybookSetup<HeadingProps>(Heading);

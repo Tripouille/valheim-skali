@@ -1,6 +1,11 @@
 import React from 'react';
 import { IconType } from 'react-icons';
-import { List, ListIcon, ListIconProps, ListItem } from '@packages/components/core/List';
+import {
+  List,
+  ListIcon,
+  ListIconProps,
+  ListItem,
+} from '@packages/components/core/DataDisplay/List';
 
 export interface RulesListProps {
   list: string[];

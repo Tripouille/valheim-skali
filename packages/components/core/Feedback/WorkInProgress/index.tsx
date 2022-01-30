@@ -1,7 +1,7 @@
 import React from 'react';
-import Background from '@packages/components/core/Background';
-import Center from '@packages/components/core/Center';
-import Heading from '@packages/components/core/Heading';
+import Background from '@packages/components/core/Containers/Background';
+import Center from '@packages/components/core/Containers/Center';
+import Heading from '@packages/components/core/Typography/Heading';
 
 const WorkInProgress: React.FC = () => (
   <Background h="full">

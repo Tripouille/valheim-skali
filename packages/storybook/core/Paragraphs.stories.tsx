@@ -1,4 +1,4 @@
-import Paragraphs, { ParagraphsProps } from '@packages/components/core/Paragraphs';
+import Paragraphs, { ParagraphsProps } from '@packages/components/core/Typography/Paragraphs';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 
 const { defaultExport, StoryFactory } = storybookSetup<ParagraphsProps>(Paragraphs);

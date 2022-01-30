@@ -1,4 +1,4 @@
-import Heading from '@packages/components/core/Heading';
+import Heading from '@packages/components/core/Typography/Heading';
 
 export interface PageTitleProps {
   title: string;

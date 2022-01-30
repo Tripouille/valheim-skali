@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accordion, TitleAccordionItem } from '@packages/components/core/Accordion';
+import { Accordion, TitleAccordionItem } from '@packages/components/core/Disclosure/Accordion';
 import LongVersion from './LongVersion';
 import ShortVersion from './ShortVersion';
 

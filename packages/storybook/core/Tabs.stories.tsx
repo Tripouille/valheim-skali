@@ -1,6 +1,13 @@
 import { action } from '@storybook/addon-actions';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
-import { Tabs, TabsProps, TabList, Tab, TabPanels, TabPanel } from '@packages/components/core/Tabs';
+import {
+  Tabs,
+  TabsProps,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+} from '@packages/components/core/Disclosure/Tabs';
 
 const { defaultExport, StoryFactory } = storybookSetup<TabsProps>(Tabs);
 

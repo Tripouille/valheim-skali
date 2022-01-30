@@ -1,8 +1,8 @@
 import React from 'react';
 import { getDataValue } from '@packages/utils/dataAttributes';
-import PageTitle from '@packages/components/core/PageTitle';
-import Background from '@packages/components/core/Background';
-import { VStack } from '@packages/components/core/Stack';
+import PageTitle from '@packages/components/core/Typography/PageTitle';
+import Background from '@packages/components/core/Containers/Background';
+import { VStack } from '@packages/components/core/Containers/Stack';
 import EventCard from './EventCard';
 import { eventComp } from './utils';
 

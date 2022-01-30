@@ -1,6 +1,6 @@
 import React from 'react';
 import { chakra } from '@chakra-ui/react';
-import Text, { TextProps } from '@packages/components/core/Text';
+import Text, { TextProps } from '@packages/components/core/Typography/Text';
 
 export interface ParagraphsProps {
   paragraphs: string[];

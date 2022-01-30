@@ -1,4 +1,4 @@
-import Tag, { TagProps } from '@packages/components/core/Tag';
+import Tag, { TagProps } from '@packages/components/core/DataDisplay/Tag';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 
 const { defaultExport, StoryFactory } = storybookSetup<TagProps>(Tag);

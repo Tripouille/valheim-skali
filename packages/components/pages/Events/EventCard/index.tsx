@@ -9,8 +9,8 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
-} from '@packages/components/core/Modal';
-import Box from '@packages/components/core/Box';
+} from '@packages/components/core/Overlay/Modal';
+import Box from '@packages/components/core/Containers/Box';
 import { EventContext, isEventClosed } from '../utils';
 import EventItem from '../EventItem';
 

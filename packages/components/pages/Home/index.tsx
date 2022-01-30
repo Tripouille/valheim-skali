@@ -1,12 +1,12 @@
 import React from 'react';
 import { getDataValue } from '@packages/utils/dataAttributes';
-import Heading from '@packages/components/core/Heading';
-import Box from '@packages/components/core/Box';
-import PageTitle from '@packages/components/core/PageTitle';
-import Background from '@packages/components/core/Background';
-import Paragraphs from '@packages/components/core/Paragraphs';
-import Carousel from '@packages/components/core/Carousel';
-import { VStack } from '@packages/components/core/Stack';
+import Heading from '@packages/components/core/Typography/Heading';
+import Box from '@packages/components/core/Containers/Box';
+import PageTitle from '@packages/components/core/Typography/PageTitle';
+import Background from '@packages/components/core/Containers/Background';
+import Paragraphs from '@packages/components/core/Typography/Paragraphs';
+import Carousel from '@packages/components/core/Images/Carousel';
+import { VStack } from '@packages/components/core/Containers/Stack';
 
 const Home = () => (
   <Background textAlign="justify">

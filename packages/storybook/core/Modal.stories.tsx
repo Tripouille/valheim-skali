@@ -7,10 +7,10 @@ import {
   ModalContent,
   ModalCloseButton,
   ModalBody,
-} from '@packages/components/core/Modal';
-import Box from '@packages/components/core/Box';
-import Button from '@packages/components/core/Button';
-import Text from '@packages/components/core/Text';
+} from '@packages/components/core/Overlay/Modal';
+import Box from '@packages/components/core/Containers/Box';
+import Button from '@packages/components/core/Interactive/Button';
+import Text from '@packages/components/core/Typography/Text';
 
 const { defaultExport, StoryFactory } = storybookSetup<ModalProps>(Modal, {
   decorators: [

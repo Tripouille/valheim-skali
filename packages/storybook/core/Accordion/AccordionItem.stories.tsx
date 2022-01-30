@@ -4,7 +4,7 @@ import {
   TitleAccordionItem,
   TitleAccordionItemProps,
   Accordion,
-} from '@packages/components/core/Accordion';
+} from '@packages/components/core/Disclosure/Accordion';
 
 const { defaultExport, StoryFactory } = storybookSetup<TitleAccordionItemProps>(
   TitleAccordionItem,

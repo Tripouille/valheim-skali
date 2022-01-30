@@ -2,10 +2,10 @@ import React from 'react';
 import { ImageProps as NextImageProps } from 'next/image';
 import { Callback, DataAttributes } from '@packages/utils/types';
 import { getDataValue } from '@packages/utils/dataAttributes';
-import Portal from '@packages/components/core/Portal';
-import Box from '@packages/components/core/Box';
-import Center from '@packages/components/core/Center';
-import Image from '@packages/components/core/Image';
+import Portal from '@packages/components/core/Overlay/Portal';
+import Box from '@packages/components/core/Containers/Box';
+import Center from '@packages/components/core/Containers/Center';
+import Image from '@packages/components/core/Images/Image';
 
 export interface ImageModalProps extends DataAttributes {
   src: NextImageProps['src'];

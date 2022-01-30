@@ -1,7 +1,7 @@
 import React from 'react';
 import { chakra } from '@chakra-ui/react';
 import { Children } from '@packages/utils/types';
-import Box from '@packages/components/core/Box';
+import Box from '@packages/components/core/Containers/Box';
 
 export interface BackgroundProps {
   className?: string;

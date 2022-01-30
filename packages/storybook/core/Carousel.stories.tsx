@@ -1,4 +1,4 @@
-import Carousel, { CarouselProps } from '@packages/components/core/Carousel';
+import Carousel, { CarouselProps } from '@packages/components/core/Images/Carousel';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 
 const { defaultExport, StoryFactory } = storybookSetup<CarouselProps>(Carousel);

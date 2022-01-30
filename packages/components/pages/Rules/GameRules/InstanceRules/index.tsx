@@ -2,12 +2,12 @@ import React from 'react';
 import { MdComputer } from 'react-icons/md';
 import { GiPig, GiVillage, GiWarPick } from 'react-icons/gi';
 import { getDataValue } from '@packages/utils/dataAttributes';
-import Box from '@packages/components/core/Box';
-import Heading from '@packages/components/core/Heading';
-import Paragraphs from '@packages/components/core/Paragraphs';
-import IconTitle from '@packages/components/core/IconTitle';
-import Figure from '@packages/components/core/Figure';
-import ZoomableImage from '@packages/components/core/ZoomableImage';
+import Box from '@packages/components/core/Containers/Box';
+import Heading from '@packages/components/core/Typography/Heading';
+import Paragraphs from '@packages/components/core/Typography/Paragraphs';
+import IconTitle from '@packages/components/core/Typography/IconTitle';
+import Figure from '@packages/components/core/Images/Figure';
+import ZoomableImage from '@packages/components/core/Images/ZoomableImage';
 
 const InstanceRules = () => (
   <>

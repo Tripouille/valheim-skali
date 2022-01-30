@@ -1,13 +1,13 @@
 import { DataAttributes } from '@packages/utils/types';
 import { getDataValue } from '@packages/utils/dataAttributes';
 import { Event } from '@packages/store/events/type';
-import Box from '@packages/components/core/Box';
-import Flex from '@packages/components/core/Flex';
-import Heading from '@packages/components/core/Heading';
-import Text from '@packages/components/core/Text';
-import { Stack, HStack } from '@packages/components/core/Stack';
-import Tag from '@packages/components/core/Tag';
-import DiscordButton from '@packages/components/core/DiscordButton';
+import Box from '@packages/components/core/Containers/Box';
+import Flex from '@packages/components/core/Containers/Flex';
+import Heading from '@packages/components/core/Typography/Heading';
+import Text from '@packages/components/core/Typography/Text';
+import { Stack, HStack } from '@packages/components/core/Containers/Stack';
+import Tag from '@packages/components/core/DataDisplay/Tag';
+import DiscordButton from '@packages/components/core/Interactive/DiscordButton';
 import { formatDateInterval } from '@packages/utils/format';
 import { EventContext } from '../utils';
 
