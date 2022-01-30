@@ -7,9 +7,9 @@ import {
   DrawerContent,
   DrawerBody,
   DrawerFooter,
-} from '@packages/components/core/Drawer';
-import Box from '@packages/components/core/Box';
-import Button from '@packages/components/core/Button';
+} from '@packages/components/core/Overlay/Drawer';
+import Box from '@packages/components/core/Containers/Box';
+import Button from '@packages/components/core/Interactive/Button';
 
 const { defaultExport, StoryFactory } = storybookSetup<DrawerProps>(Drawer, {
   decorators: [

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import Figure, { FigureProps } from '@packages/components/core/Figure';
+import Figure, { FigureProps } from '@packages/components/core/Images/Figure';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 
 const { defaultExport, StoryFactory } = storybookSetup<FigureProps>(Figure);

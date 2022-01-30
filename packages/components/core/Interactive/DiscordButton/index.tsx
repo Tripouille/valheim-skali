@@ -1,7 +1,7 @@
 import { useBoolean } from '@chakra-ui/react';
 import { FaDiscord } from 'react-icons/fa';
 import { DataAttributes } from '@packages/utils/types';
-import IconButton from '@packages/components/core/IconButton';
+import IconButton from '@packages/components/core/Interactive/IconButton';
 
 export interface DiscordButtonProps extends DataAttributes {
   href: string;

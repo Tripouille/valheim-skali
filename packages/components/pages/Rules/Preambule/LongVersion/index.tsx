@@ -1,6 +1,6 @@
 import React from 'react';
-import { VStack } from '@packages/components/core/Stack';
-import Text from '@packages/components/core/Text';
+import { VStack } from '@packages/components/core/Containers/Stack';
+import Text from '@packages/components/core/Typography/Text';
 
 const LongVersion: React.FC = () => (
   <VStack align="start">

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@packages/components/core/Tabs';
-import { VStack } from '@packages/components/core/Stack';
-import PageTitle from '@packages/components/core/PageTitle';
-import Background from '@packages/components/core/Background';
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@packages/components/core/Disclosure/Tabs';
+import { VStack } from '@packages/components/core/Containers/Stack';
+import PageTitle from '@packages/components/core/Typography/PageTitle';
+import Background from '@packages/components/core/Containers/Background';
 import Preambule from './Preambule';
 import DiscordRules from './DiscordRules';
 import GameRules from './GameRules';

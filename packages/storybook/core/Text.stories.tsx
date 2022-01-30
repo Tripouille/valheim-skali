@@ -1,4 +1,4 @@
-import Text, { TextProps } from '@packages/components/core/Text';
+import Text, { TextProps } from '@packages/components/core/Typography/Text';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 
 const { defaultExport, StoryFactory } = storybookSetup<TextProps>(Text);

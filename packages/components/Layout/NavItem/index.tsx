@@ -3,7 +3,7 @@ import NextLink from 'next/link';
 import { NavRoutes } from '@packages/utils/routes';
 import { NAV_ROUTES_TO_LABEL } from '@packages/utils/constants';
 import { Callback, DataAttributes } from '@packages/utils/types';
-import Button from '@packages/components/core/Button';
+import Button from '@packages/components/core/Interactive/Button';
 
 export interface NavItemProps extends DataAttributes {
   root: string;

@@ -1,7 +1,7 @@
 import React from 'react';
-import Box from '@packages/components/core/Box';
-import Heading from '@packages/components/core/Heading';
-import Paragraphs from '@packages/components/core/Paragraphs';
+import Box from '@packages/components/core/Containers/Box';
+import Heading from '@packages/components/core/Typography/Heading';
+import Paragraphs from '@packages/components/core/Typography/Paragraphs';
 
 const StreamerRules = () => (
   <>

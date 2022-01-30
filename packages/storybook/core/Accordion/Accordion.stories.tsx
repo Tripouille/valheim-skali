@@ -1,7 +1,11 @@
 import { action } from '@storybook/addon-actions';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 import { StoryCategory } from '@packages/utils/constants';
-import { Accordion, AccordionProps, TitleAccordionItem } from '@packages/components/core/Accordion';
+import {
+  Accordion,
+  AccordionProps,
+  TitleAccordionItem,
+} from '@packages/components/core/Disclosure/Accordion';
 
 const { defaultExport, StoryFactory } = storybookSetup<AccordionProps>(
   Accordion,

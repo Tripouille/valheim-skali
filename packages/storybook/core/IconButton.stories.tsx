@@ -1,5 +1,5 @@
 import { action } from '@storybook/addon-actions';
-import IconButton, { IconButtonProps } from '@packages/components/core/IconButton';
+import IconButton, { IconButtonProps } from '@packages/components/core/Interactive/IconButton';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 import { FaDiscord, FaSpinner } from 'react-icons/fa';
 

@@ -8,8 +8,8 @@ import {
   Menu,
   MenuButton,
   MenuList,
-} from '@packages/components/core/Menu';
-import Button from '@packages/components/core/Button';
+} from '@packages/components/core/Overlay/Menu';
+import Button from '@packages/components/core/Interactive/Button';
 
 const { defaultExport, StoryFactory } = storybookSetup<MenuItemProps>(
   MenuItem,

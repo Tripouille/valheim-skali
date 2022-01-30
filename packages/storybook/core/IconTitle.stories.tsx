@@ -1,4 +1,4 @@
-import IconTitle, { IconTitleProps } from '@packages/components/core/IconTitle';
+import IconTitle, { IconTitleProps } from '@packages/components/core/Typography/IconTitle';
 import { MdComputer } from 'react-icons/md';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 

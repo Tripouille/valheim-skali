@@ -2,16 +2,16 @@ import { chakra, useDisclosure } from '@chakra-ui/react';
 import { RiMenuLine } from 'react-icons/ri';
 import { NAV_ROUTES_VALUES } from '@packages/utils/constants';
 import { getDataValue } from '@packages/utils/dataAttributes';
-import IconButton from '@packages/components/core/IconButton';
-import Button from '@packages/components/core/Button';
-import { VStack } from '@packages/components/core/Stack';
+import IconButton from '@packages/components/core/Interactive/IconButton';
+import Button from '@packages/components/core/Interactive/Button';
+import { VStack } from '@packages/components/core/Containers/Stack';
 import {
   Drawer,
   DrawerOverlay,
   DrawerContent,
   DrawerBody,
   DrawerFooter,
-} from '@packages/components/core/Drawer';
+} from '@packages/components/core/Overlay/Drawer';
 import NavItem from '../../NavItem';
 
 export interface DrawerMenuProps {

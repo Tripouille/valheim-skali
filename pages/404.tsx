@@ -1,6 +1,6 @@
 import React from 'react';
 import { chakra } from '@chakra-ui/react';
-import Card from '@packages/components/core/Card';
+import Card from '@packages/components/core/Containers/Card';
 
 const NotFoundPage: React.FC = () => (
   <Card w="xl" h="3xs">

@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar from './NavBar';
-import Flex from '@packages/components/core/Flex';
-import Box from '@packages/components/core/Box';
+import Flex from '@packages/components/core/Containers/Flex';
+import Box from '@packages/components/core/Containers/Box';
 
 const Layout: React.FC = ({ children }) => (
   <Box

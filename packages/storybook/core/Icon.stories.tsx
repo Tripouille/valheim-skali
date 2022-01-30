@@ -1,4 +1,4 @@
-import Icon, { IconProps } from '@packages/components/core/Icon';
+import Icon, { IconProps } from '@packages/components/core/Images/Icon';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 import { GiVillage } from 'react-icons/gi';
 

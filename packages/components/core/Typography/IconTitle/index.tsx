@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconType } from 'react-icons';
-import Heading, { HeadingProps } from '@packages/components/core/Heading';
-import Icon, { IconProps } from '@packages/components/core/Icon';
+import Heading, { HeadingProps } from '@packages/components/core/Typography/Heading';
+import Icon, { IconProps } from '@packages/components/core/Images/Icon';
 
 export interface IconTitleProps {
   title: string;

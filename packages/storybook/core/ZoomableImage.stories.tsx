@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import ZoomableImage, { ZoomableImageProps } from '@packages/components/core/ZoomableImage';
+import ZoomableImage, { ZoomableImageProps } from '@packages/components/core/Images/ZoomableImage';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 
 const { defaultExport, StoryFactory } = storybookSetup<ZoomableImageProps>(ZoomableImage, {

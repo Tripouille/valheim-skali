@@ -1,7 +1,7 @@
 import React from 'react';
 import { chakra, useStyleConfig } from '@chakra-ui/react';
 import { CardSize, CardVariant } from '@packages/theme/components/Card';
-import Flex from '@packages/components/core/Flex';
+import Flex from '@packages/components/core/Containers/Flex';
 
 export interface CardProps {
   className?: string;

@@ -1,4 +1,6 @@
-import DiscordButton, { DiscordButtonProps } from '@packages/components/core/DiscordButton';
+import DiscordButton, {
+  DiscordButtonProps,
+} from '@packages/components/core/Interactive/DiscordButton';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 
 const { defaultExport, StoryFactory } = storybookSetup<DiscordButtonProps>(DiscordButton);

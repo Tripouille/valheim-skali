@@ -1,6 +1,6 @@
 import React from 'react';
 import { MdCircle } from 'react-icons/md';
-import { Accordion, TitleAccordionItem } from '@packages/components/core/Accordion';
+import { Accordion, TitleAccordionItem } from '@packages/components/core/Disclosure/Accordion';
 import RulesList from '../RulesList';
 
 const forbidden = [

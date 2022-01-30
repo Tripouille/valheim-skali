@@ -3,9 +3,15 @@ import { GiVikingHelmet } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
 import { StoryCategory } from '@packages/utils/constants';
-import { Menu, MenuProps, MenuButton, MenuList, MenuItem } from '@packages/components/core/Menu';
-import IconButton from '@packages/components/core/IconButton';
-import Button from '@packages/components/core/Button';
+import {
+  Menu,
+  MenuProps,
+  MenuButton,
+  MenuList,
+  MenuItem,
+} from '@packages/components/core/Overlay/Menu';
+import IconButton from '@packages/components/core/Interactive/IconButton';
+import Button from '@packages/components/core/Interactive/Button';
 
 const { defaultExport, StoryFactory } = storybookSetup<MenuProps>(
   Menu,

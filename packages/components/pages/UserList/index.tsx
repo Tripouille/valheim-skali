@@ -8,11 +8,11 @@ import { State } from '@packages/store';
 import selectUsers from '@packages/store/users/selectors';
 import { actions } from '@packages/store/users/slice';
 import { User, UserWithoutId } from '@packages/store/users/type';
-import Button from '@packages/components/core/Button';
-import Center from '@packages/components/core/Center';
-import Flex from '@packages/components/core/Flex';
-import Heading from '@packages/components/core/Heading';
-import { List, ListItem } from '@packages/components/core/List';
+import Button from '@packages/components/core/Interactive/Button';
+import Center from '@packages/components/core/Containers/Center';
+import Flex from '@packages/components/core/Containers/Flex';
+import Heading from '@packages/components/core/Typography/Heading';
+import { List, ListItem } from '@packages/components/core/DataDisplay/List';
 
 export interface UserListProps {
   users: User[];
