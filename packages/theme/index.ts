@@ -39,8 +39,8 @@ const options = {
     header: '4rem',
   },
   fonts: {
-    body: 'Lucida Sans',
-    heading: 'Lucida Sans',
+    body: 'Lucida Sans, sans-serif',
+    heading: 'Lucida Sans, sans-serif',
   },
 };
 

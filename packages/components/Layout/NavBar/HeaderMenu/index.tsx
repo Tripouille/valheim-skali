@@ -9,7 +9,7 @@ export interface HeaderMenuProps {
 }
 
 const HeaderMenu: React.FC<HeaderMenuProps> = ({ serverName }) => (
-  <chakra.nav ms="2" fontFamily="Norse, Lucida Sans">
+  <chakra.nav ms="2" fontFamily="Norse">
     <ButtonGroup variant="ghost">
       {NAV_ROUTES_VALUES.map(route => (
         <NavItem

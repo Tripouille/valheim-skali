@@ -4,11 +4,11 @@ import { Global } from '@emotion/react';
 const Fonts = () => (
   <Global
     styles={`
-      @font-face {
-        font-family: 'Norse';
-        src: url("/fonts/Norse.otf");
-      }
-      `}
+    @font-face {
+      font-family: 'Norse';
+      src: url('/fonts/Norse.otf'), local(Candara), local(Arial), local(sans-serif);
+    }
+    `}
   />
 );
 
