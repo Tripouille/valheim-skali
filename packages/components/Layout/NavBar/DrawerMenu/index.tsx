@@ -12,6 +12,7 @@ import {
   DrawerBody,
   DrawerFooter,
 } from '@packages/components/core/Overlay/Drawer';
+import theme from '@packages/theme';
 import NavItem from '../../NavItem';
 
 export interface DrawerMenuProps {
@@ -35,7 +36,7 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ serverName }) => {
       />
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
-        <DrawerContent bgColor="blue.700" fontFamily="Norse">
+        <DrawerContent bgColor={theme.colors.opaqueBackground} fontFamily="Norse">
           <DrawerBody mt="2">
             <chakra.nav>
               <VStack align="stretch">
