@@ -35,7 +35,7 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ serverName }) => {
       />
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
-        <DrawerContent bgColor="blue.700" fontFamily="Norse, Lucida Sans">
+        <DrawerContent bgColor="blue.700" fontFamily="Norse">
           <DrawerBody mt="2">
             <chakra.nav>
               <VStack align="stretch">
