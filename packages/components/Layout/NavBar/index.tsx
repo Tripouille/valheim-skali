@@ -8,6 +8,7 @@ import { getDataValue } from '@packages/utils/dataAttributes';
 import Center from '@packages/components/core/Containers/Center';
 import IconButton from '@packages/components/core/Interactive/IconButton';
 import { Menu, MenuButton, MenuList } from '@packages/components/core/Overlay/Menu';
+import theme from '@packages/theme';
 import HeaderMenu from './HeaderMenu';
 import DrawerMenu from './DrawerMenu';
 import SignInOut from './SignInOut';
@@ -26,7 +27,7 @@ const NavBar: React.FC = () => {
   const serverName = 'valhabba';
 
   return (
-    <chakra.header height="header" bgColor="rgba(49, 130, 206, 0.7)">
+    <chakra.header height="header" bgColor={theme.colors.overlay}>
       <Center justifyContent="space-between" h="full">
         {menuType === MenuType.HEADER && <HeaderMenu serverName={serverName} />}
         {menuType === MenuType.DRAWER && <DrawerMenu serverName={serverName} />}

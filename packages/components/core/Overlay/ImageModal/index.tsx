@@ -6,6 +6,7 @@ import Portal from '@packages/components/core/Overlay/Portal';
 import Box from '@packages/components/core/Containers/Box';
 import Center from '@packages/components/core/Containers/Center';
 import Image from '@packages/components/core/Images/Image';
+import theme from '@packages/theme';
 
 export interface ImageModalProps extends DataAttributes {
   src: NextImageProps['src'];
@@ -20,7 +21,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ dataCy, src, alt, onClick }) =>
       top="0"
       height="full"
       width="full"
-      bgColor="rgba(49, 130, 206, 0.7)"
+      bgColor={theme.colors.overlay}
       cursor="pointer"
       onClick={onClick}
     >

@@ -11,6 +11,7 @@ import {
   ModalOverlay,
 } from '@packages/components/core/Overlay/Modal';
 import Box from '@packages/components/core/Containers/Box';
+import theme from '@packages/theme';
 import { EventContext, isEventClosed } from '../utils';
 import EventItem from '../EventItem';
 
@@ -34,7 +35,7 @@ const EventCard: React.FC<EventCardProps> = ({ dataCy, event }) => {
         p="4"
         opacity={eventIsClosed ? 0.6 : 1}
         cursor="pointer"
-        _hover={{ backgroundColor: 'rgb(34, 72, 120)', borderColor: 'white' }}
+        _hover={{ backgroundColor: theme.colors.backgroundHover, borderColor: 'white' }}
         onClick={onOpen}
       >
         <EventItem
@@ -45,8 +46,8 @@ const EventCard: React.FC<EventCardProps> = ({ dataCy, event }) => {
         />
       </Box>
       <Modal isOpen={isOpen} onClose={onClose} size="6xl" scrollBehavior="inside" isCentered>
-        <ModalOverlay bgColor="rgba(49, 130, 206,0.7)" />
-        <ModalContent backgroundColor="blue.700" border="2px white solid">
+        <ModalOverlay bgColor={theme.colors.overlay} />
+        <ModalContent backgroundColor={theme.colors.opaqueBackground} border="2px white solid">
           <ModalCloseButton />
           <ModalBody>
             <EventItem

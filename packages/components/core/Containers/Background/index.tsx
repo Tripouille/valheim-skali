@@ -2,6 +2,7 @@ import React from 'react';
 import { chakra } from '@chakra-ui/react';
 import { Children } from '@packages/utils/types';
 import Box from '@packages/components/core/Containers/Box';
+import theme from '@packages/theme';
 
 export interface BackgroundProps {
   className?: string;
@@ -10,7 +11,7 @@ export interface BackgroundProps {
 
 const Background: React.FC<BackgroundProps> = ({ children, className }) => (
   <Box
-    bgColor="rgba(44, 82, 130, 0.95)"
+    bgColor={theme.colors.background}
     h="min-content"
     minH="full"
     w="8xl"
