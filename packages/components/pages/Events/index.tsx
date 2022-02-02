@@ -236,6 +236,22 @@ Elles seront différentes selon l'ordre d'arrivée et dévoilées en fin de sema
 
 Selon les retours il est possible que cet event s'étale sur deux jours.`,
   },
+  {
+    name: 'Course de sangliers',
+    href: 'https://discord.com/channels/843826987466227722/851883429162647582/938386991110823966',
+    tags: ['Course', '🐗', 'Paris'],
+    startDate: '2022-02-05T21:00',
+    continuous: false,
+    RPDescription: `Le village de Frelsijord est fier de vous convier à son premier event, qui sera une course à dos de sanglier.`,
+    description: `Le déroulement sera exactement le même que celle que j'ai précédemment organiser, mais voici un rappel pour ceux qui n'en auraient pas connaissance :
+- Les inscriptions se feront à l'avance pour faciliter l'organisation
+- Les sangliers (2* rapides) et selles seront disponibles sur place
+- Vous n'avez pas besoin de venir avec un nouveau perso, et il est possible de venir vous entrainer à tout moment si je suis dispo pour superviser
+- Le terrain à évolué depuis la première édition, il y a bien plus d'obstacles.
+- Pour contraintes techniques, l'event prendra la forme d'un tournoi à élimination directe, en fonction du succès, une seconde piste en mode "mario kart" pourra peut être voir le jour
+- Des paris pourront avoir lieu, donc ammenez des piastres 😉 la totalité de la mise est reversée aux participants
+- Les récompenses ne sont pas encore définies, n'hésitez pas à dire ce qui vous intérresserais comme récompences pour me donner des idées 🙂`,
+  },
 ];
 
 const Events = () => {
