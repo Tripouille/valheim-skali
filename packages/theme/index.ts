@@ -1,4 +1,4 @@
-import { extendTheme } from '@chakra-ui/react';
+import { extendTheme, theme as baseTheme } from '@chakra-ui/react';
 import { Card } from './components/Card';
 import { Button } from './components/Button';
 
@@ -25,6 +25,11 @@ const options = {
       },
       '&::-webkit-scrollbar-corner': {
         backgroundColor: 'blue.900',
+      },
+      // Scrollbars for firefox
+      '*': {
+        scrollbarColor: `${baseTheme.colors.blue[500]} ${baseTheme.colors.blue[900]}`,
+        scrollbarWidth: 'thin',
       },
     },
   },
