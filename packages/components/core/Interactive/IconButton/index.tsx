@@ -6,7 +6,7 @@ import {
 } from '@chakra-ui/react';
 import { DataAttributes } from '@packages/utils/types';
 
-export type IconButtonProps = ChakraIconButtonProps & { href?: string } & DataAttributes;
+export type IconButtonProps = ChakraIconButtonProps & DataAttributes;
 
 const IconButton = forwardRef<IconButtonProps, 'button'>(
   ({ dataCy, ...chakraIconButtonProps }, ref) => (
