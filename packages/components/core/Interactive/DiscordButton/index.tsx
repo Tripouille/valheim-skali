@@ -1,7 +1,8 @@
 import { useBoolean } from '@chakra-ui/react';
 import { FaDiscord } from 'react-icons/fa';
 import { DataAttributes } from '@packages/utils/types';
-import IconButton from '@packages/components/core/Interactive/IconButton';
+import Button from '@packages/components/core/Interactive/Button';
+import Spinner from '@packages/components/core/Feedback/Spinner';
 
 export interface DiscordButtonProps extends DataAttributes {
   href: string;
@@ -12,6 +13,7 @@ const DiscordButton: React.FC<DiscordButtonProps> = ({ dataCy, href }) => {
 
   const openLink = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    e.stopPropagation();
 
     setLoading.on();
     let lostFocus = false;
@@ -37,17 +39,16 @@ const DiscordButton: React.FC<DiscordButtonProps> = ({ dataCy, href }) => {
   };
 
   return (
-    <IconButton
+    <Button
       dataCy={dataCy}
       as="a"
       href={href}
-      title="Ouvrir le message discord"
-      aria-label="Ouvrir le message discord"
-      icon={<FaDiscord />}
+      leftIcon={isLoading ? <Spinner size="sm" emptyColor="blue.200" /> : <FaDiscord />}
       onClick={openLink}
-      isLoading={isLoading}
-      variant="expand"
-    />
+      lineHeight="1em"
+    >
+      <span>Lien discord</span>
+    </Button>
   );
 };
 

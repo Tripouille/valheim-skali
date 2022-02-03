@@ -1,7 +1,7 @@
-import WorkInProgress from '@packages/components/core/Feedback/WorkInProgress';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
+import WorkInProgress from '@packages/components/core/Feedback/WorkInProgress';
 
-const { defaultExport, StoryFactory } = storybookSetup<Record<string, unknown>>(WorkInProgress);
+const { defaultExport, StoryFactory } = storybookSetup(WorkInProgress);
 
 export default defaultExport;
 
