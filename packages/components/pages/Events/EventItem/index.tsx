@@ -5,7 +5,8 @@ import Box from '@packages/components/core/Containers/Box';
 import Flex from '@packages/components/core/Containers/Flex';
 import Heading from '@packages/components/core/Typography/Heading';
 import Text from '@packages/components/core/Typography/Text';
-import { Stack, HStack } from '@packages/components/core/Containers/Stack';
+import { Stack } from '@packages/components/core/Containers/Stack';
+import { Wrap } from '@packages/components/core/Containers/Wrap';
 import Tag from '@packages/components/core/DataDisplay/Tag';
 import DiscordButton from '@packages/components/core/Interactive/DiscordButton';
 import { formatDateInterval } from '@packages/utils/format';
@@ -45,19 +46,16 @@ const EventItem: React.FC<EventItemProps> = ({ dataCy, event, context, eventIsCl
           {event.name} {eventIsClosed && '(terminé)'}
         </Heading>
         <Box flex="1">
-          <HStack
-            justifyContent="flex-end"
-            wrap="wrap"
-            minH="full"
+          <Wrap
+            justify="flex-end"
             /** Give space to modal close button */
             pe={context === EventContext.MODAL ? 6 : 0}
-            shouldWrapChildren
           >
             {event.tags.map(tag => (
               <Tag key={tag} label={tag} />
             ))}
             {event.continuous && <Tag label="Continu" />}
-          </HStack>
+          </Wrap>
         </Box>
       </Flex>
       <Text textAlign="center" fontStyle="italic" pb="2">
