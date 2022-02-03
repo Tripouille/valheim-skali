@@ -6,7 +6,7 @@ const Fonts = () => (
     styles={`
     @font-face {
       font-family: 'Norse';
-      src: url('/fonts/Norse.otf'), local(Candara), local(Arial), local(sans-serif);
+      src: url('/fonts/Norse.otf'), local('Candara'), local('Arial'), local('sans-serif');
     }
     `}
   />
