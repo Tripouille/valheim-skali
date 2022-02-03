@@ -253,6 +253,45 @@ Selon les retours il est possible que cet event s'étale sur deux jours.`,
 - Des paris pourront avoir lieu, donc ammenez des piastres 😉 la totalité de la mise est reversée aux participants
 - Les récompenses ne sont pas encore définies, n'hésitez pas à dire ce qui vous intérresserais comme récompences pour me donner des idées 🙂`,
   },
+  {
+    name: 'Les récoltes de Papi Gnorta',
+    href: 'https://discord.com/channels/843826987466227722/851883429162647582/938551073126375546',
+    tags: ['Echange'],
+    startDate: '2022-01-31',
+    continuous: true,
+    RPDescription: `Dans le village de Frelsijord, l'ancien guerrier Gnorta (pnj fictif pour l'instant) cherche des ressources pour constamment reremplir ses réserves. Il est prêt à vous échanger certaines pièces d'armure et armes qu'il a accumulé depuis ses nombreuses années de combat aux Valhabba contre les ressources qu'il convoite.`,
+    description: `Déroulement : Aux village Frelsijord, une fois par semaine une quête sera publié sur un panneau et un parchemin, sur le bord du ponton a l'extrême sud du village. Chaque joueur qui ramènera les ressources demandé recevra la récompense que proposera Papi Gnorta. Les récompenses iront de l'armure et armes de l'Age du fer jusqu'à celle du Sombracier, toute niveau 1
+
+Semaine 31/01 - 07/02 : 
+
+Papi Gnorta cours dans sa cuisine, il est affolé, ou a t'il pu ranger ses fines herbes ? Comment va t'il pouvoir finir la cuisson de ses meilleurs plats ? A vous guerrier de l'aider. Ramenez 400 Pissenlits a Papi Gnorta et en échange il vous cèdera une "Cape de Loup" niv 1
+
+Pour valider la quête et l'échange prévenez Vidar.
+Coordonnées du village : (-3969.0, -1399.0)`,
+  },
+  {
+    name: 'Le Labyrinthe des Grecs',
+    href: 'https://discord.com/channels/843826987466227722/843851399943290921/938916916968435732',
+    tags: ['Labyrinthe', 'Chasse au trésor'],
+    startDate: '2022-02-03',
+    continuous: true,
+    description: `Pour cet événement vous n'aurez pas besoin de grands plats gastronomiques,  vous n'aurez pas besoin d'équipements au prix astronomique, vous aurez juste besoin de votre logique !
+(un papier et un crayon IRL sont également conseillés)
+Cet événement est ouvert aux joueurs de tout niveau et il l'est de tout temps et de toutes heures.
+Pour le démarrer, rendez-vous nu aux terres communales et parlez au PNJ à quelques mètres au nord de l'auberge du corbeau bavard (coordonnés 145,555).
+
+Pour vous rendre facilement aux terres  communales des portails publics sont disponibles (plus d'infos --> https://discord.com/channels/843826987466227722/843851399943290921/933848258848096337)
+
+Expliquation hors RP:
+-/ Si vous n'êtes pas prêt à vous creuser la tête et à (peut-être ?) mourir, ne faites pas cet évent.
+-/ Cet événement consiste à trouver la sortie d'un labyrinthe.
+-/ Ce labyrinthe ne contient aucun monstre (normalement).
+-/ Une fois l'événement lancé vous ne pourrez le quitter qu'en mourant ou en le finissant.
+-/ Vous pouvez vous déconnecter dans le labyrinthe pour vous y reconnectez plus tard.
+-/ Une fois le labyrinthe fini vous recevrez une récompense exclusive à cet évent. Elle est pensée pour être d'une grande aide pour tous les joueurs quel que soit leur niveau.
+-/ Le labyrinthe n'est pas parfait et sera forcément amélioré au fur et à mesure, si vous trouvez des endroits surprenants, parlez en aux admins (en ticket)
+-/ Vous pouvez faire cet évenement avec un nouveau personnage`,
+  },
 ];
 
 const Events = () => {
