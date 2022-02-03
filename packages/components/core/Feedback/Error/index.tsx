@@ -1,13 +1,18 @@
 import React from 'react';
 import Background from '@packages/components/core/Containers/Background';
 import Center from '@packages/components/core/Containers/Center';
+import { Children } from '@packages/utils/types';
 
-const NotFound: React.FC = () => (
+export interface ErrorProps {
+  children: Children;
+}
+
+const Error: React.FC = ({ children }) => (
   <Background h="full">
     <Center h="full" fontSize="xl">
-      404 - La page que vous recherchez n&apos;existe pas ¯\_(ツ)_/¯
+      {children}
     </Center>
   </Background>
 );
 
-export default NotFound;
+export default Error;
