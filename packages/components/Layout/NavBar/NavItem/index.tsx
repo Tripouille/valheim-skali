@@ -13,7 +13,7 @@ export interface NavItemProps extends DataAttributes {
 
 const NavItem: React.FC<NavItemProps> = ({ dataCy, root, navRoute, onClick }) => (
   <NextLink href={`${root}${navRoute}`} passHref>
-    <Button as="a" fontSize="3xl" onClick={onClick} dataCy={dataCy}>
+    <Button as="a" fontSize="3xl" size="lg" onClick={onClick} dataCy={dataCy}>
       {NAV_ROUTES_TO_LABEL[navRoute]}
     </Button>
   </NextLink>
