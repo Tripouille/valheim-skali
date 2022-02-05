@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdCircle } from 'react-icons/md';
 import { Accordion, TitleAccordionItem } from '@packages/components/core/Disclosure/Accordion';
-import RulesList from '../RulesList';
+import IconList from '@packages/components/core/DataDisplay/IconList';
 
 const forbidden = [
   `Se cacher, ou de cacher sa base, derrière une muraille de terre surélevée, derrière un fossé, derrière des murs d’arbres ou derrière une construction boguée et invulnérable.`,
@@ -49,22 +49,22 @@ const GameGuides: React.FC = () => (
       id="forbidden-behaviors"
       title="Exemples de comportements strictement interdits :"
     >
-      <RulesList list={forbidden} icon={MdCircle} iconColor="red.400" />
+      <IconList list={forbidden} icon={MdCircle} iconColor="red.400" />
     </TitleAccordionItem>
     <TitleAccordionItem
       id="behaviors-to-avoid"
       title="Exemples de comportements peu appréciés, mais pas strictement interdits :"
     >
-      <RulesList list={toAvoid} icon={MdCircle} iconColor="orange.400" />
+      <IconList list={toAvoid} icon={MdCircle} iconColor="orange.400" />
     </TitleAccordionItem>
     <TitleAccordionItem
       id="appreciated-behaviors"
       title="Exemples de comportements tout à fait appréciés :"
     >
-      <RulesList list={appreciated} icon={MdCircle} iconColor="green.400" />
+      <IconList list={appreciated} icon={MdCircle} iconColor="green.400" />
     </TitleAccordionItem>
     <TitleAccordionItem id="behavior-advice" title="Conseils">
-      <RulesList list={advice} icon={MdCircle} iconColor="blue.400" />
+      <IconList list={advice} icon={MdCircle} iconColor="blue.400" />
     </TitleAccordionItem>
   </Accordion>
 );
