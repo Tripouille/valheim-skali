@@ -13,7 +13,7 @@ const Home = () => (
     <VStack spacing="8">
       <PageTitle title="Bienvenue au Skali du Valhabba" />
 
-      <Box>
+      <Box w="full">
         <Paragraphs
           paragraphs={[
             `Mis en ligne le 20 mai par plusieurs joueurs expérimentés, Valhabba est un serveur de jeu
@@ -29,7 +29,7 @@ const Home = () => (
       </Box>
 
       <Box w="full">
-        <Heading as="h1" size="l" textAlign="left">
+        <Heading as="h1" size="l">
           Quelques souvenirs
         </Heading>
         <Carousel
@@ -105,7 +105,7 @@ const Home = () => (
       </Box>
 
       <Box w="full">
-        <Heading as="h1" size="l" textAlign="left">
+        <Heading as="h1" size="l">
           Quelques paysages
         </Heading>
         <Carousel
@@ -169,7 +169,7 @@ const Home = () => (
       </Box>
 
       <Box w="full">
-        <Heading as="h1" size="l" textAlign="left">
+        <Heading as="h1" size="l">
           Quelques statistiques
         </Heading>
         <Carousel
@@ -196,8 +196,8 @@ const Home = () => (
         />
       </Box>
 
-      <Box>
-        <Heading as="h1" size="l" mb="3" textAlign="left">
+      <Box w="full">
+        <Heading as="h1" size="l" mb="3">
           Le Skali
         </Heading>
         <Paragraphs
