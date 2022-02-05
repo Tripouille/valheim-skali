@@ -8,6 +8,9 @@ export const NAV_ROUTES_TO_LABEL: Record<NavRoutes, string> = {
   [NavRoutes.HOME]: 'Skali',
   [NavRoutes.RULES]: 'Règlement',
   [NavRoutes.EVENTS]: 'Événements',
+  [NavRoutes.PRICE_LIST]: 'Tarifs',
+  [NavRoutes.MODS]: 'Mods',
+  [NavRoutes.WORLD]: 'Monde',
 };
 
 export enum StoryCategory {
