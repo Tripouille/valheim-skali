@@ -1,8 +1,8 @@
 import { chakra } from '@chakra-ui/react';
 import { NAV_ROUTES_VALUES } from '@packages/utils/constants';
 import ButtonGroup from '@packages/components/core/Interactive/ButtonGroup';
-import NavItem from '../../NavItem';
 import { getDataValue } from '@packages/utils/dataAttributes';
+import NavItem from '../NavItem';
 
 export interface HeaderMenuProps {
   serverName: string;

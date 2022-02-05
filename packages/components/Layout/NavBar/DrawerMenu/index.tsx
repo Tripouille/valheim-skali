@@ -13,7 +13,7 @@ import {
   DrawerFooter,
 } from '@packages/components/core/Overlay/Drawer';
 import theme from '@packages/theme';
-import NavItem from '../../NavItem';
+import NavItem from '../NavItem';
 
 export interface DrawerMenuProps {
   serverName: string;
