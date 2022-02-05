@@ -1,21 +1,27 @@
 import React from 'react';
 import { IconType } from 'react-icons';
+import { FaArrowCircleRight } from 'react-icons/fa';
 import {
   List,
   ListIcon,
   ListIconProps,
   ListItem,
 } from '@packages/components/core/DataDisplay/List';
+import { Children } from '@packages/utils/types';
 
-export interface RulesListProps {
-  list: string[];
-  icon: IconType;
-  iconColor: ListIconProps['color'];
+export interface IconListProps {
+  list: Children[];
+  icon?: IconType;
+  iconColor?: ListIconProps['color'];
 }
 
-const RulesList: React.FC<RulesListProps> = ({ list, icon, iconColor }) => (
+const IconList: React.FC<IconListProps> = ({
+  list,
+  icon = FaArrowCircleRight,
+  iconColor = 'blue.200',
+}) => (
   <List spacing={3}>
-    {list.map((content: string, index: number) => (
+    {list.map((content: Children, index: number) => (
       // eslint-disable-next-line react/no-array-index-key
       <ListItem key={index} display="flex" alignItems="center">
         <ListIcon as={icon} color={iconColor} boxSize="1.2em" />
@@ -25,4 +31,4 @@ const RulesList: React.FC<RulesListProps> = ({ list, icon, iconColor }) => (
   </List>
 );
 
-export default RulesList;
+export default IconList;

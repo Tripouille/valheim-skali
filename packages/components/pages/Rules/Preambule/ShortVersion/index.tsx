@@ -3,7 +3,7 @@ import { MdCancel, MdCheckCircle } from 'react-icons/md';
 import Box from '@packages/components/core/Containers/Box';
 import Heading from '@packages/components/core/Typography/Heading';
 import { VStack } from '@packages/components/core/Containers/Stack';
-import RulesList from '../../RulesList';
+import IconList from '@packages/components/core/DataDisplay/IconList';
 
 const invalidRules = [
   `Vous cherchez des conseils ou de l’aide pour votre partie perso. Ici on ne traite que de notre serveur.`,
@@ -42,13 +42,13 @@ const ShortVersion: React.FC = () => (
       <Heading as="h3" size="l" pb="2">
         Avant toute chose, ce serveur n’est PAS pour vous si :
       </Heading>
-      <RulesList list={invalidRules} icon={MdCancel} iconColor="red.400" />
+      <IconList list={invalidRules} icon={MdCancel} iconColor="red.400" />
     </Box>
     <Box>
       <Heading as="h3" size="l" pb="2">
         Ceci étant dit, vous êtes peut-être au bon endroit, si vous cherchez un serveur :
       </Heading>
-      <RulesList list={validRules} icon={MdCheckCircle} iconColor="green.400" />
+      <IconList list={validRules} icon={MdCheckCircle} iconColor="green.400" />
     </Box>
   </VStack>
 );

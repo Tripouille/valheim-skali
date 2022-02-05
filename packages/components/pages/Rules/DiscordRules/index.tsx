@@ -1,7 +1,6 @@
 import React from 'react';
-import { Heading } from '@chakra-ui/layout';
-import { FaArrowCircleRight } from 'react-icons/fa';
-import RulesList from '../RulesList';
+import Heading from '@packages/components/core/Typography/Heading';
+import IconList from '@packages/components/core/DataDisplay/IconList';
 
 const discordRules = [
   'Soyez respectueux et utilisez votre tête, ainsi vous n’aurez pas à vous préoccuper du reste (mais lisez quand même la suite !).',
@@ -24,7 +23,7 @@ const DiscordRules: React.FC = () => (
     <Heading size="l" mb="5">
       Tu es sur internet, sois-y un bon exemple !
     </Heading>
-    <RulesList list={discordRules} icon={FaArrowCircleRight} iconColor="blue.200" />
+    <IconList list={discordRules} />
   </>
 );
 
