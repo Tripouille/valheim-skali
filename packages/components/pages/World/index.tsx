@@ -1,6 +1,12 @@
 import React from 'react';
 import Background from '@packages/components/core/Containers/Background';
 import { VStack } from '@packages/components/core/Containers/Stack';
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+} from '@packages/components/core/Feedback/Alert';
 import PageTitle from '@packages/components/core/Typography/PageTitle';
 import Paragraphs from '../../core/Typography/Paragraphs';
 import IconList from '../../core/DataDisplay/IconList';
@@ -13,6 +19,16 @@ const World = () => {
     <Background textAlign="justify">
       <VStack spacing="10">
         <PageTitle title="Les îles du Valhabba" />
+        <Alert status="warning" w="5xl">
+          <AlertIcon />
+          <AlertTitle whiteSpace="nowrap" me="5">
+            Spoiler Alert !
+          </AlertTitle>
+          <AlertDescription>
+            Cette page contient des cartes du monde du Valhabba. Si vous souhaitez découvrir le
+            monde par vous-même, abstenez-vous de regarder les images sur cette page !
+          </AlertDescription>
+        </Alert>
         <VStack align="start" w="full">
           <Paragraphs
             paragraphs={[
