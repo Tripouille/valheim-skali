@@ -7,7 +7,7 @@ export interface IconTitleProps {
   title: string;
   size: HeadingProps['size'];
   icon: IconType;
-  iconColor: IconProps['color'];
+  iconColor?: IconProps['color'];
 }
 
 const IconTitle: React.FC<IconTitleProps> = ({ title, size, icon, iconColor }) => (
