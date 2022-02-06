@@ -1,6 +1,6 @@
 import React from 'react';
-import WorkInProgress from '@packages/components/core/Feedback/WorkInProgress';
+import Mods from '@packages/components/pages/Mods';
 
-const ModsPage = () => <WorkInProgress />;
+const ModsPage = () => <Mods />;
 
 export default ModsPage;
