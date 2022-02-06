@@ -6,9 +6,10 @@ import Spinner from '@packages/components/core/Feedback/Spinner';
 
 export interface DiscordButtonProps extends DataAttributes {
   href: string;
+  label?: string;
 }
 
-const DiscordButton: React.FC<DiscordButtonProps> = ({ dataCy, href }) => {
+const DiscordButton: React.FC<DiscordButtonProps> = ({ dataCy, href, label = 'Lien discord' }) => {
   const [isLoading, setLoading] = useBoolean();
 
   const openLink = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -47,7 +48,7 @@ const DiscordButton: React.FC<DiscordButtonProps> = ({ dataCy, href }) => {
       onClick={openLink}
       lineHeight="1em"
     >
-      <span>Lien discord</span>
+      <span>{label}</span>
     </Button>
   );
 };
