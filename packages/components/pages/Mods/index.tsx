@@ -17,6 +17,12 @@ import { MdShareLocation } from 'react-icons/md';
 import Background from '@packages/components/core/Containers/Background';
 import Box from '@packages/components/core/Containers/Box';
 import { VStack } from '@packages/components/core/Containers/Stack';
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+} from '@packages/components/core/Feedback/Alert';
 import PageTitle from '@packages/components/core/Typography/PageTitle';
 import Text from '@packages/components/core/Typography/Text';
 import Paragraphs from '@packages/components/core/Typography/Paragraphs';
@@ -36,6 +42,17 @@ const Mods = () => {
     <Background textAlign="justify">
       <VStack spacing="10">
         <PageTitle title="Mods" />
+        <Alert status="warning" w="5xl">
+          <AlertIcon />
+          <AlertTitle whiteSpace="nowrap" me="5">
+            Spoiler Alert !
+          </AlertTitle>
+          <AlertDescription>
+            Cette page contient des informations que vous pourriez vouloir découvrir par vous-même.
+            Certaines ont été masquées (et sont visibles sur un clic) pour ne pas gâcher votre
+            expérience découverte du serveur.
+          </AlertDescription>
+        </Alert>
         <VStack align="start" w="full" spacing="3">
           <IconTitle title="Préambule" size="md" icon={GiDungeonGate} />
           <Paragraphs
