@@ -1,6 +1,6 @@
 import React from 'react';
-import WorkInProgress from '@packages/components/core/Feedback/WorkInProgress';
+import World from '@packages/components/pages/World';
 
-const WorldPage = () => <WorkInProgress />;
+const WorldPage = () => <World />;
 
 export default WorldPage;
