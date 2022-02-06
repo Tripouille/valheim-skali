@@ -20,7 +20,7 @@ enum MenuType {
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
-  const menuType = useBreakpointValue({ base: MenuType.DRAWER, md: MenuType.HEADER });
+  const menuType = useBreakpointValue({ base: MenuType.DRAWER, lg: MenuType.HEADER });
 
   // const router = useRouter();
   // const { serverName } = router.query;
@@ -40,7 +40,7 @@ const NavBar: React.FC = () => {
             title="Gérer mon compte"
             icon={<GiVikingHelmet />}
             fontSize="2xl"
-            me="2"
+            mx="2"
             p="2"
             rightIcon={<BiChevronDown />}
           />
