@@ -2,6 +2,7 @@
  * @jest-environment node
  */
 
+import { expect } from '@jest/globals';
 import { MongoClient } from 'mongodb';
 import { ObjectId } from 'bson';
 import db from '@packages/utils/db';
