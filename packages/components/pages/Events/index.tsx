@@ -292,6 +292,51 @@ Expliquation hors RP:
 -/ Le labyrinthe n'est pas parfait et sera forcément amélioré au fur et à mesure, si vous trouvez des endroits surprenants, parlez en aux admins (en ticket)
 -/ Vous pouvez faire cet évenement avec un nouveau personnage`,
   },
+  {
+    name: 'Construction du village communal',
+    href: 'https://discord.com/channels/843826987466227722/851883429162647582/941253004676440094',
+    tags: ['Construction'],
+    startDate: '2022-02-10',
+    continuous: true,
+    description: `Comme vous avez pu le lire sur le discord dans « guides-du-jeu » il y avait un village dans l’ancien serveur. Le but est de le recréer.
+
+Pour cela j’ai choisie le rôle de Maître d’œuvre, j’ai trouvé l’emplacement, l’implantation des commerces, maisons, auberge, hub et autre. Maintenant j’ai besoin des compétences de constructeurs aguerrie des joueurs du serveur.
+
+Les ressources vous seront fournie par les admins et moi même (ça me demande et me demandera un gros farm donc interdiction de les utiliser pour des raisons personnelles)
+
+Le village sera accessible pour tout le monde débutant comme joueur confirmé, le long de la cote proche du pnj hotel des ventes et du portail vers le Hall des Vanirs (pnj vendeurs)
+
+Votre récompenses sera d’avoir une plaque à votre nom proche de votre construction, ainsi votre œuvre restera à travers les âges et sera chanté dans les Sagas même après le Ragnarök.
+
+Les règles de l’Évent : 
+
+- Chaque joueurs souhaitant y participer se verra attribuer une parcelle de construction selon ses goûts, ses envies et ce qu’il reste à construire.
+
+- Les parcelles ont toute une instance de construction limité, allant de 300 instances (petite maison de pnj avec faible décoration), 750 (commerce de joueurs), 1500 d’instance (auberge, salle portails).
+
+- Les bâtiments du village doivent un aspect similaire. Il s’agit d’un village type scandinave (pas le centre pompidou hein ! Lol). Je suis ouvert à toute proposition, mais je sais dire non donc soyez en conscient.
+
+- Construction de l’age de fer, pour les lumières n’utilise pas de torche qui nécessite des consommables pour être allumé, le village ne sera pas sous Ward . Il existe des lanterne, bougie, lanterne avec cœur de surtling qui resteront tout le temps allumé.
+
+- Pour les commerces ne faite pas de décoration interne poussé . Les joueurs qui occuperons ces commerces s’en chargerons
+
+- Il y a 9 construction + de la décoration extérieur :
+
+1 longhouse (Skali) scandinave : Bâtiments avec le pnj chef de village, futur donneur de quete, lieu de rp et d’échange entre joueurs
+
+4 commerces : Bâtiments que les joueurs peuvent occuper pour créer un commerce (forgeron, boulanger, alchimiste, barbier, etc.…)
+
+2 maisons de pécheur : Bâtiments avec pnj qui explique des techniques et astuces du serveur
+
+1 Hall des portails : Batiments avec les portails et heraut pnj des différents villages, et les portails pour accéder a la zone communal (portail utilisable auquel les joueurs pourront se connecté pour venir mais devront déconnecter après
+
+1 Auberge : Lieux avec des pnj et joueurs, lieux de vente d’hydromel et autre boisson spirituelle (lol) , des lits seront proposé.
+
+Décoration extérieur : Lanternes, ponton, jardins en terrasse, rambarde, etc (je vous laisse faire des propositions)
+
+
+Constatez Vidar pour faire votre choix de parcelles et commencé la construction du village avec nous.`,
+  },
 ];
 
 const Events = () => {
