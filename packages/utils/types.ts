@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 export interface ImageAttributes {
   src: string;
   alt: string;
@@ -7,9 +5,15 @@ export interface ImageAttributes {
 
 export type Callback = () => void;
 
-export type Children = ReactNode;
+export type Children = React.ReactElement | null;
 
 export interface DataAttributes {
   /** Cypress */
   dataCy: string;
 }
+
+export interface AuthConfig {
+  needAuth?: boolean;
+}
+
+export type ComponentWithAuth<PropTypes = Record<string, never>> = React.FC<PropTypes> & AuthConfig;

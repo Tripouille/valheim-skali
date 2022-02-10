@@ -1,15 +1,23 @@
-import React from 'react';
+import { NextComponentType } from 'next';
+import type { AppInitialProps } from 'next/app';
 import Head from 'next/head';
-import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { ChakraProvider } from '@chakra-ui/react';
+import { AuthConfig } from '@packages/utils/types';
 import store from '@packages/store';
 import Layout from '@packages/components/Layout';
 import Fonts from '@packages/components/Layout/Fonts';
 import theme from '@packages/theme';
+import Secured from '@packages/components/core/Authentication/Secured';
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+type MyAppProps = AppInitialProps & {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Component: NextComponentType & AuthConfig;
+};
+
+const MyApp = ({ Component, pageProps: { session, ...pageProps } }: MyAppProps) => {
   return (
     <SessionProvider session={session}>
       <ChakraProvider theme={theme}>
@@ -21,12 +29,18 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
           </Head>
           <Fonts />
           <Layout>
-            <Component {...pageProps} />
+            {Component.needAuth ? (
+              <Secured>
+                <Component {...pageProps} />
+              </Secured>
+            ) : (
+              <Component {...pageProps} />
+            )}
           </Layout>
         </Provider>
       </ChakraProvider>
     </SessionProvider>
   );
-}
+};
 
 export default MyApp;
