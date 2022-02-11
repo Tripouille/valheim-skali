@@ -1,4 +1,4 @@
-import Signin from '@packages/components/core/Authentication/Signin';
+import Signin from '@packages/components/pages/Signin';
 
 const SigninPage: React.FC = () => <Signin />;
 

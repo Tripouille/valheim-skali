@@ -1,3 +1,6 @@
+import { ReactNode } from 'react';
+import { Permission } from './constants';
+
 export interface ImageAttributes {
   src: string;
   alt: string;
@@ -5,7 +8,7 @@ export interface ImageAttributes {
 
 export type Callback = () => void;
 
-export type Children = React.ReactElement | null;
+export type Children = ReactNode;
 
 export interface DataAttributes {
   /** Cypress */
@@ -13,7 +16,7 @@ export interface DataAttributes {
 }
 
 export interface AuthConfig {
-  needAuth?: boolean;
+  needAuth?: { permission?: Permission };
 }
 
 export type ComponentWithAuth<PropTypes = Record<string, never>> = React.FC<PropTypes> & AuthConfig;

@@ -17,30 +17,28 @@ type MyAppProps = AppInitialProps & {
   Component: NextComponentType & AuthConfig;
 };
 
-const MyApp = ({ Component, pageProps: { session, ...pageProps } }: MyAppProps) => {
-  return (
-    <SessionProvider session={session}>
-      <ChakraProvider theme={theme}>
-        <Provider store={store}>
-          <Head>
-            <title>Skali - Valhabba</title>
-            <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-            <link rel="preload" href="/fonts/Norse.otf" as="font" crossOrigin="" />
-          </Head>
-          <Fonts />
-          <Layout>
-            {Component.needAuth ? (
-              <Secured>
-                <Component {...pageProps} />
-              </Secured>
-            ) : (
+const MyApp = ({ Component, pageProps: { session, ...pageProps } }: MyAppProps) => (
+  <SessionProvider session={session}>
+    <ChakraProvider theme={theme}>
+      <Provider store={store}>
+        <Head>
+          <title>Skali - Valhabba</title>
+          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+          <link rel="preload" href="/fonts/Norse.otf" as="font" crossOrigin="" />
+        </Head>
+        <Fonts />
+        <Layout>
+          {Component.needAuth ? (
+            <Secured permission={Component.needAuth.permission}>
               <Component {...pageProps} />
-            )}
-          </Layout>
-        </Provider>
-      </ChakraProvider>
-    </SessionProvider>
-  );
-};
+            </Secured>
+          ) : (
+            <Component {...pageProps} />
+          )}
+        </Layout>
+      </Provider>
+    </ChakraProvider>
+  </SessionProvider>
+);
 
 export default MyApp;

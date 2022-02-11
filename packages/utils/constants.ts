@@ -24,3 +24,14 @@ export const TagColors: Record<string, string> = {
   PvE: '#0047AB', // cobalt
   Continu: '#4299e1', // blue.400
 };
+
+export enum Permission {
+  USER = 'USER',
+  ROLE = 'ROLE',
+  EVENT = 'EVENT',
+}
+
+export enum AuthError {
+  CALLBACK = 'Callback',
+  SESSION_REQUIRED = 'SessionRequired',
+}
