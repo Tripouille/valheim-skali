@@ -7,11 +7,7 @@ import Center from '@packages/components/core/Containers/Center';
 import Button from '@packages/components/core/Interactive/Button';
 import Text from '@packages/components/core/Typography/Text';
 import { getDataValue } from '@packages/utils/dataAttributes';
-
-enum AuthError {
-  CALLBACK = 'Callback',
-  SESSION_REQUIRED = 'SessionRequired',
-}
+import { AuthError } from '@packages/utils/constants';
 
 const Signin = () => {
   const router = useRouter();
