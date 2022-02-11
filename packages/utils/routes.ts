@@ -1,8 +1,10 @@
-enum APIRoutes {
+import { AuthError } from './constants';
+
+export enum APIRoutes {
   USERS = '/api/users',
 }
 
-enum NavRoutes {
+export enum NavRoutes {
   HOME = '/',
   RULES = '/rules',
   EVENTS = '/events',
@@ -11,4 +13,9 @@ enum NavRoutes {
   WORLD = '/world',
 }
 
-export { APIRoutes, NavRoutes };
+enum AuthRoutes {
+  SIGNIN = '/auth/signin',
+}
+
+export const getSigninRoute = (error: AuthError, callbackUrl: string) =>
+  `${AuthRoutes.SIGNIN}?error=${error}&callbackUrl=${callbackUrl}`;
