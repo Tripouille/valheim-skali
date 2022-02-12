@@ -9,6 +9,8 @@ import {
   MenuItemProps as ChakraMenuItemProps,
   MenuList as ChakraMenuList,
   MenuListProps as ChakraMenuListProps,
+  MenuDivider as ChakraMenuDivider,
+  MenuDividerProps as ChakraMenuDividerProps,
 } from '@chakra-ui/react';
 import { DataAttributes } from '@packages/utils/types';
 
@@ -35,4 +37,10 @@ export type MenuListProps = ChakraMenuListProps;
 
 export const MenuList: React.FC<MenuListProps> = chakraMenuListProps => (
   <ChakraMenuList {...chakraMenuListProps}></ChakraMenuList>
+);
+
+export type MenuDividerProps = ChakraMenuDividerProps;
+
+export const MenuDivider: React.FC<MenuDividerProps> = chakraMenuDividerProps => (
+  <ChakraMenuDivider {...chakraMenuDividerProps}></ChakraMenuDivider>
 );

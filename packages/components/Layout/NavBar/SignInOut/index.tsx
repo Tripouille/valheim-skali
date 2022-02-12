@@ -15,7 +15,7 @@ const SignInOut: React.FC<SignInOutProps> = ({ dataCy, isConnected }) => {
   const onClick = () => (isConnected ? signOut() : signIn('discord'));
 
   return (
-    <MenuItem icon={icon} onClick={onClick} dataCy={getDataValue(dataCy, 'sign_in_out')}>
+    <MenuItem dataCy={getDataValue(dataCy, 'sign_in_out')} icon={icon} onClick={onClick}>
       {label}
     </MenuItem>
   );
