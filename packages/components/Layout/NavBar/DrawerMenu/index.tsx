@@ -1,9 +1,10 @@
 import { chakra, useDisclosure } from '@chakra-ui/react';
 import { RiMenuLine } from 'react-icons/ri';
-import { NAV_ROUTES_VALUES } from '@packages/utils/constants';
 import { getDataValue } from '@packages/utils/dataAttributes';
+import { NavRoutes } from '@packages/utils/routes';
 import IconButton from '@packages/components/core/Interactive/IconButton';
 import Button from '@packages/components/core/Interactive/Button';
+import NavItem from '@packages/components/core/Interactive/NavItem';
 import { VStack } from '@packages/components/core/Containers/Stack';
 import {
   Drawer,
@@ -13,7 +14,6 @@ import {
   DrawerFooter,
 } from '@packages/components/core/Overlay/Drawer';
 import theme from '@packages/theme';
-import NavItem from '../NavItem';
 
 export interface DrawerMenuProps {
   serverName: string;
@@ -37,10 +37,10 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ serverName }) => {
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent bgColor={theme.colors.opaqueBackground} fontFamily="Norse">
-          <DrawerBody mt="2">
+          <DrawerBody mt="2" px={{ base: 3, sm: 6 }}>
             <chakra.nav>
               <VStack align="stretch">
-                {NAV_ROUTES_VALUES.map(route => (
+                {Object.values(NavRoutes).map(route => (
                   <NavItem
                     dataCy={getDataValue('nav_bar_drawer', 'nav_item', route)}
                     key={route}

@@ -7,7 +7,7 @@ import Center from '@packages/components/core/Containers/Center';
 import Button from '@packages/components/core/Interactive/Button';
 import Text from '@packages/components/core/Typography/Text';
 import { getDataValue } from '@packages/utils/dataAttributes';
-import { AuthError } from '@packages/utils/constants';
+import { AuthError } from '@packages/utils/auth';
 
 const Signin = () => {
   const router = useRouter();

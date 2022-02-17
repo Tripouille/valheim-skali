@@ -1,44 +1,23 @@
-import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { Children } from '@packages/utils/types';
-import { AuthError, Permission } from '@packages/utils/constants';
-import { getSigninRoute } from '@packages/utils/routes';
-import Spinner from '@packages/components/core/Feedback/Spinner';
-import Center from '@packages/components/core/Containers/Center';
-
-enum SessionStatus {
-  LOADING = 'loading',
-  AUTHENTICATED = 'authenticated',
-  UNAUTHENTICATED = 'unauthenticated',
-}
+import { Permissions, SessionStatus, userHasRequiredPermissions } from '@packages/utils/auth';
 
 export interface SecuredProps {
-  permission?: Permission;
+  permissions?: Permissions;
   children: Children;
 }
 
-const Secured: React.FC<SecuredProps> = ({ permission, children }) => {
-  const router = useRouter();
-  const session = useSession({
-    required: true,
-    onUnauthenticated: () => {
-      router.push(getSigninRoute(AuthError.SESSION_REQUIRED, router.asPath));
-    },
-  });
+const Secured: React.FC<SecuredProps> = ({ permissions, children }) => {
+  const session = useSession();
 
-  if (session.status === SessionStatus.AUTHENTICATED) {
-    if (permission && !session.data.permissions?.includes(permission)) {
-      router.push('/403');
-    } else {
-      return <>{children}</>;
-    }
+  if (
+    session.status === SessionStatus.AUTHENTICATED &&
+    userHasRequiredPermissions(session.data.permissions, permissions)
+  ) {
+    return <>{children}</>;
   }
 
-  return (
-    <Center>
-      <Spinner />
-    </Center>
-  );
+  return null;
 };
 
 export default Secured;

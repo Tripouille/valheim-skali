@@ -1,11 +1,14 @@
 import NextLink from 'next/link';
-import React from 'react';
-// import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import { chakra, useBreakpointValue } from '@chakra-ui/react';
+import React from 'react';
 import { GiStakeHammer, GiVikingHelmet } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
+import { CgInfo } from 'react-icons/cg';
+import { chakra, useBreakpointValue } from '@chakra-ui/react';
+import theme from '@packages/theme';
 import { getDataValue } from '@packages/utils/dataAttributes';
+import { SessionStatus, ROUTES_TO_PERMISSIONS } from '@packages/utils/auth';
+import { Routes } from '@packages/utils/routes';
 import Center from '@packages/components/core/Containers/Center';
 import IconButton from '@packages/components/core/Interactive/IconButton';
 import {
@@ -15,7 +18,7 @@ import {
   MenuItem,
   MenuList,
 } from '@packages/components/core/Overlay/Menu';
-import theme from '@packages/theme';
+import Secured from '@packages/components/core/Authentication/Secured';
 import HeaderMenu from './HeaderMenu';
 import DrawerMenu from './DrawerMenu';
 import SignInOut from './SignInOut';
@@ -24,14 +27,11 @@ enum MenuType {
   DRAWER,
   HEADER,
 }
+const serverName = 'valhabba';
 
-const NavBar: React.FC = () => {
-  const { data: session } = useSession();
+const NavBar = () => {
+  const session = useSession();
   const menuType = useBreakpointValue({ base: MenuType.DRAWER, lg: MenuType.HEADER });
-
-  // const router = useRouter();
-  // const { serverName } = router.query;
-  const serverName = 'valhabba';
 
   return (
     <chakra.header height="header" bgColor={theme.colors.overlay}>
@@ -54,13 +54,25 @@ const NavBar: React.FC = () => {
           <MenuList>
             <SignInOut
               dataCy={getDataValue('nav_bar', 'menu', 'dropdown')}
-              isConnected={Boolean(session)}
+              isConnected={session.status === SessionStatus.AUTHENTICATED}
             />
             <MenuDivider />
-            <NextLink href="/about">
+            <Secured permissions={ROUTES_TO_PERMISSIONS[Routes.ADMIN]}>
+              <NextLink href={`/${serverName}${Routes.ADMIN}`} passHref>
+                <MenuItem
+                  dataCy={getDataValue('nav_bar', 'menu', 'dropdown', 'admin')}
+                  as="a"
+                  icon={<GiStakeHammer size="20" />}
+                >
+                  Administration
+                </MenuItem>
+              </NextLink>
+            </Secured>
+            <NextLink href={Routes.ABOUT} passHref>
               <MenuItem
                 dataCy={getDataValue('nav_bar', 'menu', 'dropdown', 'about')}
-                icon={<GiStakeHammer size="20" />}
+                as="a"
+                icon={<CgInfo size="20" />}
               >
                 A propos du site
               </MenuItem>

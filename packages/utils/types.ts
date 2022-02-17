@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { Permission } from './constants';
 
 export interface ImageAttributes {
   src: string;
@@ -14,9 +13,3 @@ export interface DataAttributes {
   /** Cypress */
   dataCy: string;
 }
-
-export interface AuthConfig {
-  needAuth?: { permission?: Permission };
-}
-
-export type ComponentWithAuth<PropTypes = Record<string, never>> = React.FC<PropTypes> & AuthConfig;

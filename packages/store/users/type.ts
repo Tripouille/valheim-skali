@@ -3,6 +3,7 @@ export interface User {
   name: string;
   email: string;
   image: string;
+  roles?: string[];
 }
 
 export type UserWithoutId = Omit<User, '_id'>;
