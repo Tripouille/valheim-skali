@@ -9,6 +9,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  MenuDivider,
 } from '@packages/components/core/Overlay/Menu';
 import IconButton from '@packages/components/core/Interactive/IconButton';
 import Button from '@packages/components/core/Interactive/Button';
@@ -50,6 +51,7 @@ const baseProperties: MenuProps = {
         <MenuItem dataCy="" icon={<GiVikingHelmet />}>
           Item 1
         </MenuItem>
+        <MenuDivider />
         <MenuItem dataCy="">Item 2</MenuItem>
       </MenuList>
     </>
