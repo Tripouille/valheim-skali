@@ -9,6 +9,8 @@ import {
   MenuItemProps as ChakraMenuItemProps,
   MenuList as ChakraMenuList,
   MenuListProps as ChakraMenuListProps,
+  MenuDivider as ChakraMenuDivider,
+  MenuDividerProps as ChakraMenuDividerProps,
 } from '@chakra-ui/react';
 import { DataAttributes } from '@packages/utils/types';
 
@@ -27,12 +29,21 @@ MenuButton.displayName = 'MenuButton';
 
 export type MenuItemProps = ChakraMenuItemProps & DataAttributes;
 
-export const MenuItem: React.FC<MenuItemProps> = ({ dataCy, ...chakraMenuItemProps }) => (
-  <ChakraMenuItem {...chakraMenuItemProps} data-cy={dataCy}></ChakraMenuItem>
+export const MenuItem = forwardRef<MenuItemProps, 'button'>(
+  ({ dataCy, ...chakraMenuItemProps }, ref) => (
+    <ChakraMenuItem {...chakraMenuItemProps} data-cy={dataCy} ref={ref}></ChakraMenuItem>
+  ),
 );
+MenuItem.displayName = 'MenuItem';
 
 export type MenuListProps = ChakraMenuListProps;
 
 export const MenuList: React.FC<MenuListProps> = chakraMenuListProps => (
   <ChakraMenuList {...chakraMenuListProps}></ChakraMenuList>
+);
+
+export type MenuDividerProps = ChakraMenuDividerProps;
+
+export const MenuDivider: React.FC<MenuDividerProps> = chakraMenuDividerProps => (
+  <ChakraMenuDivider {...chakraMenuDividerProps}></ChakraMenuDivider>
 );

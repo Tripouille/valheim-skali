@@ -1,8 +1,14 @@
 import { MdCheckCircle } from 'react-icons/md';
 import { storybookSetup } from '@packages/utils/Storybook/storybookSetup';
+import { StoryCategory } from '@packages/utils/constants';
 import { List, ListProps, ListItem, ListIcon } from '@packages/components/core/DataDisplay/List';
 
-const { defaultExport, StoryFactory } = storybookSetup<ListProps>(List);
+const { defaultExport, StoryFactory } = storybookSetup<ListProps>(
+  List,
+  {},
+  StoryCategory.CORE,
+  List.displayName,
+);
 
 export default defaultExport;
 
