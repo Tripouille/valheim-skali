@@ -13,7 +13,7 @@ import {
 export type AlertProps = ChakraAlertProps;
 
 export const Alert: React.FC<AlertProps> = chakraAlertProps => (
-  <ChakraAlert {...chakraAlertProps}></ChakraAlert>
+  <ChakraAlert {...chakraAlertProps} maxW="full"></ChakraAlert>
 );
 
 export type AlertIconProps = ChakraAlertIconProps;

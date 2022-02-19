@@ -11,7 +11,12 @@ const Tag: React.FC<TagProps> = ({ label, ...chakraTagProps }) => {
   const bgColor = TagColors[label] ?? autoBgColor(label);
 
   return (
-    <ChakraTag bgColor={bgColor} color={autoTextColor(bgColor)} {...chakraTagProps}>
+    <ChakraTag
+      bgColor={bgColor}
+      color={autoTextColor(bgColor)}
+      overflow="hidden"
+      {...chakraTagProps}
+    >
       {label}
     </ChakraTag>
   );
