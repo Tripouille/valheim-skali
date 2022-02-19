@@ -29,7 +29,7 @@ const EventItem: React.FC<EventItemProps> = ({ dataCy, event, context, eventIsCl
 
   return (
     <Stack>
-      <Flex>
+      <Flex direction={{ base: 'column', md: 'row' }}>
         <Box flex="1" textAlign="left">
           {event.href && (
             <DiscordButton dataCy={getDataValue(dataCy, 'discord_button')} href={event.href} />
@@ -42,14 +42,15 @@ const EventItem: React.FC<EventItemProps> = ({ dataCy, event, context, eventIsCl
           whiteSpace={context === EventContext.LIST ? 'nowrap' : undefined}
           textOverflow="ellipsis"
           overflow="hidden"
+          order={{ base: 1, md: 0 }}
         >
           {event.name} {eventIsClosed && '(terminé)'}
         </Heading>
-        <Box flex="1">
+        <Box flex="1" my={{ base: 2, md: 0 }}>
           <Wrap
-            justify="flex-end"
+            justify={{ base: 'center', md: 'flex-end' }}
             /** Give space to modal close button */
-            pe={context === EventContext.MODAL ? 6 : 0}
+            pe={context === EventContext.MODAL ? { base: 0, md: 6 } : 0}
           >
             {event.tags.map(tag => (
               <Tag key={tag} label={tag} />
