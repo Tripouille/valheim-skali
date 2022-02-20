@@ -1,9 +1,9 @@
-import { Permission } from '@packages/utils/constants';
+import { Permissions } from '@packages/utils/auth';
 
 export interface Role {
   _id: string;
   name: string;
-  permissions: Permission[];
+  permissions: Permissions;
 }
 
 export type RoleWithoutId = Omit<Role, '_id'>;

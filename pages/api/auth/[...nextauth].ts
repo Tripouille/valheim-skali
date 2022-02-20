@@ -4,6 +4,7 @@ import DiscordProvider from 'next-auth/providers/discord';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import db from '@packages/utils/db';
 import { Role } from '@packages/store/roles/type';
+import { PermissionCategory, PermissionPrivilege, Permissions } from '@packages/utils/auth';
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   const nextAuth = NextAuth(req, res, {
@@ -26,8 +27,22 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
           const userRoles: Role[] = await db.find('roles', {
             _id: { $in: user.roles as string[] },
           });
-          const userPermissions = [...new Set(userRoles.map(role => role.permissions).flat())];
+          const userPermissions: Permissions = {};
+          userRoles.forEach(role => {
+            (
+              Object.entries(role.permissions) as [PermissionCategory, PermissionPrivilege][]
+            ).forEach(([category, privilege]) => {
+              if (privilege !== undefined) {
+                userPermissions[category] = Math.max(
+                  userPermissions[category] ?? PermissionPrivilege.NONE,
+                  privilege,
+                );
+              }
+            });
+          });
           token.permissions = userPermissions;
+        } else if (!token.permissions) {
+          token.permissions = {};
         }
         return token;
       },

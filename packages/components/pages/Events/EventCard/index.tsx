@@ -45,9 +45,9 @@ const EventCard: React.FC<EventCardProps> = ({ dataCy, event }) => {
           eventIsClosed={eventIsClosed}
         />
       </Box>
-      <Modal isOpen={isOpen} onClose={onClose} size="6xl" scrollBehavior="inside" isCentered>
-        <ModalOverlay bgColor={theme.colors.overlay} />
-        <ModalContent backgroundColor={theme.colors.opaqueBackground} border="2px white solid">
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent border="2px white solid">
           <ModalCloseButton />
           <ModalBody>
             <EventItem

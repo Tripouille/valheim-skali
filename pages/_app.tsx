@@ -5,12 +5,12 @@ import { SessionProvider } from 'next-auth/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { ChakraProvider } from '@chakra-ui/react';
-import { AuthConfig } from '@packages/utils/types';
+import { AuthConfig } from '@packages/utils/auth';
 import store from '@packages/store';
 import Layout from '@packages/components/Layout';
 import Fonts from '@packages/components/Layout/Fonts';
 import theme from '@packages/theme';
-import Secured from '@packages/components/core/Authentication/Secured';
+import SecuredPage from '@packages/components/core/Authentication/SecuredPage';
 
 type MyAppProps = AppInitialProps & {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -29,9 +29,9 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }: MyAppProps) 
         <Fonts />
         <Layout>
           {Component.needAuth ? (
-            <Secured permission={Component.needAuth.permission}>
+            <SecuredPage permissions={Component.needAuth.permissions}>
               <Component {...pageProps} />
-            </Secured>
+            </SecuredPage>
           ) : (
             <Component {...pageProps} />
           )}

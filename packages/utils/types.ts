@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { Permission } from './constants';
 
 export interface ImageAttributes {
   src: string;
@@ -15,8 +14,4 @@ export interface DataAttributes {
   dataCy: string;
 }
 
-export interface AuthConfig {
-  needAuth?: { permission?: Permission };
-}
-
-export type ComponentWithAuth<PropTypes = Record<string, never>> = React.FC<PropTypes> & AuthConfig;
+export type OneOrMany<T> = T | T[];
