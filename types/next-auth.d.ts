@@ -1,15 +1,15 @@
 import { DefaultSession } from 'next-auth';
-import { Permission } from '@packages/utils/constants';
+import { Permissions } from '@packages/utils/auth';
 
 declare module 'next-auth' {
   interface Session {
-    permissions?: Permission[];
+    permissions: Permissions;
     user: DefaultSession['user'];
   }
 }
 
 declare module 'next-auth/jwt' {
   interface JWT {
-    permissions?: Permission[];
+    permissions: Permissions;
   }
 }

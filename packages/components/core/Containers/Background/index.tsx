@@ -1,16 +1,18 @@
 import React from 'react';
-import { chakra } from '@chakra-ui/react';
+import { As, chakra, shouldForwardProp } from '@chakra-ui/react';
 import { Children } from '@packages/utils/types';
 import Box from '@packages/components/core/Containers/Box';
 import theme from '@packages/theme';
 
 export interface BackgroundProps {
   className?: string;
+  as?: As;
   children: Children;
 }
 
-const Background: React.FC<BackgroundProps> = ({ children, className }) => (
+const Background: React.FC<BackgroundProps> = ({ children, className, as }) => (
   <Box
+    as={as}
     bgColor={theme.colors.background}
     h="min-content"
     minH="full"
@@ -24,4 +26,6 @@ const Background: React.FC<BackgroundProps> = ({ children, className }) => (
   </Box>
 );
 
-export default chakra(Background);
+export default chakra(Background, {
+  shouldForwardProp: prop => (prop === 'as' ? true : shouldForwardProp(prop)),
+});

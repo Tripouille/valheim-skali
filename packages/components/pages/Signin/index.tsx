@@ -7,35 +7,22 @@ import Center from '@packages/components/core/Containers/Center';
 import Button from '@packages/components/core/Interactive/Button';
 import Text from '@packages/components/core/Typography/Text';
 import { getDataValue } from '@packages/utils/dataAttributes';
-import { AuthError } from '@packages/utils/constants';
+import { getRouteParameterAsString } from '@packages/utils/routes';
+import { getAuthErrorMessage } from './utils';
 
 const Signin = () => {
   const router = useRouter();
 
-  const getErrorText = (): string => {
-    if (router.query.error === AuthError.CALLBACK) {
-      return "Il y a eu un problème avec l'authentification ; ou bien vous avez annulé votre connexion, dans ce cas il n'y a pas de problème :)";
-    } else if (router.query.error === AuthError.SESSION_REQUIRED) {
-      return "Vous n'êtes pas autorisé à visiter cette page. Veuillez vous connecter.";
-    } else {
-      return "Il y a eu un problème avec l'authentification. Réessayez ou contactez le propriétaire du site.";
-    }
-  };
-
-  const getCallbackUrl = (): string | undefined => {
-    return Array.isArray(router.query.callbackUrl)
-      ? router.query.callbackUrl[0]
-      : router.query.callbackUrl;
-  };
-
   const onClick = () => {
-    signIn('discord', { callbackUrl: getCallbackUrl() });
+    signIn('discord', { callbackUrl: getRouteParameterAsString(router.query.callbackUrl) });
   };
 
   return (
     <Background h="full">
       <Center h="full" flexDirection="column">
-        {router.query.error && <Text mb="3">{getErrorText()}</Text>}
+        {router.query.error && (
+          <Text mb="3">{getAuthErrorMessage(getRouteParameterAsString(router.query.error))}</Text>
+        )}
         <Button
           dataCy={getDataValue('signin', 'button')}
           leftIcon={<GiVikingHelmet />}

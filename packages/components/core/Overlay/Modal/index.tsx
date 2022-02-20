@@ -11,23 +11,31 @@ import {
   ModalBody as ChakraModalBody,
   ModalBodyProps as ChakraModalBodyProps,
 } from '@chakra-ui/react';
+import theme from '@packages/theme';
 
 export type ModalProps = ChakraModalProps;
 
 export const Modal: React.FC<ModalProps> = chakraModalProps => (
-  <ChakraModal {...chakraModalProps}></ChakraModal>
+  <ChakraModal scrollBehavior="inside" isCentered size="6xl" {...chakraModalProps}></ChakraModal>
 );
 
 export type ModalOverlayProps = ChakraModalOverlayProps;
 
 export const ModalOverlay: React.FC<ModalOverlayProps> = chakraModalOverlayProps => (
-  <ChakraModalOverlay {...chakraModalOverlayProps}></ChakraModalOverlay>
+  <ChakraModalOverlay
+    bgColor={theme.colors.overlay}
+    {...chakraModalOverlayProps}
+  ></ChakraModalOverlay>
 );
 
 export type ModalContentProps = ChakraModalContentProps;
 
 export const ModalContent: React.FC<ModalContentProps> = chakraModalContentProps => (
-  <ChakraModalContent {...chakraModalContentProps}></ChakraModalContent>
+  <ChakraModalContent
+    bgColor={theme.colors.opaqueBackground}
+    border="1px silver solid"
+    {...chakraModalContentProps}
+  ></ChakraModalContent>
 );
 
 export type ModalCloseButtonProps = ChakraModalCloseButtonProps;
