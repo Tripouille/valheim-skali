@@ -337,6 +337,46 @@ Décoration extérieur : Lanternes, ponton, jardins en terrasse, rambarde, etc (
 
 Constatez Vidar pour faire votre choix de parcelles et commencé la construction du village avec nous.`,
   },
+  {
+    name: 'Convoi de minerais',
+    href: 'https://discord.com/channels/843826987466227722/910932432260309062/942837204487651418',
+    tags: ['PvP', 'Escorte', 'Marin'],
+    startDate: '2022-02-19T22:00',
+    continuous: false,
+    RPDescription: `Bonsoir chers Vikings !
+
+J'en appelle aujourd'hui aux plus fiers et valeureux guerriers de nos contrées, car j'ai une mission à vous confier :
+Je suis sur le point d'acquérir une grande quantité de minerais, que je devrai ensuite ramener à mon hangar. 
+
+Malheureusement, les cinq mercenaires que j'engageais jusqu'alors ont eu un petit.. soucis, plus communément appelé Kraken, paix à leur âme. 
+
+Par conséquent, j'aimerai recruter de nouveaux mercenaires afin de protéger mon convoi !
+Cinq postes sont donc à pourvoir, dont un capitaine capable de se diriger aux cartes, et au moins un archer professionnel. Les autres pourront s'équiper à leur guise.
+
+Enfin, la paye est de 500 Piastres par personne, plus une prime de 200 Piastres si le chargement arrive intact.`,
+    description: `L'équipement est limité au BRONZE afin d'éviter les potentielles pertes de matériel..
+Si vous ne possédez pas de matériel en bronze, je peux vous en vendre à un prix réduit, mais pas gratuitement.`,
+  },
+  {
+    name: 'Première compétition inter-village',
+    href: 'https://discord.com/channels/843826987466227722/843847698373148683/945238451752669194',
+    tags: ['Village', 'Concours'],
+    startDate: '2022-02-21',
+    continuous: true,
+    description: `Un second village officiel et actif vient de voir le jour, il est donc temps de démarrer la compétition inter-village !
+
+Le premier prix mis en jeu est un .... baton totem de soins façonné à partir de morceaux de de longues observations des shamans naingris. Il a la capacité de tirer de petites orbes magiques mais surtout de soigner les alliés à proximité !
+
+Cet artefact sera confié au village ayant organisé le plus d'events joueurs depuis la formation de leur village ! 
+(un evenement avorté par manque de participants ne sera pas comptabilisé)
+
+Pour candidater aller dans villages-du-valhabba et faites plusieurs posts recensant chacun de vos events séparrément sous la forme :
+-/ Nom de l'event
+-/ Date
+-/ Lien du post discord
+-/ Joueurs extérieurs au village attestant de la viabilité de l'event (en l'ayant fini ou en y  participant actuellement si l'event n'a pas (encore) eu de fin)
+Ce post doit receuillir au moins deux 👍 de joueurs extérieurs au village et attestant de votre event.`,
+  },
 ];
 
 const Events = () => {
