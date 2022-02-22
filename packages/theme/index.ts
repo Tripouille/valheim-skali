@@ -1,6 +1,7 @@
 import { extendTheme, theme as baseTheme } from '@chakra-ui/react';
 import { Card } from './components/Card';
 import { Button } from './components/Button';
+import { LimitedWidthText } from './components/LimitedWidthText';
 
 const options = {
   styles: {
@@ -36,6 +37,8 @@ const options = {
   components: {
     Card,
     Button,
+    Text: LimitedWidthText,
+    Heading: LimitedWidthText,
   },
   config: {
     initialColorMode: 'dark',

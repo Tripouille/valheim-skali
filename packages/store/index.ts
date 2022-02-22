@@ -6,17 +6,22 @@ import { all } from 'redux-saga/effects';
 import { State as usersState } from './users/type';
 import { reducer as usersReducer } from './users/slice';
 import usersWatcher from './users/saga';
+import { State as rolesState } from './roles/type';
+import { reducer as rolesReducer } from './roles/slice';
+import rolesWatcher from './roles/saga';
 
 const reducer = {
   users: usersReducer,
+  roles: rolesReducer,
 };
 
 function* watcherSaga() {
-  yield all([usersWatcher()]);
+  yield all([usersWatcher(), rolesWatcher()]);
 }
 
 export interface State {
   users: usersState;
+  roles: rolesState;
 }
 
 const logger = createLogger({ collapsed: true });

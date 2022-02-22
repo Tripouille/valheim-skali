@@ -1,13 +1,20 @@
 import React from 'react';
-import { Tag as ChakraTag, TagProps as ChakraTagProps } from '@chakra-ui/react';
+import {
+  Tag as ChakraTag,
+  TagProps as ChakraTagProps,
+  TagLabel,
+  TagCloseButton,
+} from '@chakra-ui/react';
 import { TagColors } from '@packages/utils/constants';
 import { autoBgColor, autoTextColor } from '@packages/utils/color';
+import { Callback } from '@packages/utils/types';
 
 export type TagProps = ChakraTagProps & {
   label: string;
+  onClose?: Callback;
 };
 
-const Tag: React.FC<TagProps> = ({ label, ...chakraTagProps }) => {
+const Tag: React.FC<TagProps> = ({ label, onClose, ...chakraTagProps }) => {
   const bgColor = TagColors[label] ?? autoBgColor(label);
 
   return (
@@ -17,7 +24,8 @@ const Tag: React.FC<TagProps> = ({ label, ...chakraTagProps }) => {
       overflow="hidden"
       {...chakraTagProps}
     >
-      {label}
+      <TagLabel>{label}</TagLabel>
+      {onClose && <TagCloseButton onClick={onClose} />}
     </ChakraTag>
   );
 };

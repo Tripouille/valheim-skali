@@ -10,6 +10,10 @@ import {
   CloseButtonProps as ChakraModalCloseButtonProps,
   ModalBody as ChakraModalBody,
   ModalBodyProps as ChakraModalBodyProps,
+  ModalHeader as ChakraModalHeader,
+  ModalHeaderProps as ChakraModalHeaderProps,
+  ModalFooter as ChakraModalFooter,
+  ModalFooterProps as ChakraModalFooterProps,
 } from '@chakra-ui/react';
 import theme from '@packages/theme';
 
@@ -48,4 +52,16 @@ export type ModalBodyProps = ChakraModalBodyProps;
 
 export const ModalBody: React.FC<ModalBodyProps> = chakraModalBodyProps => (
   <ChakraModalBody {...chakraModalBodyProps}></ChakraModalBody>
+);
+
+export type ModalHeaderProps = ChakraModalHeaderProps;
+
+export const ModalHeader: React.FC<ModalHeaderProps> = chakraModalHeaderProps => (
+  <ChakraModalHeader {...chakraModalHeaderProps}></ChakraModalHeader>
+);
+
+export type ModalFooterProps = ChakraModalFooterProps;
+
+export const ModalFooter: React.FC<ModalFooterProps> = chakraModalFooterProps => (
+  <ChakraModalFooter {...chakraModalFooterProps}></ChakraModalFooter>
 );

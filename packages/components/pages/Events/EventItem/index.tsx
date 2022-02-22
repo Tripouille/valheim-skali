@@ -39,9 +39,8 @@ const EventItem: React.FC<EventItemProps> = ({ dataCy, event, context, eventIsCl
           flex="2.5"
           size="lg"
           textAlign="center"
-          whiteSpace={context === EventContext.LIST ? 'nowrap' : undefined}
-          textOverflow="ellipsis"
-          overflow="hidden"
+          variant="limitedWidth"
+          whiteSpace={context === EventContext.LIST ? 'nowrap' : 'initial'}
           order={{ base: 1, md: 0 }}
         >
           {event.name} {eventIsClosed && '(terminé)'}
