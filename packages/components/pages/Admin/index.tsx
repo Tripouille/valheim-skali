@@ -44,7 +44,9 @@ const AdminLayout: React.FC = ({ children }) => (
         ))}
       </Stack>
     </Background>
-    <Background flex={{ base: 1, lg: 'initial' }}>{children}</Background>
+    <Background flex={{ base: 1, lg: 'initial' }} py={[2, 4, 4, 6]}>
+      {children}
+    </Background>
   </Flex>
 );
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import { ComponentWithAuth, ROUTES_TO_PERMISSIONS } from '@packages/utils/auth';
 import AdminLayout from '@packages/components/pages/Admin';
-// import Members from '@packages/components/pages/Admin/Members';
+import Members from '@packages/components/pages/Admin/Members';
 import { MenuRoute } from '@packages/utils/routes';
 
 const AdminPage: ComponentWithAuth = () => (
   <AdminLayout>
-    <>Page vikings</>
+    <Members />
   </AdminLayout>
 );
 
