@@ -16,8 +16,8 @@ import { Table, Tbody, Td, Th, Tr } from '@packages/components/core/DataDisplay/
 import Text from '@packages/components/core/Typography/Text';
 import Button from '@packages/components/core/Interactive/Button';
 import Editable from '@packages/components/core/Interactive/Editable';
-import MembersRoleForm from '../MemberRolesForm';
-import MemberAvatar from '../MemberAvatar';
+import MembersRoleForm from './MemberRolesForm';
+import MemberAvatar from './MemberAvatar';
 
 export interface MemberModalProps extends DataAttributes {
   isOpen: boolean;

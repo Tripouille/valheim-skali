@@ -8,9 +8,9 @@ import { Wrap } from '@packages/components/core/Containers/Wrap';
 import IconButton from '@packages/components/core/Interactive/IconButton';
 import Tag from '@packages/components/core/DataDisplay/Tag';
 import { Td, Tr } from '@packages/components/core/DataDisplay/Table';
-import { rowIconSize } from '../../utils';
-import MemberModal from '../MemberModal';
-import MemberAvatar from '../MemberAvatar';
+import { rowIconSize } from '../utils';
+import MemberModal from './MemberModal';
+import MemberAvatar from './MemberAvatar';
 
 export interface MemberRowProps extends DataAttributes {
   user: User;
