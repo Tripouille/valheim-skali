@@ -9,7 +9,7 @@ import { Wrap } from '@packages/components/core/Containers/Wrap';
 import Tag from '@packages/components/core/DataDisplay/Tag';
 import DiscordButton from '@packages/components/core/Interactive/DiscordButton';
 import { formatDateInterval } from '@packages/utils/format';
-import { EventContext } from '../utils';
+import { EventContext } from './utils';
 
 export interface EventItemProps extends DataAttributes {
   event: Event;

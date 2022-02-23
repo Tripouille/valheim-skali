@@ -11,8 +11,8 @@ import {
 } from '@packages/components/core/Overlay/Modal';
 import Box from '@packages/components/core/Containers/Box';
 import theme from '@packages/theme';
-import { EventContext, isEventClosed } from '../utils';
-import EventItem from '../EventItem';
+import { EventContext, isEventClosed } from './utils';
+import EventItem from './EventItem';
 
 export interface EventCardProps extends DataAttributes {
   event: Event;

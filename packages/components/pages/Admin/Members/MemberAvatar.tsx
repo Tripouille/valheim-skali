@@ -1,6 +1,6 @@
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import Image from '@packages/components/core/Images/Image';
-import { avatarSize } from '../../utils';
+import { avatarSize } from '../utils';
 
 export interface MemberAvatarProps extends DataAttributes {
   src: string;
