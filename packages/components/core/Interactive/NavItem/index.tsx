@@ -1,7 +1,8 @@
 import React from 'react';
 import NextLink from 'next/link';
 import { Route, ROUTES_TO_LABEL } from '@packages/utils/routes';
-import { Callback, DataAttributes } from '@packages/utils/types';
+import { Callback } from '@packages/utils/types';
+import { DataAttributes } from '@packages/utils/dataAttributes';
 import Button from '@packages/components/core/Interactive/Button';
 
 export interface NavItemProps extends DataAttributes {

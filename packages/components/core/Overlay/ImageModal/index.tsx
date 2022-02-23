@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageProps as NextImageProps } from 'next/image';
-import { Callback, DataAttributes } from '@packages/utils/types';
-import { getDataValue } from '@packages/utils/dataAttributes';
+import { Callback } from '@packages/utils/types';
+import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import Portal from '@packages/components/core/Overlay/Portal';
 import Box from '@packages/components/core/Containers/Box';
 import Center from '@packages/components/core/Containers/Center';

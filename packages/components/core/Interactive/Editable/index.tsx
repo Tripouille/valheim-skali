@@ -7,8 +7,7 @@ import {
   EditableProps as ChakraEditableProps,
   useEditableControls,
 } from '@chakra-ui/react';
-import { DataAttributes } from '@packages/utils/types';
-import { getDataValue } from '@packages/utils/dataAttributes';
+import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import IconButton from '@packages/components/core/Interactive/IconButton';
 
 const EditableControls: React.FC<DataAttributes> = ({ dataCy }) => {

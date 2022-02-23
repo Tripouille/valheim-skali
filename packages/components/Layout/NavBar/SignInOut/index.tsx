@@ -1,8 +1,7 @@
 import React from 'react';
 import { signIn, signOut } from 'next-auth/react';
 import { MdLogin, MdLogout } from 'react-icons/md';
-import { DataAttributes } from '@packages/utils/types';
-import { getDataValue } from '@packages/utils/dataAttributes';
+import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { MenuItem } from '@packages/components/core/Overlay/Menu';
 
 export interface SignInOutProps extends DataAttributes {

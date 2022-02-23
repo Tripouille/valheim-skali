@@ -1,5 +1,5 @@
-import { DataAttributes, ImageAttributes } from '@packages/utils/types';
-import { getDataValue } from '@packages/utils/dataAttributes';
+import { ImageAttributes } from '@packages/utils/types';
+import { DataAttributes, getDataValue } from '@packages/utils/dataAttributes';
 import ZoomableImage, { ZoomableImageProps } from '@packages/components/core/Images/ZoomableImage';
 import { HStack } from '@packages/components/core/Containers/Stack';
 

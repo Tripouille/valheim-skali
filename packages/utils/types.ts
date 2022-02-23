@@ -16,9 +16,4 @@ export type StrictReactNode =
   | undefined;
 export type Children = StrictReactNode;
 
-export interface DataAttributes {
-  /** Cypress */
-  dataCy: string;
-}
-
 export type OneOrMany<T> = T | T[];

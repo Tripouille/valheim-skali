@@ -12,7 +12,7 @@ import {
   MenuDivider as ChakraMenuDivider,
   MenuDividerProps as ChakraMenuDividerProps,
 } from '@chakra-ui/react';
-import { DataAttributes } from '@packages/utils/types';
+import { DataAttributes } from '@packages/utils/dataAttributes';
 
 export type MenuProps = ChakraMenuProps;
 

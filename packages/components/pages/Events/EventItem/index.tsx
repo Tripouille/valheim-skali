@@ -1,5 +1,4 @@
-import { DataAttributes } from '@packages/utils/types';
-import { getDataValue } from '@packages/utils/dataAttributes';
+import { DataAttributes, getDataValue } from '@packages/utils/dataAttributes';
 import { Event } from '@packages/store/events/type';
 import Box from '@packages/components/core/Containers/Box';
 import Flex from '@packages/components/core/Containers/Flex';
