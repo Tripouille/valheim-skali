@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactChild, ReactPortal } from 'react';
 
 export interface ImageAttributes {
   src: string;
@@ -7,7 +7,14 @@ export interface ImageAttributes {
 
 export type Callback = () => void;
 
-export type Children = ReactNode;
+type StrictReactNode =
+  | ReactChild
+  | Iterable<StrictReactNode>
+  | ReactPortal
+  | false
+  | null
+  | undefined;
+export type Children = StrictReactNode;
 
 export interface DataAttributes {
   /** Cypress */
