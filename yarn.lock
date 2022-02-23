@@ -9873,6 +9873,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-local@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "eslint-plugin-local@npm:1.0.0"
+  checksum: fe0c11e55f3c99ed816c88bbf3160a6d27b71dfb6a7b1f03878131cd765dce70d39e7def8d50617a410a8697994b435a654d50fa396223a38af1274eb2d3c92f
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-react-hooks@npm:^4.3.0":
   version: 4.3.0
   resolution: "eslint-plugin-react-hooks@npm:4.3.0"
@@ -20682,6 +20689,7 @@ __metadata:
     eslint-config-airbnb-typescript: ^16.1.0
     eslint-config-next: ^12.0.7
     eslint-config-prettier: ^8.3.0
+    eslint-plugin-local: ^1.0.0
     eslint-plugin-storybook: ^0.5.5
     framer-motion: ^4
     jest: ^27.4.5

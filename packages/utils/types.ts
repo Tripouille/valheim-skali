@@ -7,7 +7,7 @@ export interface ImageAttributes {
 
 export type Callback = () => void;
 
-type StrictReactNode =
+export type StrictReactNode =
   | ReactChild
   | Iterable<StrictReactNode>
   | ReactPortal
