@@ -3,7 +3,7 @@ import { Children } from '@packages/utils/types';
 import { Permissions, SessionStatus, userHasRequiredPermissions } from '@packages/utils/auth';
 
 export interface SecuredProps {
-  permissions?: Permissions;
+  permissions: Permissions;
   children: Children;
 }
 

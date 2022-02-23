@@ -11,7 +11,7 @@ import { getSigninRoute } from '@packages/utils/routes';
 import Loading from '@packages/components/core/Feedback/Loading';
 
 export interface SecuredPageProps {
-  permissions?: Permissions;
+  permissions: Permissions;
   children: Children;
 }
 

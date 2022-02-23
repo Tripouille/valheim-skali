@@ -1,7 +1,7 @@
 import { AdminNavRoute, AuthRoute, MenuRoute, NavRoute, Route } from './routes';
 
 export interface AuthConfig {
-  needAuth?: { permissions?: Permissions };
+  needAuth?: { permissions: Permissions };
 }
 
 export type ComponentWithAuth<PropTypes = Record<string, never>> = React.FC<PropTypes> & AuthConfig;
@@ -50,9 +50,8 @@ export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions> = {
 
 export const userHasRequiredPermissions = (
   userPermissions: Permissions,
-  requiredPermissions?: Permissions,
+  requiredPermissions: Permissions,
 ) => {
-  if (!requiredPermissions) return true;
   for (const c in requiredPermissions) {
     const category = c as PermissionCategory;
     if ((userPermissions[category] ?? -1) < (requiredPermissions[category] ?? -1)) return false;
