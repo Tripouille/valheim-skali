@@ -3,6 +3,7 @@ import theme from '@packages/theme';
 import { AdminNavRoute, MenuRoute } from '@packages/utils/routes';
 import { ROUTES_TO_PERMISSIONS } from '@packages/utils/auth';
 import { getDataValue } from '@packages/utils/dataAttributes';
+import { Children } from '@packages/utils/types';
 import Background from '@packages/components/core/Containers/Background';
 import Flex from '@packages/components/core/Containers/Flex';
 import { Stack } from '@packages/components/core/Containers/Stack';
@@ -11,7 +12,11 @@ import Secured from '@packages/components/core/Authentication/Secured';
 
 const serverName = 'valhabba';
 
-const AdminLayout: React.FC = ({ children }) => (
+export interface AdminLayoutProps {
+  children: Children;
+}
+
+const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => (
   <Flex maxW="full" direction={{ base: 'column', lg: 'row' }} justify="center" h="min-content">
     <Background
       bgColor={theme.colors.opaqueBackground}
