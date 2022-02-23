@@ -1,6 +1,6 @@
 import { useBoolean } from '@chakra-ui/react';
 import { FaDiscord } from 'react-icons/fa';
-import { DataAttributes } from '@packages/utils/types';
+import { DataAttributes } from '@packages/utils/dataAttributes';
 import Button from '@packages/components/core/Interactive/Button';
 import Spinner from '@packages/components/core/Feedback/Spinner';
 

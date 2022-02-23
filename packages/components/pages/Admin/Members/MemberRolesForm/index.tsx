@@ -1,8 +1,7 @@
 import { BsPlusLg } from 'react-icons/bs';
 import { isUserWithInfos, User } from '@packages/store/users/type';
 import { Role } from '@packages/store/roles/type';
-import { getDataValue } from '@packages/utils/dataAttributes';
-import { DataAttributes } from '@packages/utils/types';
+import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { Wrap } from '@packages/components/core/Containers/Wrap';
 import Box from '@packages/components/core/Containers/Box';
 import { Menu, MenuButton, MenuItem, MenuList } from '@packages/components/core/Overlay/Menu';

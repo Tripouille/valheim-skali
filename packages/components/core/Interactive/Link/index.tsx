@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link as ChakraLink, LinkProps as ChakraLinkProps } from '@chakra-ui/react';
-import { DataAttributes } from '@packages/utils/types';
+import { DataAttributes } from '@packages/utils/dataAttributes';
 
 export type LinkProps = ChakraLinkProps & DataAttributes;
 

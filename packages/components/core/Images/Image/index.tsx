@@ -1,6 +1,6 @@
 import NextImage, { ImageProps as NextImageProps } from 'next/image';
 import { chakra } from '@chakra-ui/react';
-import { DataAttributes } from '@packages/utils/types';
+import { DataAttributes } from '@packages/utils/dataAttributes';
 
 export type ImageProps = NextImageProps & DataAttributes;
 

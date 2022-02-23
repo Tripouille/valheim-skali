@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDisclosure } from '@chakra-ui/react';
-import { DataAttributes } from '@packages/utils/types';
-import { getDataValue } from '@packages/utils/dataAttributes';
+import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { Event } from '@packages/store/events/type';
 import {
   Modal,

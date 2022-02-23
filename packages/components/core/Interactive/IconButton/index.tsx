@@ -4,7 +4,7 @@ import {
   IconButton as ChakraIconButton,
   IconButtonProps as ChakraIconButtonProps,
 } from '@chakra-ui/react';
-import { DataAttributes } from '@packages/utils/types';
+import { DataAttributes } from '@packages/utils/dataAttributes';
 
 export type IconButtonProps = ChakraIconButtonProps & DataAttributes;
 

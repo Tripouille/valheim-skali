@@ -1,5 +1,5 @@
-import { getDataValue } from '@packages/utils/dataAttributes';
-import { Callback, DataAttributes } from '@packages/utils/types';
+import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
+import { Callback } from '@packages/utils/types';
 import { isUserWithInfos, User } from '@packages/store/users/type';
 import { Role } from '@packages/store/roles/type';
 import Center from '@packages/components/core/Containers/Center';

@@ -1,5 +1,4 @@
-import { DataAttributes } from '@packages/utils/types';
-import { getDataValue } from '@packages/utils/dataAttributes';
+import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import Image from '@packages/components/core/Images/Image';
 import { avatarSize } from '../../utils';
 

@@ -1,8 +1,7 @@
 import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
 import { limitedWidthVariant } from '@packages/theme/components/LimitedWidthText';
-import { getDataValue } from '@packages/utils/dataAttributes';
-import { DataAttributes } from '@packages/utils/types';
+import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { isUserWithInfos, User } from '@packages/store/users/type';
 import { Role } from '@packages/store/roles/type';
 import { Wrap } from '@packages/components/core/Containers/Wrap';
