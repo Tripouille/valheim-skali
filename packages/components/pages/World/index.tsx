@@ -8,10 +8,10 @@ import {
   AlertTitle,
 } from '@packages/components/core/Feedback/Alert';
 import PageTitle from '@packages/components/core/Typography/PageTitle';
-import Paragraphs from '../../core/Typography/Paragraphs';
-import IconList from '../../core/DataDisplay/IconList';
-import Figure from '../../core/Images/Figure';
-import ZoomableImage from '../../core/Images/ZoomableImage';
+import Paragraphs from '@packages/components/core/Typography/Paragraphs';
+import IconList from '@packages/components/core/DataDisplay/IconList';
+import Figure from '@packages/components/core/Images/Figure';
+import ZoomableImage from '@packages/components/core/Images/ZoomableImage';
 import { getDataValue } from '@packages/utils/dataAttributes';
 
 const World = () => {
