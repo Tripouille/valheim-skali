@@ -16,7 +16,7 @@
       }
     }
   ],
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "local"],
   "extends": [
     "next",
     "airbnb-typescript",
@@ -30,7 +30,8 @@
     "jsx-a11y/anchor-is-valid": "off",
     "jsx-a11y/alt-text": "error",
     "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/no-explicit-any": "error"
+    "@typescript-eslint/no-explicit-any": "error",
+    "local/no-react-node": "error"
   },
   "env": {
     "jest": true
