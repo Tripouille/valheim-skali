@@ -238,7 +238,7 @@ Elles seront différentes selon l'ordre d'arrivée et dévoilées en fin de sema
 Selon les retours il est possible que cet event s'étale sur deux jours.`,
   },
   {
-    name: 'Course de sangliers',
+    name: 'Course de sangliers (2)',
     href: 'https://discord.com/channels/843826987466227722/851883429162647582/938386991110823966',
     tags: ['Course', '🐗', 'Paris'],
     startDate: '2022-02-05T21:00',
@@ -376,6 +376,36 @@ Pour candidater aller dans villages-du-valhabba et faites plusieurs posts recens
 -/ Lien du post discord
 -/ Joueurs extérieurs au village attestant de la viabilité de l'event (en l'ayant fini ou en y  participant actuellement si l'event n'a pas (encore) eu de fin)
 Ce post doit receuillir au moins deux 👍 de joueurs extérieurs au village et attestant de votre event.`,
+  },
+  {
+    name: 'Convoi de minerais (course-poursuite)',
+    href: 'https://discord.com/channels/843826987466227722/910932432260309062/946080563582869514',
+    tags: ['PvP', 'Escorte', 'Marin'],
+    startDate: '2022-02-27T21:00',
+    continuous: false,
+    description: `Bonjour Vikings,
+
+J'organise un convoi de minerais attaquable ce dimanche (27/02) à 21h.
+
+Le trajet est long et avec beaucoup de pleine mer, par conséquent je l'imagine plus comme une course-poursuite (mais ça prendra la tournure que ça prendra 😄 ), avec la règle suivante :
+NOUVELLE REGLE : un bateau contenant des minerais (marchand ou pirate) ne pourra pas déployer sa voile entièrement (elle sera donc bloquée au premier niveau de voile, la vitesse 2).
+
+Comme cela donne un net avantage aux pirates, cette fois, on va arrêter de les laisser tendre des embuscades è.é Ils n'auront pas tout le temps la position du marchand (je ferai au jugé, pour équilibrer, pendant le convoi) et n'auront pas le trajet exact du convoi.
+
+Objectif : Le but n'est pas de se tuer, mais de garder/voler la cargaison !
+- Marchands : amener le convoi à destination (une balise délimitera l'arrivée)
+- Pirates : faire disparaître la cargaison, ils gagnent quand le marchand abandonne l'idée de la récupérer.
+
+PvP activé pour tous les participants pendant toute la durée de l'événement.
+
+Portails : des portails seront à disposition pour tout le monde le long du trajet. Leurs noms seront donnés à l'avance par mp à mes alliés, et à l'heure H dans blabla-event pour les pirates.
+
+Stuff : Comme le but n'est pas le PvP et que respawn et revenir n'est pas marrant, je vous propose de prendre des grosses armures (minimum fer), et des petites armes (maximum bronze et flèches de bois). Les consommables sont libres, mangez vos meilleurs plats. Si un admin est dispo, on lui demandera gentiment s'il peut fournir les plus démunis.
+N'ayez pas peur de participer si vous êtes débutant, même sans admin on vous prêtera un stuff, marchand ou pirate.
+
+Localisation : Nous partirons d'une prairie située sur l'axe nord-centre du monde, et nous aurons pour destination une autre prairie située en début de zone 2 au sud-ouest (chez moi en gros 🙄 les anciens savent).
+
+Vous pouvez réagir par un petit smiley pour indiquer votre participation et nous rassurer sur l'existence de l'événement, mais cela ne vous engage à rien et vous pouvez rejoindre au dernier moment 🙂 `,
   },
 ];
 
