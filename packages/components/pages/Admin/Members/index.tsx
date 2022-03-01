@@ -1,6 +1,10 @@
 import { getDataValue } from '@packages/utils/dataAttributes';
 import { AdminNavRoute, ROUTES_TO_LABEL } from '@packages/utils/routes';
-import { ROUTES_TO_PERMISSIONS } from '@packages/utils/auth';
+import {
+  PermissionCategory,
+  PermissionPrivilege,
+  ROUTES_TO_PERMISSIONS,
+} from '@packages/utils/auth';
 import Secured from '@packages/components/core/Authentication/Secured';
 import {
   Table,
@@ -42,7 +46,9 @@ const Members = () => {
             <Th textAlign="center" display={{ base: 'none', sm: 'table-cell' }}>
               Rôles
             </Th>
-            <Th width={getCellWidth(rowIconWidth)}></Th>
+            <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
+              <Th width={getCellWidth(rowIconWidth)}></Th>
+            </Secured>
           </Tr>
         </Thead>
         <Tbody>

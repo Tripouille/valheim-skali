@@ -8,9 +8,11 @@ import { Wrap } from '@packages/components/core/Containers/Wrap';
 import IconButton from '@packages/components/core/Interactive/IconButton';
 import Tag from '@packages/components/core/DataDisplay/Tag';
 import { Td, Tr } from '@packages/components/core/DataDisplay/Table';
+import Secured from '@packages/components/core/Authentication/Secured';
 import { rowIconSize } from '../utils';
 import MemberModal from './MemberModal';
 import MemberAvatar from './MemberAvatar';
+import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 
 export interface MemberRowProps extends DataAttributes {
   user: User;
@@ -43,24 +45,26 @@ const MemberRow: React.FC<MemberRowProps> = ({ dataCy, user, roles }) => {
           </Wrap>
         )}
       </Td>
-      <Td>
-        <IconButton
-          dataCy={getDataValue(dataCy, 'edit')}
-          aria-label="Modifier l'utilisateur"
-          title="Modifier l'utilisateur"
-          icon={<BiEdit size="30" />}
-          variant="ghost"
-          size={rowIconSize}
-          onClick={onOpen}
-        />
-        <MemberModal
-          dataCy={getDataValue(dataCy, 'modal')}
-          isOpen={isOpen}
-          onClose={onClose}
-          user={user}
-          roles={roles}
-        />
-      </Td>
+      <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
+        <Td>
+          <IconButton
+            dataCy={getDataValue(dataCy, 'edit')}
+            aria-label="Modifier l'utilisateur"
+            title="Modifier l'utilisateur"
+            icon={<BiEdit size="30" />}
+            variant="ghost"
+            size={rowIconSize}
+            onClick={onOpen}
+          />
+          <MemberModal
+            dataCy={getDataValue(dataCy, 'modal')}
+            isOpen={isOpen}
+            onClose={onClose}
+            user={user}
+            roles={roles}
+          />
+        </Td>
+      </Secured>
     </Tr>
   );
 };
