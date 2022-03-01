@@ -3,7 +3,7 @@ import NextAuth from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import db from '@packages/utils/db';
-import { Role } from '@packages/store/roles/type';
+import { Role } from '@packages/data/role';
 import { PermissionCategory, PermissionPrivilege, Permissions } from '@packages/utils/auth';
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import theme from '@packages/theme';
-import { AdminNavRoute, MenuRoute } from '@packages/utils/routes';
+import { AdminNavRoute, MenuRoute, serverName } from '@packages/utils/routes';
 import { ROUTES_TO_PERMISSIONS } from '@packages/utils/auth';
 import { getDataValue } from '@packages/utils/dataAttributes';
 import { Children } from '@packages/utils/types';
@@ -9,8 +9,6 @@ import Flex from '@packages/components/core/Containers/Flex';
 import { Stack } from '@packages/components/core/Containers/Stack';
 import NavItem from '@packages/components/core/Interactive/NavItem';
 import Secured from '@packages/components/core/Authentication/Secured';
-
-const serverName = 'valhabba';
 
 export interface AdminLayoutProps {
   children: Children;

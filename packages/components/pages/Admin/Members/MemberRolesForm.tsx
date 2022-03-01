@@ -1,6 +1,6 @@
 import { BsPlusLg } from 'react-icons/bs';
-import { isUserWithInfos, User } from '@packages/store/users/type';
-import { Role } from '@packages/store/roles/type';
+import { isUserWithInfos, User } from '@packages/data/user';
+import { Role } from '@packages/data/role';
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { Wrap } from '@packages/components/core/Containers/Wrap';
 import Box from '@packages/components/core/Containers/Box';

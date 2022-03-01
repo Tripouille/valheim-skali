@@ -1,6 +1,8 @@
 import { AuthError } from './auth';
 import { OneOrMany } from './types';
 
+export const serverName = 'valhabba';
+
 export enum APIRoute {
   USERS = '/api/users',
   ROLES = '/api/roles',

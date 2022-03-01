@@ -1,4 +1,4 @@
-import { Event } from '@packages/store/events/type';
+import { Event } from '@packages/data/event';
 
 export enum EventContext {
   LIST = 'list',

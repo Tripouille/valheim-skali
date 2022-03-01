@@ -1,5 +1,5 @@
 import { DataAttributes, getDataValue } from '@packages/utils/dataAttributes';
-import { Event } from '@packages/store/events/type';
+import { Event } from '@packages/data/event';
 import Box from '@packages/components/core/Containers/Box';
 import Flex from '@packages/components/core/Containers/Flex';
 import Heading from '@packages/components/core/Typography/Heading';
