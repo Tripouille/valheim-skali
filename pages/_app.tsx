@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { SessionProvider } from 'next-auth/react';
 import React from 'react';
 import { QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { ChakraProvider } from '@chakra-ui/react';
 import { AuthConfig } from '@packages/utils/auth';
 import Layout from '@packages/components/Layout';
@@ -13,14 +14,13 @@ import SecuredPage from '@packages/components/core/Authentication/SecuredPage';
 import { queryClient } from '@packages/utils/queryClient';
 
 type MyAppProps = AppInitialProps & {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Component: NextComponentType & AuthConfig;
 };
 
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }: MyAppProps) => (
   <SessionProvider session={session}>
-    <QueryClientProvider client={queryClient}>
-      <ChakraProvider theme={theme}>
+    <ChakraProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
         <Head>
           <title>Skali - Valhabba</title>
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -36,8 +36,9 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }: MyAppProps) 
             <Component {...pageProps} />
           )}
         </Layout>
-      </ChakraProvider>
-    </QueryClientProvider>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </ChakraProvider>
   </SessionProvider>
 );
 
