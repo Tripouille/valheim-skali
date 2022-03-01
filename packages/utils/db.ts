@@ -1,5 +1,5 @@
-import { ObjectId } from 'bson';
-import { Collection, Db, Filter, FindOptions, MongoClient, OptionalId } from 'mongodb';
+import { Document, ObjectId } from 'bson';
+import { Collection, Db, Filter, FindOptions, MongoClient, OptionalId, WithId } from 'mongodb';
 
 let cachedDb: Db;
 
@@ -30,9 +30,20 @@ async function find<T>(
   collectionName: string,
   query: Filter<T> = {},
   projection?: FindOptions<Document>,
-) {
+): Promise<WithId<T>[]> {
   const collection = await connectToCollection<T>(collectionName);
   const result = await collection.find(query, projection).toArray();
+
+  return result;
+}
+
+async function findOne<T>(
+  collectionName: string,
+  query: Filter<T> = {},
+  projection?: FindOptions<Document>,
+): Promise<T | null> {
+  const collection = await connectToCollection<T>(collectionName);
+  const result = await collection.findOne(query, projection);
 
   return result;
 }
@@ -57,6 +68,7 @@ export default {
   connectToDb,
   connectToCollection,
   find,
+  findOne,
   insert,
   remove,
 };
