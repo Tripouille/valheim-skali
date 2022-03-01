@@ -5,6 +5,29 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import db from '@packages/utils/db';
 import { Role } from '@packages/data/role';
 import { PermissionCategory, PermissionPrivilege, Permissions } from '@packages/utils/auth';
+import { ObjectId } from 'bson';
+import { isUserWithInfos, User, UserWithInfos } from '@packages/data/user';
+
+const getUserPermissions = async (user: UserWithInfos) => {
+  const userRoles: Role[] = await db.find('roles', {
+    _id: { $in: user.roles as string[] },
+  });
+  const userPermissions: Permissions = {};
+  userRoles.forEach(role => {
+    (Object.entries(role.permissions) as [PermissionCategory, PermissionPrivilege][]).forEach(
+      ([category, privilege]) => {
+        if (privilege !== undefined) {
+          userPermissions[category] = Math.max(
+            userPermissions[category] ?? PermissionPrivilege.NONE,
+            privilege,
+          );
+        }
+      },
+    );
+  });
+
+  return userPermissions;
+};
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   const nextAuth = NextAuth(req, res, {
@@ -22,32 +45,15 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
       signIn: '/auth/signin',
     },
     callbacks: {
-      async jwt({ token, user }) {
-        if (user) {
-          const userRoles: Role[] = await db.find('roles', {
-            _id: { $in: user.roles as string[] },
-          });
-          const userPermissions: Permissions = {};
-          userRoles.forEach(role => {
-            (
-              Object.entries(role.permissions) as [PermissionCategory, PermissionPrivilege][]
-            ).forEach(([category, privilege]) => {
-              if (privilege !== undefined) {
-                userPermissions[category] = Math.max(
-                  userPermissions[category] ?? PermissionPrivilege.NONE,
-                  privilege,
-                );
-              }
-            });
-          });
-          token.permissions = userPermissions;
-        } else if (!token.permissions) {
-          token.permissions = {};
+      async session({ session, token }) {
+        const user = await db.findOne<User>('users', {
+          _id: new ObjectId(token.sub),
+        });
+        if (user && isUserWithInfos(user)) {
+          session.permissions = await getUserPermissions(user);
+        } else {
+          session.permissions = {};
         }
-        return token;
-      },
-      session({ session, token }) {
-        session.permissions = token.permissions;
         return session;
       },
     },
