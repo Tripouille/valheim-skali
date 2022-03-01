@@ -1,7 +1,18 @@
 import { Document, ObjectId } from 'bson';
-import { Collection, Db, Filter, FindOptions, MongoClient, OptionalId, WithId } from 'mongodb';
+import {
+  Collection,
+  Db,
+  Filter,
+  FindOptions,
+  ModifyResult,
+  MongoClient,
+  OptionalId,
+  UpdateFilter,
+  WithId,
+} from 'mongodb';
 
 let cachedDb: Db;
+let connecting = false;
 
 function getDbUri(): string {
   if (!process.env.MONGODB_URI)
@@ -10,11 +21,27 @@ function getDbUri(): string {
   return process.env.MONGODB_URI;
 }
 
+function wait(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function waitForDb() {
+  while (!cachedDb) {
+    await wait(50);
+  }
+}
+
 async function connectToDb(): Promise<Db> {
   if (!cachedDb) {
-    const client = await MongoClient.connect(getDbUri());
+    if (!connecting) {
+      connecting = true;
+      const client = await MongoClient.connect(getDbUri());
 
-    cachedDb = client.db();
+      cachedDb = client.db();
+      connecting = false;
+    } else {
+      await waitForDb();
+    }
   }
 
   return cachedDb;
@@ -56,6 +83,17 @@ async function insert<T>(collectionName: string, document: OptionalId<T>): Promi
   return newId.toString();
 }
 
+async function updateOne<T>(
+  collectionName: string,
+  query: Filter<T>,
+  update: UpdateFilter<T> | Partial<T>,
+): Promise<ModifyResult<T>> {
+  const collection = await connectToCollection<T>(collectionName);
+  const result = await collection.findOneAndUpdate(query, update, { returnDocument: 'after' });
+
+  return result;
+}
+
 async function remove<T>(collectionName: string, id: string) {
   const collection = await connectToCollection<T>(collectionName);
 
@@ -70,5 +108,6 @@ export default {
   find,
   findOne,
   insert,
+  updateOne,
   remove,
 };
