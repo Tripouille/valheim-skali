@@ -1,5 +1,5 @@
 import { NextApiHandler, NextApiRequest as Req, NextApiResponse as Res } from 'next';
-import { Role, RoleWithoutId } from '@packages/store/roles/type';
+import { Role, RoleWithoutId } from '@packages/data/role';
 import db from '@packages/utils/db';
 
 export type PullAllResponse = Role[];

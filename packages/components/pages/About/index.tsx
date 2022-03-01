@@ -54,7 +54,7 @@ const About = () => (
         <ExternalLink href="https://storybook.js.org/">Storybook</ExternalLink> et{' '}
         <ExternalLink href="https://www.chromatic.com/">Chromatic</ExternalLink>. Il utilise les
         libraries <ExternalLink href="https://chakra-ui.com/">Chakra UI</ExternalLink>,{' '}
-        <ExternalLink href="https://redux-saga.js.org/">Redux-Saga</ExternalLink> et{' '}
+        <ExternalLink href="https://react-query.tanstack.com/">React Query</ExternalLink> et{' '}
         <ExternalLink href="https://next-auth.js.org/">NextAuth.js</ExternalLink>.
       </Text>
       <Text>

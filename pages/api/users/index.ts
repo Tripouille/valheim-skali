@@ -1,5 +1,5 @@
 import { NextApiHandler, NextApiRequest as Req, NextApiResponse as Res } from 'next';
-import { User, UserWithoutId } from '@packages/store/users/type';
+import { User, UserWithoutId } from '@packages/data/user';
 import db from '@packages/utils/db';
 
 export type PullAllResponse = User[];

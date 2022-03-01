@@ -1,13 +1,3 @@
-import { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { State } from '@packages/store';
-import { User } from '@packages/store/users/type';
-import { actions as userActions } from '@packages/store/users/slice';
-import selectUsers from '@packages/store/users/selectors';
-import { Role } from '@packages/store/roles/type';
-import { actions as roleActions } from '@packages/store/roles/slice';
-import selectRoles from '@packages/store/roles/selectors';
 import { getDataValue } from '@packages/utils/dataAttributes';
 import { AdminNavRoute, ROUTES_TO_LABEL } from '@packages/utils/routes';
 import { ROUTES_TO_PERMISSIONS } from '@packages/utils/auth';
@@ -21,19 +11,13 @@ import {
   Tr,
 } from '@packages/components/core/DataDisplay/Table';
 import { avatarSize, getCellWidth, rowIconWidth, tableSize } from '../utils';
+import { UserQueryFilter, useUsers } from '../hooks/useUsers';
+import { useRoles } from '../hooks/useRoles';
 import MemberRow from './MemberRow';
 
-export interface UsersProps {
-  users: User[];
-  pullUsers: () => void;
-  onRemoveUser: (user: User) => void;
-  roles: Role[];
-  pullRoles: () => void;
-}
-
-const Members: React.FC<UsersProps> = ({ users, pullUsers, roles, pullRoles }) => {
-  useEffect(() => pullUsers(), [pullUsers]);
-  useEffect(() => pullRoles(), [pullRoles]);
+const Members = () => {
+  const users = useUsers(UserQueryFilter.MEMBER);
+  const roles = useRoles();
 
   return (
     <Secured permissions={ROUTES_TO_PERMISSIONS[AdminNavRoute.MEMBERS]}>
@@ -76,17 +60,4 @@ const Members: React.FC<UsersProps> = ({ users, pullUsers, roles, pullRoles }) =
   );
 };
 
-const mapStateToProps = (state: State) => ({
-  users: selectUsers(state),
-  roles: selectRoles(state),
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  pullUsers: () => dispatch(userActions.pullRequest()),
-  onRemoveUser: (user: User) => dispatch(userActions.removeRequest(user)),
-  pullRoles: () => dispatch(roleActions.pullRequest()),
-});
-
-const ConnectedMembers = connect(mapStateToProps, mapDispatchToProps)(Members);
-
-export default ConnectedMembers;
+export default Members;

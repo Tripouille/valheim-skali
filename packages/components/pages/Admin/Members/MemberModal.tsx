@@ -1,7 +1,7 @@
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { Callback } from '@packages/utils/types';
-import { isUserWithInfos, User } from '@packages/store/users/type';
-import { Role } from '@packages/store/roles/type';
+import { isUserWithInfos, User } from '@packages/data/user';
+import { Role } from '@packages/data/role';
 import Center from '@packages/components/core/Containers/Center';
 import {
   Modal,

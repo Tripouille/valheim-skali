@@ -7,5 +7,3 @@ export interface Role {
 }
 
 export type RoleWithoutId = Omit<Role, '_id'>;
-
-export type State = Role[];

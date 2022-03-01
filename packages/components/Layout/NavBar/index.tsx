@@ -8,7 +8,7 @@ import { chakra, useBreakpointValue } from '@chakra-ui/react';
 import theme from '@packages/theme';
 import { getDataValue } from '@packages/utils/dataAttributes';
 import { SessionStatus, ROUTES_TO_PERMISSIONS } from '@packages/utils/auth';
-import { MenuRoute, ROUTES_TO_LABEL } from '@packages/utils/routes';
+import { MenuRoute, ROUTES_TO_LABEL, serverName } from '@packages/utils/routes';
 import Center from '@packages/components/core/Containers/Center';
 import IconButton from '@packages/components/core/Interactive/IconButton';
 import {
@@ -27,7 +27,6 @@ enum MenuType {
   DRAWER,
   HEADER,
 }
-const serverName = 'valhabba';
 
 const NavBar = () => {
   const session = useSession();
