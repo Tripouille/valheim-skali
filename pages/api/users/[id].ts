@@ -1,19 +1,11 @@
-import { NextApiHandler, NextApiRequest as Req, NextApiResponse as Res } from 'next';
-import db from '@packages/utils/db';
+import { NextApiHandler } from 'next';
+import { handlerWithId } from '@packages/utils/api';
+import { User } from '@packages/data/user';
 
 const collectionName = 'users';
 
-const removeHandler = async (req: Req, res: Res) => {
-  const { id } = req.query as { id: string };
-
-  await db.remove(collectionName, id);
-  res.status(204).end();
-};
-
 const handler: NextApiHandler = async (req, res) => {
-  if (req.method === 'DELETE') {
-    await removeHandler(req, res);
-  }
+  await handlerWithId<User>(collectionName, req, res);
 };
 
 export default handler;
