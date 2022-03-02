@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next';
-import { handlerWithoutId } from '@packages/utils/api';
+import { handlerWithoutId } from '@packages/utils/api/api';
 import { Role } from '@packages/data/role';
 
 const collectionName = 'roles';

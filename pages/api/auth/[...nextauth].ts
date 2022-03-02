@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import db from '@packages/utils/db';
+import db from '@packages/utils/api/db';
 import { Role } from '@packages/data/role';
 import { PermissionCategory, PermissionPrivilege, Permissions } from '@packages/utils/auth';
 import { ObjectId } from 'bson';

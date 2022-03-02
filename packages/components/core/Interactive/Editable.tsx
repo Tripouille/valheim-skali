@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiEdit } from 'react-icons/bi';
 import {
   Editable as ChakraEditable,
@@ -23,12 +23,23 @@ const EditableControls: React.FC<DataAttributes> = ({ dataCy }) => {
   );
 };
 
-export type EditableProps = ChakraEditableProps & DataAttributes;
+export type EditableProps = Omit<ChakraEditableProps, 'value'> & {
+  initialValue?: ChakraEditableProps['value'];
+} & DataAttributes;
 
-const Editable: React.FC<EditableProps> = ({ dataCy, ...chakraEditableProps }) => {
+const Editable: React.FC<EditableProps> = ({ dataCy, initialValue, ...chakraEditableProps }) => {
+  const [value, setValue] = useState(initialValue);
+
+  useEffect(() => setValue(initialValue), [initialValue]);
+
+  const handleChange = (nextValue: string) => {
+    setValue(nextValue);
+    if (chakraEditableProps.onChange) chakraEditableProps.onChange(nextValue);
+  };
+
   return (
-    <ChakraEditable {...chakraEditableProps} data-cy={dataCy}>
-      {chakraEditableProps.value && <EditablePreview pe="5" />}
+    <ChakraEditable {...chakraEditableProps} value={value} onChange={handleChange} data-cy={dataCy}>
+      {value && <EditablePreview pe="5" />}
       <EditableInput />
       <EditableControls dataCy={dataCy} />
     </ChakraEditable>
