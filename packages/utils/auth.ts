@@ -24,14 +24,12 @@ export enum PermissionCategory {
 }
 
 export enum PermissionPrivilege {
-  NONE,
-  READ,
-  READ_WRITE,
+  NONE = '0_NONE',
+  READ = '1_READ',
+  READ_WRITE = '2_READ_WRITE',
 }
 
-export type Permissions = {
-  [key in PermissionCategory]?: PermissionPrivilege;
-};
+export type Permissions = Partial<Record<PermissionCategory, PermissionPrivilege>>;
 
 export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions> = {
   [NavRoute.HOME]: {},

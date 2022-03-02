@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, UseQueryResult } from 'react-query';
 import axios from 'axios';
 import { APIRoute } from '@packages/utils/routes';
 import { QueryKeys, QueryTypes } from '@packages/utils/queryClient';
@@ -10,12 +10,23 @@ export enum UserQueryFilter {
   NON_MEMBER = 'non_member',
 }
 
+export type UseUsersReturn =
+  | {
+      users: QueryTypes[QueryKeys.USERS];
+      usersStatus: 'success' | 'error';
+    }
+  | {
+      users: undefined;
+      usersStatus: UseQueryResult<QueryTypes[QueryKeys.USERS]>['status'];
+    };
+
 export const getUsers = async (): Promise<User[]> => {
   const { data } = await axios.get<User[]>(APIRoute.USERS);
+
   return data;
 };
 
-export const useUsers = (filter: UserQueryFilter): QueryTypes[QueryKeys.USERS] => {
+export const useUsers = (filter: UserQueryFilter) => {
   const filterUsers = useCallback(
     (allUsers: QueryTypes[QueryKeys.USERS]) => {
       //TODO
@@ -24,10 +35,9 @@ export const useUsers = (filter: UserQueryFilter): QueryTypes[QueryKeys.USERS] =
     [filter],
   );
 
-  const fallback: QueryTypes[QueryKeys.USERS] = [];
-  const { data: users = fallback } = useQuery(QueryKeys.USERS, getUsers, {
+  const usersQuery = useQuery(QueryKeys.USERS, getUsers, {
     select: filterUsers,
   });
 
-  return users;
+  return usersQuery;
 };
