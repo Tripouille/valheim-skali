@@ -2,9 +2,10 @@ import { useQuery } from 'react-query';
 import axios from 'axios';
 import { APIRoute } from '@packages/utils/routes';
 import { QueryKeys, QueryTypes } from '@packages/utils/queryClient';
+import { Role } from '@packages/data/role';
 
-export const getRoles = async () => {
-  const { data } = await axios.get(APIRoute.ROLES);
+export const getRoles = async (): Promise<Role[]> => {
+  const { data } = await axios.get<Role[]>(APIRoute.ROLES);
   return data;
 };
 

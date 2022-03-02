@@ -3,14 +3,15 @@ import { useQuery } from 'react-query';
 import axios from 'axios';
 import { APIRoute } from '@packages/utils/routes';
 import { QueryKeys, QueryTypes } from '@packages/utils/queryClient';
+import { User } from '@packages/data/user';
 
 export enum UserQueryFilter {
   MEMBER = 'member',
   NON_MEMBER = 'non_member',
 }
 
-export const getUsers = async () => {
-  const { data } = await axios.get(APIRoute.USERS);
+export const getUsers = async (): Promise<User[]> => {
+  const { data } = await axios.get<User[]>(APIRoute.USERS);
   return data;
 };
 
