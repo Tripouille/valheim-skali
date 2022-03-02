@@ -18,6 +18,7 @@ import Button from '@packages/components/core/Interactive/Button';
 import Editable from '@packages/components/core/Interactive/Editable';
 import MembersRoleForm from './MemberRolesForm';
 import MemberAvatar from './MemberAvatar';
+import { usePatchUser } from '../hooks/usePatchUser';
 
 export interface MemberModalProps extends DataAttributes {
   isOpen: boolean;
@@ -28,6 +29,7 @@ export interface MemberModalProps extends DataAttributes {
 
 const MemberModal: React.FC<MemberModalProps> = ({ dataCy, isOpen, onClose, user, roles }) => {
   const userHasInfos = isUserWithInfos(user);
+  const patchUser = usePatchUser(user);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="6xl" scrollBehavior="inside" isCentered>
@@ -50,7 +52,8 @@ const MemberModal: React.FC<MemberModalProps> = ({ dataCy, isOpen, onClose, user
                 <Td>
                   <Editable
                     dataCy={getDataValue(dataCy, 'name_in_game', 'editable')}
-                    value={userHasInfos ? user.nameInGame : undefined}
+                    initialValue={userHasInfos ? user.nameInGame : undefined}
+                    onSubmit={nameInGame => patchUser({ nameInGame })}
                   />
                 </Td>
               </Tr>

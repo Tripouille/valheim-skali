@@ -23,5 +23,5 @@ export const Default = StoryFactory({
   selectAllOnFocus: true,
   startWithEditView: false,
   submitOnBlur: true,
-  value: 'Some text',
+  initialValue: 'Some text',
 });

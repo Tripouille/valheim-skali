@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import { User } from '@packages/data/user';
 import { APIRoute } from '@packages/utils/routes';
-import { QueryKeys } from '@packages/utils/queryClient';
+import { QueryKeys, QueryTypes } from '@packages/utils/queryClient';
 
 export enum UserQueryFilter {
   MEMBER = 'member',
@@ -15,16 +14,16 @@ export const getUsers = async () => {
   return data;
 };
 
-export const useUsers = (filter: UserQueryFilter): User[] => {
+export const useUsers = (filter: UserQueryFilter): QueryTypes[QueryKeys.USERS] => {
   const filterUsers = useCallback(
-    (allUsers: User[]) => {
+    (allUsers: QueryTypes[QueryKeys.USERS]) => {
       //TODO
       return allUsers;
     },
     [filter],
   );
 
-  const fallback: User[] = [];
+  const fallback: QueryTypes[QueryKeys.USERS] = [];
   const { data: users = fallback } = useQuery(QueryKeys.USERS, getUsers, {
     select: filterUsers,
   });

@@ -5,7 +5,7 @@
 import { expect } from '@jest/globals';
 import { MongoClient } from 'mongodb';
 import { ObjectId } from 'bson';
-import db from '@packages/utils/db';
+import db from '@packages/utils/api/db';
 
 describe('Db utils', () => {
   const originalEnv = process.env;
