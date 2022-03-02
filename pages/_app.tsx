@@ -1,7 +1,6 @@
 import { NextComponentType } from 'next';
 import type { AppInitialProps } from 'next/app';
 import Head from 'next/head';
-import { SessionProvider } from 'next-auth/react';
 import React from 'react';
 import { QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -17,29 +16,27 @@ type MyAppProps = AppInitialProps & {
   Component: NextComponentType & AuthConfig;
 };
 
-const MyApp = ({ Component, pageProps: { session, ...pageProps } }: MyAppProps) => (
-  <SessionProvider session={session}>
-    <ChakraProvider theme={theme}>
-      <QueryClientProvider client={queryClient}>
-        <Head>
-          <title>Skali - Valhabba</title>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-          <link rel="preload" href="/fonts/Norse.otf" as="font" crossOrigin="" />
-        </Head>
-        <Fonts />
-        <Layout>
-          {Component.needAuth ? (
-            <SecuredPage permissions={Component.needAuth.permissions}>
-              <Component {...pageProps} />
-            </SecuredPage>
-          ) : (
+const MyApp = ({ Component, pageProps }: MyAppProps) => (
+  <ChakraProvider theme={theme}>
+    <QueryClientProvider client={queryClient}>
+      <Head>
+        <title>Skali - Valhabba</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link rel="preload" href="/fonts/Norse.otf" as="font" crossOrigin="" />
+      </Head>
+      <Fonts />
+      <Layout>
+        {Component.needAuth ? (
+          <SecuredPage permissions={Component.needAuth.permissions}>
             <Component {...pageProps} />
-          )}
-        </Layout>
-        <ReactQueryDevtools />
-      </QueryClientProvider>
-    </ChakraProvider>
-  </SessionProvider>
+          </SecuredPage>
+        ) : (
+          <Component {...pageProps} />
+        )}
+      </Layout>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  </ChakraProvider>
 );
 
 export default MyApp;
