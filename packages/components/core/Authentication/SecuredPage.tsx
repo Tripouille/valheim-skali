@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@packages/utils/hooks/useSession';
 import { Children } from '@packages/utils/types';
 import {
   AuthError,
@@ -19,9 +19,7 @@ const SecuredPage: React.FC<SecuredPageProps> = ({ permissions, children }) => {
   const router = useRouter();
   const session = useSession({
     required: true,
-    onUnauthenticated: () => {
-      router.push(getSigninRoute(AuthError.SESSION_REQUIRED, router.asPath));
-    },
+    redirectTo: getSigninRoute(AuthError.SESSION_REQUIRED, router.asPath),
   });
 
   if (session.status === SessionStatus.AUTHENTICATED) {

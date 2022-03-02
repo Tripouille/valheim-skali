@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react';
+import { useSession } from '@packages/utils/hooks/useSession';
 import { Children } from '@packages/utils/types';
 import { Permissions, SessionStatus, userHasRequiredPermissions } from '@packages/utils/auth';
 

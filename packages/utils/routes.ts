@@ -6,6 +6,7 @@ export const serverName = 'valhabba';
 export enum APIRoute {
   USERS = '/api/users',
   ROLES = '/api/roles',
+  SESSION = '/api/auth/session',
 }
 
 export enum NavRoute {
@@ -46,8 +47,10 @@ export const ROUTES_TO_LABEL: Record<Route, string> = {
   [AuthRoute.SIGNIN]: 'Connexion',
 };
 
-export const getSigninRoute = (error: AuthError, callbackUrl: string) =>
-  `${AuthRoute.SIGNIN}?error=${error}&callbackUrl=${callbackUrl}`;
+export const getSigninRoute = (error: AuthError, callbackUrl?: string) =>
+  callbackUrl
+    ? `${AuthRoute.SIGNIN}?error=${error}&callbackUrl=${callbackUrl}`
+    : `${AuthRoute.SIGNIN}?error=${error}`;
 
 export const getRouteParameterAsString = (routeParameterValue?: OneOrMany<string>) => {
   return Array.isArray(routeParameterValue) ? routeParameterValue[0] : routeParameterValue ?? '';
