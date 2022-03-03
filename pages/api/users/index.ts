@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next';
-import { pullCollection } from '@packages/utils/api/api';
+import { pullCollection, ServerException } from '@packages/utils/api/api';
 import { User } from '@packages/data/user';
 import { requirePermissions } from '@packages/utils/api/auth';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
@@ -13,7 +13,7 @@ const handler: NextApiHandler = async (req, res) => {
       await pullCollection<User>(collectionName, req, res);
     }
   } catch (e) {
-    if (e instanceof Error) res.status(401).end();
+    if (e instanceof ServerException) res.status(e.statusCode).end();
     else throw e;
   }
 };
