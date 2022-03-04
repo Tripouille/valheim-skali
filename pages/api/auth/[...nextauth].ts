@@ -17,10 +17,12 @@ const getUserPermissions = async (user: UserWithInfos) => {
     (Object.entries(role.permissions) as [PermissionCategory, PermissionPrivilege][]).forEach(
       ([category, privilege]) => {
         if (privilege !== undefined) {
-          userPermissions[category] = Math.max(
-            userPermissions[category] ?? PermissionPrivilege.NONE,
-            privilege,
-          );
+          const actualUserPermissionForCategory =
+            userPermissions[category] ?? PermissionPrivilege.NONE;
+          userPermissions[category] =
+            actualUserPermissionForCategory > privilege
+              ? actualUserPermissionForCategory
+              : privilege;
         }
       },
     );
