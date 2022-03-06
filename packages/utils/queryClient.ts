@@ -1,5 +1,6 @@
 import { QueryClient } from 'react-query';
 import axios from 'axios';
+import { toast } from '@chakra-ui/react';
 import { User } from '@packages/data/user';
 import { Role } from '@packages/data/role';
 import { getMessageFromError } from './error';
@@ -8,10 +9,12 @@ import { displayErrorToast } from './toast';
 export const queryErrorHandler = (error: unknown) => {
   const id = axios.isAxiosError(error) ? `${error.config.method}-${error.config.url}` : undefined;
 
-  displayErrorToast({
-    id,
-    title: getMessageFromError(error),
-  });
+  if (!id || !toast.isActive(id)) {
+    displayErrorToast({
+      id,
+      title: getMessageFromError(error),
+    });
+  }
 };
 
 export const queryClient = new QueryClient({
