@@ -38,7 +38,7 @@ const MemberRow: React.FC<MemberRowProps> = ({ dataCy, user, roles }) => {
       <Td display={{ base: 'none', sm: 'table-cell' }}>
         {userHasInfos && (
           <Wrap justify="center">
-            {user.roles?.map(roleId => {
+            {user.roleIds?.map(roleId => {
               const role = roles.find(r => r._id === roleId);
               return role ? <Tag key={roleId} label={role.name} /> : null;
             })}

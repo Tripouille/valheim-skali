@@ -2,7 +2,7 @@ import { NextApiHandler, NextApiRequest as Req, NextApiResponse as Res } from 'n
 import { ObjectId } from 'bson';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import { requirePermissions } from '@packages/utils/api/auth';
-import { isUpdatableUserData, User } from '@packages/data/user';
+import { isUpdatableUserData, User, UserInDb } from '@packages/data/user';
 import db from '@packages/utils/api/db';
 import { ServerException, updateOneInCollection } from '@packages/utils/api/api';
 
@@ -11,17 +11,22 @@ const collectionName = 'users';
 const putUser = async (req: Req, res: Res) => {
   const { id } = req.query as { id: string };
 
-  const body: Partial<User> = req.body;
-  if (!isUpdatableUserData(body)) throw new ServerException(400);
+  const userNewData: Partial<User> = req.body;
+  if (!isUpdatableUserData(userNewData)) throw new ServerException(400);
 
-  const oldUser = await db.findOne<User>(collectionName, { _id: new ObjectId(id) });
+  const oldUser = await db.findOne<UserInDb>(collectionName, { _id: new ObjectId(id) });
   if (!oldUser) throw new ServerException(404);
 
-  /** Ensure roles in set after this update : the returned user should be a UserWithInfos */
-  const result = await updateOneInCollection<User>(collectionName, id, {
-    roles: [],
+  const newRoleIds =
+    'roleIds' in userNewData
+      ? userNewData.roleIds.map(roleId => new ObjectId(roleId))
+      : 'roleIds' in oldUser
+      ? oldUser.roleIds
+      : [];
+  const result = await updateOneInCollection<UserInDb>(collectionName, id, {
     ...oldUser,
-    ...body,
+    ...userNewData,
+    roleIds: newRoleIds,
   });
   if (!result.ok) throw new ServerException(500);
 

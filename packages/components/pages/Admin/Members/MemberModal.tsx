@@ -19,6 +19,8 @@ import Editable from '@packages/components/core/Interactive/Editable';
 import MembersRoleForm from './MemberRolesForm';
 import MemberAvatar from './MemberAvatar';
 import { useUpdateUser } from '../hooks/useUpdateUser';
+import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
+import Secured from '../../../core/Authentication/Secured';
 
 export interface MemberModalProps extends DataAttributes {
   isOpen: boolean;
@@ -57,12 +59,14 @@ const MemberModal: React.FC<MemberModalProps> = ({ dataCy, isOpen, onClose, user
                   />
                 </Td>
               </Tr>
-              <Tr>
-                <Th>Rôles</Th>
-                <Td>
-                  <MembersRoleForm dataCy={dataCy} user={user} roles={roles} />
-                </Td>
-              </Tr>
+              <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ }}>
+                <Tr>
+                  <Th>Rôles</Th>
+                  <Td>
+                    <MembersRoleForm dataCy={dataCy} user={user} roles={roles} />
+                  </Td>
+                </Tr>
+              </Secured>
             </Tbody>
           </Table>
         </ModalBody>
