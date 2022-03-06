@@ -13,7 +13,7 @@ interface UserMutationContext {
 
 const updateUserOnServer =
   (updatedUser: User) => async (updatedUserPartialData: UpdatedUserPartialData) => {
-    await axios.put(`${APIRoute.USERS}/${updatedUser._id}`, updatedUserPartialData);
+    await axios.patch(`${APIRoute.USERS}/${updatedUser._id}`, updatedUserPartialData);
   };
 
 const getUpdatedUsers = (
