@@ -86,6 +86,7 @@ const MembersRoleForm: React.FC<MembersRoleFormProps> = ({ dataCy, user, roles }
           </Menu>
         </Box>
       )}
+      {userRoles.length === 0 && addableRoles.length === 0 && 'Aucun rôle'}
     </Wrap>
   );
 };
