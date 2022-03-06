@@ -44,7 +44,6 @@ const getUserPermissions = async (user: UserWithInfos) => {
     }
   });
 
-  console.log('userPermissions:', userPermissions);
   return userPermissions;
 };
 

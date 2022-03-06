@@ -94,3 +94,7 @@ export const SpecialRolesParameters: Record<SpecialRole, SpecialRoleParameters> 
     canEdit: { [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE },
   },
 };
+
+export const isSpecialRoleName = (roleName: string): roleName is SpecialRole => {
+  return Object.values(SpecialRole).includes(roleName as SpecialRole);
+};

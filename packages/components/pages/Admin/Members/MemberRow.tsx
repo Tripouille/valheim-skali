@@ -2,6 +2,7 @@ import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
 import { limitedWidthVariant } from '@packages/theme/components/LimitedWidthText';
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
+import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import { isUserWithInfos, User } from '@packages/data/user';
 import { Role } from '@packages/data/role';
 import { Wrap } from '@packages/components/core/Containers/Wrap';
@@ -12,7 +13,6 @@ import Secured from '@packages/components/core/Authentication/Secured';
 import { rowIconSize } from '../utils';
 import MemberModal from './MemberModal';
 import MemberAvatar from './MemberAvatar';
-import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 
 export interface MemberRowProps extends DataAttributes {
   user: User;
@@ -35,36 +35,36 @@ const MemberRow: React.FC<MemberRowProps> = ({ dataCy, user, roles }) => {
       <Td display={{ base: 'none', md: 'table-cell' }} textAlign="center" {...limitedWidthVariant}>
         {user.name}
       </Td>
-      <Td display={{ base: 'none', sm: 'table-cell' }}>
-        {userHasInfos && (
-          <Wrap justify="center">
-            {user.roleIds?.map(roleId => {
-              const role = roles.find(r => r._id === roleId);
-              return role ? <Tag key={roleId} label={role.name} /> : null;
-            })}
-          </Wrap>
-        )}
-      </Td>
-      <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
-        <Td>
-          <IconButton
-            dataCy={getDataValue(dataCy, 'edit')}
-            aria-label="Modifier l'utilisateur"
-            title="Modifier l'utilisateur"
-            icon={<BiEdit size="30" />}
-            variant="ghost"
-            size={rowIconSize}
-            onClick={onOpen}
-          />
-          <MemberModal
-            dataCy={getDataValue(dataCy, 'modal')}
-            isOpen={isOpen}
-            onClose={onClose}
-            user={user}
-            roles={roles}
-          />
+      <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ }}>
+        <Td display={{ base: 'none', sm: 'table-cell' }}>
+          {userHasInfos && (
+            <Wrap justify="center">
+              {user.roleIds?.map(roleId => {
+                const role = roles.find(r => r._id === roleId);
+                return role ? <Tag key={roleId} label={role.name} /> : null;
+              })}
+            </Wrap>
+          )}
         </Td>
       </Secured>
+      <Td>
+        <IconButton
+          dataCy={getDataValue(dataCy, 'edit')}
+          aria-label="Modifier l'utilisateur"
+          title="Modifier l'utilisateur"
+          icon={<BiEdit size="30" />}
+          variant="ghost"
+          size={rowIconSize}
+          onClick={onOpen}
+        />
+        <MemberModal
+          dataCy={getDataValue(dataCy, 'modal')}
+          isOpen={isOpen}
+          onClose={onClose}
+          user={user}
+          roles={roles}
+        />
+      </Td>
     </Tr>
   );
 };

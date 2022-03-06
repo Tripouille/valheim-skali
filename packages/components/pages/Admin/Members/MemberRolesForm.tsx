@@ -9,55 +9,34 @@ import Tag from '@packages/components/core/DataDisplay/Tag';
 import Button from '@packages/components/core/Interactive/Button';
 import { useUpdateUser } from '../hooks/useUpdateUser';
 import { useMemo } from 'react';
-import {
-  SpecialRole,
-  SpecialRolesParameters,
-  userHasRequiredPermissions,
-} from '@packages/utils/auth';
 import { useSession } from '@packages/utils/hooks/useSession';
+import { canUserAssignRole } from '../utils';
+import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 
 export interface MembersRoleFormProps extends DataAttributes {
   user: User;
   roles: Role[];
 }
 
-// TODO: move in data role
-const isSpecialRoleName = (roleName: string): roleName is SpecialRole => {
-  return Object.values(SpecialRole).includes(roleName as SpecialRole);
-};
-
 const MembersRoleForm: React.FC<MembersRoleFormProps> = ({ dataCy, user, roles }) => {
   const session = useSession();
-  const updateUser = useUpdateUser(user);
+  const { addRoleToUser, removeRoleFromUser } = useUpdateUser(user);
 
   const userHasInfos = isUserWithInfos(user);
+  const hasUserWritePermission = session.hasRequiredPermissions({
+    [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE,
+  });
 
-  const availableRoles = useMemo(() => {
-    if (!session.data) return [];
+  const addableRoles = useMemo(() => {
+    if (!hasUserWritePermission) return [];
     const nonOwnedRoles = userHasInfos
       ? roles.filter(role => !user.roleIds.includes(role._id))
       : roles;
-    return nonOwnedRoles.filter(role => {
-      if (
-        isSpecialRoleName(role.name) &&
-        !userHasRequiredPermissions(
-          session.data.permissions,
-          SpecialRolesParameters[role.name].canAssign,
-        )
-      ) {
-        return false;
-      }
-      return true;
-    });
-  }, [roles, userHasInfos, user, session.data]);
+    return nonOwnedRoles.filter(role => canUserAssignRole(role, session.hasRequiredPermissions));
+  }, [roles, userHasInfos, user, session.hasRequiredPermissions, hasUserWritePermission]);
 
-  const removeRoleFromUser = (removedRole: Role) => () => {
-    if ('roleIds' in user)
-      updateUser({ roleIds: user.roleIds.filter(roleId => roleId !== removedRole._id) });
-  };
-
-  const addRoleToUser = (addedRole: Role) => () => {
-    updateUser({ roleIds: [...('roleIds' in user ? user.roleIds : []), addedRole._id] });
+  const canRemoveRole = (role: Role) => {
+    return hasUserWritePermission && canUserAssignRole(role, session.hasRequiredPermissions);
   };
 
   return (
@@ -66,10 +45,15 @@ const MembersRoleForm: React.FC<MembersRoleFormProps> = ({ dataCy, user, roles }
         user.roleIds.map(roleId => {
           const role = roles.find(r => r._id === roleId);
           return role ? (
-            <Tag key={roleId} label={role.name} size="lg" onClose={removeRoleFromUser(role)} />
+            <Tag
+              key={roleId}
+              label={role.name}
+              size="lg"
+              onClose={canRemoveRole(role) ? removeRoleFromUser(role) : undefined}
+            />
           ) : null;
         })}
-      {availableRoles.length > 0 && (
+      {addableRoles.length > 0 && (
         <Box>
           <Menu placement="bottom" gutter={0}>
             <MenuButton
@@ -82,7 +66,7 @@ const MembersRoleForm: React.FC<MembersRoleFormProps> = ({ dataCy, user, roles }
               Ajouter un rôle
             </MenuButton>
             <MenuList minW="min-content">
-              {availableRoles.map(role => (
+              {addableRoles.map(role => (
                 <MenuItem
                   key={role._id}
                   dataCy={getDataValue(dataCy, 'add_role', role._id)}
