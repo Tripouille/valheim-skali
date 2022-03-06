@@ -5,10 +5,12 @@ import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import db from '@packages/utils/api/db';
 import { Role } from '@packages/data/role';
 import {
+  isSpecialRoleName,
   PermissionCategory,
   PermissionPrivilege,
   Permissions,
-  SpecialRole,
+  SpecialRoleName,
+  SpecialRolesParameters,
 } from '@packages/utils/auth';
 import { ObjectId } from 'bson';
 import { isUserWithInfos, User, UserWithInfos } from '@packages/data/user';
@@ -19,14 +21,10 @@ const getUserPermissions = async (user: UserWithInfos) => {
   });
   const userPermissions: Permissions = {};
   userRoleIds.forEach(role => {
-    // TODO better
-    if (role.name === SpecialRole.SUPER_ADMIN) {
+    if (isSpecialRoleName(role.name) && SpecialRolesParameters[role.name].specialPrivilege) {
       Object.values(PermissionCategory).forEach(category => {
-        userPermissions[category] = PermissionPrivilege.SUPER_ADMIN;
-      });
-    } else if (role.name === SpecialRole.ADMIN) {
-      Object.values(PermissionCategory).forEach(category => {
-        userPermissions[category] = PermissionPrivilege.ADMIN;
+        userPermissions[category] =
+          SpecialRolesParameters[role.name as SpecialRoleName].specialPrivilege;
       });
     } else {
       (Object.entries(role.permissions) as [PermissionCategory, PermissionPrivilege][]).forEach(
