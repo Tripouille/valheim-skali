@@ -1,17 +1,17 @@
+import { useMemo } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { isUserWithInfos, User } from '@packages/data/user';
-import { Role } from '@packages/data/role';
+import { compareRolesFromName, Role } from '@packages/data/role';
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
+import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
+import { useSession } from '@packages/utils/hooks/useSession';
 import { Wrap } from '@packages/components/core/Containers/Wrap';
 import Box from '@packages/components/core/Containers/Box';
 import { Menu, MenuButton, MenuItem, MenuList } from '@packages/components/core/Overlay/Menu';
 import Tag from '@packages/components/core/DataDisplay/Tag';
 import Button from '@packages/components/core/Interactive/Button';
 import { useUpdateUser } from '../hooks/useUpdateUser';
-import { useMemo } from 'react';
-import { useSession } from '@packages/utils/hooks/useSession';
 import { canUserAssignRole } from '../utils';
-import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 
 export interface MembersRoleFormProps extends DataAttributes {
   user: User;
@@ -23,6 +23,14 @@ const MembersRoleForm: React.FC<MembersRoleFormProps> = ({ dataCy, user, roles }
   const { addRoleToUser, removeRoleFromUser } = useUpdateUser(user);
 
   const userHasInfos = isUserWithInfos(user);
+  const userRoles = useMemo(
+    () =>
+      userHasInfos
+        ? user.roleIds.map(roleId => roles.find(r => r._id === roleId)).sort(compareRolesFromName)
+        : [],
+    [roles, user, userHasInfos],
+  );
+
   const hasUserWritePermission = session.hasRequiredPermissions({
     [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE,
   });
@@ -41,18 +49,16 @@ const MembersRoleForm: React.FC<MembersRoleFormProps> = ({ dataCy, user, roles }
 
   return (
     <Wrap>
-      {userHasInfos &&
-        user.roleIds.map(roleId => {
-          const role = roles.find(r => r._id === roleId);
-          return role ? (
-            <Tag
-              key={roleId}
-              label={role.name}
-              size="lg"
-              onClose={canRemoveRole(role) ? removeRoleFromUser(role) : undefined}
-            />
-          ) : null;
-        })}
+      {userRoles.map(role => {
+        return role ? (
+          <Tag
+            key={role._id}
+            label={role.name}
+            size="lg"
+            onClose={canRemoveRole(role) ? removeRoleFromUser(role) : undefined}
+          />
+        ) : null;
+      })}
       {addableRoles.length > 0 && (
         <Box>
           <Menu placement="bottom" gutter={0}>

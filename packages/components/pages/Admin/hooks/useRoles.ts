@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import { Role } from '@packages/data/role';
+import { compareRolesFromName, Role } from '@packages/data/role';
 import { APIRoute } from '@packages/utils/routes';
 import { QueryKeys, QueryTypes } from '@packages/utils/queryClient';
 import { useSession } from '@packages/utils/hooks/useSession';
@@ -19,6 +19,7 @@ export const useRoles = (): QueryTypes[QueryKeys.ROLES] => {
     enabled: session.hasRequiredPermissions({
       [PermissionCategory.ROLE]: PermissionPrivilege.READ,
     }),
+    select: data => data.sort(compareRolesFromName),
   });
 
   return roles;
