@@ -8,7 +8,7 @@ import { ServerException, updateOneInCollection } from '@packages/utils/api/api'
 
 const collectionName = 'users';
 
-const putUser = async (req: Req, res: Res) => {
+const patchUser = async (req: Req, res: Res) => {
   const { id } = req.query as { id: string };
 
   const userNewData: Partial<User> = req.body;
@@ -35,9 +35,9 @@ const putUser = async (req: Req, res: Res) => {
 
 const handler: NextApiHandler = async (req: Req, res: Res) => {
   try {
-    if (req.method === 'PUT') {
+    if (req.method === 'PATCH') {
       await requirePermissions({ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }, req);
-      await putUser(req, res);
+      await patchUser(req, res);
     }
   } catch (e) {
     if (e instanceof ServerException) res.status(e.statusCode).end();
