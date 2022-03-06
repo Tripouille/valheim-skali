@@ -1,3 +1,4 @@
+import { hasOwnProperty } from '@packages/utils/types';
 import { ObjectId } from 'bson';
 import { Role } from './role';
 
@@ -24,28 +25,26 @@ export type UserInDb = DefaultNextAuthUser | UserWithInfosInDb;
 
 export type UserWithoutId = Omit<UserWithInfos, '_id'>;
 
+export const usersCollectionName = 'users';
+
 export const USER_NAME_IN_GAME_MAX_LENGTH = 20;
 
 /** The only keys that can be updated */
-export type UpdatedUserPartialData = {
-  nameInGame?: UserWithInfos['nameInGame'];
-  roleIds?: UserWithInfos['roleIds'];
+export type UpdateUserData = {
+  nameInGame: NonNullable<UserWithInfos['nameInGame']>;
 };
+export type UpdateUserRolesData = { roleId: string };
 
 /** Type guards */
 
-export const isUserWithInfos = (user: User): user is UserWithInfos => 'roleIds' in user;
+export const isUserWithInfos = (user: User): user is UserWithInfos =>
+  hasOwnProperty(user, 'roleIds');
 
-const isUpdatableUserDataProperty = ([key, value]: [key: string, value: unknown]) => {
+export const isUpdateUserRolesData = (data: unknown): data is UpdateUserRolesData => {
   return (
-    (key === 'nameInGame' && typeof value === 'string') ||
-    (key === 'roleIds' && Array.isArray(value) && value.every(roleId => typeof roleId === 'string'))
+    !!data &&
+    typeof data === 'object' &&
+    hasOwnProperty(data, 'roleId') &&
+    typeof data.roleId === 'string'
   );
-};
-export const isUpdatableUserData = (data: unknown): data is UpdatedUserPartialData => {
-  if (!data || typeof data !== 'object') return false;
-  if (!Object.entries(data).every(isUpdatableUserDataProperty)) {
-    return false;
-  }
-  return true;
 };
