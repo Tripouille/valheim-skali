@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';
-import { UpdatedUserPartialData, User } from '@packages/data/user';
+import { isUserWithInfos, UpdatedUserPartialData, User } from '@packages/data/user';
 import { Role } from '@packages/data/role';
 import { APIRoute } from '@packages/utils/routes';
 import { queryErrorHandler, QueryKeys, QueryTypes } from '@packages/utils/queryClient';
@@ -62,8 +62,11 @@ export const useUpdateUser = (updatedUser: User) => {
   });
 
   const updateUserNameInGame = useCallback(
-    (newNameInGame: string) => updateUser({ nameInGame: newNameInGame }),
-    [updateUser],
+    (newNameInGame: string) => {
+      if (!isUserWithInfos(updatedUser) || updatedUser.nameInGame !== newNameInGame)
+        updateUser({ nameInGame: newNameInGame });
+    },
+    [updateUser, updatedUser],
   );
 
   const removeRoleFromUser = useCallback(
