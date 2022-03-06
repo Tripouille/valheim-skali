@@ -1,16 +1,14 @@
 import { NextApiHandler } from 'next';
 import { pullCollection, ServerException } from '@packages/utils/api/api';
-import { UserInDb } from '@packages/data/user';
+import { UserInDb, usersCollectionName } from '@packages/data/user';
 import { requirePermissions } from '@packages/utils/api/auth';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 
-const collectionName = 'users';
-
-const handler: NextApiHandler = async (req, res) => {
+const usersHandler: NextApiHandler = async (req, res) => {
   try {
     if (req.method === 'GET') {
       await requirePermissions({ [PermissionCategory.USER]: PermissionPrivilege.READ }, req);
-      await pullCollection<UserInDb>(collectionName, req, res);
+      await pullCollection<UserInDb>(usersCollectionName, req, res);
     }
   } catch (e) {
     if (e instanceof ServerException) res.status(e.statusCode).end();
@@ -18,4 +16,4 @@ const handler: NextApiHandler = async (req, res) => {
   }
 };
 
-export default handler;
+export default usersHandler;
