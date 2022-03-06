@@ -3,7 +3,7 @@ import { Session } from 'next-auth';
 import { QueryKey, useQuery, UseQueryOptions } from 'react-query';
 import axios from 'axios';
 import { APIRoute, getSigninRoute } from '../routes';
-import { AuthError } from '../auth';
+import { AuthError, SessionStatus } from '../auth';
 
 export async function fetchSession(): Promise<Session | null> {
   const { data: session } = await axios.get(APIRoute.SESSION);
@@ -22,11 +22,11 @@ interface UseSessionParameters {
 type UseSessionReturn =
   | {
       data: Session;
-      status: 'authenticated';
+      status: SessionStatus.AUTHENTICATED;
     }
   | {
       data?: null;
-      status: 'unauthenticated' | 'loading';
+      status: SessionStatus.UNAUTHENTICATED | SessionStatus.LOADING;
     };
 
 export const useSession = ({
@@ -36,28 +36,29 @@ export const useSession = ({
 }: UseSessionParameters = {}): UseSessionReturn => {
   const router = useRouter();
 
-  const { data: sessionData, status } = useQuery<Session | null, unknown, Session | null, QueryKey>(
+  const { data, status } = useQuery<Session | null, unknown, Session | null, QueryKey>(
     ['session'],
     fetchSession,
     {
       ...queryConfig,
-      onSettled(data, error) {
-        if (queryConfig.onSettled) queryConfig.onSettled(data, error);
-        if (data || !required) return;
+      onSettled(session, error) {
+        if (queryConfig.onSettled) queryConfig.onSettled(session, error);
+        if (session || !required) return;
         router.push(redirectTo);
       },
     },
   );
 
-  if (sessionData) {
+  if (data) {
     return {
-      data: sessionData,
-      status: 'authenticated',
+      data,
+      status: SessionStatus.AUTHENTICATED,
     };
   } else {
     return {
       data: null,
-      status: status === 'loading' ? 'loading' : 'unauthenticated',
+      status:
+        status === SessionStatus.LOADING ? SessionStatus.LOADING : SessionStatus.UNAUTHENTICATED, //???
     };
   }
 };

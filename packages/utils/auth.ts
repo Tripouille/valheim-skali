@@ -27,6 +27,8 @@ export enum PermissionPrivilege {
   NONE = '0_NONE',
   READ = '1_READ',
   READ_WRITE = '2_READ_WRITE',
+  ADMIN = '3_ADMIN', // special privilege for admin actions
+  SUPER_ADMIN = '4_SUPER_ADMIN', // special privilege for owner actions
 }
 
 export type Permissions = Partial<Record<PermissionCategory, PermissionPrivilege>>;
@@ -52,7 +54,43 @@ export const userHasRequiredPermissions = (
 ) => {
   for (const c in requiredPermissions) {
     const category = c as PermissionCategory;
-    if ((userPermissions[category] ?? -1) < (requiredPermissions[category] ?? -1)) return false;
+    if (
+      (userPermissions[category] ?? PermissionPrivilege.NONE) <
+      (requiredPermissions[category] ?? PermissionPrivilege.NONE)
+    )
+      return false;
   }
   return true;
+};
+
+export enum SpecialRole {
+  /** Dev who has access to database, has all permissions to SuperAdmin level */
+  SUPER_ADMIN = 'SuperAdmin',
+  /** Has all permissions to Admin level
+   * (this is the only role with write access on roles) */
+  ADMIN = 'Admin',
+  MEMBER = 'Viking',
+}
+interface SpecialRoleParameters {
+  canRead: Permissions;
+  canAssign: Permissions;
+  canEdit: Permissions;
+}
+// Special role can't be deleted and have the following restrictions to see/edit them
+export const SpecialRolesParameters: Record<SpecialRole, SpecialRoleParameters> = {
+  [SpecialRole.SUPER_ADMIN]: {
+    canRead: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
+    canAssign: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
+    canEdit: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
+  },
+  [SpecialRole.ADMIN]: {
+    canRead: { [PermissionCategory.ROLE]: PermissionPrivilege.READ },
+    canAssign: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
+    canEdit: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
+  },
+  [SpecialRole.MEMBER]: {
+    canRead: { [PermissionCategory.ROLE]: PermissionPrivilege.READ },
+    canAssign: { [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE },
+    canEdit: { [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE },
+  },
 };
