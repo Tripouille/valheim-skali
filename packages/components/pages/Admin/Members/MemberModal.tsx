@@ -75,13 +75,15 @@ const MemberModal: React.FC<MemberModalProps> = ({ dataCy, isOpen, onClose, user
             </Tbody>
           </Table>
         </ModalBody>
-        <ModalFooter borderTop="1px gray solid">
-          <Center w="full">
-            <Button dataCy={getDataValue(dataCy, 'delete')} colorScheme="red">
-              Supprimer l&apos;utilisateur
-            </Button>
-          </Center>
-        </ModalFooter>
+        <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
+          <ModalFooter borderTop="1px gray solid">
+            <Center w="full">
+              <Button dataCy={getDataValue(dataCy, 'delete')} colorScheme="red">
+                Supprimer l&apos;utilisateur
+              </Button>
+            </Center>
+          </ModalFooter>
+        </Secured>
       </ModalContent>
     </Modal>
   );
