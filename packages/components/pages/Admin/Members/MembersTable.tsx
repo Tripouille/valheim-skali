@@ -30,12 +30,12 @@ const MembersTable: React.FC<MembersTableProps> = ({ users }) => {
           <Th textAlign="center" display={{ base: 'none', md: 'table-cell' }}>
             Pseudo discord
           </Th>
-          <Th textAlign="center" display={{ base: 'none', sm: 'table-cell' }}>
-            Rôles
-          </Th>
-          <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
-            <Th width={getCellWidth(rowIconWidth)}></Th>
+          <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ }}>
+            <Th textAlign="center" display={{ base: 'none', sm: 'table-cell' }}>
+              Rôles
+            </Th>
           </Secured>
+          <Th width={getCellWidth(rowIconWidth)}></Th>
         </Tr>
       </Thead>
       <Tbody>

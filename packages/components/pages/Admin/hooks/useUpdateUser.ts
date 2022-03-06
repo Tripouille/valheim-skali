@@ -1,6 +1,8 @@
+import { useCallback } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';
-import { UseMutateFunction, useMutation, useQueryClient } from 'react-query';
 import { UpdatedUserPartialData, User } from '@packages/data/user';
+import { Role } from '@packages/data/role';
 import { APIRoute } from '@packages/utils/routes';
 import { queryErrorHandler, QueryKeys, QueryTypes } from '@packages/utils/queryClient';
 import { displaySuccessToast } from '@packages/utils/toast';
@@ -23,9 +25,7 @@ const getUpdatedUsers = (
     user._id === updatedUser._id ? { ...user, ...updatedUserPartialData } : user,
   ) ?? [];
 
-export const useUpdateUser = (
-  updatedUser: User,
-): UseMutateFunction<void, unknown, UpdatedUserPartialData, UserMutationContext> => {
+export const useUpdateUser = (updatedUser: User) => {
   const queryClient = useQueryClient();
 
   const { mutate: updateUser } = useMutation<
@@ -61,5 +61,27 @@ export const useUpdateUser = (
     },
   });
 
-  return updateUser;
+  const updateUserNameInGame = useCallback(
+    (newNameInGame: string) => updateUser({ nameInGame: newNameInGame }),
+    [updateUser],
+  );
+
+  const removeRoleFromUser = useCallback(
+    (removedRole: Role) => () => {
+      if ('roleIds' in updatedUser)
+        updateUser({ roleIds: updatedUser.roleIds.filter(roleId => roleId !== removedRole._id) });
+    },
+    [updateUser, updatedUser],
+  );
+
+  const addRoleToUser = useCallback(
+    (addedRole: Role) => () => {
+      updateUser({
+        roleIds: [...('roleIds' in updatedUser ? updatedUser.roleIds : []), addedRole._id],
+      });
+    },
+    [updateUser, updatedUser],
+  );
+
+  return { updateUserNameInGame, removeRoleFromUser, addRoleToUser };
 };

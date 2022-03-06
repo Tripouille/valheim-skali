@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router';
 import { Session } from 'next-auth';
+import { useCallback, useMemo } from 'react';
 import { QueryKey, useQuery, UseQueryOptions } from 'react-query';
 import axios from 'axios';
 import { APIRoute, getSigninRoute } from '../routes';
-import { AuthError, SessionStatus } from '../auth';
+import { AuthError, Permissions, SessionStatus, userHasRequiredPermissions } from '../auth';
 
 export async function fetchSession(): Promise<Session | null> {
   const { data: session } = await axios.get(APIRoute.SESSION);
@@ -19,7 +20,7 @@ interface UseSessionParameters {
   queryConfig?: UseQueryOptions<Session | null, unknown, Session | null, QueryKey>;
 }
 
-type UseSessionReturn =
+export type UseSessionReturn = (
   | {
       data: Session;
       status: SessionStatus.AUTHENTICATED;
@@ -27,7 +28,8 @@ type UseSessionReturn =
   | {
       data?: null;
       status: SessionStatus.UNAUTHENTICATED | SessionStatus.LOADING;
-    };
+    }
+) & { hasRequiredPermissions: (requiredPermissions: Permissions) => boolean };
 
 export const useSession = ({
   required = false,
@@ -49,16 +51,29 @@ export const useSession = ({
     },
   );
 
-  if (data) {
-    return {
-      data,
-      status: SessionStatus.AUTHENTICATED,
-    };
-  } else {
-    return {
-      data: null,
-      status:
-        status === SessionStatus.LOADING ? SessionStatus.LOADING : SessionStatus.UNAUTHENTICATED, //???
-    };
-  }
+  const hasRequiredPermissions = useCallback(
+    (requiredPermissions: Permissions) => {
+      return data ? userHasRequiredPermissions(data.permissions, requiredPermissions) : false;
+    },
+    [data],
+  );
+
+  const session = useMemo(() => {
+    if (data) {
+      return {
+        data,
+        status: SessionStatus.AUTHENTICATED,
+        hasRequiredPermissions,
+      };
+    } else {
+      return {
+        data: null,
+        status:
+          status === SessionStatus.LOADING ? SessionStatus.LOADING : SessionStatus.UNAUTHENTICATED,
+        hasRequiredPermissions,
+      };
+    }
+  }, [data, status, hasRequiredPermissions]) as UseSessionReturn;
+
+  return session;
 };
