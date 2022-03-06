@@ -15,22 +15,22 @@ export interface UserWithInfos extends DefaultNextAuthUser {
   roleIds: Role['_id'][];
 }
 
-export interface UserWithInfosInDb extends DefaultNextAuthUser {
-  nameInGame?: string;
+export type UserWithInfosInDb = Omit<UserWithInfos, 'roleIds'> & {
   roleIds: ObjectId[];
-}
+};
 
 export type User = DefaultNextAuthUser | UserWithInfos;
 export type UserInDb = DefaultNextAuthUser | UserWithInfosInDb;
 
 export type UserWithoutId = Omit<UserWithInfos, '_id'>;
 
+export const USER_NAME_IN_GAME_MAX_LENGTH = 20;
+
 /** The only keys that can be updated */
-export type UpdatedUserPartialData =
-  | {
-      nameInGame: string;
-    }
-  | { roleIds: Role['_id'][] };
+export type UpdatedUserPartialData = {
+  nameInGame?: UserWithInfos['nameInGame'];
+  roleIds?: UserWithInfos['roleIds'];
+};
 
 /** Type guards */
 
