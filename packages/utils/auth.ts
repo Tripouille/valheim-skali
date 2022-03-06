@@ -63,7 +63,7 @@ export const userHasRequiredPermissions = (
   return true;
 };
 
-export enum SpecialRole {
+export enum SpecialRoleName {
   /** Dev who has access to database, has all permissions to SuperAdmin level */
   SUPER_ADMIN = 'SuperAdmin',
   /** Has all permissions to Admin level
@@ -75,26 +75,29 @@ interface SpecialRoleParameters {
   canRead: Permissions;
   canAssign: Permissions;
   canEdit: Permissions;
+  specialPrivilege?: PermissionPrivilege;
 }
 // Special role can't be deleted and have the following restrictions to see/edit them
-export const SpecialRolesParameters: Record<SpecialRole, SpecialRoleParameters> = {
-  [SpecialRole.SUPER_ADMIN]: {
+export const SpecialRolesParameters: Record<SpecialRoleName, SpecialRoleParameters> = {
+  [SpecialRoleName.SUPER_ADMIN]: {
     canRead: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
     canAssign: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
     canEdit: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
+    specialPrivilege: PermissionPrivilege.SUPER_ADMIN,
   },
-  [SpecialRole.ADMIN]: {
+  [SpecialRoleName.ADMIN]: {
     canRead: { [PermissionCategory.ROLE]: PermissionPrivilege.READ },
     canAssign: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
     canEdit: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
+    specialPrivilege: PermissionPrivilege.ADMIN,
   },
-  [SpecialRole.MEMBER]: {
+  [SpecialRoleName.MEMBER]: {
     canRead: { [PermissionCategory.ROLE]: PermissionPrivilege.READ },
     canAssign: { [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE },
     canEdit: { [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE },
   },
 };
 
-export const isSpecialRoleName = (roleName: string): roleName is SpecialRole => {
-  return Object.values(SpecialRole).includes(roleName as SpecialRole);
+export const isSpecialRoleName = (roleName: string): roleName is SpecialRoleName => {
+  return Object.values(SpecialRoleName).includes(roleName as SpecialRoleName);
 };
