@@ -1,9 +1,11 @@
 import { useCallback } from 'react';
 import { useQuery, UseQueryResult } from 'react-query';
 import axios from 'axios';
+import { User } from '@packages/data/user';
 import { APIRoute } from '@packages/utils/routes';
 import { QueryKeys, QueryTypes } from '@packages/utils/queryClient';
-import { User } from '@packages/data/user';
+import { useSession } from '@packages/utils/hooks/useSession';
+import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 
 export enum UserQueryFilter {
   MEMBER = 'member',
@@ -27,6 +29,8 @@ export const getUsers = async (): Promise<User[]> => {
 };
 
 export const useUsers = (filter: UserQueryFilter) => {
+  const session = useSession();
+
   const filterUsers = useCallback(
     (allUsers: QueryTypes[QueryKeys.USERS]) => {
       //TODO
@@ -36,6 +40,9 @@ export const useUsers = (filter: UserQueryFilter) => {
   );
 
   const usersQuery = useQuery(QueryKeys.USERS, getUsers, {
+    enabled: session.hasRequiredPermissions({
+      [PermissionCategory.USER]: PermissionPrivilege.READ,
+    }),
     select: filterUsers,
   });
 
