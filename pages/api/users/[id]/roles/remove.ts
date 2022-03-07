@@ -6,6 +6,8 @@ const userRolesHandler: NextApiHandler = async (req: Req, res: Res) => {
   try {
     if (req.method === 'PATCH') {
       await addOrRemoveRoleToUser(Action.REMOVE, req, res);
+    } else {
+      throw new ServerException(501);
     }
   } catch (e) {
     if (e instanceof ServerException) res.status(e.statusCode).end();

@@ -9,6 +9,8 @@ const rolesHandler: NextApiHandler = async (req, res) => {
     if (req.method === 'GET') {
       await requirePermissions({ [PermissionCategory.ROLE]: PermissionPrivilege.READ }, req);
       await pullCollection<Role>(rolesCollectionName, req, res);
+    } else {
+      throw new ServerException(501);
     }
   } catch (e) {
     if (e instanceof ServerException) res.status(e.statusCode).end();

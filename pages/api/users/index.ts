@@ -9,6 +9,8 @@ const usersHandler: NextApiHandler = async (req, res) => {
     if (req.method === 'GET') {
       await requirePermissions({ [PermissionCategory.USER]: PermissionPrivilege.READ }, req);
       await pullCollection<UserInDb>(usersCollectionName, req, res);
+    } else {
+      throw new ServerException(501);
     }
   } catch (e) {
     if (e instanceof ServerException) res.status(e.statusCode).end();

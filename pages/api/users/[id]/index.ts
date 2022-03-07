@@ -9,6 +9,8 @@ const userHandler: NextApiHandler = async (req: Req, res: Res) => {
     if (req.method === 'PATCH') {
       await requirePermissions({ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }, req);
       await patchUser(req, res);
+    } else {
+      throw new ServerException(501);
     }
   } catch (e) {
     if (e instanceof ServerException) res.status(e.statusCode).end();
