@@ -23,7 +23,7 @@ export const requirePermissions = async (requiredPermissions: Permissions, req: 
 
 export const getUserPermissions = async (user: UserInDb) => {
   const userRoles: RoleInDb[] = await db.find(rolesCollectionName, {
-    _id: { $in: user.roleIds },
+    _id: { $in: user.roleIds ?? [] },
   });
   const userPermissions: Permissions = {};
   userRoles.forEach(role => {
