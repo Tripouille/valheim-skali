@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
-import { isUserWithInfos, User } from '@packages/data/user';
+import { User } from '@packages/data/user';
 import { compareRolesFromName, Role } from '@packages/data/role';
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
@@ -22,13 +22,11 @@ const MembersRoleForm: React.FC<MembersRoleFormProps> = ({ dataCy, user, roles }
   const session = useSession();
   const { addRoleToUser, removeRoleFromUser } = useUpdateUser(user);
 
-  const userHasInfos = isUserWithInfos(user);
   const userRoles = useMemo(
     () =>
-      userHasInfos
-        ? user.roleIds.map(roleId => roles.find(r => r._id === roleId)).sort(compareRolesFromName)
-        : [],
-    [roles, user, userHasInfos],
+      user.roleIds?.map(roleId => roles.find(r => r._id === roleId)).sort(compareRolesFromName) ??
+      [],
+    [roles, user],
   );
 
   const hasUserWritePermission = session.hasRequiredPermissions({
@@ -37,11 +35,9 @@ const MembersRoleForm: React.FC<MembersRoleFormProps> = ({ dataCy, user, roles }
 
   const addableRoles = useMemo(() => {
     if (!hasUserWritePermission) return [];
-    const nonOwnedRoles = userHasInfos
-      ? roles.filter(role => !user.roleIds.includes(role._id))
-      : roles;
+    const nonOwnedRoles = roles.filter(role => !user.roleIds || !user.roleIds.includes(role._id));
     return nonOwnedRoles.filter(role => canUserAssignRole(role, session.hasRequiredPermissions));
-  }, [roles, userHasInfos, user, session.hasRequiredPermissions, hasUserWritePermission]);
+  }, [roles, user, session.hasRequiredPermissions, hasUserWritePermission]);
 
   const canRemoveRole = (role: Role) => {
     return hasUserWritePermission && canUserAssignRole(role, session.hasRequiredPermissions);

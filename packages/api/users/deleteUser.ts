@@ -20,7 +20,7 @@ export const deleteUser = async (req: Req, res: Res) => {
   const user = await db.findOne<UserInDb>(usersCollectionName, { _id: new ObjectId(id) });
   if (!user) throw new ServerException(404);
 
-  const userRoleIds = 'roleIds' in user ? user.roleIds : [];
+  const userRoleIds = user.roleIds ?? [];
   const userRoles: RoleInDb[] = await db.find(rolesCollectionName, {
     _id: { $in: userRoleIds },
   });

@@ -4,7 +4,6 @@ import {
   UpdateUserData,
   UserInDb,
   usersCollectionName,
-  UserWithInfosInDb,
   USER_NAME_IN_GAME_MAX_LENGTH,
 } from '@packages/data/user';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
@@ -23,8 +22,8 @@ const isUpdateUserData = (data: unknown): data is UpdateUserData => {
   return true;
 };
 
-const getUserNewDataForDb = (userNewData: UpdateUserData): Partial<UserWithInfosInDb> => {
-  const userNewDataForDb: Partial<UserWithInfosInDb> = {};
+const getUserNewDataForDb = (userNewData: UpdateUserData): Partial<UserInDb> => {
+  const userNewDataForDb: Partial<UserInDb> = {};
   if (userNewData.nameInGame !== undefined)
     userNewDataForDb.nameInGame = userNewData.nameInGame.substring(0, USER_NAME_IN_GAME_MAX_LENGTH);
   return userNewDataForDb;

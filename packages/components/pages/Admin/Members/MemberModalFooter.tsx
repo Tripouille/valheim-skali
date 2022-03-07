@@ -11,7 +11,7 @@ import {
   PopoverTrigger,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import { isUserWithInfos, User } from '@packages/data/user';
+import { User } from '@packages/data/user';
 import { Role } from '@packages/data/role';
 import { useSession } from '@packages/utils/hooks/useSession';
 import { DataAttributes, getDataValue } from '@packages/utils/dataAttributes';
@@ -41,7 +41,7 @@ const MemberModalFooter: React.FC<MemberModalFooterProps> = ({ dataCy, user, rol
       !session.hasRequiredPermissions({ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE })
     )
       return false;
-    if (isUserWithInfos(user)) {
+    if (user.roleIds) {
       const userRoles = user.roleIds.map(roleId => roles.find(role => role._id === roleId));
       for (const role of userRoles) {
         if (role && !canUserAssignRole(role, session.hasRequiredPermissions)) return false;

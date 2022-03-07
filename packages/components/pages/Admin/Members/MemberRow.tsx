@@ -3,7 +3,7 @@ import { useDisclosure } from '@chakra-ui/react';
 import { limitedWidthVariant } from '@packages/theme/components/LimitedWidthText';
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
-import { isUserWithInfos, User } from '@packages/data/user';
+import { User } from '@packages/data/user';
 import { Role } from '@packages/data/role';
 import { Wrap } from '@packages/components/core/Containers/Wrap';
 import IconButton from '@packages/components/core/Interactive/IconButton';
@@ -22,29 +22,27 @@ export interface MemberRowProps extends DataAttributes {
 const MemberRow: React.FC<MemberRowProps> = ({ dataCy, user, roles }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const userHasInfos = isUserWithInfos(user);
-
   return (
     <Tr>
       <Td>
         <MemberAvatar dataCy={dataCy} src={user.image} />
       </Td>
       <Td textAlign="center" {...limitedWidthVariant}>
-        {userHasInfos ? user.nameInGame : null}
+        {user.nameInGame}
       </Td>
       <Td display={{ base: 'none', md: 'table-cell' }} textAlign="center" {...limitedWidthVariant}>
         {user.name}
       </Td>
       <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ }}>
         <Td display={{ base: 'none', sm: 'table-cell' }}>
-          {userHasInfos && (
+          {
             <Wrap justify="center">
               {user.roleIds?.map(roleId => {
                 const role = roles.find(r => r._id === roleId);
                 return role ? <Tag key={roleId} label={role.name} /> : null;
               })}
             </Wrap>
-          )}
+          }
         </Td>
       </Secured>
       <Td>

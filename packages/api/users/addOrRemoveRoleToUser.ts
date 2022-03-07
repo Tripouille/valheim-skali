@@ -2,7 +2,6 @@ import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { ObjectId } from 'bson';
 import { Role, rolesCollectionName } from '@packages/data/role';
 import { UpdateUserRolesData, UserInDb, usersCollectionName } from '@packages/data/user';
-import { hasOwnProperty } from '@packages/utils/types';
 import {
   isSpecialRoleName,
   PermissionCategory,
@@ -29,10 +28,7 @@ const getUserNewRoles: Record<
 
 const isUpdateUserRolesData = (data: unknown): data is UpdateUserRolesData => {
   return (
-    !!data &&
-    typeof data === 'object' &&
-    hasOwnProperty(data, 'roleId') &&
-    typeof data.roleId === 'string'
+    !!data && typeof data === 'object' && typeof (data as { roleId?: unknown }).roleId === 'string'
   );
 };
 
@@ -53,7 +49,7 @@ export const addOrRemoveRoleToUser = async (action: Action, req: Req, res: Res) 
   const user = await db.findOne<UserInDb>(usersCollectionName, { _id: new ObjectId(id) });
   if (!user) throw new ServerException(404);
 
-  const userOldRoleIds = 'roleIds' in user ? user.roleIds : [];
+  const userOldRoleIds = user.roleIds ?? [];
   if (action === Action.REMOVE && !userOldRoleIds.some(roleId => roleId.equals(roleToMoveId)))
     throw new ServerException(404);
 
