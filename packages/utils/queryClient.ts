@@ -7,7 +7,7 @@ import { getMessageFromError } from './error';
 import { displayErrorToast } from './toast';
 
 export const queryErrorHandler = (error: unknown) => {
-  const id = axios.isAxiosError(error) ? `${error.config.method}-${error.config.url}` : undefined;
+  const id = axios.isAxiosError(error) ? error.config.url : undefined;
 
   if (!id || !toast.isActive(id)) {
     displayErrorToast({
