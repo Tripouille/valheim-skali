@@ -3,8 +3,9 @@ import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';
 import { User } from '@packages/data/user';
 import { APIRoute } from '@packages/utils/routes';
-import { queryErrorHandler, QueryKeys, QueryTypes } from '@packages/utils/queryClient';
-import { displaySuccessToast } from '@packages/utils/toast';
+import { QueryKeys, QueryTypes } from '@packages/utils/queryClient';
+import { displayErrorToast, displaySuccessToast } from '@packages/utils/toast';
+import { getMessageFromError } from '@packages/utils/error';
 
 interface UserMutationContext {
   previousUsers?: QueryTypes[QueryKeys.USERS];
@@ -38,7 +39,10 @@ const useDeleteUser = (deletedUser: User) => {
           context.previousUsers,
         );
       }
-      queryErrorHandler(error);
+      displayErrorToast({
+        title: getMessageFromError(error),
+        description: 'Les changements ont été annulés.',
+      });
     },
     onSuccess: () => displaySuccessToast({ title: "L'utilisateur a bien été supprimé." }),
     onSettled: () => queryClient.invalidateQueries(QueryKeys.USERS),

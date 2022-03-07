@@ -3,9 +3,10 @@ import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';
 import { User, UpdateUserData, UpdateUserRolesData } from '@packages/data/user';
 import { APIRoute } from '@packages/utils/routes';
-import { queryErrorHandler, QueryKeys, QueryTypes } from '@packages/utils/queryClient';
-import { displaySuccessToast } from '@packages/utils/toast';
+import { QueryKeys, QueryTypes } from '@packages/utils/queryClient';
+import { displayErrorToast, displaySuccessToast } from '@packages/utils/toast';
 import { Role } from '@packages/data/role';
+import { getMessageFromError } from '@packages/utils/error';
 
 interface UserMutationContext {
   previousUsers?: QueryTypes[QueryKeys.USERS];
@@ -56,7 +57,10 @@ const useUpdateUser = (updatedUser: User) => {
           context.previousUsers,
         );
       }
-      queryErrorHandler(error);
+      displayErrorToast({
+        title: getMessageFromError(error),
+        description: 'Les changements ont été annulés.',
+      });
     },
     [queryClient],
   );
