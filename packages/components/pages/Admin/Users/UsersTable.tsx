@@ -3,16 +3,26 @@ import { Table, Th, Thead, Tr, Tbody } from '@packages/components/core/DataDispl
 import { User } from '@packages/data/user';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import { getDataValue } from '@packages/utils/dataAttributes';
-import { tableSize, avatarSize, getCellWidth, rowIconWidth } from '../utils';
+import { tableSize, avatarSize, getCellWidth, rowIconWidth, UserQueryFilter } from '../utils';
 import { useRoles } from '../hooks/useRoles';
-import MemberRow from './MemberRow';
+import UserRow from './UserRow';
 
-export interface MembersTableProps {
+export interface UsersTableProps {
   users: User[];
+  filter: UserQueryFilter;
 }
 
-const MembersTable: React.FC<MembersTableProps> = ({ users }) => {
+const UsersTable: React.FC<UsersTableProps> = ({ users, filter }) => {
   const roles = useRoles();
+
+  if (users.length === 0)
+    return (
+      <>
+        {filter === UserQueryFilter.MEMBER
+          ? "Aucun viking n'a été accepté au Valhabba."
+          : "Aucune âme ne s'est perdue aux frontières du Valhabba."}
+      </>
+    );
 
   return (
     <Table
@@ -30,21 +40,25 @@ const MembersTable: React.FC<MembersTableProps> = ({ users }) => {
           <Th textAlign="center" display={{ base: 'none', md: 'table-cell' }}>
             Pseudo discord
           </Th>
-          <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ }}>
-            <Th textAlign="center" display={{ base: 'none', sm: 'table-cell' }}>
-              Rôles
-            </Th>
+          {filter === UserQueryFilter.MEMBER && (
+            <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ }}>
+              <Th display={{ base: 'none', sm: 'table-cell' }}>Rôles</Th>
+            </Secured>
+          )}
+          <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
+            {filter === UserQueryFilter.NON_MEMBER && <Th textAlign="center">Promouvoir</Th>}
+            <Th width={getCellWidth(rowIconWidth)}></Th>
           </Secured>
-          <Th width={getCellWidth(rowIconWidth)}></Th>
         </Tr>
       </Thead>
       <Tbody>
         {users.map(user => (
-          <MemberRow
-            dataCy={getDataValue('members', user._id)}
+          <UserRow
+            dataCy={getDataValue('users', user._id)}
             key={user._id}
             user={user}
             roles={roles}
+            filter={filter}
           />
         ))}
       </Tbody>
@@ -52,4 +66,4 @@ const MembersTable: React.FC<MembersTableProps> = ({ users }) => {
   );
 };
 
-export default MembersTable;
+export default UsersTable;

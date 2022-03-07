@@ -1,12 +1,13 @@
 import React from 'react';
 import { ComponentWithAuth, ROUTES_TO_PERMISSIONS } from '@packages/utils/auth';
 import AdminLayout from '@packages/components/pages/Admin';
-import Members from '@packages/components/pages/Admin/Members';
+import Users from '@packages/components/pages/Admin/Users';
 import { MenuRoute } from '@packages/utils/routes';
+import { UserQueryFilter } from '@packages/components/pages/Admin/utils';
 
 const AdminPage: ComponentWithAuth = () => (
   <AdminLayout>
-    <Members />
+    <Users filter={UserQueryFilter.MEMBER} />
   </AdminLayout>
 );
 

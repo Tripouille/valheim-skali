@@ -2,11 +2,11 @@ import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import Image from '@packages/components/core/Images/Image';
 import { avatarSize } from '../utils';
 
-export interface MemberAvatarProps extends DataAttributes {
+export interface UserAvatarProps extends DataAttributes {
   src: string;
 }
 
-const MemberAvatar: React.FC<MemberAvatarProps> = ({ dataCy, src }) => {
+const UserAvatar: React.FC<UserAvatarProps> = ({ dataCy, src }) => {
   return (
     <Image
       dataCy={getDataValue(dataCy, 'avatar')}
@@ -18,4 +18,4 @@ const MemberAvatar: React.FC<MemberAvatarProps> = ({ dataCy, src }) => {
   );
 };
 
-export default MemberAvatar;
+export default UserAvatar;

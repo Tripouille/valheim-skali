@@ -19,7 +19,7 @@ export enum NavRoute {
 }
 export enum AdminNavRoute {
   MEMBERS = '/members',
-  USERS = '/users',
+  NON_MEMBERS = '/non-members',
   ROLES = '/roles',
 }
 export enum MenuRoute {
@@ -40,7 +40,7 @@ export const ROUTES_TO_LABEL: Record<Route, string> = {
   [NavRoute.MODS]: 'Mods',
   [NavRoute.WORLD]: 'Monde',
   [AdminNavRoute.MEMBERS]: 'Vikings',
-  [AdminNavRoute.USERS]: 'Âmes perdues',
+  [AdminNavRoute.NON_MEMBERS]: 'Âmes perdues',
   [AdminNavRoute.ROLES]: 'Rôles',
   [MenuRoute.ABOUT]: 'A propos du site',
   [MenuRoute.ADMIN]: 'Administration',

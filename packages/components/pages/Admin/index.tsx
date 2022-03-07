@@ -47,7 +47,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => (
         ))}
       </Stack>
     </Background>
-    <Background flex={{ base: 1, lg: 'initial' }} py={[2, 4, 4, 6]}>
+    <Background flex={{ base: 1, lg: 'initial' }} py={[2, 4, 4, 6]} textAlign="center">
       {children}
     </Background>
   </Flex>

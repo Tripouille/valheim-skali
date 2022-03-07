@@ -41,7 +41,7 @@ export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions> = {
   [NavRoute.MODS]: {},
   [NavRoute.WORLD]: {},
   [AdminNavRoute.MEMBERS]: { [PermissionCategory.USER]: PermissionPrivilege.READ },
-  [AdminNavRoute.USERS]: { [PermissionCategory.USER]: PermissionPrivilege.READ },
+  [AdminNavRoute.NON_MEMBERS]: { [PermissionCategory.USER]: PermissionPrivilege.READ },
   [AdminNavRoute.ROLES]: { [PermissionCategory.ROLE]: PermissionPrivilege.READ },
   [MenuRoute.ADMIN]: { [PermissionCategory.USER]: PermissionPrivilege.READ },
   [MenuRoute.ABOUT]: {},
