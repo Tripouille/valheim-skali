@@ -3,7 +3,12 @@ import { ObjectId } from 'bson';
 import { Role, rolesCollectionName } from '@packages/data/role';
 import { UpdateUserRolesData, UserInDb, usersCollectionName } from '@packages/data/user';
 import { hasOwnProperty } from '@packages/utils/types';
-import { isSpecialRoleName, SpecialRolesParameters } from '@packages/utils/auth';
+import {
+  isSpecialRoleName,
+  PermissionCategory,
+  PermissionPrivilege,
+  SpecialRolesParameters,
+} from '@packages/utils/auth';
 import { ServerException, updateOneInCollection } from '@packages/api/common';
 import { requirePermissions } from '@packages/api/auth';
 import db from '@packages/api/db';
@@ -32,6 +37,14 @@ const isUpdateUserRolesData = (data: unknown): data is UpdateUserRolesData => {
 };
 
 export const addOrRemoveRoleToUser = async (action: Action, req: Req, res: Res) => {
+  await requirePermissions(
+    {
+      [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE,
+      [PermissionCategory.ROLE]: PermissionPrivilege.READ,
+    },
+    req,
+  );
+
   const { id } = req.query as { id: string };
 
   if (!isUpdateUserRolesData(req.body)) throw new ServerException(400);
