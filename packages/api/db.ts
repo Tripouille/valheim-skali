@@ -11,9 +11,6 @@ import {
   WithId,
 } from 'mongodb';
 
-let cachedDb: Db;
-let connecting = false;
-
 function getDbUri(): string {
   if (!process.env.MONGODB_URI)
     throw new Error('Missing environment variable to connect to database.');
@@ -21,30 +18,16 @@ function getDbUri(): string {
   return process.env.MONGODB_URI;
 }
 
-function wait(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function waitForDb() {
-  while (!cachedDb) {
-    await wait(50);
-  }
-}
-
 async function connectToDb(): Promise<Db> {
-  if (!cachedDb) {
-    if (!connecting) {
-      connecting = true;
-      const client = await MongoClient.connect(getDbUri());
-
-      cachedDb = client.db();
-      connecting = false;
-    } else {
-      await waitForDb();
-    }
+  const globalVariable = global as { cachedDb?: Db; dbConnectionPromise?: Promise<MongoClient> };
+  if (!globalVariable.cachedDb) {
+    if (!globalVariable.dbConnectionPromise)
+      globalVariable.dbConnectionPromise = MongoClient.connect(getDbUri());
+    const client = await globalVariable.dbConnectionPromise;
+    globalVariable.cachedDb = client.db();
   }
 
-  return cachedDb;
+  return globalVariable.cachedDb;
 }
 
 async function connectToCollection<T>(collectionName: string): Promise<Collection<T>> {
