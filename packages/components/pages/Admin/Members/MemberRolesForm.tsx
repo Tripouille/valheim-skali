@@ -10,7 +10,7 @@ import Box from '@packages/components/core/Containers/Box';
 import { Menu, MenuButton, MenuItem, MenuList } from '@packages/components/core/Overlay/Menu';
 import Tag from '@packages/components/core/DataDisplay/Tag';
 import Button from '@packages/components/core/Interactive/Button';
-import { useUpdateUser } from '../hooks/useUpdateUser';
+import useUpdateUser from '../hooks/useUpdateUser';
 import { canUserAssignRole } from '../utils';
 
 export interface MembersRoleFormProps extends DataAttributes {

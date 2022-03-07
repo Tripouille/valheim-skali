@@ -4,7 +4,6 @@ import { Permissions } from '@packages/utils/auth';
 
 export interface SecuredProps {
   permissions: Permissions;
-  children: Children;
   fallback?: Children;
 }
 

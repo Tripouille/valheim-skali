@@ -1,6 +1,6 @@
 import { hasOwnProperty } from '@packages/utils/types';
 import { ObjectId } from 'bson';
-import { Role } from './role';
+import { Role, RoleInDb } from './role';
 
 export interface DefaultNextAuthUser {
   _id: string;
@@ -9,21 +9,22 @@ export interface DefaultNextAuthUser {
   image: string;
 }
 
-/** ObjectIds are automatically processed to strings
- * when sent from back to front */
+export type DefaultNextAuthUserInDb = Omit<DefaultNextAuthUser, '_id'> & {
+  _id: ObjectId;
+};
+
 export interface UserWithInfos extends DefaultNextAuthUser {
   nameInGame?: string;
   roleIds: Role['_id'][];
 }
 
-export type UserWithInfosInDb = Omit<UserWithInfos, 'roleIds'> & {
-  roleIds: ObjectId[];
-};
+export interface UserWithInfosInDb extends DefaultNextAuthUserInDb {
+  nameInGame?: string;
+  roleIds: RoleInDb['_id'][];
+}
 
 export type User = DefaultNextAuthUser | UserWithInfos;
-export type UserInDb = DefaultNextAuthUser | UserWithInfosInDb;
-
-export type UserWithoutId = Omit<UserWithInfos, '_id'>;
+export type UserInDb = DefaultNextAuthUserInDb | UserWithInfosInDb;
 
 export const usersCollectionName = 'users';
 

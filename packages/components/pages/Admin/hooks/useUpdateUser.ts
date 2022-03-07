@@ -33,7 +33,7 @@ const getUpdatedUsers = (
   previousUsers?.map(user => (user._id === updatedUser._id ? { ...user, ...newUserData } : user)) ??
   [];
 
-export const useUpdateUser = (updatedUser: User) => {
+const useUpdateUser = (updatedUser: User) => {
   const queryClient = useQueryClient();
 
   const onMutate =
@@ -115,3 +115,5 @@ export const useUpdateUser = (updatedUser: User) => {
 
   return { updateUserNameInGame, removeRoleFromUser, addRoleToUser };
 };
+
+export default useUpdateUser;
