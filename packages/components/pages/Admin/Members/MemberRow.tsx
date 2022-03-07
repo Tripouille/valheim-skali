@@ -1,16 +1,17 @@
+import { useMemo } from 'react';
 import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
 import { limitedWidthVariant } from '@packages/theme/components/LimitedWidthText';
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import { User } from '@packages/data/user';
-import { Role } from '@packages/data/role';
+import { compareRolesFromName, Role } from '@packages/data/role';
 import { Wrap } from '@packages/components/core/Containers/Wrap';
 import IconButton from '@packages/components/core/Interactive/IconButton';
 import Tag from '@packages/components/core/DataDisplay/Tag';
 import { Td, Tr } from '@packages/components/core/DataDisplay/Table';
 import Secured from '@packages/components/core/Authentication/Secured';
-import { rowIconSize } from '../utils';
+import { getUserRoles, rowIconSize } from '../utils';
 import MemberModal from './MemberModal';
 import MemberAvatar from './MemberAvatar';
 
@@ -21,6 +22,11 @@ export interface MemberRowProps extends DataAttributes {
 
 const MemberRow: React.FC<MemberRowProps> = ({ dataCy, user, roles }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const userRoles = useMemo(
+    () => getUserRoles(user, roles).sort(compareRolesFromName),
+    [user, roles],
+  );
 
   return (
     <Tr>
@@ -37,9 +43,8 @@ const MemberRow: React.FC<MemberRowProps> = ({ dataCy, user, roles }) => {
         <Td display={{ base: 'none', sm: 'table-cell' }}>
           {
             <Wrap justify="center">
-              {user.roleIds?.map(roleId => {
-                const role = roles.find(r => r._id === roleId);
-                return role ? <Tag key={roleId} label={role.name} /> : null;
+              {userRoles.map(role => {
+                return role ? <Tag key={role._id} label={role.name} /> : null;
               })}
             </Wrap>
           }

@@ -21,7 +21,7 @@ import { ModalFooter } from '@packages/components/core/Overlay/Modal';
 import Button from '@packages/components/core/Interactive/Button';
 import Center from '@packages/components/core/Containers/Center';
 import useDeleteUser from '../hooks/useDeleteUser';
-import { canUserAssignRole } from '../utils';
+import { canUserAssignRole, getUserRoles } from '../utils';
 
 export interface MemberModalFooterProps extends DataAttributes {
   user: User;
@@ -37,16 +37,9 @@ const MemberModalFooter: React.FC<MemberModalFooterProps> = ({ dataCy, user, rol
   const session = useSession();
 
   const canDeleteUser = useMemo(() => {
-    if (
-      !session.hasRequiredPermissions({ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE })
-    )
-      return false;
-    if (user.roleIds) {
-      const userRoles = user.roleIds.map(roleId => roles.find(role => role._id === roleId));
-      for (const role of userRoles) {
-        if (role && !canUserAssignRole(role, session.hasRequiredPermissions)) return false;
-      }
-      return true;
+    const userRoles = getUserRoles(user, roles);
+    for (const role of userRoles) {
+      if (role && !canUserAssignRole(role, session.hasRequiredPermissions)) return false;
     }
     return true;
   }, [user, roles, session]);

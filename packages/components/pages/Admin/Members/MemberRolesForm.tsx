@@ -11,7 +11,7 @@ import { Menu, MenuButton, MenuItem, MenuList } from '@packages/components/core/
 import Tag from '@packages/components/core/DataDisplay/Tag';
 import Button from '@packages/components/core/Interactive/Button';
 import useUpdateUser from '../hooks/useUpdateUser';
-import { canUserAssignRole } from '../utils';
+import { canUserAssignRole, getUserRoles } from '../utils';
 
 export interface MembersRoleFormProps extends DataAttributes {
   user: User;
@@ -23,9 +23,7 @@ const MembersRoleForm: React.FC<MembersRoleFormProps> = ({ dataCy, user, roles }
   const { addRoleToUser, removeRoleFromUser } = useUpdateUser(user);
 
   const userRoles = useMemo(
-    () =>
-      user.roleIds?.map(roleId => roles.find(r => r._id === roleId)).sort(compareRolesFromName) ??
-      [],
+    () => getUserRoles(user, roles).sort(compareRolesFromName),
     [roles, user],
   );
 
