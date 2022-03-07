@@ -4,9 +4,9 @@ import { AdminNavRoute, getRouteParameterAsString, MenuRoute } from '@packages/u
 import { ComponentWithAuth, ROUTES_TO_PERMISSIONS } from '@packages/utils/auth';
 import { Children } from '@packages/utils/types';
 import AdminLayout from '@packages/components/pages/Admin';
-import Members from '@packages/components/pages/Admin/Members';
 import Users from '@packages/components/pages/Admin/Users';
 import Roles from '@packages/components/pages/Admin/Roles';
+import { UserQueryFilter } from '@packages/components/pages/Admin/utils';
 
 const AdminPage: ComponentWithAuth = () => {
   const router = useRouter();
@@ -16,13 +16,13 @@ const AdminPage: ComponentWithAuth = () => {
   const getAdminComponent = (): Children => {
     switch (route) {
       case AdminNavRoute.MEMBERS:
-        return <Members />;
-      case AdminNavRoute.USERS:
-        return <Users />;
+        return <Users filter={UserQueryFilter.MEMBER} />;
+      case AdminNavRoute.NON_MEMBERS:
+        return <Users filter={UserQueryFilter.NON_MEMBER} />;
       case AdminNavRoute.ROLES:
         return <Roles />;
       default:
-        return <Members />;
+        return <Users />;
     }
   };
 

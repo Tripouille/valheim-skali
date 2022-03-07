@@ -5,12 +5,9 @@ import { User } from '@packages/data/user';
 import { APIRoute } from '@packages/utils/routes';
 import { QueryKeys, QueryTypes } from '@packages/utils/queryClient';
 import { useSession } from '@packages/utils/hooks/useSession';
-import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
-
-export enum UserQueryFilter {
-  MEMBER = 'member',
-  NON_MEMBER = 'non_member',
-}
+import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from '@packages/utils/auth';
+import { getUserRoles, UserQueryFilter } from '../utils';
+import { useRoles } from './useRoles';
 
 export type UseUsersReturn =
   | {
@@ -30,13 +27,21 @@ export const getUsers = async (): Promise<User[]> => {
 
 export const useUsers = (filter: UserQueryFilter) => {
   const session = useSession();
+  const roles = useRoles();
 
   const filterUsers = useCallback(
     (allUsers: QueryTypes[QueryKeys.USERS]) => {
-      //TODO
-      return allUsers;
+      if (!roles) return allUsers;
+      const isMemberRequiredResult = filter === UserQueryFilter.MEMBER ? true : false;
+      return allUsers.filter(user => {
+        const userRoles = getUserRoles(user, roles);
+        return (
+          userRoles.some(role => role && role.name === SpecialRoleName.MEMBER) ===
+          isMemberRequiredResult
+        );
+      });
     },
-    [filter],
+    [filter, roles],
   );
 
   const usersQuery = useQuery(QueryKeys.USERS, getUsers, {

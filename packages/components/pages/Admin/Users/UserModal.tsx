@@ -16,19 +16,19 @@ import {
 import { Table, Tbody, Td, Th, Tr } from '@packages/components/core/DataDisplay/Table';
 import Text from '@packages/components/core/Typography/Text';
 import Editable from '@packages/components/core/Interactive/Editable';
-import MembersRoleForm from './MemberRolesForm';
-import MemberAvatar from './MemberAvatar';
+import UserRolesForm from './UserRolesForm';
+import UserAvatar from './UserAvatar';
 import useUpdateUser from '../hooks/useUpdateUser';
-import MemberModalFooter from './MemberModalFooter';
+import UserModalFooter from './UserModalFooter';
 
-export interface MemberModalProps extends DataAttributes {
+export interface UserModalProps extends DataAttributes {
   isOpen: boolean;
   onClose: Callback;
   user: User;
   roles: Role[];
 }
 
-const MemberModal: React.FC<MemberModalProps> = ({ dataCy, isOpen, onClose, user, roles }) => {
+const UserModal: React.FC<UserModalProps> = ({ dataCy, isOpen, onClose, user, roles }) => {
   const { updateUserNameInGame } = useUpdateUser(user);
 
   return (
@@ -38,7 +38,7 @@ const MemberModal: React.FC<MemberModalProps> = ({ dataCy, isOpen, onClose, user
         <ModalCloseButton />
         <ModalHeader>
           <Center>
-            <MemberAvatar dataCy={dataCy} src={user.image} />
+            <UserAvatar dataCy={dataCy} src={user.image} />
             <Text px="5" maxW="80%" variant="limitedWidth">
               {user.name}
             </Text>
@@ -66,17 +66,17 @@ const MemberModal: React.FC<MemberModalProps> = ({ dataCy, isOpen, onClose, user
                 <Tr>
                   <Th>Rôles</Th>
                   <Td>
-                    <MembersRoleForm dataCy={dataCy} user={user} roles={roles} />
+                    <UserRolesForm dataCy={dataCy} user={user} roles={roles} />
                   </Td>
                 </Tr>
               </Secured>
             </Tbody>
           </Table>
         </ModalBody>
-        <MemberModalFooter dataCy={dataCy} user={user} roles={roles} />
+        <UserModalFooter dataCy={dataCy} user={user} roles={roles} />
       </ModalContent>
     </Modal>
   );
 };
 
-export default MemberModal;
+export default UserModal;

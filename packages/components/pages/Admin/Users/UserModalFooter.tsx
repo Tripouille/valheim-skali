@@ -23,12 +23,12 @@ import Center from '@packages/components/core/Containers/Center';
 import useDeleteUser from '../hooks/useDeleteUser';
 import { canUserAssignRole, getUserRoles } from '../utils';
 
-export interface MemberModalFooterProps extends DataAttributes {
+export interface UserModalFooterProps extends DataAttributes {
   user: User;
   roles: Role[];
 }
 
-const MemberModalFooter: React.FC<MemberModalFooterProps> = ({ dataCy, user, roles }) => {
+const UserModalFooter: React.FC<UserModalFooterProps> = ({ dataCy, user, roles }) => {
   const deletePopoverPlacement: PlacementWithLogical | undefined = useBreakpointValue({
     base: 'bottom',
     lg: 'end',
@@ -81,4 +81,4 @@ const MemberModalFooter: React.FC<MemberModalFooterProps> = ({ dataCy, user, rol
   );
 };
 
-export default MemberModalFooter;
+export default UserModalFooter;

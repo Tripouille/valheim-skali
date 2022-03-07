@@ -13,12 +13,12 @@ import Button from '@packages/components/core/Interactive/Button';
 import useUpdateUser from '../hooks/useUpdateUser';
 import { canUserAssignRole, getUserRoles } from '../utils';
 
-export interface MembersRoleFormProps extends DataAttributes {
+export interface UserRolesFormProps extends DataAttributes {
   user: User;
   roles: Role[];
 }
 
-const MembersRoleForm: React.FC<MembersRoleFormProps> = ({ dataCy, user, roles }) => {
+const UserRolesForm: React.FC<UserRolesFormProps> = ({ dataCy, user, roles }) => {
   const session = useSession();
   const { addRoleToUser, removeRoleFromUser } = useUpdateUser(user);
 
@@ -85,4 +85,4 @@ const MembersRoleForm: React.FC<MembersRoleFormProps> = ({ dataCy, user, roles }
   );
 };
 
-export default MembersRoleForm;
+export default UserRolesForm;
