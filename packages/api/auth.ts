@@ -1,6 +1,6 @@
 import { NextApiRequest as Req } from 'next';
 import { getSession } from 'next-auth/react';
-import { UserWithInfosInDb } from '@packages/data/user';
+import { UserInDb } from '@packages/data/user';
 import { RoleInDb, rolesCollectionName } from '@packages/data/role';
 import {
   Permissions,
@@ -21,7 +21,7 @@ export const requirePermissions = async (requiredPermissions: Permissions, req: 
   }
 };
 
-export const getUserPermissions = async (user: UserWithInfosInDb) => {
+export const getUserPermissions = async (user: UserInDb) => {
   const userRoles: RoleInDb[] = await db.find(rolesCollectionName, {
     _id: { $in: user.roleIds },
   });

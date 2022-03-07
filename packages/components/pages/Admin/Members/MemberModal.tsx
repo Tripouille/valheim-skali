@@ -1,6 +1,6 @@
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { Callback } from '@packages/utils/types';
-import { isUserWithInfos, User } from '@packages/data/user';
+import { User } from '@packages/data/user';
 import { Role } from '@packages/data/role';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import Secured from '@packages/components/core/Authentication/Secured';
@@ -31,8 +31,6 @@ export interface MemberModalProps extends DataAttributes {
 const MemberModal: React.FC<MemberModalProps> = ({ dataCy, isOpen, onClose, user, roles }) => {
   const { updateUserNameInGame } = useUpdateUser(user);
 
-  const userHasInfos = isUserWithInfos(user);
-
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="6xl" scrollBehavior="inside" isCentered>
       <ModalOverlay />
@@ -54,11 +52,11 @@ const MemberModal: React.FC<MemberModalProps> = ({ dataCy, isOpen, onClose, user
                 <Td>
                   <Secured
                     permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}
-                    fallback={<Text>{userHasInfos ? user.nameInGame : undefined}</Text>}
+                    fallback={<Text>{user.nameInGame}</Text>}
                   >
                     <Editable
                       dataCy={getDataValue(dataCy, 'name_in_game', 'editable')}
-                      initialValue={userHasInfos ? user.nameInGame : undefined}
+                      initialValue={user.nameInGame}
                       onSubmit={updateUserNameInGame}
                     />
                   </Secured>

@@ -3,8 +3,7 @@ import NextAuth from 'next-auth';
 import { ObjectId } from 'bson';
 import DiscordProvider from 'next-auth/providers/discord';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import { UserInDb, UserWithInfosInDb } from '@packages/data/user';
-import { hasOwnProperty } from '@packages/utils/types';
+import { UserInDb } from '@packages/data/user';
 import db from '@packages/api/db';
 import { getUserPermissions } from '@packages/api/auth';
 
@@ -28,8 +27,8 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         const user = await db.findOne<UserInDb>('users', {
           _id: new ObjectId(token.sub),
         });
-        if (user && hasOwnProperty(user, 'roleIds')) {
-          session.permissions = await getUserPermissions(user as UserWithInfosInDb);
+        if (user) {
+          session.permissions = await getUserPermissions(user);
         } else {
           session.permissions = {};
         }

@@ -17,8 +17,3 @@ export type StrictReactNode =
 export type Children = StrictReactNode;
 
 export type OneOrMany<T> = T | T[];
-
-export const hasOwnProperty = <X extends object, Y extends PropertyKey>(
-  obj: X,
-  prop: string,
-): obj is X & Record<Y, unknown> => obj.hasOwnProperty(prop);
