@@ -7,8 +7,10 @@ import {
   UserWithInfosInDb,
   USER_NAME_IN_GAME_MAX_LENGTH,
 } from '@packages/data/user';
-import db from '@packages/api/db';
+import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
+import { requirePermissions } from '@packages/api/auth';
 import { ServerException, updateOneInCollection } from '@packages/api/common';
+import db from '@packages/api/db';
 
 const isUpdateUserDataProperty = ([key, value]: [key: string, value: unknown]) => {
   return key === 'nameInGame' && typeof value === 'string';
@@ -29,6 +31,8 @@ const getUserNewDataForDb = (userNewData: UpdateUserData): Partial<UserWithInfos
 };
 
 export const patchUser = async (req: Req, res: Res) => {
+  await requirePermissions({ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }, req);
+
   const { id } = req.query as { id: string };
 
   const userNewData: unknown = req.body;

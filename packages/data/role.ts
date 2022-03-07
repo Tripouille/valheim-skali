@@ -1,12 +1,16 @@
+import { ObjectId } from 'bson';
 import { Permissions } from '@packages/utils/auth';
 
 export interface Role {
   _id: string;
   name: string;
   permissions: Permissions;
+  needAdminPermissionToAssign: boolean;
 }
 
-export type RoleWithoutId = Omit<Role, '_id'>;
+export type RoleInDb = Omit<Role, '_id'> & {
+  _id: ObjectId;
+};
 
 export const rolesCollectionName = 'roles';
 

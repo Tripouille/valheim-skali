@@ -53,8 +53,8 @@ export const addOrRemoveRoleToUser = async (action: Action, req: Req, res: Res) 
   const user = await db.findOne<UserInDb>(usersCollectionName, { _id: new ObjectId(id) });
   if (!user) throw new ServerException(404);
 
-  const userOldRoles = 'roleIds' in user ? user.roleIds : [];
-  if (action === Action.REMOVE && !userOldRoles.some(roleId => roleId.equals(roleToMoveId)))
+  const userOldRoleIds = 'roleIds' in user ? user.roleIds : [];
+  if (action === Action.REMOVE && !userOldRoleIds.some(roleId => roleId.equals(roleToMoveId)))
     throw new ServerException(404);
 
   const roleToMove = await db.findOne<Role>(rolesCollectionName, { _id: roleToMoveId });
@@ -65,7 +65,7 @@ export const addOrRemoveRoleToUser = async (action: Action, req: Req, res: Res) 
   }
 
   const result = await updateOneInCollection<UserInDb>(usersCollectionName, id, {
-    roleIds: getUserNewRoles[action](userOldRoles, roleToMoveId),
+    roleIds: getUserNewRoles[action](userOldRoleIds, roleToMoveId),
   });
   if (!result.ok) throw new ServerException(500);
 

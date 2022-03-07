@@ -71,13 +71,16 @@ export enum SpecialRoleName {
   ADMIN = 'Admin',
   MEMBER = 'Viking',
 }
+
 interface SpecialRoleParameters {
   canRead: Permissions;
   canAssign: Permissions;
   canEdit: Permissions;
   specialPrivilege?: PermissionPrivilege;
 }
-// Special role can't be deleted and have the following restrictions to see/edit them
+
+/* Special roles can't be deleted
+ * and have the following restrictions to see/edit them */
 export const SpecialRolesParameters: Record<SpecialRoleName, SpecialRoleParameters> = {
   [SpecialRoleName.SUPER_ADMIN]: {
     canRead: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },

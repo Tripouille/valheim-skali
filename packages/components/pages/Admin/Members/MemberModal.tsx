@@ -2,6 +2,8 @@ import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { Callback } from '@packages/utils/types';
 import { isUserWithInfos, User } from '@packages/data/user';
 import { Role } from '@packages/data/role';
+import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
+import Secured from '@packages/components/core/Authentication/Secured';
 import Center from '@packages/components/core/Containers/Center';
 import {
   Modal,
@@ -9,18 +11,15 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
-  ModalFooter,
   ModalHeader,
 } from '@packages/components/core/Overlay/Modal';
 import { Table, Tbody, Td, Th, Tr } from '@packages/components/core/DataDisplay/Table';
 import Text from '@packages/components/core/Typography/Text';
-import Button from '@packages/components/core/Interactive/Button';
 import Editable from '@packages/components/core/Interactive/Editable';
 import MembersRoleForm from './MemberRolesForm';
 import MemberAvatar from './MemberAvatar';
-import { useUpdateUser } from '../hooks/useUpdateUser';
-import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
-import Secured from '../../../core/Authentication/Secured';
+import useUpdateUser from '../hooks/useUpdateUser';
+import MemberModalFooter from './MemberModalFooter';
 
 export interface MemberModalProps extends DataAttributes {
   isOpen: boolean;
@@ -30,8 +29,9 @@ export interface MemberModalProps extends DataAttributes {
 }
 
 const MemberModal: React.FC<MemberModalProps> = ({ dataCy, isOpen, onClose, user, roles }) => {
-  const userHasInfos = isUserWithInfos(user);
   const { updateUserNameInGame } = useUpdateUser(user);
+
+  const userHasInfos = isUserWithInfos(user);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="6xl" scrollBehavior="inside" isCentered>
@@ -75,15 +75,7 @@ const MemberModal: React.FC<MemberModalProps> = ({ dataCy, isOpen, onClose, user
             </Tbody>
           </Table>
         </ModalBody>
-        <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
-          <ModalFooter borderTop="1px gray solid">
-            <Center w="full">
-              <Button dataCy={getDataValue(dataCy, 'delete')} colorScheme="red">
-                Supprimer l&apos;utilisateur
-              </Button>
-            </Center>
-          </ModalFooter>
-        </Secured>
+        <MemberModalFooter dataCy={dataCy} user={user} roles={roles} />
       </ModalContent>
     </Modal>
   );
