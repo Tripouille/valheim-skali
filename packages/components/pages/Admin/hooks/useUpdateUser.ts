@@ -77,7 +77,7 @@ export const useUpdateUser = (updatedUser: User) => {
         roleIds: [...oldUserRoles, updateData.roleId],
       };
     }),
-    // onError,
+    onError,
     onSuccess,
     onSettled,
   });

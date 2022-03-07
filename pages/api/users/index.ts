@@ -1,8 +1,8 @@
 import { NextApiHandler } from 'next';
-import { pullCollection, ServerException } from '@packages/utils/api/api';
 import { UserInDb, usersCollectionName } from '@packages/data/user';
-import { requirePermissions } from '@packages/utils/api/auth';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
+import { pullCollection, ServerException } from '@packages/api/common';
+import { requirePermissions } from '@packages/api/auth';
 
 const usersHandler: NextApiHandler = async (req, res) => {
   try {

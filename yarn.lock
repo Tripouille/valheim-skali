@@ -3711,9 +3711,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@packages/api@workspace:pages/api":
+"@packages/api@workspace:packages/api":
   version: 0.0.0-use.local
-  resolution: "@packages/api@workspace:pages/api"
+  resolution: "@packages/api@workspace:packages/api"
   languageName: unknown
   linkType: soft
 
