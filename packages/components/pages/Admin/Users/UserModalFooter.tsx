@@ -1,6 +1,13 @@
 import { useMemo } from 'react';
+import { PlacementWithLogical, useBreakpointValue } from '@chakra-ui/react';
+import { User } from '@packages/data/user';
+import { Role } from '@packages/data/role';
+import { useSession } from '@packages/utils/hooks/useSession';
+import { DataAttributes, getDataValue } from '@packages/utils/dataAttributes';
+import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
+import Secured from '@packages/components/core/Authentication/Secured';
+import { ModalFooter } from '@packages/components/core/Overlay/Modal';
 import {
-  PlacementWithLogical,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -9,15 +16,7 @@ import {
   PopoverFooter,
   PopoverHeader,
   PopoverTrigger,
-  useBreakpointValue,
-} from '@chakra-ui/react';
-import { User } from '@packages/data/user';
-import { Role } from '@packages/data/role';
-import { useSession } from '@packages/utils/hooks/useSession';
-import { DataAttributes, getDataValue } from '@packages/utils/dataAttributes';
-import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
-import Secured from '@packages/components/core/Authentication/Secured';
-import { ModalFooter } from '@packages/components/core/Overlay/Modal';
+} from '@packages/components/core/Overlay/Popover';
 import Button from '@packages/components/core/Interactive/Button';
 import Center from '@packages/components/core/Containers/Center';
 import useDeleteUser from '../hooks/useDeleteUser';
