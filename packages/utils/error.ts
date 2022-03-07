@@ -9,5 +9,6 @@ const ERROR_STATUS_TO_MESSAGE: Record<number, string> = {
 
 export const getMessageFromError = (error: unknown): string =>
   axios.isAxiosError(error) && error.response
-    ? ERROR_STATUS_TO_MESSAGE[error.response.status] ?? 'Erreur de connexion au serveur'
+    ? ERROR_STATUS_TO_MESSAGE[error.response.status] ??
+      `Erreur du serveur (${error.response.status})`
     : 'Erreur inconnue';

@@ -29,7 +29,7 @@ export const usersCollectionName = 'users';
 
 export const USER_NAME_IN_GAME_MAX_LENGTH = 20;
 
-/** The only keys that can be updated */
+/** The only keys that can be updated for a simple user patch */
 export type UpdateUserData = {
   nameInGame: NonNullable<UserWithInfos['nameInGame']>;
 };
@@ -39,12 +39,3 @@ export type UpdateUserRolesData = { roleId: string };
 
 export const isUserWithInfos = (user: User): user is UserWithInfos =>
   hasOwnProperty(user, 'roleIds');
-
-export const isUpdateUserRolesData = (data: unknown): data is UpdateUserRolesData => {
-  return (
-    !!data &&
-    typeof data === 'object' &&
-    hasOwnProperty(data, 'roleId') &&
-    typeof data.roleId === 'string'
-  );
-};

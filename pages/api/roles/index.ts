@@ -1,8 +1,8 @@
 import { NextApiHandler } from 'next';
 import { Role, rolesCollectionName } from '@packages/data/role';
-import { requirePermissions } from '@packages/utils/api/auth';
-import { pullCollection, ServerException } from '@packages/utils/api/api';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
+import { requirePermissions } from '@packages/api/auth';
+import { pullCollection, ServerException } from '@packages/api/common';
 
 const rolesHandler: NextApiHandler = async (req, res) => {
   try {

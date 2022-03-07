@@ -1,7 +1,7 @@
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
-import db from '@packages/utils/api/db';
 import { ObjectId } from 'bson';
 import { ModifyResult } from 'mongodb';
+import db from '@packages/api/db';
 
 export class ServerException extends Error {
   statusCode: number;
