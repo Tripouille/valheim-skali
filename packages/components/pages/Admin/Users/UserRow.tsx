@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { MouseEventHandler, useMemo } from 'react';
 import { BiEdit } from 'react-icons/bi';
 import { GiArmorUpgrade } from 'react-icons/gi';
 import { useDisclosure } from '@chakra-ui/react';
@@ -31,13 +31,17 @@ const UserRow: React.FC<UserRowProps> = ({ dataCy, user, roles, filter }) => {
     () => getUserRoles(user, roles).sort(compareRolesFromName),
     [user, roles],
   );
-  const memberRole = useMemo(
-    () => roles.find(role => role.name === SpecialRoleName.MEMBER),
-    [roles],
-  );
+
+  const handlePromoteClick: MouseEventHandler<HTMLButtonElement> = e => {
+    e.stopPropagation(); /** Prevent opening the user modal */
+    const memberRole = roles.find(role => role.name === SpecialRoleName.MEMBER);
+    if (memberRole) {
+      addRoleToUser(memberRole)();
+    }
+  };
 
   return (
-    <Tr>
+    <Tr onClick={onOpen}>
       <Td>
         <UserAvatar dataCy={dataCy} src={user.image} />
       </Td>
@@ -70,7 +74,7 @@ const UserRow: React.FC<UserRowProps> = ({ dataCy, user, roles, filter }) => {
               icon={<GiArmorUpgrade size="30" />}
               variant="ghost"
               size={rowIconSize}
-              onClick={memberRole ? addRoleToUser(memberRole) : undefined}
+              onClick={handlePromoteClick}
             />
           </Td>
         </Secured>
