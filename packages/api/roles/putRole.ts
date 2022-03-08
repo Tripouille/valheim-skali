@@ -7,11 +7,12 @@ import {
   UpdateRoleData,
 } from '@packages/data/role';
 import {
-  isSpecialRoleName,
+  isAdminPrivilege,
+  isAdminRole,
+  isSpecialRole,
   PermissionCategory,
   PermissionPrivilege,
   Permissions,
-  SpecialRolesParameters,
 } from '@packages/utils/auth';
 import { requirePermissions } from '@packages/api/auth';
 import { ServerException, updateOneInCollection } from '@packages/api/common';
@@ -40,14 +41,9 @@ const isUpdateRoleData = (data: unknown): data is UpdateRoleData => {
   return true;
 };
 
-const checkPermissionsIfRoleIsSpecial = async (
-  role: RoleInDb,
-  roleNewData: UpdateRoleData,
-  req: Req,
-) => {
-  if (isSpecialRoleName(role.name)) {
-    if (roleNewData.name) throw new ServerException(403);
-    await requirePermissions(SpecialRolesParameters[role.name].canEdit, req);
+const checkPermissionsIfRoleIsSpecial = async (role: RoleInDb, roleNewData: UpdateRoleData) => {
+  if (isSpecialRole(role)) {
+    if (roleNewData.name || isAdminRole(role)) throw new ServerException(403);
   }
 };
 
@@ -62,9 +58,8 @@ const checkRoleData = (newRole: RoleInDb) => {
     PermissionCategory,
     PermissionPrivilege,
   ][]) {
-    /** It is forbidden to give ADMIN or SUPER_ADMIN privileges */
-    if (privilege === PermissionPrivilege.ADMIN || privilege === PermissionPrivilege.SUPER_ADMIN)
-      throw new ServerException(403);
+    /** It is forbidden to give admin privileges */
+    if (isAdminPrivilege(privilege)) throw new ServerException(403);
     /** Replace NONE values with undefined to not store and display them uselessly */
     if (privilege === PermissionPrivilege.NONE) delete newRole.permissions[category];
   }
@@ -92,7 +87,7 @@ const putRole = async (req: Req, res: Res) => {
   const role = await db.findOne<RoleInDb>(rolesCollectionName, { _id: new ObjectId(id) });
   if (!role) throw new ServerException(404);
 
-  await checkPermissionsIfRoleIsSpecial(role, roleNewData, req);
+  await checkPermissionsIfRoleIsSpecial(role, roleNewData);
 
   const newRole = getRoleNewDataForDb(roleNewData, role);
   checkRoleData(newRole);

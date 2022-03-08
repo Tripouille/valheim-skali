@@ -3,7 +3,7 @@ import { ObjectId } from 'bson';
 import { Role, rolesCollectionName } from '@packages/data/role';
 import { UpdateUserRolesData, UserInDb, usersCollectionName } from '@packages/data/user';
 import {
-  isSpecialRoleName,
+  isSpecialRole,
   PermissionCategory,
   PermissionPrivilege,
   SpecialRolesParameters,
@@ -58,7 +58,7 @@ const addOrRemoveRoleToUser = async (action: Action, req: Req, res: Res) => {
   const roleToMove = await db.findOne<Role>(rolesCollectionName, { _id: roleToMoveId });
   if (!roleToMove) throw new ServerException(404);
 
-  if (isSpecialRoleName(roleToMove.name)) {
+  if (isSpecialRole(roleToMove)) {
     await requirePermissions(SpecialRolesParameters[roleToMove.name].canAssign, req);
   }
 

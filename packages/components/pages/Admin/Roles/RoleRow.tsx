@@ -3,11 +3,11 @@ import { useDisclosure } from '@chakra-ui/react';
 import { Role } from '@packages/data/role';
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import {
+  isAdminRole,
   PermissionCategory,
   PermissionPrivilege,
   PERMISSION_CATEGORY_TO_LABEL,
   PERMISSION_PRIVILEGE_TO_LABEL,
-  SpecialRoleName,
 } from '@packages/utils/auth';
 import Secured from '@packages/components/core/Authentication/Secured';
 import IconButton from '@packages/components/core/Interactive/IconButton';
@@ -23,9 +23,6 @@ export interface RoleRowProps extends DataAttributes {
 const RoleRow: React.FC<RoleRowProps> = ({ dataCy, role }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const isAdminRole =
-    role.name === SpecialRoleName.ADMIN || role.name === SpecialRoleName.SUPER_ADMIN;
-
   return (
     <Tr onClick={onOpen}>
       <Td textAlign="center">
@@ -34,7 +31,7 @@ const RoleRow: React.FC<RoleRowProps> = ({ dataCy, role }) => {
       <Td>
         <Table size="sm" bgColor="initial">
           <Tbody>
-            {isAdminRole
+            {isAdminRole(role)
               ? 'Toutes'
               : (
                   Object.entries(role.permissions) as [PermissionCategory, PermissionPrivilege][]
