@@ -50,8 +50,10 @@ export const addOrRemoveRoleToUser = async (action: Action, req: Req, res: Res) 
   if (!user) throw new ServerException(404);
 
   const userOldRoleIds = user.roleIds ?? [];
-  if (action === Action.REMOVE && !userOldRoleIds.some(roleId => roleId.equals(roleToMoveId)))
-    throw new ServerException(404);
+
+  const userHasRole = userOldRoleIds.some(roleId => roleId.equals(roleToMoveId));
+  if (action === Action.REMOVE && !userHasRole) throw new ServerException(404);
+  if (action === Action.ADD && userHasRole) throw new ServerException(409);
 
   const roleToMove = await db.findOne<Role>(rolesCollectionName, { _id: roleToMoveId });
   if (!roleToMove) throw new ServerException(404);
