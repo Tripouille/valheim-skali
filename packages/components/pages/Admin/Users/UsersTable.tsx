@@ -13,7 +13,7 @@ export interface UsersTableProps {
 }
 
 const UsersTable: React.FC<UsersTableProps> = ({ users, filter }) => {
-  const roles = useRoles();
+  const { data: roles = [] } = useRoles();
 
   if (users.length === 0)
     return (
@@ -47,10 +47,12 @@ const UsersTable: React.FC<UsersTableProps> = ({ users, filter }) => {
               </Th>
             </Secured>
           )}
-          <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
-            {filter === UserQueryFilter.NON_MEMBER && <Th textAlign="center">Promouvoir</Th>}
-            <Th width={getCellWidth(rowIconWidth)}></Th>
-          </Secured>
+          {filter === UserQueryFilter.NON_MEMBER && (
+            <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
+              <Th textAlign="center">Promouvoir</Th>
+            </Secured>
+          )}
+          <Th width={getCellWidth(rowIconWidth)}></Th>
         </Tr>
       </Thead>
       <Tbody>

@@ -48,6 +48,19 @@ export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions> = {
   [AuthRoute.SIGNIN]: {},
 };
 
+export const PERMISSION_CATEGORY_TO_LABEL: Record<PermissionCategory, string> = {
+  [PermissionCategory.USER]: 'Utilisateurs',
+  [PermissionCategory.ROLE]: 'Rôles',
+  [PermissionCategory.EVENT]: 'Évenements',
+};
+export const PERMISSION_PRIVILEGE_TO_LABEL: Record<PermissionPrivilege, string> = {
+  [PermissionPrivilege.NONE]: '-',
+  [PermissionPrivilege.READ]: 'Lecture',
+  [PermissionPrivilege.READ_WRITE]: 'Lecture et écriture',
+  [PermissionPrivilege.ADMIN]: 'Admin',
+  [PermissionPrivilege.SUPER_ADMIN]: 'SuperAdmin',
+};
+
 export const userHasRequiredPermissions = (
   userPermissions: Permissions,
   requiredPermissions: Permissions,
