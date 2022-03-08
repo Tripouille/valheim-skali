@@ -1,14 +1,11 @@
 import { NextApiHandler } from 'next';
-import { Role, rolesCollectionName } from '@packages/data/role';
-import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
-import { requirePermissions } from '@packages/api/auth';
-import { pullCollection, ServerException } from '@packages/api/common';
+import { ServerException } from '@packages/api/common';
+import getRoles from '@packages/api/roles/getRoles';
 
 const rolesHandler: NextApiHandler = async (req, res) => {
   try {
     if (req.method === 'GET') {
-      await requirePermissions({ [PermissionCategory.ROLE]: PermissionPrivilege.READ }, req);
-      await pullCollection<Role>(rolesCollectionName, req, res);
+      await getRoles(req, res);
     } else {
       throw new ServerException(501);
     }

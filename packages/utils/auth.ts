@@ -86,7 +86,6 @@ export enum SpecialRoleName {
 }
 
 interface SpecialRoleParameters {
-  canRead: Permissions;
   canAssign: Permissions;
   canEdit: Permissions;
   specialPrivilege?: PermissionPrivilege;
@@ -95,20 +94,18 @@ interface SpecialRoleParameters {
 /* Special roles can't be deleted
  * and have the following restrictions to see/edit them */
 export const SpecialRolesParameters: Record<SpecialRoleName, SpecialRoleParameters> = {
+  /** Readable only by super admins */
   [SpecialRoleName.SUPER_ADMIN]: {
-    canRead: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
     canAssign: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
     canEdit: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
     specialPrivilege: PermissionPrivilege.SUPER_ADMIN,
   },
   [SpecialRoleName.ADMIN]: {
-    canRead: { [PermissionCategory.ROLE]: PermissionPrivilege.READ },
     canAssign: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
     canEdit: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
     specialPrivilege: PermissionPrivilege.ADMIN,
   },
   [SpecialRoleName.MEMBER]: {
-    canRead: { [PermissionCategory.ROLE]: PermissionPrivilege.READ },
     canAssign: { [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE },
     canEdit: { [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE },
   },
