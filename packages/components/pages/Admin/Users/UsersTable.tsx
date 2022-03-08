@@ -42,7 +42,9 @@ const UsersTable: React.FC<UsersTableProps> = ({ users, filter }) => {
           </Th>
           {filter === UserQueryFilter.MEMBER && (
             <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ }}>
-              <Th display={{ base: 'none', sm: 'table-cell' }}>Rôles</Th>
+              <Th textAlign="center" display={{ base: 'none', sm: 'table-cell' }}>
+                Rôles
+              </Th>
             </Secured>
           )}
           <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
