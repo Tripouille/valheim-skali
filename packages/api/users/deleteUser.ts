@@ -12,7 +12,7 @@ import { requirePermissions } from '@packages/api/auth';
 import { ServerException } from '@packages/api/common';
 import db from '@packages/api/db';
 
-export const deleteUser = async (req: Req, res: Res) => {
+const deleteUser = async (req: Req, res: Res) => {
   await requirePermissions({ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }, req);
 
   const { id } = req.query as { id: string };
@@ -34,3 +34,5 @@ export const deleteUser = async (req: Req, res: Res) => {
 
   res.status(200).end();
 };
+
+export default deleteUser;
