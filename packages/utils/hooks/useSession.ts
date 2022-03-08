@@ -5,8 +5,9 @@ import { QueryKey, useQuery, UseQueryOptions } from 'react-query';
 import axios from 'axios';
 import { APIRoute, getSigninRoute } from '../routes';
 import { AuthError, Permissions, SessionStatus, userHasRequiredPermissions } from '../auth';
+import { QueryKeys, QueryTypes } from '../queryClient';
 
-export async function fetchSession(): Promise<Session | null> {
+export async function fetchSession(): Promise<QueryTypes[QueryKeys.SESSION]> {
   const { data: session } = await axios.get(APIRoute.SESSION);
   if (Object.keys(session).length) {
     return session;
@@ -17,7 +18,12 @@ export async function fetchSession(): Promise<Session | null> {
 interface UseSessionParameters {
   required?: boolean;
   redirectTo?: string;
-  queryConfig?: UseQueryOptions<Session | null, unknown, Session | null, QueryKey>;
+  queryConfig?: UseQueryOptions<
+    QueryTypes[QueryKeys.SESSION],
+    unknown,
+    QueryTypes[QueryKeys.SESSION],
+    QueryKey
+  >;
 }
 
 export type UseSessionReturn = (
@@ -31,25 +37,26 @@ export type UseSessionReturn = (
     }
 ) & { hasRequiredPermissions: (requiredPermissions: Permissions) => boolean };
 
-export const useSession = ({
+const useSession = ({
   required = false,
   redirectTo = getSigninRoute(AuthError.SESSION_REQUIRED),
   queryConfig = {},
 }: UseSessionParameters = {}): UseSessionReturn => {
   const router = useRouter();
 
-  const { data, status } = useQuery<Session | null, unknown, Session | null, QueryKey>(
-    ['session'],
-    fetchSession,
-    {
-      ...queryConfig,
-      onSettled(session, error) {
-        if (queryConfig.onSettled) queryConfig.onSettled(session, error);
-        if (session || !required) return;
-        router.push(redirectTo);
-      },
+  const { data, status } = useQuery<
+    QueryTypes[QueryKeys.SESSION],
+    unknown,
+    QueryTypes[QueryKeys.SESSION],
+    QueryKey
+  >(QueryKeys.SESSION, fetchSession, {
+    ...queryConfig,
+    onSettled(session, error) {
+      if (queryConfig.onSettled) queryConfig.onSettled(session, error);
+      if (session || !required) return;
+      router.push(redirectTo);
     },
-  );
+  });
 
   const hasRequiredPermissions = useCallback(
     (requiredPermissions: Permissions) => {
@@ -77,3 +84,5 @@ export const useSession = ({
 
   return session;
 };
+
+export default useSession;

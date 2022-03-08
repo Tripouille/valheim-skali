@@ -32,6 +32,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         } else {
           session.permissions = {};
         }
+        session.user._id = token.sub;
         return session;
       },
     },

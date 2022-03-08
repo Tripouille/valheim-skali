@@ -1,9 +1,11 @@
 import { useCallback } from 'react';
+import { useQueryClient } from 'react-query';
 import axios from 'axios';
 import { User, UpdateUserData, UpdateUserRolesData } from '@packages/data/user';
 import { Role } from '@packages/data/role';
 import { APIRoute } from '@packages/utils/routes';
 import { QueryKeys, QueryTypes } from '@packages/utils/queryClient';
+import useSession from '@packages/utils/hooks/useSession';
 import useOptimisticMutation from '@packages/utils/hooks/useOptimisticMutation';
 
 const updateUserOnServer = (updatedUser: User) => async (updateUserData: UpdateUserData) => {
@@ -29,12 +31,16 @@ const getUpdatedUsers = (
   [];
 
 const useUpdateUser = (updatedUser: User) => {
+  const queryClient = useQueryClient();
+  const session = useSession();
+
   const updateUserMutate = useOptimisticMutation<QueryKeys.USERS, UpdateUserData>(
     QueryKeys.USERS,
     updateUserOnServer(updatedUser),
     (previousUsers, updateUserData) => getUpdatedUsers(previousUsers, updatedUser, updateUserData),
     "L'utilisateur a bien été mis à jour.",
   );
+
   const addRoleToUserMutate = useOptimisticMutation<QueryKeys.USERS, UpdateUserRolesData>(
     QueryKeys.USERS,
     addOrRemoveRoleToUserOnServer(updatedUser, AddOrRemoveAction.ADD),
@@ -45,7 +51,16 @@ const useUpdateUser = (updatedUser: User) => {
       });
     },
     "L'utilisateur a bien été mis à jour avec un nouveau rôle.",
+    {
+      onSettled: () => {
+        /** If I update my own roles, my permissions may have changed */
+        if (updatedUser._id === session.data?.user._id) {
+          queryClient.invalidateQueries(QueryKeys.SESSION);
+        }
+      },
+    },
   );
+
   const removeRoleFromUserMutate = useOptimisticMutation<QueryKeys.USERS, UpdateUserRolesData>(
     QueryKeys.USERS,
     addOrRemoveRoleToUserOnServer(updatedUser, AddOrRemoveAction.REMOVE),
@@ -56,6 +71,14 @@ const useUpdateUser = (updatedUser: User) => {
       });
     },
     "L'utilisateur a bien été mis à jour sans le rôle.",
+    {
+      onSettled: () => {
+        /** If I update my own roles, my permissions may have changed */
+        if (updatedUser._id === session.data?.user._id) {
+          queryClient.invalidateQueries(QueryKeys.SESSION);
+        }
+      },
+    },
   );
 
   const updateUserNameInGame = useCallback(

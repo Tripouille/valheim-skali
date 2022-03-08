@@ -3,7 +3,7 @@ import axios from 'axios';
 import { compareRolesFromName, Role } from '@packages/data/role';
 import { APIRoute } from '@packages/utils/routes';
 import { QueryKeys, QueryTypes } from '@packages/utils/queryClient';
-import { useSession } from '@packages/utils/hooks/useSession';
+import useSession from '@packages/utils/hooks/useSession';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 
 export const getRoles = async (): Promise<Role[]> => {
