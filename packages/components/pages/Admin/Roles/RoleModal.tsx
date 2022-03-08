@@ -22,6 +22,7 @@ import FormLabel from '@packages/components/core/Interactive/FormControl';
 import Input from '@packages/components/core/Interactive/Input';
 import Select from '@packages/components/core/Interactive/Select';
 import RoleModalFooter from './RoleModalFooter';
+import useUpdateRole from '../hooks/useUpdateRole';
 
 export interface RoleModalProps extends DataAttributes {
   isOpen: boolean;
@@ -32,19 +33,20 @@ export interface RoleModalProps extends DataAttributes {
 const RoleModal: React.FC<RoleModalProps> = ({ dataCy, isOpen, onClose, role }) => {
   const [name, setName] = useState(role.name);
   const [permissions, setPermissions] = useState(role.permissions);
+  const updateRole = useUpdateRole(role);
 
-  useEffect(() => setPermissions(role.permissions), [role.permissions]);
-  useEffect(() => setName(role.name), [role.name]);
+  useEffect(() => setPermissions(role.permissions), [role.permissions, isOpen]);
+  useEffect(() => setName(role.name), [role.name, isOpen]);
 
-  /* onClose dans validate*/
-
-  const onPermissionChange =
+  const changePermissions =
     (category: PermissionCategory) => (newPermission: PermissionPrivilege) => {
       setPermissions(previousPermissions => ({
         ...previousPermissions,
         [category]: newPermission,
       }));
     };
+
+  const submit = () => updateRole({ name, permissions });
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="6xl" scrollBehavior="inside" isCentered>
@@ -87,7 +89,7 @@ const RoleModal: React.FC<RoleModalProps> = ({ dataCy, isOpen, onClose, role }) 
                               id={category}
                               maxW="max-content"
                               value={permissions[category]}
-                              onChange={onPermissionChange(category)}
+                              onChange={changePermissions(category)}
                             >
                               {Object.values(PermissionPrivilege).map(privilege => (
                                 <option key={privilege} value={privilege}>
@@ -105,7 +107,7 @@ const RoleModal: React.FC<RoleModalProps> = ({ dataCy, isOpen, onClose, role }) 
             </Tbody>
           </Table>
         </ModalBody>
-        <RoleModalFooter dataCy={dataCy} role={role} />
+        <RoleModalFooter dataCy={dataCy} role={role} onSubmit={submit} />
       </ModalContent>
     </Modal>
   );

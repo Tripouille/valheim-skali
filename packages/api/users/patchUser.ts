@@ -29,7 +29,7 @@ const getUserNewDataForDb = (userNewData: UpdateUserData): Partial<UserInDb> => 
   return userNewDataForDb;
 };
 
-export const patchUser = async (req: Req, res: Res) => {
+const patchUser = async (req: Req, res: Res) => {
   await requirePermissions({ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }, req);
 
   const { id } = req.query as { id: string };
@@ -49,3 +49,5 @@ export const patchUser = async (req: Req, res: Res) => {
 
   res.status(200).json(result.value);
 };
+
+export default patchUser;

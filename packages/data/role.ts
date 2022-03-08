@@ -12,7 +12,11 @@ export type RoleInDb = Omit<Role, '_id'> & {
   _id: ObjectId;
 };
 
+export type UpdateRoleData = Partial<Omit<Role, '_id'>>;
+
 export const rolesCollectionName = 'roles';
+
+export const ROLE_NAME_IN_GAME_MAX_LENGTH = 15;
 
 export const compareRolesFromName = (role1?: Role, role2?: Role) => {
   if (role1 && role2) {

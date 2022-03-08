@@ -2,6 +2,7 @@ import { PlacementWithLogical, useBreakpointValue } from '@chakra-ui/react';
 import { Role } from '@packages/data/role';
 import { DataAttributes, getDataValue } from '@packages/utils/dataAttributes';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
+import { Callback } from '@packages/utils/types';
 import Secured from '@packages/components/core/Authentication/Secured';
 import { ModalFooter } from '@packages/components/core/Overlay/Modal';
 import {
@@ -20,9 +21,10 @@ import ButtonGroup from '@packages/components/core/Interactive/ButtonGroup';
 
 export interface RoleModalFooterProps extends DataAttributes {
   role: Role;
+  onSubmit: Callback;
 }
 
-const RoleModalFooter: React.FC<RoleModalFooterProps> = ({ dataCy }) => {
+const RoleModalFooter: React.FC<RoleModalFooterProps> = ({ dataCy, onSubmit }) => {
   const deletePopoverPlacement: PlacementWithLogical | undefined = useBreakpointValue({
     base: 'bottom',
     lg: 'end',
@@ -55,7 +57,7 @@ const RoleModalFooter: React.FC<RoleModalFooterProps> = ({ dataCy }) => {
                 </PopoverFooter>
               </PopoverContent>
             </Popover>
-            <Button dataCy={getDataValue(dataCy, 'submit')} colorScheme="green">
+            <Button dataCy={getDataValue(dataCy, 'submit')} colorScheme="green" onClick={onSubmit}>
               Valider les changements
             </Button>
           </ButtonGroup>

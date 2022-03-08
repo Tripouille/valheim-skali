@@ -32,7 +32,7 @@ const isUpdateUserRolesData = (data: unknown): data is UpdateUserRolesData => {
   );
 };
 
-export const addOrRemoveRoleToUser = async (action: Action, req: Req, res: Res) => {
+const addOrRemoveRoleToUser = async (action: Action, req: Req, res: Res) => {
   await requirePermissions(
     {
       [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE,
@@ -69,3 +69,5 @@ export const addOrRemoveRoleToUser = async (action: Action, req: Req, res: Res) 
 
   res.status(200).json(result.value);
 };
+
+export default addOrRemoveRoleToUser;
