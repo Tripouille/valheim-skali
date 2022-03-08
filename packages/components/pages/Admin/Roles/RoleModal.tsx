@@ -65,7 +65,6 @@ const RoleModal: React.FC<RoleModalProps> = ({ dataCy, isOpen, onClose, role }) 
                       dataCy={getDataValue(dataCy, 'name', 'input')}
                       value={name}
                       onChange={setName}
-                      variant="filled"
                     />
                   </Secured>
                 </Td>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentWithAuth, ROUTES_TO_PERMISSIONS } from '@packages/utils/auth';
-import AdminLayout from '@packages/components/pages/Admin';
+import AdminLayout from '@packages/components/pages/Admin/AdminLayout';
 import Users from '@packages/components/pages/Admin/Users';
 import { MenuRoute } from '@packages/utils/routes';
 import { UserQueryFilter } from '@packages/components/pages/Admin/utils';
