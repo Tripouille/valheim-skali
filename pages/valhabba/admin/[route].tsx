@@ -3,7 +3,7 @@ import React from 'react';
 import { AdminNavRoute, getRouteParameterAsString, MenuRoute } from '@packages/utils/routes';
 import { ComponentWithAuth, ROUTES_TO_PERMISSIONS } from '@packages/utils/auth';
 import { Children } from '@packages/utils/types';
-import AdminLayout from '@packages/components/pages/Admin';
+import AdminLayout from '@packages/components/pages/Admin/AdminLayout';
 import Users from '@packages/components/pages/Admin/Users';
 import Roles from '@packages/components/pages/Admin/Roles';
 import { UserQueryFilter } from '@packages/components/pages/Admin/utils';
