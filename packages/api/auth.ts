@@ -5,10 +5,9 @@ import { RoleInDb, rolesCollectionName } from '@packages/data/role';
 import {
   Permissions,
   userHasRequiredPermissions,
-  isSpecialRoleName,
+  isSpecialRole,
   PermissionCategory,
   PermissionPrivilege,
-  SpecialRoleName,
   SpecialRolesParameters,
 } from '@packages/utils/auth';
 import { ServerException } from '@packages/api/common';
@@ -27,10 +26,9 @@ export const getUserPermissions = async (user: UserInDb) => {
   });
   const userPermissions: Permissions = {};
   userRoles.forEach(role => {
-    if (isSpecialRoleName(role.name) && SpecialRolesParameters[role.name].specialPrivilege) {
+    if (isSpecialRole(role) && SpecialRolesParameters[role.name].specialPrivilege) {
       Object.values(PermissionCategory).forEach(category => {
-        userPermissions[category] =
-          SpecialRolesParameters[role.name as SpecialRoleName].specialPrivilege;
+        userPermissions[category] = SpecialRolesParameters[role.name].specialPrivilege;
       });
     } else {
       (Object.entries(role.permissions) as [PermissionCategory, PermissionPrivilege][]).forEach(

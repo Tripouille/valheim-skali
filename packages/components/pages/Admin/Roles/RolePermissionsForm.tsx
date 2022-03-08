@@ -1,12 +1,13 @@
 import { Role } from '@packages/data/role';
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import {
+  isAdminPrivilege,
+  isAdminRole,
   PermissionCategory,
   PermissionPrivilege,
   Permissions,
   PERMISSION_CATEGORY_TO_LABEL,
   PERMISSION_PRIVILEGE_TO_LABEL,
-  SpecialRoleName,
 } from '@packages/utils/auth';
 import { Table, Tbody, Td, Th, Tr } from '@packages/components/core/DataDisplay/Table';
 import FormLabel from '@packages/components/core/Interactive/FormControl';
@@ -25,18 +26,14 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
   onChange,
 }) => {
   const availablePermissions = Object.values(PermissionPrivilege).filter(
-    privilege =>
-      privilege !== PermissionPrivilege.ADMIN && privilege !== PermissionPrivilege.SUPER_ADMIN,
+    privilege => !isAdminPrivilege(privilege),
   );
-
-  const isAdminRole =
-    role.name === SpecialRoleName.ADMIN || role.name === SpecialRoleName.SUPER_ADMIN;
 
   const isPrivilegeForbiddenAndWhy = (
     category: PermissionCategory,
     privilege: PermissionPrivilege,
   ): false | string => {
-    if (isAdminRole) return false;
+    if (isAdminRole(role)) return false;
     if (category === PermissionCategory.ROLE && privilege === PermissionPrivilege.READ_WRITE)
       return 'Réservé aux Admins';
     if (
@@ -71,9 +68,9 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
                 dataCy={getDataValue(dataCy, category, 'select')}
                 id={category}
                 maxW="sm"
-                value={isAdminRole ? PermissionPrivilege.READ_WRITE : permissions[category]}
+                value={isAdminRole(role) ? PermissionPrivilege.READ_WRITE : permissions[category]}
                 onChange={onChange(category)}
-                isDisabled={isAdminRole}
+                isDisabled={isAdminRole(role)}
               >
                 {availablePermissions.map(privilege => {
                   const forbiddenPrivilegeReason = isPrivilegeForbiddenAndWhy(category, privilege);

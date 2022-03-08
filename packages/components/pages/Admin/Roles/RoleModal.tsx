@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { Callback } from '@packages/utils/types';
 import { Role } from '@packages/data/role';
-import { isSpecialRoleName, PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
+import { isSpecialRole, PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import Secured from '@packages/components/core/Authentication/Secured';
 import {
   Modal,
@@ -31,8 +31,6 @@ const RoleModal: React.FC<RoleModalProps> = ({ dataCy, isOpen, onClose, role }) 
 
   useEffect(() => setPermissions(role.permissions), [role.permissions, isOpen]);
   useEffect(() => setName(role.name), [role.name, isOpen]);
-
-  const isSpecialRole = isSpecialRoleName(role.name);
 
   const changePermissions =
     (category: PermissionCategory) => (newPrivilege: PermissionPrivilege) => {
@@ -63,7 +61,7 @@ const RoleModal: React.FC<RoleModalProps> = ({ dataCy, isOpen, onClose, role }) 
                       dataCy={getDataValue(dataCy, 'name', 'input')}
                       value={name}
                       onChange={setName}
-                      isReadOnly={isSpecialRole}
+                      isReadOnly={isSpecialRole(role)}
                     />
                   </Secured>
                 </Td>

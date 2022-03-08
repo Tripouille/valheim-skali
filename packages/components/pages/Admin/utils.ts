@@ -1,7 +1,7 @@
 import theme from '@packages/theme';
 import { Role } from '@packages/data/role';
 import { User } from '@packages/data/user';
-import { isSpecialRoleName, SpecialRolesParameters } from '@packages/utils/auth';
+import { isSpecialRole, SpecialRolesParameters } from '@packages/utils/auth';
 import { UseSessionReturn } from '@packages/utils/hooks/useSession';
 import { AdminNavRoute } from '@packages/utils/routes';
 
@@ -30,10 +30,7 @@ export const canUserAssignRole = (
   role: Role,
   hasRequiredPermissions: UseSessionReturn['hasRequiredPermissions'],
 ) => {
-  if (
-    isSpecialRoleName(role.name) &&
-    !hasRequiredPermissions(SpecialRolesParameters[role.name].canAssign)
-  )
+  if (isSpecialRole(role) && !hasRequiredPermissions(SpecialRolesParameters[role.name].canAssign))
     return false;
   return true;
 };

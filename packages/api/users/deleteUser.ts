@@ -3,7 +3,7 @@ import { ObjectId } from 'bson';
 import { UserInDb, usersCollectionName } from '@packages/data/user';
 import { RoleInDb, rolesCollectionName } from '@packages/data/role';
 import {
-  isSpecialRoleName,
+  isSpecialRole,
   PermissionCategory,
   PermissionPrivilege,
   SpecialRolesParameters,
@@ -25,7 +25,7 @@ const deleteUser = async (req: Req, res: Res) => {
     _id: { $in: userRoleIds },
   });
   for (const userRole of userRoles) {
-    if (isSpecialRoleName(userRole.name)) {
+    if (isSpecialRole(userRole)) {
       await requirePermissions(SpecialRolesParameters[userRole.name].canAssign, req);
     }
   }

@@ -1,3 +1,4 @@
+import { Role, RoleInDb } from '@packages/data/role';
 import { AdminNavRoute, AuthRoute, MenuRoute, NavRoute, Route } from './routes';
 
 export interface AuthConfig {
@@ -61,6 +62,9 @@ export const PERMISSION_PRIVILEGE_TO_LABEL: Record<PermissionPrivilege, string> 
   [PermissionPrivilege.SUPER_ADMIN]: 'SuperAdmin',
 };
 
+export const isAdminPrivilege = (privilege: PermissionPrivilege) =>
+  privilege === PermissionPrivilege.ADMIN || privilege === PermissionPrivilege.SUPER_ADMIN;
+
 export const userHasRequiredPermissions = (
   userPermissions: Permissions,
   requiredPermissions: Permissions,
@@ -87,7 +91,6 @@ export enum SpecialRoleName {
 
 interface SpecialRoleParameters {
   canAssign: Permissions;
-  canEdit: Permissions;
   specialPrivilege?: PermissionPrivilege;
 }
 
@@ -97,20 +100,22 @@ export const SpecialRolesParameters: Record<SpecialRoleName, SpecialRoleParamete
   /** Readable only by super admins */
   [SpecialRoleName.SUPER_ADMIN]: {
     canAssign: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
-    canEdit: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
     specialPrivilege: PermissionPrivilege.SUPER_ADMIN,
   },
   [SpecialRoleName.ADMIN]: {
     canAssign: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
-    canEdit: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
     specialPrivilege: PermissionPrivilege.ADMIN,
   },
   [SpecialRoleName.MEMBER]: {
     canAssign: { [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE },
-    canEdit: { [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE },
   },
 };
 
-export const isSpecialRoleName = (roleName: string): roleName is SpecialRoleName => {
-  return Object.values(SpecialRoleName).includes(roleName as SpecialRoleName);
+type SpecialRole = (Role | RoleInDb) & { name: SpecialRoleName };
+
+export const isSpecialRole = (role: Role | RoleInDb): role is SpecialRole => {
+  return Object.values(SpecialRoleName).includes(role.name as SpecialRoleName);
 };
+
+export const isAdminRole = (role: Role | RoleInDb) =>
+  role.name === SpecialRoleName.ADMIN || role.name === SpecialRoleName.SUPER_ADMIN;
