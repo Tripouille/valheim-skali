@@ -4,7 +4,7 @@ import axios from 'axios';
 import { User } from '@packages/data/user';
 import { APIRoute } from '@packages/utils/routes';
 import { QueryKeys, QueryTypes } from '@packages/utils/queryClient';
-import { useSession } from '@packages/utils/hooks/useSession';
+import useSession from '@packages/utils/hooks/useSession';
 import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from '@packages/utils/auth';
 import { getUserRoles, UserQueryFilter } from '../utils';
 import { useRoles } from './useRoles';

@@ -1,4 +1,4 @@
-import { useSession } from '@packages/utils/hooks/useSession';
+import useSession from '@packages/utils/hooks/useSession';
 import { Children } from '@packages/utils/types';
 import { Permissions } from '@packages/utils/auth';
 

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useSession } from '@packages/utils/hooks/useSession';
+import useSession from '@packages/utils/hooks/useSession';
 import { Children } from '@packages/utils/types';
 import {
   AuthError,

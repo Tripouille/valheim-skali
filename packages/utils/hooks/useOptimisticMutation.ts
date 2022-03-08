@@ -1,4 +1,4 @@
-import { MutationFunction, useMutation, useQueryClient } from 'react-query';
+import { MutationFunction, useMutation, UseMutationOptions, useQueryClient } from 'react-query';
 import { getMessageFromError } from '../error';
 import { QueryTypes } from '../queryClient';
 import { displayErrorToast, displaySuccessToast } from '../toast';
@@ -12,6 +12,10 @@ const useOptimisticMutation = <T extends keyof QueryTypes, TVariables = void>(
   mutationFn: MutationFunction<void, TVariables>,
   getNewData: (previousData: QueryTypes[T], variables: TVariables) => QueryTypes[T],
   successMessage: string,
+  options?: Omit<
+    UseMutationOptions<void, unknown, TVariables, UseOptimisticMutationContext<QueryTypes[T]>>,
+    'mutationFn'
+  >,
 ) => {
   const queryClient = useQueryClient();
 
@@ -29,13 +33,10 @@ const useOptimisticMutation = <T extends keyof QueryTypes, TVariables = void>(
           associatedQueryKey,
           getNewData(previousData, variables),
         );
+      if (options?.onMutate) options.onMutate(variables);
       return { previousData };
     },
-    onError: (
-      error: unknown,
-      variables: TVariables,
-      context?: UseOptimisticMutationContext<QueryTypes[T]>,
-    ) => {
+    onError: (error, variables, context) => {
       if (context?.previousData) {
         queryClient.setQueryData<QueryTypes[T]>(associatedQueryKey, context.previousData);
       }
@@ -43,9 +44,16 @@ const useOptimisticMutation = <T extends keyof QueryTypes, TVariables = void>(
         title: getMessageFromError(error),
         description: 'Les changements ont été annulés.',
       });
+      if (options?.onError) options.onError(error, variables, context);
     },
-    onSuccess: () => displaySuccessToast({ title: successMessage }),
-    onSettled: () => queryClient.invalidateQueries(associatedQueryKey),
+    onSuccess: (data, variables, context) => {
+      displaySuccessToast({ title: successMessage });
+      if (options?.onSuccess) options.onSuccess(data, variables, context);
+    },
+    onSettled: (data, error, variables, context) => {
+      queryClient.invalidateQueries(associatedQueryKey);
+      if (options?.onSettled) options.onSettled(data, error, variables, context);
+    },
   });
 
   return mutate;

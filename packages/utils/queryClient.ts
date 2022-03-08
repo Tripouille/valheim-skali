@@ -1,3 +1,4 @@
+import { Session } from 'next-auth';
 import { QueryClient } from 'react-query';
 import axios from 'axios';
 import { toast } from '@chakra-ui/react';
@@ -30,9 +31,11 @@ export const queryClient = new QueryClient({
 export enum QueryKeys {
   USERS = 'users',
   ROLES = 'roles',
+  SESSION = 'session',
 }
 
 export type QueryTypes = {
   [QueryKeys.USERS]: User[];
   [QueryKeys.ROLES]: Role[];
+  [QueryKeys.SESSION]: Session | null;
 };

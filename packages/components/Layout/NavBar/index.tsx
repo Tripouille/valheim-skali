@@ -5,7 +5,7 @@ import { BiChevronDown } from 'react-icons/bi';
 import { CgInfo } from 'react-icons/cg';
 import { chakra, useBreakpointValue } from '@chakra-ui/react';
 import theme from '@packages/theme';
-import { useSession } from '@packages/utils/hooks/useSession';
+import useSession from '@packages/utils/hooks/useSession';
 import { getDataValue } from '@packages/utils/dataAttributes';
 import { SessionStatus, ROUTES_TO_PERMISSIONS } from '@packages/utils/auth';
 import { MenuRoute, ROUTES_TO_LABEL, serverName } from '@packages/utils/routes';

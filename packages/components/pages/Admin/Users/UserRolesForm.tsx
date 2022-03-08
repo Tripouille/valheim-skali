@@ -4,7 +4,7 @@ import { User } from '@packages/data/user';
 import { compareRolesFromName, Role } from '@packages/data/role';
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
-import { useSession } from '@packages/utils/hooks/useSession';
+import useSession from '@packages/utils/hooks/useSession';
 import { Wrap } from '@packages/components/core/Containers/Wrap';
 import Box from '@packages/components/core/Containers/Box';
 import { Menu, MenuButton, MenuItem, MenuList } from '@packages/components/core/Overlay/Menu';
