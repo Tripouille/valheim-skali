@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useQuery, UseQueryResult } from 'react-query';
+import { useQuery } from 'react-query';
 import axios from 'axios';
 import { User } from '@packages/data/user';
 import { APIRoute } from '@packages/utils/routes';
@@ -9,16 +9,6 @@ import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from '@packa
 import { getUserRoles, UserQueryFilter } from '../utils';
 import { useRoles } from './useRoles';
 
-export type UseUsersReturn =
-  | {
-      users: QueryTypes[QueryKeys.USERS];
-      usersStatus: 'success' | 'error';
-    }
-  | {
-      users: undefined;
-      usersStatus: UseQueryResult<QueryTypes[QueryKeys.USERS]>['status'];
-    };
-
 export const getUsers = async (): Promise<User[]> => {
   const { data } = await axios.get<User[]>(APIRoute.USERS);
 
@@ -27,7 +17,7 @@ export const getUsers = async (): Promise<User[]> => {
 
 export const useUsers = (filter: UserQueryFilter) => {
   const session = useSession();
-  const roles = useRoles();
+  const { data: roles } = useRoles();
 
   const filterUsers = useCallback(
     (allUsers: QueryTypes[QueryKeys.USERS]) => {
