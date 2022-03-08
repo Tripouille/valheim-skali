@@ -18,8 +18,8 @@ export enum AuthError {
 }
 
 export enum PermissionCategory {
-  USER = 'USER',
   ROLE = 'ROLE',
+  USER = 'USER',
   EVENT = 'EVENT',
 }
 
@@ -54,7 +54,7 @@ export const PERMISSION_CATEGORY_TO_LABEL: Record<PermissionCategory, string> = 
   [PermissionCategory.EVENT]: 'Évenements',
 };
 export const PERMISSION_PRIVILEGE_TO_LABEL: Record<PermissionPrivilege, string> = {
-  [PermissionPrivilege.NONE]: '-',
+  [PermissionPrivilege.NONE]: '',
   [PermissionPrivilege.READ]: 'Lecture',
   [PermissionPrivilege.READ_WRITE]: 'Lecture et écriture',
   [PermissionPrivilege.ADMIN]: 'Admin',

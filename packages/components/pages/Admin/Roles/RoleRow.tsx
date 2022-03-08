@@ -23,16 +23,8 @@ export interface RoleRowProps extends DataAttributes {
 const RoleRow: React.FC<RoleRowProps> = ({ dataCy, role }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const rolePermissions =
-    role.name === SpecialRoleName.ADMIN
-      ? Object.values(PermissionCategory).reduce(
-          (adminPermissions, category) => ({
-            ...adminPermissions,
-            [category]: PermissionPrivilege.READ_WRITE,
-          }),
-          {},
-        )
-      : role.permissions;
+  const isAdminRole =
+    role.name === SpecialRoleName.ADMIN || role.name === SpecialRoleName.SUPER_ADMIN;
 
   return (
     <Tr onClick={onOpen}>
@@ -40,16 +32,20 @@ const RoleRow: React.FC<RoleRowProps> = ({ dataCy, role }) => {
         <Tag label={role.name} />
       </Td>
       <Td>
-        <Table size="sm" variant="unstyled" bgColor="initial">
+        <Table size="sm" bgColor="initial">
           <Tbody>
-            {(Object.entries(rolePermissions) as [PermissionCategory, PermissionPrivilege][]).map(
-              ([category, privilege]) => (
-                <Tr key={category}>
-                  <Th w="32">{PERMISSION_CATEGORY_TO_LABEL[category]}</Th>
-                  <Td>{PERMISSION_PRIVILEGE_TO_LABEL[privilege]}</Td>
-                </Tr>
-              ),
-            )}
+            {isAdminRole
+              ? 'Toutes'
+              : (
+                  Object.entries(role.permissions) as [PermissionCategory, PermissionPrivilege][]
+                ).map(([category, privilege]) => (
+                  <Tr key={category}>
+                    <Th w="28" ps="0">
+                      {PERMISSION_CATEGORY_TO_LABEL[category]}
+                    </Th>
+                    <Td>{PERMISSION_PRIVILEGE_TO_LABEL[privilege]}</Td>
+                  </Tr>
+                ))}
           </Tbody>
         </Table>
       </Td>
