@@ -12,6 +12,7 @@ import {
 import { Table, Tbody, Td, Th, Tr } from '@packages/components/core/DataDisplay/Table';
 import FormLabel from '@packages/components/core/Interactive/FormControl';
 import Select from '@packages/components/core/Interactive/Select';
+import { modalTableHeaderWidth } from '../utils';
 
 export interface RolePermissionsFormProps extends DataAttributes {
   role: Role;
@@ -54,7 +55,7 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
   };
 
   return (
-    <Table colorScheme="blue" size="sm">
+    <Table>
       <Tbody>
         <Tr>
           <Th>Catégorie</Th>
@@ -62,7 +63,7 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
         </Tr>
         {Object.values(PermissionCategory).map(category => (
           <Tr key={category}>
-            <Th w="20%">
+            <Th w={modalTableHeaderWidth}>
               <FormLabel htmlFor={category} m="0">
                 {PERMISSION_CATEGORY_TO_LABEL[category]}
               </FormLabel>

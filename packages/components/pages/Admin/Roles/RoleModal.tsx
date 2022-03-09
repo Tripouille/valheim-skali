@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { FiHelpCircle } from 'react-icons/fi';
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { Callback } from '@packages/utils/types';
 import { Role } from '@packages/data/role';
@@ -8,8 +7,6 @@ import {
   isSpecialRole,
   PermissionCategory,
   PermissionPrivilege,
-  PERMISSION_CATEGORY_TO_LABEL,
-  PERMISSION_PRIVILEGE_TO_LABEL,
 } from '@packages/utils/auth';
 import Secured from '@packages/components/core/Authentication/Secured';
 import {
@@ -19,16 +16,14 @@ import {
   ModalContent,
   ModalOverlay,
 } from '@packages/components/core/Overlay/Modal';
-import Tooltip from '@packages/components/core/Overlay/Tooltip';
 import { Table, Tbody, Td, Th, Tr } from '@packages/components/core/DataDisplay/Table';
 import Text from '@packages/components/core/Typography/Text';
 import Input from '@packages/components/core/Interactive/Input';
-import FormLabel from '@packages/components/core/Interactive/FormControl';
-import Select from '@packages/components/core/Interactive/Select';
-import Flex from '@packages/components/core/Containers/Flex';
 import useUpdateRole from '../hooks/useUpdateRole';
+import { darkerBackgroundColor, modalTableHeaderWidth } from '../utils';
 import RolePermissionsForm from './RolePermissionsForm';
 import RoleModalFooter from './RoleModalFooter';
+import RoleModalReqPermsForm from './RoleModalReqPermsForm';
 
 export interface RoleModalProps extends DataAttributes {
   isOpen: boolean;
@@ -50,19 +45,19 @@ const RoleModal: React.FC<RoleModalProps> = ({ dataCy, isOpen, onClose, role }) 
     setRequiredPermissionsToAssign(role.requiredPermissionsToAssign);
   }, [role, isOpen]);
 
-  const hasUserWritePermission =
+  const roleHasUserWritePermission =
     (permissions[PermissionCategory.USER] ?? PermissionPrivilege.NONE) >=
       PermissionPrivilege.READ_WRITE || isAdminRole(role);
 
   useEffect(() => {
     if (
-      hasUserWritePermission &&
+      roleHasUserWritePermission &&
       (requiredPermissionsToAssign[PermissionCategory.USER] ?? PermissionPrivilege.NONE) <
         PermissionPrivilege.ADMIN
     ) {
       setRequiredPermissionsToAssign({ [PermissionCategory.USER]: PermissionPrivilege.ADMIN });
     }
-  }, [hasUserWritePermission, requiredPermissionsToAssign, isOpen]);
+  }, [roleHasUserWritePermission, requiredPermissionsToAssign, isOpen]);
 
   const changePermissions =
     (category: PermissionCategory) => (newPrivilege: PermissionPrivilege) => {
@@ -72,24 +67,18 @@ const RoleModal: React.FC<RoleModalProps> = ({ dataCy, isOpen, onClose, role }) 
       }));
     };
 
-  const changeRequiredPermissionsToAssign = (newPrivilege: PermissionPrivilege) => {
-    setRequiredPermissionsToAssign({
-      [PermissionCategory.USER]: newPrivilege,
-    });
-  };
-
   const submit = () => updateRole({ name, permissions, requiredPermissionsToAssign });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="6xl" scrollBehavior="inside" isCentered>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalCloseButton />
         <ModalBody>
-          <Table colorScheme="blue">
+          <Table>
             <Tbody>
-              <Tr bgColor="rgba(0, 0, 0, 0.08)">
-                <Th w="20%">Nom</Th>
+              <Tr bgColor={darkerBackgroundColor}>
+                <Th w={modalTableHeaderWidth}>Nom</Th>
                 <Td>
                   <Secured
                     permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE }}
@@ -115,54 +104,16 @@ const RoleModal: React.FC<RoleModalProps> = ({ dataCy, isOpen, onClose, role }) 
                   />
                 </Td>
               </Tr>
-              <Tr bgColor="rgba(0, 0, 0, 0.08)">
+              <Tr bgColor={darkerBackgroundColor}>
                 <Th>Permissions requises pour assigner ce rôle</Th>
                 <Td>
-                  <Table colorScheme="blue" size="sm">
-                    <Tbody>
-                      <Tr>
-                        <Th w="20%">
-                          <FormLabel htmlFor="required_to_assign" m="0">
-                            {PERMISSION_CATEGORY_TO_LABEL[PermissionCategory.USER]}
-                          </FormLabel>
-                        </Th>
-                        <Td>
-                          <Flex align="center">
-                            <Select
-                              dataCy={getDataValue(dataCy, 'required_to_assign', 'select')}
-                              id="required_to_assign"
-                              maxW="sm"
-                              value={requiredPermissionsToAssign[PermissionCategory.USER]}
-                              onChange={changeRequiredPermissionsToAssign}
-                              isDisabled={hasUserWritePermission}
-                            >
-                              <option value={PermissionPrivilege.READ_WRITE}>
-                                {PERMISSION_PRIVILEGE_TO_LABEL[PermissionPrivilege.READ_WRITE]}
-                              </option>
-                              <option value={PermissionPrivilege.ADMIN}>
-                                {PERMISSION_PRIVILEGE_TO_LABEL[PermissionPrivilege.ADMIN]}
-                              </option>
-                              {isAdminRole(role) && (
-                                <option value={PermissionPrivilege.SUPER_ADMIN}>
-                                  {PERMISSION_PRIVILEGE_TO_LABEL[PermissionPrivilege.SUPER_ADMIN]}
-                                </option>
-                              )}
-                            </Select>
-                            {hasUserWritePermission && !isAdminRole(role) && (
-                              <Tooltip
-                                label="Le rôle Admin est obligatoire pour assigner le rôle si ce rôle peut modifier les utilisateurs."
-                                placement="end"
-                              >
-                                <span style={{ marginLeft: '1em' }}>
-                                  <FiHelpCircle />
-                                </span>
-                              </Tooltip>
-                            )}
-                          </Flex>
-                        </Td>
-                      </Tr>
-                    </Tbody>
-                  </Table>
+                  <RoleModalReqPermsForm
+                    dataCy={dataCy}
+                    requiredPermissionsToAssign={requiredPermissionsToAssign}
+                    setRequiredPermissionsToAssign={setRequiredPermissionsToAssign}
+                    isAdminRole={isAdminRole(role)}
+                    roleHasUserWritePermission={roleHasUserWritePermission}
+                  />
                 </Td>
               </Tr>
             </Tbody>

@@ -21,7 +21,7 @@ import {
 export type TableProps = ChakraTableProps;
 
 export const Table: React.FC<TableProps> = chakraTableProps => (
-  <ChakraTable {...chakraTableProps}></ChakraTable>
+  <ChakraTable colorScheme="blue" size="sm" {...chakraTableProps}></ChakraTable>
 );
 
 export type TheadProps = ChakraTheadProps;

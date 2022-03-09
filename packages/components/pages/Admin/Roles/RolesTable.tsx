@@ -3,7 +3,7 @@ import { getDataValue } from '@packages/utils/dataAttributes';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import Secured from '@packages/components/core/Authentication/Secured';
 import { Table, Th, Thead, Tr, Tbody } from '@packages/components/core/DataDisplay/Table';
-import { getCellWidth, rowIconWidth, tableSize } from '../utils';
+import { adminTableStyleProps, getCellWidth, rowIconWidth } from '../utils';
 import RoleRow from './RoleRow';
 
 export interface RolesTableProps {
@@ -14,14 +14,7 @@ const RolesTable: React.FC<RolesTableProps> = ({ roles }) => {
   if (roles.length === 0) return <>Aucun rôle n&apos;a été créé.</>;
 
   return (
-    <Table
-      variant="striped"
-      colorScheme="blue"
-      size={tableSize}
-      w={{ base: '100%', md: '90%', xl: '70%' }}
-      margin="auto"
-      sx={{ tableLayout: 'fixed' }}
-    >
+    <Table {...adminTableStyleProps}>
       <Thead>
         <Tr>
           <Th textAlign="center" w={{ base: '36', xl: '2xs' }}>

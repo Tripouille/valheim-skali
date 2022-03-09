@@ -1,4 +1,4 @@
-import { ReactChild, ReactPortal } from 'react';
+import { Dispatch, ReactChild, ReactPortal, SetStateAction } from 'react';
 
 export interface ImageAttributes {
   src: string;
@@ -17,3 +17,5 @@ export type StrictReactNode =
 export type Children = StrictReactNode;
 
 export type OneOrMany<T> = T | T[];
+
+export type Setter<T> = Dispatch<SetStateAction<T>>;

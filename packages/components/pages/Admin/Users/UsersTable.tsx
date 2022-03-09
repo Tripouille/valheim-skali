@@ -3,7 +3,13 @@ import { Table, Th, Thead, Tr, Tbody } from '@packages/components/core/DataDispl
 import { User } from '@packages/data/user';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import { getDataValue } from '@packages/utils/dataAttributes';
-import { tableSize, avatarSize, getCellWidth, rowIconWidth, UserQueryFilter } from '../utils';
+import {
+  avatarSize,
+  getCellWidth,
+  rowIconWidth,
+  UserQueryFilter,
+  adminTableStyleProps,
+} from '../utils';
 import { useRoles } from '../hooks/useRoles';
 import UserRow from './UserRow';
 
@@ -25,14 +31,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ users, filter }) => {
     );
 
   return (
-    <Table
-      variant="striped"
-      colorScheme="blue"
-      size={tableSize}
-      w={{ base: '100%', md: '90%', xl: '70%' }}
-      margin="auto"
-      sx={{ tableLayout: 'fixed' }}
-    >
+    <Table {...adminTableStyleProps}>
       <Thead>
         <Tr>
           <Th width={getCellWidth(`${avatarSize}px`)}></Th>
