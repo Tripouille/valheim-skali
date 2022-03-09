@@ -15,13 +15,13 @@ export const getUsers = async (): Promise<User[]> => {
   return data;
 };
 
-export const useUsers = (filter: UserQueryFilter) => {
+export const useUsers = (filter: UserQueryFilter | false) => {
   const session = useSession();
   const { data: roles } = useRoles();
 
   const filterUsers = useCallback(
     (allUsers: QueryTypes[QueryKeys.USERS]) => {
-      if (!roles) return allUsers;
+      if (!roles || !filter) return allUsers;
       const isMemberRequiredResult = filter === UserQueryFilter.MEMBER ? true : false;
       return allUsers.filter(user => {
         const userRoles = getUserRoles(user, roles);
