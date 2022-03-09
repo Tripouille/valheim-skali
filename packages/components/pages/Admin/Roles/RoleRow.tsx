@@ -35,7 +35,7 @@ const RoleRow: React.FC<RoleRowProps> = ({ dataCy, role }) => {
         <Tag label={role.name} />
       </Td>
       <Td>
-        <Table size="sm" bgColor="initial">
+        <Table>
           <Tbody>
             {isAdminRole(role)
               ? 'Toutes'

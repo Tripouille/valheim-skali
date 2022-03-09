@@ -19,6 +19,7 @@ import Editable from '@packages/components/core/Interactive/Editable';
 import UserRolesForm from './UserRolesForm';
 import UserAvatar from './UserAvatar';
 import useUpdateUser from '../hooks/useUpdateUser';
+import { darkerBackgroundColor, modalTableHeaderWidth } from '../utils';
 import UserModalFooter from './UserModalFooter';
 
 export interface UserModalProps extends DataAttributes {
@@ -32,7 +33,7 @@ const UserModal: React.FC<UserModalProps> = ({ dataCy, isOpen, onClose, user, ro
   const { updateUserNameInGame } = useUpdateUser(user);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="6xl" scrollBehavior="inside" isCentered>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalCloseButton />
@@ -45,10 +46,10 @@ const UserModal: React.FC<UserModalProps> = ({ dataCy, isOpen, onClose, user, ro
           </Center>
         </ModalHeader>
         <ModalBody>
-          <Table colorScheme="blue">
+          <Table>
             <Tbody>
-              <Tr bgColor="rgba(0, 0, 0, 0.08)">
-                <Th w="20%">Pseudo en jeu</Th>
+              <Tr bgColor={darkerBackgroundColor}>
+                <Th w={modalTableHeaderWidth}>Pseudo en jeu</Th>
                 <Td>
                   <Secured
                     permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}
