@@ -1,6 +1,7 @@
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { ObjectId } from 'bson';
 import { RoleInDb, rolesCollectionName } from '@packages/data/role';
+import { UserInDb, usersCollectionName } from '@packages/data/user';
 import { isSpecialRole, PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import { requirePermissions } from '@packages/api/auth';
 import { ServerException } from '@packages/api/common';
@@ -15,6 +16,12 @@ const deleteRole = async (req: Req, res: Res) => {
   if (!role) throw new ServerException(404);
 
   if (isSpecialRole(role)) throw new ServerException(403);
+
+  /** Check that no user has this role */
+  const userWithRole = await db.findOne<UserInDb>(usersCollectionName, {
+    roleIds: new ObjectId(id),
+  });
+  if (userWithRole) throw new ServerException(409);
 
   await db.remove<RoleInDb>(rolesCollectionName, id);
 
