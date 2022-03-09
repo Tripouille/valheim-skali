@@ -1,10 +1,15 @@
 import { theme as baseTheme } from '@chakra-ui/react';
 import { StyleFunctionProps, mode } from '@chakra-ui/theme-tools';
 
-/** Fix striped variant which acted on non-striped subtables */
 export const Table = {
   variants: {
+    simple: {
+      tbody: {
+        'th, td': { borderColor: 'transparent' },
+      },
+    },
     striped: (props: StyleFunctionProps) => {
+      /** Fix striped variant which acted on non-striped subtables */
       const { colorScheme: c } = props;
       const base = baseTheme.components.Table.variants.striped(props);
 
