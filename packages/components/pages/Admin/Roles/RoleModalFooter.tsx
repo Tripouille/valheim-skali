@@ -23,28 +23,35 @@ import {
 import Center from '@packages/components/core/Containers/Center';
 import Button from '@packages/components/core/Interactive/Button';
 import ButtonGroup from '@packages/components/core/Interactive/ButtonGroup';
-import useDeleteRole from '../hooks/useDeleteRole';
 
 export interface RoleModalFooterProps extends DataAttributes {
-  role: Role;
+  /** If no role, this is a creation modal */
+  role?: Role;
   onSubmit: Callback;
+  onDelete?: Callback;
+  isValid: boolean;
 }
 
-const RoleModalFooter: React.FC<RoleModalFooterProps> = ({ dataCy, role, onSubmit }) => {
+const RoleModalFooter: React.FC<RoleModalFooterProps> = ({
+  dataCy,
+  role,
+  onSubmit,
+  onDelete,
+  isValid,
+}) => {
   const deletePopoverPlacement: PlacementWithLogical | undefined = useBreakpointValue({
     base: 'bottom',
     lg: 'end',
   });
-  const deleteRole = useDeleteRole(role);
 
-  if (isAdminRole(role)) return null;
+  if (role && isAdminRole(role)) return null;
 
   return (
     <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE }}>
       <ModalFooter>
         <Center w="full">
           <ButtonGroup>
-            {!isSpecialRole(role) && (
+            {role && !isSpecialRole(role) && (
               <Popover placement={deletePopoverPlacement} preventOverflow>
                 <PopoverTrigger>
                   <Button dataCy={getDataValue(dataCy, 'delete')} colorScheme="red">
@@ -60,7 +67,7 @@ const RoleModalFooter: React.FC<RoleModalFooterProps> = ({ dataCy, role, onSubmi
                     <Button
                       dataCy={getDataValue(dataCy, 'delete')}
                       colorScheme="red"
-                      onClick={deleteRole}
+                      onClick={onDelete}
                     >
                       Confirmer la suppression
                     </Button>
@@ -68,8 +75,14 @@ const RoleModalFooter: React.FC<RoleModalFooterProps> = ({ dataCy, role, onSubmi
                 </PopoverContent>
               </Popover>
             )}
-            <Button dataCy={getDataValue(dataCy, 'submit')} colorScheme="green" onClick={onSubmit}>
-              Valider les changements
+            <Button
+              dataCy={getDataValue(dataCy, 'submit')}
+              colorScheme="green"
+              onClick={onSubmit}
+              isDisabled={!isValid}
+              title={isValid ? undefined : 'Le nom est obligatoire'}
+            >
+              {role ? 'Valider les changements' : 'Valider la création'}
             </Button>
           </ButtonGroup>
         </Center>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { Callback } from '@packages/utils/types';
-import { Role } from '@packages/data/role';
+import { CreateRoleData, Role, UpdateRoleData } from '@packages/data/role';
 import {
   isAdminRole,
   isSpecialRole,
@@ -19,61 +19,75 @@ import {
 import { Table, Tbody, Td, Th, Tr } from '@packages/components/core/DataDisplay/Table';
 import Text from '@packages/components/core/Typography/Text';
 import Input from '@packages/components/core/Interactive/Input';
-import useUpdateRole from '../hooks/useUpdateRole';
 import { darkerBackgroundColor, modalTableHeaderWidth } from '../utils';
 import RolePermissionsForm from './RolePermissionsForm';
 import RoleModalFooter from './RoleModalFooter';
 import RoleModalReqPermsForm from './RoleModalReqPermsForm';
 
+const defaultRoleData: CreateRoleData = {
+  name: '',
+  permissions: {},
+  requiredPermissionsToAssign: { [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE },
+};
+
 export interface RoleModalProps extends DataAttributes {
+  /** Modal is open */
   isOpen: boolean;
+  /** Function to close the modal */
   onClose: Callback;
-  role: Role;
+  /** If no role, this is a creation modal */
+  role?: Role;
+  /** Function to create or update role */
+  onSubmit: ((newRole: UpdateRoleData) => void) | ((newRole: CreateRoleData) => void);
+  /** Function to delete role */
+  onDelete?: Callback;
 }
 
-const RoleModal: React.FC<RoleModalProps> = ({ dataCy, isOpen, onClose, role }) => {
-  const [name, setName] = useState(role.name);
-  const [permissions, setPermissions] = useState(role.permissions);
-  const [requiredPermissionsToAssign, setRequiredPermissionsToAssign] = useState(
-    role.requiredPermissionsToAssign,
-  );
-  const updateRole = useUpdateRole(role);
-
-  useEffect(() => {
-    setName(role.name);
-    setPermissions(role.permissions);
-    setRequiredPermissionsToAssign(role.requiredPermissionsToAssign);
-  }, [role, isOpen]);
+const RoleModal: React.FC<RoleModalProps> = ({
+  dataCy,
+  isOpen,
+  onClose,
+  role,
+  onSubmit,
+  onDelete,
+}: RoleModalProps) => {
+  const [roleData, setRoleData] = useState(role ?? defaultRoleData);
 
   const roleHasUserWritePermission =
-    (permissions[PermissionCategory.USER] ?? PermissionPrivilege.NONE) >=
-      PermissionPrivilege.READ_WRITE || isAdminRole(role);
+    (roleData.permissions[PermissionCategory.USER] ?? PermissionPrivilege.NONE) >=
+      PermissionPrivilege.READ_WRITE ||
+    (!!role && isAdminRole(role));
+
+  useEffect(() => {
+    if (isOpen) setRoleData(role ?? defaultRoleData);
+  }, [role, isOpen]);
 
   useEffect(() => {
     if (
+      isOpen &&
       roleHasUserWritePermission &&
-      (requiredPermissionsToAssign[PermissionCategory.USER] ?? PermissionPrivilege.NONE) <
+      (roleData.requiredPermissionsToAssign[PermissionCategory.USER] ?? PermissionPrivilege.NONE) <
         PermissionPrivilege.ADMIN
     ) {
-      setRequiredPermissionsToAssign({ [PermissionCategory.USER]: PermissionPrivilege.ADMIN });
+      setRoleData(prev => ({
+        ...prev,
+        requiredPermissionsToAssign: { [PermissionCategory.USER]: PermissionPrivilege.ADMIN },
+      }));
     }
-  }, [roleHasUserWritePermission, requiredPermissionsToAssign, isOpen]);
+  }, [roleHasUserWritePermission, roleData, isOpen]);
 
   const changePermissions =
     (category: PermissionCategory) => (newPrivilege: PermissionPrivilege) => {
-      setPermissions(previousPermissions => ({
-        ...previousPermissions,
-        [category]: newPrivilege,
+      setRoleData(prev => ({
+        ...prev,
+        permissions: { ...prev.permissions, [category]: newPrivilege },
       }));
     };
-
-  const submit = () => updateRole({ name, permissions, requiredPermissionsToAssign });
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalCloseButton />
         <ModalBody>
           <Table>
             <Tbody>
@@ -81,14 +95,23 @@ const RoleModal: React.FC<RoleModalProps> = ({ dataCy, isOpen, onClose, role }) 
                 <Th w={modalTableHeaderWidth}>Nom</Th>
                 <Td>
                   <Secured
-                    permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE }}
-                    fallback={<Text>{role.name}</Text>}
+                    permissions={{
+                      [PermissionCategory.ROLE]:
+                        role && isSpecialRole(role)
+                          ? PermissionPrivilege.SUPER_ADMIN
+                          : PermissionPrivilege.READ_WRITE,
+                    }}
+                    fallback={
+                      <Text fontSize="md" m="3">
+                        {role?.name}
+                      </Text>
+                    }
                   >
                     <Input
                       dataCy={getDataValue(dataCy, 'name', 'input')}
-                      value={name}
-                      onChange={setName}
-                      isReadOnly={isSpecialRole(role)}
+                      id="role_name"
+                      value={roleData.name}
+                      onChange={name => setRoleData(prev => ({ ...prev, name }))}
                     />
                   </Secured>
                 </Td>
@@ -98,8 +121,8 @@ const RoleModal: React.FC<RoleModalProps> = ({ dataCy, isOpen, onClose, role }) 
                 <Td>
                   <RolePermissionsForm
                     dataCy={getDataValue(dataCy, 'permissions')}
-                    role={role}
-                    permissions={permissions}
+                    isAdminRole={!!role && isAdminRole(role)}
+                    permissions={roleData.permissions}
                     onChange={changePermissions}
                   />
                 </Td>
@@ -109,9 +132,11 @@ const RoleModal: React.FC<RoleModalProps> = ({ dataCy, isOpen, onClose, role }) 
                 <Td>
                   <RoleModalReqPermsForm
                     dataCy={dataCy}
-                    requiredPermissionsToAssign={requiredPermissionsToAssign}
-                    setRequiredPermissionsToAssign={setRequiredPermissionsToAssign}
-                    isAdminRole={isAdminRole(role)}
+                    requiredPermissionsToAssign={roleData.requiredPermissionsToAssign}
+                    setRequiredPermissionsToAssign={requiredPermissionsToAssign =>
+                      setRoleData(prev => ({ ...prev, requiredPermissionsToAssign }))
+                    }
+                    isAdminRole={!!role && isAdminRole(role)}
                     roleHasUserWritePermission={roleHasUserWritePermission}
                   />
                 </Td>
@@ -119,7 +144,14 @@ const RoleModal: React.FC<RoleModalProps> = ({ dataCy, isOpen, onClose, role }) 
             </Tbody>
           </Table>
         </ModalBody>
-        <RoleModalFooter dataCy={dataCy} role={role} onSubmit={submit} />
+        <ModalCloseButton />
+        <RoleModalFooter
+          dataCy={dataCy}
+          role={role}
+          onSubmit={() => onSubmit(roleData)}
+          onDelete={onDelete}
+          isValid={roleData.name.length > 0}
+        />
       </ModalContent>
     </Modal>
   );

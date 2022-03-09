@@ -1,8 +1,6 @@
-import { Role } from '@packages/data/role';
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import {
   isAdminPrivilege,
-  isAdminRole,
   PermissionCategory,
   PermissionPrivilege,
   Permissions,
@@ -15,26 +13,26 @@ import Select from '@packages/components/core/Interactive/Select';
 import { modalTableHeaderWidth } from '../utils';
 
 export interface RolePermissionsFormProps extends DataAttributes {
-  role: Role;
+  isAdminRole: boolean;
   permissions: Permissions;
   onChange: (category: PermissionCategory) => (newPrivilege: PermissionPrivilege) => void;
 }
 
 const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
   dataCy,
-  role,
+  isAdminRole,
   permissions,
   onChange,
 }) => {
   const availablePermissions = Object.values(PermissionPrivilege).filter(
-    privilege => isAdminRole(role) || !isAdminPrivilege(privilege),
+    privilege => isAdminRole || !isAdminPrivilege(privilege),
   );
 
   const isPrivilegeForbiddenAndWhy = (
     category: PermissionCategory,
     privilege: PermissionPrivilege,
   ): false | string => {
-    if (isAdminRole(role)) return false;
+    if (isAdminRole) return false;
     if (category === PermissionCategory.ROLE && privilege >= PermissionPrivilege.READ_WRITE)
       return 'Réservé aux Admins';
     if (
@@ -73,9 +71,9 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
                 dataCy={getDataValue(dataCy, category, 'select')}
                 id={category}
                 maxW="sm"
-                value={isAdminRole(role) ? PermissionPrivilege.ADMIN : permissions[category]}
+                value={isAdminRole ? PermissionPrivilege.ADMIN : permissions[category]}
                 onChange={onChange(category)}
-                isDisabled={isAdminRole(role)}
+                isDisabled={isAdminRole}
               >
                 {availablePermissions.map(privilege => {
                   const forbiddenPrivilegeReason = isPrivilegeForbiddenAndWhy(category, privilege);

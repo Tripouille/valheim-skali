@@ -1,5 +1,4 @@
 import { FiHelpCircle } from 'react-icons/fi';
-import { Setter } from '@packages/utils/types';
 import {
   PermissionCategory,
   PermissionPrivilege,
@@ -17,7 +16,7 @@ import { modalTableHeaderWidth } from '../utils';
 
 export interface RoleModalReqPermsFormProps extends DataAttributes {
   requiredPermissionsToAssign: Permissions;
-  setRequiredPermissionsToAssign: Setter<Permissions>;
+  setRequiredPermissionsToAssign: (requiredPermissionsToAssign: Permissions) => void;
   isAdminRole: boolean;
   roleHasUserWritePermission: boolean;
 }

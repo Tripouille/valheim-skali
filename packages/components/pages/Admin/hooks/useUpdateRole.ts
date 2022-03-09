@@ -19,7 +19,7 @@ const useUpdateRole = (updatedRole: Role) => {
       previousRoles?.map(role =>
         role._id === updatedRole._id ? { ...role, ...updateRoleData } : role,
       ) ?? [],
-    "L'utilisateur a bien été mis à jour.",
+    'Le rôle a bien été mis à jour.',
     { onSettled: () => queryClient.invalidateQueries(QueryKeys.SESSION) },
   );
 
