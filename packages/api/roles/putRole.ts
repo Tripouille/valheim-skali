@@ -18,18 +18,28 @@ import { requirePermissions } from '@packages/api/auth';
 import { ServerException, updateOneInCollection } from '@packages/api/common';
 import db from '../db';
 
-const isPermissions = (value: object): value is Permissions => {
-  return Object.entries(value).every(
-    ([category, privilege]) =>
-      Object.values(PermissionCategory).includes(category as PermissionCategory) &&
-      Object.values(PermissionPrivilege).includes(privilege),
+const isPermissions = (value: unknown): value is Permissions => {
+  return (
+    typeof value === 'object' &&
+    !!value &&
+    Object.entries(value).every(
+      ([category, privilege]) =>
+        Object.values(PermissionCategory).includes(category as PermissionCategory) &&
+        Object.values(PermissionPrivilege).includes(privilege),
+    )
   );
+};
+
+const roleKeyToValueTypeCheck: Record<keyof UpdateRoleData, (value: unknown) => boolean> = {
+  name: value => typeof value === 'string',
+  permissions: value => isPermissions(value),
+  requiredPermissionsToAssign: value => isPermissions(value),
 };
 
 const isUpdateRoleDataProperty = ([key, value]: [key: string, value: unknown]) => {
   return (
-    (key === 'name' && typeof value === 'string') ||
-    (key === 'permissions' && typeof value === 'object' && value && isPermissions(value))
+    Object.keys(roleKeyToValueTypeCheck).includes(key) &&
+    roleKeyToValueTypeCheck[key as keyof UpdateRoleData](value)
   );
 };
 
@@ -47,21 +57,31 @@ const checkPermissionsIfRoleIsSpecial = async (role: RoleInDb, roleNewData: Upda
   }
 };
 
+const deleteNonePrivileges = (permissions: Permissions) => {
+  for (const [category, privilege] of Object.entries(permissions) as [
+    PermissionCategory,
+    PermissionPrivilege,
+  ][]) {
+    if (privilege === PermissionPrivilege.NONE) delete permissions[category];
+  }
+};
+
 const getRoleNewDataForDb = (roleNewData: UpdateRoleData, role: RoleInDb): RoleInDb => {
   roleNewData.name = roleNewData.name?.substring(0, ROLE_NAME_IN_GAME_MAX_LENGTH);
   roleNewData.permissions = { ...role.permissions, ...roleNewData.permissions };
+  roleNewData.requiredPermissionsToAssign = {
+    ...role.requiredPermissionsToAssign,
+    ...roleNewData.requiredPermissionsToAssign,
+  };
+  deleteNonePrivileges(role.permissions);
+  deleteNonePrivileges(role.requiredPermissionsToAssign);
   return roleNewData as RoleInDb;
 };
 
 const checkRoleData = (newRole: RoleInDb) => {
-  for (const [category, privilege] of Object.entries(newRole.permissions) as [
-    PermissionCategory,
-    PermissionPrivilege,
-  ][]) {
-    /** It is forbidden to give admin privileges */
+  /** It is forbidden to give admin privileges */
+  for (const privilege of Object.values(newRole.permissions)) {
     if (isAdminPrivilege(privilege)) throw new ServerException(403);
-    /** Replace NONE values with undefined to not store and display them uselessly */
-    if (privilege === PermissionPrivilege.NONE) delete newRole.permissions[category];
   }
   /** It is forbidden to have USER READ_WRITE but not ROLE READ on a role,
    * because editing a user means assigning roles to it
@@ -71,6 +91,22 @@ const checkRoleData = (newRole: RoleInDb) => {
       PermissionPrivilege.READ_WRITE &&
     (newRole.permissions[PermissionCategory.ROLE] ?? PermissionPrivilege.NONE) <
       PermissionPrivilege.READ
+  ) {
+    throw new ServerException(403);
+  }
+  /** A role must require at least user write permission to be assigned */
+  if (
+    (newRole.requiredPermissionsToAssign[PermissionCategory.USER] ?? PermissionPrivilege.NONE) <
+    PermissionPrivilege.READ_WRITE
+  ) {
+    throw new ServerException(403);
+  }
+  /** A role with user write permission must require admin privilege to be assigned */
+  if (
+    (newRole.permissions[PermissionCategory.USER] ?? PermissionPrivilege.NONE) >=
+      PermissionPrivilege.READ_WRITE &&
+    (newRole.requiredPermissionsToAssign[PermissionCategory.USER] ?? PermissionPrivilege.NONE) <
+      PermissionPrivilege.ADMIN
   ) {
     throw new ServerException(403);
   }

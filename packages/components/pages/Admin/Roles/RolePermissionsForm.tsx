@@ -26,7 +26,7 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
   onChange,
 }) => {
   const availablePermissions = Object.values(PermissionPrivilege).filter(
-    privilege => !isAdminPrivilege(privilege),
+    privilege => isAdminRole(role) || !isAdminPrivilege(privilege),
   );
 
   const isPrivilegeForbiddenAndWhy = (
@@ -34,11 +34,11 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
     privilege: PermissionPrivilege,
   ): false | string => {
     if (isAdminRole(role)) return false;
-    if (category === PermissionCategory.ROLE && privilege === PermissionPrivilege.READ_WRITE)
+    if (category === PermissionCategory.ROLE && privilege >= PermissionPrivilege.READ_WRITE)
       return 'Réservé aux Admins';
     if (
       category === PermissionCategory.USER &&
-      privilege === PermissionPrivilege.READ_WRITE &&
+      privilege >= PermissionPrivilege.READ_WRITE &&
       (permissions[PermissionCategory.ROLE] ?? PermissionPrivilege.NONE) < PermissionPrivilege.READ
     )
       return 'Doit pouvoir lire les rôles';
@@ -56,6 +56,10 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
   return (
     <Table colorScheme="blue" size="sm">
       <Tbody>
+        <Tr>
+          <Th>Catégorie</Th>
+          <Th>Permissions sur la catégorie</Th>
+        </Tr>
         {Object.values(PermissionCategory).map(category => (
           <Tr key={category}>
             <Th w="20%">
@@ -68,7 +72,7 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
                 dataCy={getDataValue(dataCy, category, 'select')}
                 id={category}
                 maxW="sm"
-                value={isAdminRole(role) ? PermissionPrivilege.READ_WRITE : permissions[category]}
+                value={isAdminRole(role) ? PermissionPrivilege.ADMIN : permissions[category]}
                 onChange={onChange(category)}
                 isDisabled={isAdminRole(role)}
               >

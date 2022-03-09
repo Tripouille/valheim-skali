@@ -5,7 +5,7 @@ export interface Role {
   _id: string;
   name: string;
   permissions: Permissions;
-  needAdminPermissionToAssign: boolean;
+  requiredPermissionsToAssign: Permissions;
 }
 
 export type RoleInDb = Omit<Role, '_id'> & {
