@@ -41,7 +41,7 @@ const UserRow: React.FC<UserRowProps> = ({ dataCy, user, roles, filter }) => {
   };
 
   return (
-    <Tr onClick={onOpen}>
+    <Tr cursor="pointer" onClick={onOpen}>
       <Td>
         <UserAvatar dataCy={dataCy} src={user.image} />
       </Td>

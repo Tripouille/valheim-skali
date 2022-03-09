@@ -9,6 +9,7 @@ import {
   PERMISSION_CATEGORY_TO_LABEL,
   PERMISSION_PRIVILEGE_TO_LABEL,
 } from '@packages/utils/auth';
+import useSession from '@packages/utils/hooks/useSession';
 import Secured from '@packages/components/core/Authentication/Secured';
 import IconButton from '@packages/components/core/Interactive/IconButton';
 import { Table, Td, Tr, Th, Tbody } from '@packages/components/core/DataDisplay/Table';
@@ -22,9 +23,14 @@ export interface RoleRowProps extends DataAttributes {
 
 const RoleRow: React.FC<RoleRowProps> = ({ dataCy, role }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { hasRequiredPermissions } = useSession();
+
+  const hasRoleWritePermission = hasRequiredPermissions({
+    [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE,
+  });
 
   return (
-    <Tr onClick={onOpen}>
+    <Tr cursor={hasRoleWritePermission ? 'pointer' : 'auto'} onClick={onOpen}>
       <Td textAlign="center">
         <Tag label={role.name} />
       </Td>

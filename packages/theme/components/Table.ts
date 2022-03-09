@@ -30,7 +30,6 @@ export const Table = {
             borderBottom: 0,
           },
           '> tr': {
-            cursor: 'pointer',
             '> td': {
               borderBottom: '1px',
               borderColor: mode(`${c}.100`, `${c}.700`)(props),
