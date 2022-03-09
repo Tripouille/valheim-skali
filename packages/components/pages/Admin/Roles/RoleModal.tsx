@@ -148,7 +148,13 @@ const RoleModal: React.FC<RoleModalProps> = ({
         <RoleModalFooter
           dataCy={dataCy}
           role={role}
-          onSubmit={() => onSubmit(roleData)}
+          onSubmit={() =>
+            onSubmit({
+              name: roleData.name,
+              permissions: roleData.permissions,
+              requiredPermissionsToAssign: roleData.requiredPermissionsToAssign,
+            })
+          }
           onDelete={onDelete}
           isValid={roleData.name.length > 0}
         />
