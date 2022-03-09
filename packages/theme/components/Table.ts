@@ -1,6 +1,7 @@
 import { theme as baseTheme } from '@chakra-ui/react';
 import { StyleFunctionProps, mode } from '@chakra-ui/theme-tools';
 
+/** Fix striped variant which acted on non-striped subtables */
 export const Table = {
   variants: {
     striped: (props: StyleFunctionProps) => {
@@ -20,7 +21,7 @@ export const Table = {
               },
             },
           },
-          td: {
+          'td, th': {
             borderBottom: 0,
           },
           '> tr': {

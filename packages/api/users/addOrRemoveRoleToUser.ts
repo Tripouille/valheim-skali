@@ -2,12 +2,7 @@ import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { ObjectId } from 'bson';
 import { Role, rolesCollectionName } from '@packages/data/role';
 import { UpdateUserRolesData, UserInDb, usersCollectionName } from '@packages/data/user';
-import {
-  isSpecialRole,
-  PermissionCategory,
-  PermissionPrivilege,
-  SpecialRolesParameters,
-} from '@packages/utils/auth';
+import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import { ServerException, updateOneInCollection } from '@packages/api/common';
 import { requirePermissions } from '@packages/api/auth';
 import db from '@packages/api/db';
@@ -58,9 +53,7 @@ const addOrRemoveRoleToUser = async (action: Action, req: Req, res: Res) => {
   const roleToMove = await db.findOne<Role>(rolesCollectionName, { _id: roleToMoveId });
   if (!roleToMove) throw new ServerException(404);
 
-  if (isSpecialRole(roleToMove)) {
-    await requirePermissions(SpecialRolesParameters[roleToMove.name].canAssign, req);
-  }
+  await requirePermissions(roleToMove.requiredPermissionsToAssign, req);
 
   const result = await updateOneInCollection<UserInDb>(usersCollectionName, id, {
     roleIds: getUserNewRoles[action](userOldRoleIds, roleToMoveId),

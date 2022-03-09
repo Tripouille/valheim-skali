@@ -89,33 +89,16 @@ export enum SpecialRoleName {
   MEMBER = 'Viking',
 }
 
-interface SpecialRoleParameters {
-  canAssign: Permissions;
-  specialPrivilege?: PermissionPrivilege;
-}
-
-/* Special roles can't be deleted
- * and have the following restrictions to see/edit them */
-export const SpecialRolesParameters: Record<SpecialRoleName, SpecialRoleParameters> = {
-  /** Readable only by super admins */
-  [SpecialRoleName.SUPER_ADMIN]: {
-    canAssign: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
-    specialPrivilege: PermissionPrivilege.SUPER_ADMIN,
-  },
-  [SpecialRoleName.ADMIN]: {
-    canAssign: { [PermissionCategory.ROLE]: PermissionPrivilege.SUPER_ADMIN },
-    specialPrivilege: PermissionPrivilege.ADMIN,
-  },
-  [SpecialRoleName.MEMBER]: {
-    canAssign: { [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE },
-  },
-};
-
-type SpecialRole = (Role | RoleInDb) & { name: SpecialRoleName };
-
-export const isSpecialRole = (role: Role | RoleInDb): role is SpecialRole => {
+export const isSpecialRole = (role: Role | RoleInDb) => {
   return Object.values(SpecialRoleName).includes(role.name as SpecialRoleName);
 };
 
-export const isAdminRole = (role: Role | RoleInDb) =>
+type AdminRole = (Role | RoleInDb) & { name: SpecialRoleName.ADMIN | SpecialRoleName.SUPER_ADMIN };
+
+export const ADMIN_ROLE_TO_PRIVILEGE: Record<AdminRole['name'], PermissionPrivilege> = {
+  [SpecialRoleName.ADMIN]: PermissionPrivilege.ADMIN,
+  [SpecialRoleName.SUPER_ADMIN]: PermissionPrivilege.SUPER_ADMIN,
+};
+
+export const isAdminRole = (role: Role | RoleInDb): role is AdminRole =>
   role.name === SpecialRoleName.ADMIN || role.name === SpecialRoleName.SUPER_ADMIN;
