@@ -14,6 +14,8 @@ import Secured from '@packages/components/core/Authentication/Secured';
 import IconButton from '@packages/components/core/Interactive/IconButton';
 import { Table, Td, Tr, Th, Tbody } from '@packages/components/core/DataDisplay/Table';
 import Tag from '@packages/components/core/DataDisplay/Tag';
+import useUpdateRole from '../hooks/useUpdateRole';
+import useDeleteRole from '../hooks/useDeleteRole';
 import { rowIconSize } from '../utils';
 import RoleModal from './RoleModal';
 
@@ -24,6 +26,8 @@ export interface RoleRowProps extends DataAttributes {
 const RoleRow: React.FC<RoleRowProps> = ({ dataCy, role }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { hasRequiredPermissions } = useSession();
+  const updateRole = useUpdateRole(role);
+  const deleteRole = useDeleteRole(role);
 
   const hasRoleWritePermission = hasRequiredPermissions({
     [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE,
@@ -68,6 +72,8 @@ const RoleRow: React.FC<RoleRowProps> = ({ dataCy, role }) => {
             isOpen={isOpen}
             onClose={onClose}
             role={role}
+            onSubmit={updateRole}
+            onDelete={deleteRole}
           />
         </Td>
       </Secured>

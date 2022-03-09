@@ -12,6 +12,7 @@ export type RoleInDb = Omit<Role, '_id'> & {
   _id: ObjectId;
 };
 
+export type CreateRoleData = Omit<Role, '_id'>;
 export type UpdateRoleData = Partial<Omit<Role, '_id'>>;
 
 export const rolesCollectionName = 'roles';
