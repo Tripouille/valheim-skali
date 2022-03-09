@@ -39,22 +39,24 @@ const RoleRow: React.FC<RoleRowProps> = ({ dataCy, role }) => {
         <Tag label={role.name} />
       </Td>
       <Td>
-        <Table>
-          <Tbody>
-            {isAdminRole(role)
-              ? 'Toutes'
-              : (
-                  Object.entries(role.permissions) as [PermissionCategory, PermissionPrivilege][]
-                ).map(([category, privilege]) => (
-                  <Tr key={category}>
-                    <Th w="28" ps="0">
-                      {PERMISSION_CATEGORY_TO_LABEL[category]}
-                    </Th>
-                    <Td>{PERMISSION_PRIVILEGE_TO_LABEL[privilege]}</Td>
-                  </Tr>
-                ))}
-          </Tbody>
-        </Table>
+        {isAdminRole(role) ? (
+          'Toutes'
+        ) : (
+          <Table>
+            <Tbody>
+              {(
+                Object.entries(role.permissions) as [PermissionCategory, PermissionPrivilege][]
+              ).map(([category, privilege]) => (
+                <Tr key={category}>
+                  <Th w="28" ps="0">
+                    {PERMISSION_CATEGORY_TO_LABEL[category]}
+                  </Th>
+                  <Td>{PERMISSION_PRIVILEGE_TO_LABEL[privilege]}</Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        )}
       </Td>
       <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE }}>
         <Td>
