@@ -47,6 +47,9 @@ export const ROUTES_TO_LABEL: Record<Route, string> = {
   [AuthRoute.SIGNIN]: 'Connexion',
 };
 
+export const isAdminNavRoute = (route: string): route is AdminNavRoute =>
+  Object.values(AdminNavRoute).includes(route as AdminNavRoute);
+
 export const getSigninRoute = (error: AuthError, callbackUrl?: string) =>
   callbackUrl
     ? `${AuthRoute.SIGNIN}?error=${error}&callbackUrl=${callbackUrl}`
