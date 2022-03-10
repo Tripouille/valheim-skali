@@ -1,22 +1,23 @@
 import { BsPlusLg } from 'react-icons/bs';
 import { useDisclosure } from '@chakra-ui/react';
-import { AdminNavRoute } from '@packages/utils/routes';
+import { Role } from '@packages/data/role';
 import { getDataValue } from '@packages/utils/dataAttributes';
 import Button from '@packages/components/core/Interactive/Button';
-import { useRoles } from '../hooks/useRoles';
 import useCreateRole from '../hooks/useCreateRole';
 import RolesTable from './RolesTable';
 import RoleModal from './RoleModal';
-import AdminTableWrapper from '../AdminTableWrapper';
 
-const Roles = () => {
-  const rolesQuery = useRoles();
+export interface RolesProps {
+  roles?: Role[];
+}
+
+const Roles: React.FC<RolesProps> = ({ roles = [] }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const createRole = useCreateRole(onClose);
 
   return (
-    <AdminTableWrapper adminNavRoute={AdminNavRoute.ROLES} query={rolesQuery}>
-      <RolesTable roles={rolesQuery.data ?? []} />
+    <>
+      <RolesTable roles={roles} />
       <Button
         dataCy={getDataValue('roles', 'create', 'button')}
         leftIcon={<BsPlusLg />}
@@ -32,7 +33,7 @@ const Roles = () => {
         onSubmit={createRole}
         onClose={onClose}
       />
-    </AdminTableWrapper>
+    </>
   );
 };
 

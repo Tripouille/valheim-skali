@@ -14,11 +14,11 @@ import { useRoles } from '../hooks/useRoles';
 import UserRow from './UserRow';
 
 export interface UsersTableProps {
-  users: User[];
+  users?: User[];
   filter: UserQueryFilter;
 }
 
-const UsersTable: React.FC<UsersTableProps> = ({ users, filter }) => {
+const UsersTable: React.FC<UsersTableProps> = ({ users = [], filter }) => {
   const { data: roles = [] } = useRoles();
 
   if (users.length === 0)
