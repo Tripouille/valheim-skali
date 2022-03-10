@@ -407,6 +407,23 @@ Localisation : Nous partirons d'une prairie située sur l'axe nord-centre du mon
 
 Vous pouvez réagir par un petit smiley pour indiquer votre participation et nous rassurer sur l'existence de l'événement, mais cela ne vous engage à rien et vous pouvez rejoindre au dernier moment 🙂 `,
   },
+  {
+    name: 'Concours photo',
+    href: 'https://discord.com/channels/843826987466227722/843847641766690856/944678529298210876',
+    tags: ['Concours', 'Photo'],
+    startDate: '2022-02-19',
+    continuous: true,
+    description: `Pour chacune des 5 catégories suivantes : construction, paysage, créature, banquet, libre ; une récompense spéciale sera attribuée au meilleur photographe.
+Règles :
+1/ Dans ce canal, une seule photo est autorisée par participant, tout le monde peut participer. 
+2/ Dans un mois, le 20 Mars 2022 à 23h59, le concours prendra fin et le gagnant sera désigné par la photo ayant reçu le plus de réaction 🤩. Les autres réactions ne compteront pas.
+3/ Une semaine avant la fin du concours TOUTES les réactions des joueurs sous TOUTES les photos seront supprimées. Seules les réactions postées durant cette dernière semaine seront comptabilisées.
+4/ Vous ne devez poster qu'une et seule photo par catégorie. Vous être libre d'en poster une par catégorie, ou juste dans une ou deux catégories, à vous de voir tant qu'un participant ne met pas deux photos dans une seule catégorie. Si c'est le cas, il sera éliminé.
+5/ Vous pouvez supprimer votre photo si vous voulez en poster une autre.
+6/ Vous ne pouvez pas participer en tant que groupe et ne devez poster que votre propre travail. Si le travail d'un autre joueur apparait en arrière plan, merci de le flouter, ou votre photo sera supprimée.
+7/ Dans le doute, les avis des admins trancheront.
+8/ Ceci n'est PAS un canal où discutter. À la limite ouvrez un "fil" si vous voulez vraiment parler d'une photo.`,
+  },
 ];
 
 const Events = () => {
