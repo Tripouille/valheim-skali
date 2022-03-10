@@ -1,8 +1,11 @@
 import React from 'react';
-import { Flex as ChakraFlex, FlexProps as ChakraFlexProps } from '@chakra-ui/react';
+import { Flex as ChakraFlex, FlexProps as ChakraFlexProps, forwardRef } from '@chakra-ui/react';
 
 export type FlexProps = ChakraFlexProps;
 
-const Flex: React.FC<FlexProps> = chakraFlexProps => <ChakraFlex {...chakraFlexProps}></ChakraFlex>;
+const Flex = forwardRef<FlexProps, 'div'>((chakraFlexProps, ref) => (
+  <ChakraFlex {...chakraFlexProps} ref={ref}></ChakraFlex>
+));
 
+Flex.displayName = 'Flex';
 export default Flex;
