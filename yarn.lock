@@ -5324,6 +5324,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/luxon@npm:^2":
+  version: 2.3.0
+  resolution: "@types/luxon@npm:2.3.0"
+  checksum: 163cadf3f2b6e0e6e73c5803916229a0ce1c08197caf77b7315c71df7c1ed24d213db4bcb7e04d58b9e081099eab5eedc7f3666131bf284f65b40187f3302892
+  languageName: node
+  linkType: hard
+
 "@types/mdast@npm:^3.0.0":
   version: 3.0.10
   resolution: "@types/mdast@npm:3.0.10"
@@ -14265,6 +14272,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"luxon@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "luxon@npm:2.3.1"
+  checksum: ce5eec873a0172a0956618531e28010e8d8319a8b3a836b893d0f92239413a1fc5f77841ca24988e27bd61e8b2748e160e9dfcb13e92d7f031c1e31ad1c8ae91
+  languageName: node
+  linkType: hard
+
 "make-dir@npm:^2.0.0, make-dir@npm:^2.1.0":
   version: 2.1.0
   resolution: "make-dir@npm:2.1.0"
@@ -20578,6 +20592,7 @@ __metadata:
     "@storybook/react": ^6.4.9
     "@types/babel__core": ^7
     "@types/jest": ^27.0.3
+    "@types/luxon": ^2
     "@types/mdx-js__react": ^1
     "@typescript-eslint/eslint-plugin": ^5.8.0
     "@typescript-eslint/parser": ^5.8.0
@@ -20595,6 +20610,7 @@ __metadata:
     eslint-plugin-storybook: ^0.5.5
     framer-motion: ^4
     jest: ^27.4.5
+    luxon: ^2.3.1
     mongodb: ^4.1.3
     next: ^12.0.7
     next-auth: 4.0.0-beta.7
