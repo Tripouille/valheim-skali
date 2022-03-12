@@ -1,5 +1,5 @@
 import { Event } from '@packages/data/event';
-import { dateHasNoTime } from '@packages/utils/format';
+import { dateHasNoTime, toInputDatetimeFormat } from '@packages/utils/format';
 
 export enum EventContext {
   LIST = 'list',
@@ -8,6 +8,7 @@ export enum EventContext {
 
 export const modalTableHeaderWidth = '20%';
 export const modalTableHeaderMinWidth = '48';
+export const editIconSize = 'lg';
 
 const getEventEndDateFromStartDate = (startDate: string): Date => {
   const endDate = new Date(startDate);
@@ -74,3 +75,10 @@ export const eventComp =
       }
     }
   };
+
+export const getEventFormData = (event: Event) => ({
+  ...event,
+  _id: undefined,
+  startDate: toInputDatetimeFormat(event.startDate),
+  endDate: event.endDate ? toInputDatetimeFormat(event.endDate) : undefined,
+});

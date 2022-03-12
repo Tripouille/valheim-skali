@@ -1,5 +1,13 @@
-import { FormEventHandler, useEffect, useRef, useState } from 'react';
+import {
+  FormEventHandler,
+  KeyboardEventHandler,
+  RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { BsPlusLg } from 'react-icons/bs';
+import { useOutsideClick } from '@chakra-ui/react';
 import { EVENT_TAG_MAX_LENGTH } from '@packages/data/event';
 import { DataAttributes, getDataValue } from '@packages/utils/dataAttributes';
 import { CONTINUOUS_LABEL } from '@packages/utils/constants';
@@ -14,6 +22,7 @@ export interface EventTagsFormProps extends DataAttributes {
   tags?: string[];
   onChange: (fn: (oldTags: string[]) => string[]) => void;
   continuous?: boolean;
+  nextInputRef: RefObject<HTMLInputElement>;
 }
 
 const EventTagsForm: React.FC<EventTagsFormProps> = ({
@@ -21,14 +30,15 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
   tags = [],
   onChange,
   continuous = false,
+  nextInputRef,
 }) => {
-  const newTagInput = useRef<HTMLInputElement>(null);
+  const newTagInputRef = useRef<HTMLInputElement>(null);
   const tagInputErrorTimeoutId = useRef<number | undefined>();
   const [showTagInput, setShowTagInput] = useState(false);
   const [showInvalidTagInput, setShowInvalidTagInput] = useState(false);
 
   useEffect(() => {
-    if (showTagInput) newTagInput.current?.focus();
+    if (showTagInput) newTagInputRef.current?.focus();
   }, [showTagInput]);
 
   useEffect(() => {
@@ -37,6 +47,11 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
       clearTimeout(timeoutId);
     };
   }, []);
+
+  useOutsideClick({
+    ref: newTagInputRef,
+    handler: () => setShowTagInput(false),
+  });
 
   const startInvalidTagInputTimeout = () => {
     clearTimeout(tagInputErrorTimeoutId.current);
@@ -47,10 +62,10 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
   const submitTagForm: FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault();
     onChange(oldTags => {
-      const newTag = newTagInput.current?.value;
+      const newTag = newTagInputRef.current?.value;
       if (newTag) {
         if (!oldTags.includes(newTag) && newTag !== CONTINUOUS_LABEL) {
-          newTagInput.current.value = '';
+          newTagInputRef.current.value = '';
           return [...oldTags, newTag];
         } else {
           startInvalidTagInputTimeout();
@@ -62,6 +77,14 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
 
   const removeTag = (removedTag: string) => () => {
     onChange(oldTags => oldTags.filter(tag => tag !== removedTag));
+  };
+
+  const handleNewTagInputKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
+    if (e.key === 'Escape') {
+      e.stopPropagation();
+      setShowTagInput(false);
+      nextInputRef.current?.focus();
+    }
   };
 
   return (
@@ -82,12 +105,10 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
             <Input
               dataCy={getDataValue(dataCy, 'add_tag', 'input')}
               w="36"
-              ref={newTagInput}
+              ref={newTagInputRef}
               showInvalidOverFocus
               maxLength={EVENT_TAG_MAX_LENGTH}
-              onKeyUp={e => {
-                if (e.key === 'Escape') setShowTagInput(false);
-              }}
+              onKeyDown={handleNewTagInputKeyDown}
             />
             {/* Display autocomplete popover with previous event tags */}
             <IconButton

@@ -9,6 +9,7 @@ import {
   OptionalId,
   UpdateFilter,
   WithId,
+  WithoutId,
 } from 'mongodb';
 
 function getDbUri(): string {
@@ -77,6 +78,19 @@ async function updateOne<T>(
   return result;
 }
 
+async function replaceOne<T>(
+  collectionName: string,
+  query: Filter<T>,
+  replacement: WithoutId<T>,
+): Promise<ModifyResult<T>> {
+  const collection = await connectToCollection<T>(collectionName);
+  const result = await collection.findOneAndReplace(query, replacement, {
+    returnDocument: 'after',
+  });
+
+  return result;
+}
+
 async function remove<T>(collectionName: string, id: string) {
   const collection = await connectToCollection<T>(collectionName);
 
@@ -92,5 +106,6 @@ export default {
   findOne,
   insert,
   updateOne,
+  replaceOne,
   remove,
 };

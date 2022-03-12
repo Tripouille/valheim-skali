@@ -4,7 +4,7 @@ import { ROUTES_TO_PERMISSIONS } from '@packages/utils/auth';
 import Secured from '@packages/components/core/Authentication/Secured';
 import Button from '@packages/components/core/Interactive/Button';
 import Box from '@packages/components/core/Containers/Box';
-import Flex from '../../core/Containers/Flex';
+import Flex from '@packages/components/core/Containers/Flex';
 
 export interface AdminNavItemProps {
   route: AdminNavRoute;
