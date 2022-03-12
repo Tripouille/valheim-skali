@@ -1,12 +1,6 @@
 import { Role, RoleInDb } from '@packages/data/role';
 import { AdminNavRoute, AuthRoute, MenuRoute, NavRoute, Route } from './routes';
 
-export interface AuthConfig {
-  needAuth?: { permissions: Permissions };
-}
-
-export type ComponentWithAuth<PropTypes = Record<string, never>> = React.FC<PropTypes> & AuthConfig;
-
 export enum SessionStatus {
   LOADING = 'loading',
   AUTHENTICATED = 'authenticated',
