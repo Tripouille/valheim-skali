@@ -1,29 +1,31 @@
 import { useRouter } from 'next/router';
 import { Session } from 'next-auth';
 import { useCallback, useMemo } from 'react';
-import { QueryKey, useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from 'react-query';
 import axios from 'axios';
 import { APIRoute, getSigninRoute } from '../routes';
-import { AuthError, Permissions, SessionStatus, userHasRequiredPermissions } from '../auth';
+import { AuthError, Permissions, SessionStatus, permissionsMeetRequirement } from '../auth';
 import { QueryKeys, QueryTypes } from '../queryClient';
 
-export async function fetchSession(): Promise<QueryTypes[QueryKeys.SESSION]> {
-  const { data: session } = await axios.get(APIRoute.SESSION);
+export async function getSessionFromServer(): Promise<QueryTypes[QueryKeys.SESSION]> {
+  const { data: session } = await axios.get<Session | Record<string, never>>(APIRoute.SESSION);
   if (Object.keys(session).length) {
-    return session;
+    return session as Session;
   }
   return null;
+}
+
+export async function getVisitorPermissionsFromServer(): Promise<QueryTypes[QueryKeys.VISITOR]> {
+  const { data: visitorPermissions } = await axios.get<QueryTypes[QueryKeys.VISITOR]>(
+    APIRoute.VISITOR,
+  );
+  return visitorPermissions;
 }
 
 interface UseSessionParameters {
   required?: boolean;
   redirectTo?: string;
-  queryConfig?: UseQueryOptions<
-    QueryTypes[QueryKeys.SESSION],
-    unknown,
-    QueryTypes[QueryKeys.SESSION],
-    QueryKey
-  >;
+  queryConfig?: UseQueryOptions<QueryTypes[QueryKeys.SESSION]>;
 }
 
 export type UseSessionReturn = (
@@ -44,31 +46,40 @@ const useSession = ({
 }: UseSessionParameters = {}): UseSessionReturn => {
   const router = useRouter();
 
-  const { data, status } = useQuery<
-    QueryTypes[QueryKeys.SESSION],
-    unknown,
-    QueryTypes[QueryKeys.SESSION],
-    QueryKey
-  >(QueryKeys.SESSION, fetchSession, {
-    ...queryConfig,
-    onSettled(session, error) {
-      if (queryConfig.onSettled) queryConfig.onSettled(session, error);
-      if (session || !required) return;
-      router.push(redirectTo);
+  const { data: sessionData, status } = useQuery<QueryTypes[QueryKeys.SESSION]>(
+    QueryKeys.SESSION,
+    getSessionFromServer,
+    {
+      ...queryConfig,
+      onSettled(session, error) {
+        if (queryConfig.onSettled) queryConfig.onSettled(session, error);
+        if (session || !required) return;
+        router.push(redirectTo);
+      },
     },
-  });
+  );
+
+  const { data: visitorPermissions } = useQuery<QueryTypes[QueryKeys.VISITOR]>(
+    QueryKeys.VISITOR,
+    getVisitorPermissionsFromServer,
+    {
+      enabled: !sessionData,
+    },
+  );
 
   const hasRequiredPermissions = useCallback(
     (requiredPermissions: Permissions) => {
-      return data ? userHasRequiredPermissions(data.permissions, requiredPermissions) : false;
+      return sessionData
+        ? permissionsMeetRequirement(sessionData.permissions, requiredPermissions)
+        : permissionsMeetRequirement(visitorPermissions ?? {}, requiredPermissions);
     },
-    [data],
+    [sessionData, visitorPermissions],
   );
 
   const session = useMemo(() => {
-    if (data) {
+    if (sessionData) {
       return {
-        data,
+        data: sessionData,
         status: SessionStatus.AUTHENTICATED,
         hasRequiredPermissions,
       };
@@ -80,7 +91,7 @@ const useSession = ({
         hasRequiredPermissions,
       };
     }
-  }, [data, status, hasRequiredPermissions]) as UseSessionReturn;
+  }, [sessionData, status, hasRequiredPermissions]) as UseSessionReturn;
 
   return session;
 };

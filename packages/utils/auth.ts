@@ -31,7 +31,7 @@ export type Permissions = Partial<Record<PermissionCategory, PermissionPrivilege
 export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions> = {
   [NavRoute.HOME]: {},
   [NavRoute.RULES]: {},
-  [NavRoute.EVENTS]: {},
+  [NavRoute.EVENTS]: { [PermissionCategory.EVENT]: PermissionPrivilege.READ },
   [NavRoute.TRADE]: {},
   [NavRoute.MODS]: {},
   [NavRoute.WORLD]: {},
@@ -59,7 +59,7 @@ export const PERMISSION_PRIVILEGE_TO_LABEL: Record<PermissionPrivilege, string> 
 export const isAdminPrivilege = (privilege: PermissionPrivilege) =>
   privilege === PermissionPrivilege.ADMIN || privilege === PermissionPrivilege.SUPER_ADMIN;
 
-export const userHasRequiredPermissions = (
+export const permissionsMeetRequirement = (
   userPermissions: Permissions,
   requiredPermissions: Permissions,
 ) => {
@@ -81,6 +81,7 @@ export enum SpecialRoleName {
    * (this is the only role with write access on roles) */
   ADMIN = 'Admin',
   MEMBER = 'Viking',
+  VISITOR = 'Visiteur',
 }
 
 export const isSpecialRole = (role: Role | RoleInDb) => {

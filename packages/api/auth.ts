@@ -4,19 +4,38 @@ import { UserInDb } from '@packages/data/user';
 import { RoleInDb, rolesCollectionName } from '@packages/data/role';
 import {
   Permissions,
-  userHasRequiredPermissions,
+  permissionsMeetRequirement,
   PermissionCategory,
   PermissionPrivilege,
   isAdminRole,
   ADMIN_ROLE_TO_PRIVILEGE,
+  SpecialRoleName,
 } from '@packages/utils/auth';
 import { ServerException } from '@packages/api/common';
 import db from '@packages/api/db';
 
+export const getVisitorPermissions = async (): Promise<Permissions> => {
+  const visitorRole = await db.findOne<RoleInDb>(
+    rolesCollectionName,
+    { name: SpecialRoleName.VISITOR },
+    { projection: { _id: 0, permissions: 1 } },
+  );
+  if (!visitorRole) throw new ServerException(404);
+
+  return visitorRole.permissions;
+};
+
 export const requirePermissions = async (requiredPermissions: Permissions, req: Req) => {
   const session = await getSession({ req });
-  if (!session || !userHasRequiredPermissions(session.permissions, requiredPermissions)) {
-    throw new ServerException(401);
+  if (session) {
+    if (!permissionsMeetRequirement(session.permissions, requiredPermissions)) {
+      throw new ServerException(401);
+    }
+  } else {
+    const visitorPermissions = await getVisitorPermissions();
+    if (!permissionsMeetRequirement(visitorPermissions, requiredPermissions)) {
+      throw new ServerException(401);
+    }
   }
 };
 
