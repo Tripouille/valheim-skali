@@ -29,8 +29,8 @@ const EventItem: React.FC<EventItemProps> = ({ dataCy, event, context, eventIsCl
 
   return (
     <Stack>
-      <Flex direction={{ base: 'column', md: 'row' }}>
-        <Box flex="1" textAlign="left">
+      <Flex direction={{ base: 'column', md: 'row' }} align="center">
+        <Box w={{ base: '', md: '22%' }} textAlign="left">
           {event.discordLink && (
             <DiscordButton
               dataCy={getDataValue(dataCy, 'discord_button')}
@@ -39,28 +39,21 @@ const EventItem: React.FC<EventItemProps> = ({ dataCy, event, context, eventIsCl
           )}
         </Box>
         <Heading
-          flex="2.5"
+          w="56%"
           size="lg"
           textAlign="center"
           variant="limitedWidth"
           whiteSpace={context === EventContext.LIST ? 'nowrap' : 'initial'}
-          order={{ base: 1, md: 0 }}
         >
           {event.name} {eventIsClosed && '(terminé)'}
         </Heading>
-        <Box flex="1" my={{ base: 2, md: 0 }}>
-          <Wrap
-            justify={{ base: 'center', md: 'flex-end' }}
-            /** Give space to modal close button */
-            pe={context === EventContext.MODAL ? { base: 0, md: 6 } : 0}
-          >
-            {event.tags.map(tag => (
-              <Tag key={tag} label={tag} />
-            ))}
-            {event.continuous && <Tag label={CONTINUOUS_LABEL} />}
-          </Wrap>
-        </Box>
       </Flex>
+      <Wrap justify="center">
+        {event.tags.map(tag => (
+          <Tag key={tag} label={tag} />
+        ))}
+        {event.continuous && <Tag label={CONTINUOUS_LABEL} />}
+      </Wrap>
       <Text textAlign="center" fontStyle="italic" pb="2">
         {formatDateInterval(event.startDate, event.endDate, !event.continuous)}
         {event.location && ` - ${event.location}`}

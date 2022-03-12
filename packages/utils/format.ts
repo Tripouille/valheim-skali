@@ -31,4 +31,7 @@ export const formatDateInterval = (
   }
 };
 
-export const toISOWithTimezone = (date: string) => DateTime.fromISO(date).toISO();
+export const toISOWithTimezone = (date: string): string => DateTime.fromISO(date).toISO();
+
+export const toInputDatetimeFormat = (date: string): string =>
+  DateTime.fromISO(date).toISO({ includeOffset: false });

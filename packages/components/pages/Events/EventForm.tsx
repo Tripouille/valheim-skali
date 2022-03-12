@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DateTime } from 'luxon';
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { CONTINUOUS_LABEL } from '@packages/utils/constants';
@@ -24,6 +24,7 @@ import Switch from '@packages/components/core/Form/Switch';
 import Textarea from '@packages/components/core/Form/Textarea';
 import EventTagsForm from './EventTagsForm';
 import EventFormFooter from './EventFormFooter';
+import { getEventFormData } from './utils';
 
 const defaultEventData: Partial<CreateEventData> = {
   continuous: false,
@@ -51,20 +52,27 @@ const EventForm: React.FC<EventFormProps> = ({
   onSubmit,
   onDelete,
 }: EventFormProps) => {
-  const [eventData, setEventData] = useState(event ?? defaultEventData);
+  const firstInputRef = useRef<HTMLInputElement>(null);
+  const firstPostTagsInputRef = useRef<HTMLInputElement>(null);
+  const endDateInputRef = useRef<HTMLInputElement>(null);
+
+  const [eventData, setEventData] = useState(event ? getEventFormData(event) : defaultEventData);
   const [validationError, setValidationError] = useState<string | null>(null);
 
   useEffect(() => {
     if (isOpen) {
       setEventData(
-        event ?? {
-          ...defaultEventData,
-          startDate: DateTime.now().startOf('day').toISO({ includeOffset: false }),
-        },
+        event
+          ? getEventFormData(event)
+          : {
+              ...defaultEventData,
+              startDate: DateTime.now().startOf('day').toISO({ includeOffset: false }),
+            },
       );
     }
   }, [event, isOpen]);
 
+  /** Sets error state and returns wether the data is valid  */
   const validate = (data: Partial<CreateEventData>): data is CreateEventData => {
     const error = getEventValidationError(data);
     setValidationError(error);
@@ -75,10 +83,17 @@ const EventForm: React.FC<EventFormProps> = ({
     validate(eventData);
   }, [eventData]);
 
+  const handleSubmit = () => {
+    if (validate(eventData)) onSubmit(eventData);
+    /** Clear date input that was (partially) erased */
+    if (!eventData.endDate && endDateInputRef.current) endDateInputRef.current.value = '';
+  };
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} closeOnEsc={false}>
+    <Modal isOpen={isOpen} onClose={onClose} initialFocusRef={firstInputRef}>
       <ModalOverlay />
       <ModalContent>
+        <ModalCloseButton />
         <ModalHeader textAlign="center">Créer un événement</ModalHeader>
         <ModalBody>
           <Stack spacing="5">
@@ -88,6 +103,7 @@ const EventForm: React.FC<EventFormProps> = ({
                 value={eventData.name ?? ''}
                 onChange={name => setEventData(prev => ({ ...prev, name }))}
                 maxLength={EVENT_VALUES_MAX_LENGTH.name}
+                ref={firstInputRef}
               />
             </FormElement>
             <FormElement
@@ -115,6 +131,7 @@ const EventForm: React.FC<EventFormProps> = ({
                 type="datetime-local"
                 value={eventData.endDate ?? ''}
                 onChange={endDate => setEventData(prev => ({ ...prev, endDate }))}
+                ref={endDateInputRef}
               />
             </FormElement>
             <FormElement label={`${CONTINUOUS_LABEL} ?`}>
@@ -142,6 +159,7 @@ const EventForm: React.FC<EventFormProps> = ({
                   setEventData(prev => ({ ...prev, tags: fn(prev.tags ?? []) }))
                 }
                 continuous={eventData.continuous}
+                nextInputRef={firstPostTagsInputRef}
               />
             </FormElement>
             <FormElement label="Description RP">
@@ -150,6 +168,7 @@ const EventForm: React.FC<EventFormProps> = ({
                 value={eventData.RPDescription ?? ''}
                 onChange={RPDescription => setEventData(prev => ({ ...prev, RPDescription }))}
                 maxLength={EVENT_VALUES_MAX_LENGTH.RPDescription}
+                ref={firstPostTagsInputRef}
               />
             </FormElement>
             <FormElement label="Description" isRequired>
@@ -162,13 +181,10 @@ const EventForm: React.FC<EventFormProps> = ({
             </FormElement>
           </Stack>
         </ModalBody>
-        <ModalCloseButton />
         <EventFormFooter
           dataCy={dataCy}
           event={event}
-          onSubmit={() => {
-            if (validate(eventData)) onSubmit(eventData);
-          }}
+          onSubmit={handleSubmit}
           onDelete={onDelete}
           error={validationError}
         />

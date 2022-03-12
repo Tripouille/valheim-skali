@@ -1,6 +1,6 @@
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { ObjectId } from 'bson';
-import { ModifyResult } from 'mongodb';
+import { ModifyResult, WithoutId } from 'mongodb';
 import db from '@packages/api/db';
 
 export class ServerException extends Error {
@@ -31,6 +31,16 @@ export const updateOneInCollection = async <T>(
     { _id: new ObjectId(id) },
     { $set: updateData },
   );
+
+  return result;
+};
+
+export const replaceOneInCollection = async <T>(
+  collectionName: string,
+  id: string,
+  newData: WithoutId<T>,
+): Promise<ModifyResult<T>> => {
+  const result = await db.replaceOne<T>(collectionName, { _id: new ObjectId(id) }, newData);
 
   return result;
 };
