@@ -1,6 +1,12 @@
-export const formatLongDate = (ISODate: string): string => {
+import { DateTime } from 'luxon';
+
+export const dateHasNoTime = (date: string) => date.slice(11, 16) === '00:00';
+
+const formatDate = (ISODate: string): string => {
   const date = new Date(ISODate);
-  const noTime = date.toISOString().slice(11, -5) === '00:00:00';
+  /** If the time is 00:00 in the original date,
+   * the event creator probably didn't mean any hour. */
+  const noTime = dateHasNoTime(ISODate);
   return date.toLocaleString('fr', {
     weekday: 'long',
     year: 'numeric',
@@ -17,10 +23,12 @@ export const formatDateInterval = (
   ponctual?: boolean,
 ): string => {
   if (endDate) {
-    return `Du ${formatLongDate(startDate)} au ${formatLongDate(endDate)}`;
+    return `Du ${formatDate(startDate)} au ${formatDate(endDate)}`;
   } else if (ponctual) {
-    return `Le ${formatLongDate(startDate)}`;
+    return `Le ${formatDate(startDate)}`;
   } else {
-    return `A partir du ${formatLongDate(startDate)}`;
+    return `A partir du ${formatDate(startDate)}`;
   }
 };
+
+export const toISOWithTimezone = (date: string) => DateTime.fromISO(date).toISO();

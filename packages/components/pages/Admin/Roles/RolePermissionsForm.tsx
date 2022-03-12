@@ -8,8 +8,8 @@ import {
   PERMISSION_PRIVILEGE_TO_LABEL,
 } from '@packages/utils/auth';
 import { Table, Tbody, Td, Th, Tr } from '@packages/components/core/DataDisplay/Table';
-import FormLabel from '@packages/components/core/Interactive/FormControl';
-import Select from '@packages/components/core/Interactive/Select';
+import { FormLabel } from '@packages/components/core/Form/FormControl';
+import Select from '@packages/components/core/Form/Select';
 import { modalTableHeaderWidth } from '../utils';
 
 export interface RolePermissionsFormProps extends DataAttributes {
@@ -62,9 +62,7 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
         {Object.values(PermissionCategory).map(category => (
           <Tr key={category}>
             <Th w={modalTableHeaderWidth}>
-              <FormLabel htmlFor={category} m="0">
-                {PERMISSION_CATEGORY_TO_LABEL[category]}
-              </FormLabel>
+              <FormLabel htmlFor={category}>{PERMISSION_CATEGORY_TO_LABEL[category]}</FormLabel>
             </Th>
             <Td>
               <Select

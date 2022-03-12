@@ -6,6 +6,7 @@ export const serverName = 'valhabba';
 export enum APIRoute {
   USERS = '/api/users',
   ROLES = '/api/roles',
+  EVENTS = '/api/events',
   SESSION = '/api/auth/session',
 }
 

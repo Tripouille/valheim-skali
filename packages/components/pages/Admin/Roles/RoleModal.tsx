@@ -18,7 +18,7 @@ import {
 } from '@packages/components/core/Overlay/Modal';
 import { Table, Tbody, Td, Th, Tr } from '@packages/components/core/DataDisplay/Table';
 import Text from '@packages/components/core/Typography/Text';
-import Input from '@packages/components/core/Interactive/Input';
+import Input from '@packages/components/core/Form/Input';
 import { darkerBackgroundColor, modalTableHeaderWidth } from '../utils';
 import RolePermissionsForm from './RolePermissionsForm';
 import RoleModalFooter from './RoleModalFooter';
@@ -148,13 +148,7 @@ const RoleModal: React.FC<RoleModalProps> = ({
         <RoleModalFooter
           dataCy={dataCy}
           role={role}
-          onSubmit={() =>
-            onSubmit({
-              name: roleData.name,
-              permissions: roleData.permissions,
-              requiredPermissionsToAssign: roleData.requiredPermissionsToAssign,
-            })
-          }
+          onSubmit={() => onSubmit(roleData)}
           onDelete={onDelete}
           isValid={roleData.name.length > 0}
         />

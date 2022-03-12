@@ -1,13 +1,17 @@
 import { Event } from '@packages/data/event';
+import { dateHasNoTime } from '@packages/utils/format';
 
 export enum EventContext {
   LIST = 'list',
   MODAL = 'modal',
 }
 
+export const modalTableHeaderWidth = '20%';
+export const modalTableHeaderMinWidth = '48';
+
 const getEventEndDateFromStartDate = (startDate: string): Date => {
   const endDate = new Date(startDate);
-  const noTime = endDate.toISOString().slice(11, -5) === '00:00:00';
+  const noTime = dateHasNoTime(endDate.toISOString());
   if (noTime) endDate.setDate(endDate.getDate() + 1);
   else endDate.setHours(endDate.getHours() + 6);
   return endDate;
