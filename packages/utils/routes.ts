@@ -8,6 +8,7 @@ export enum APIRoute {
   ROLES = '/api/roles',
   EVENTS = '/api/events',
   SESSION = '/api/auth/session',
+  VISITOR = '/api/auth/visitor',
 }
 
 export enum NavRoute {

@@ -7,6 +7,7 @@ import { Role } from '@packages/data/role';
 import { Event } from '@packages/data/event';
 import { getMessageFromError } from './error';
 import { displayErrorToast } from './toast';
+import { Permissions } from './auth';
 
 export const queryErrorHandler = (error: unknown) => {
   const id = axios.isAxiosError(error) ? error.config.url : undefined;
@@ -34,6 +35,7 @@ export enum QueryKeys {
   ROLES = 'roles',
   EVENTS = 'events',
   SESSION = 'session',
+  VISITOR = 'visitor',
 }
 
 export type QueryTypes = {
@@ -41,4 +43,5 @@ export type QueryTypes = {
   [QueryKeys.ROLES]: Role[];
   [QueryKeys.EVENTS]: Event[];
   [QueryKeys.SESSION]: Session | null;
+  [QueryKeys.VISITOR]: Permissions;
 };

@@ -1,7 +1,9 @@
 import { chakra, useDisclosure } from '@chakra-ui/react';
 import { RiMenuLine } from 'react-icons/ri';
+import theme from '@packages/theme';
 import { getDataValue } from '@packages/utils/dataAttributes';
 import { NavRoute } from '@packages/utils/routes';
+import { ROUTES_TO_PERMISSIONS } from '@packages/utils/auth';
 import IconButton from '@packages/components/core/Interactive/IconButton';
 import Button from '@packages/components/core/Interactive/Button';
 import NavItem from '@packages/components/core/Interactive/NavItem';
@@ -13,7 +15,7 @@ import {
   DrawerBody,
   DrawerFooter,
 } from '@packages/components/core/Overlay/Drawer';
-import theme from '@packages/theme';
+import Secured from '@packages/components/core/Authentication/Secured';
 
 export interface DrawerMenuProps {
   serverName: string;
@@ -41,13 +43,14 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ serverName }) => {
             <chakra.nav>
               <VStack align="stretch">
                 {Object.values(NavRoute).map(route => (
-                  <NavItem
-                    dataCy={getDataValue('nav_bar_drawer', 'nav_item', route)}
-                    key={route}
-                    root={`/${serverName}`}
-                    route={route}
-                    onClick={onClose}
-                  />
+                  <Secured key={route} permissions={ROUTES_TO_PERMISSIONS[route]}>
+                    <NavItem
+                      dataCy={getDataValue('nav_bar_drawer', 'nav_item', route)}
+                      root={`/${serverName}`}
+                      route={route}
+                      onClick={onClose}
+                    />
+                  </Secured>
                 ))}
               </VStack>
             </chakra.nav>
