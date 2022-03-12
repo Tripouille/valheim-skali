@@ -1,6 +1,7 @@
 import Tag, { TagProps } from '@packages/components/core/DataDisplay/Tag';
 import { StoryCategory } from '@packages/utils/Storybook/constants';
 import { storybookSetup } from '@packages/utils/Storybook/setup';
+import { CONTINUOUS_LABEL } from '@packages/utils/constants';
 
 const { defaultExport, StoryFactory } = storybookSetup<TagProps>(
   Tag,
@@ -17,7 +18,7 @@ export const Default = StoryFactory({
 });
 
 export const DefinedColor = StoryFactory({
-  label: 'Continu',
+  label: CONTINUOUS_LABEL,
   colorScheme: 'gray',
   size: 'md',
   variant: 'subtle',

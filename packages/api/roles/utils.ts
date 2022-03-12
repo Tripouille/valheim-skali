@@ -34,7 +34,7 @@ export const deleteNonePrivileges = (permissions: Permissions) => {
   }
 };
 
-export const checkRoleData = async (newRole: RoleInDb) => {
+export const checkRoleData = (newRole: RoleInDb) => {
   /** Name cannot be empty */
   if (newRole.name.length === 0) throw new ServerException(400);
   /** It is forbidden to give admin privileges */

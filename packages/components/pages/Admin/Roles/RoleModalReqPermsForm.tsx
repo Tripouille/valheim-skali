@@ -8,8 +8,8 @@ import {
 } from '@packages/utils/auth';
 import { DataAttributes, getDataValue } from '@packages/utils/dataAttributes';
 import { Table, Tbody, Td, Th, Tr } from '@packages/components/core/DataDisplay/Table';
-import FormLabel from '@packages/components/core/Interactive/FormControl';
-import Select from '@packages/components/core/Interactive/Select';
+import { FormLabel } from '@packages/components/core/Form/FormControl';
+import Select from '@packages/components/core/Form/Select';
 import Flex from '@packages/components/core/Containers/Flex';
 import Tooltip from '@packages/components/core/Overlay/Tooltip';
 import { modalTableHeaderWidth } from '../utils';
@@ -40,7 +40,7 @@ const RoleModalReqPermsForm: React.FC<RoleModalReqPermsFormProps> = ({
       <Tbody>
         <Tr>
           <Th w={modalTableHeaderWidth}>
-            <FormLabel htmlFor="required_to_assign" m="0">
+            <FormLabel htmlFor="required_to_assign">
               {PERMISSION_CATEGORY_TO_LABEL[PermissionCategory.USER]}
             </FormLabel>
           </Th>

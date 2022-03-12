@@ -1,11 +1,11 @@
 import { action } from '@storybook/addon-actions';
-import Select, { SelectProps } from '@packages/components/core/Interactive/Select';
+import Select, { SelectProps } from '@packages/components/core/Form/Select';
 import { storybookSetup } from '@packages/utils/Storybook/setup';
 import { StoryCategory } from '@packages/utils/Storybook/constants';
 
 const { defaultExport, StoryFactory } = storybookSetup<SelectProps<string>>(
   Select,
-  StoryCategory.CORE_INTERACTIVE,
+  StoryCategory.CORE_FORM,
 );
 
 export default defaultExport;

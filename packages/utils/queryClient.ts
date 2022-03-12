@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from '@chakra-ui/react';
 import { User } from '@packages/data/user';
 import { Role } from '@packages/data/role';
+import { Event } from '@packages/data/event';
 import { getMessageFromError } from './error';
 import { displayErrorToast } from './toast';
 
@@ -31,11 +32,13 @@ export const queryClient = new QueryClient({
 export enum QueryKeys {
   USERS = 'users',
   ROLES = 'roles',
+  EVENTS = 'events',
   SESSION = 'session',
 }
 
 export type QueryTypes = {
   [QueryKeys.USERS]: User[];
   [QueryKeys.ROLES]: Role[];
+  [QueryKeys.EVENTS]: Event[];
   [QueryKeys.SESSION]: Session | null;
 };

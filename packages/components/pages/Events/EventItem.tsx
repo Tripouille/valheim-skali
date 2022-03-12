@@ -1,5 +1,7 @@
 import { DataAttributes, getDataValue } from '@packages/utils/dataAttributes';
 import { Event } from '@packages/data/event';
+import { formatDateInterval } from '@packages/utils/format';
+import { CONTINUOUS_LABEL } from '@packages/utils/constants';
 import Box from '@packages/components/core/Containers/Box';
 import Flex from '@packages/components/core/Containers/Flex';
 import Heading from '@packages/components/core/Typography/Heading';
@@ -8,7 +10,6 @@ import { Stack } from '@packages/components/core/Containers/Stack';
 import { Wrap } from '@packages/components/core/Containers/Wrap';
 import Tag from '@packages/components/core/DataDisplay/Tag';
 import DiscordButton from '@packages/components/core/Interactive/DiscordButton';
-import { formatDateInterval } from '@packages/utils/format';
 import { EventContext } from './utils';
 
 export interface EventItemProps extends DataAttributes {
@@ -30,8 +31,11 @@ const EventItem: React.FC<EventItemProps> = ({ dataCy, event, context, eventIsCl
     <Stack>
       <Flex direction={{ base: 'column', md: 'row' }}>
         <Box flex="1" textAlign="left">
-          {event.href && (
-            <DiscordButton dataCy={getDataValue(dataCy, 'discord_button')} href={event.href} />
+          {event.discordLink && (
+            <DiscordButton
+              dataCy={getDataValue(dataCy, 'discord_button')}
+              href={event.discordLink}
+            />
           )}
         </Box>
         <Heading
@@ -53,7 +57,7 @@ const EventItem: React.FC<EventItemProps> = ({ dataCy, event, context, eventIsCl
             {event.tags.map(tag => (
               <Tag key={tag} label={tag} />
             ))}
-            {event.continuous && <Tag label="Continu" />}
+            {event.continuous && <Tag label={CONTINUOUS_LABEL} />}
           </Wrap>
         </Box>
       </Flex>

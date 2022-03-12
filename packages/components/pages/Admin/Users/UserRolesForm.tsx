@@ -50,6 +50,7 @@ const UserRolesForm: React.FC<UserRolesFormProps> = ({ dataCy, user, roles }) =>
             label={role.name}
             size="lg"
             onClose={canRemoveRole(role) ? removeRoleFromUser(role) : undefined}
+            dataCy={getDataValue(dataCy, 'roles', role._id)}
           />
         ) : null;
       })}
