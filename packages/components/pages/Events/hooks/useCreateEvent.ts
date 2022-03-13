@@ -3,12 +3,11 @@ import axios from 'axios';
 import { CreateEventData } from '@packages/data/event';
 import { APIRoute } from '@packages/utils/routes';
 import { QueryKeys } from '@packages/utils/queryClient';
-import { toISOWithTimezone } from '@packages/utils/format';
 import useOptimisticMutation from '@packages/utils/hooks/useOptimisticMutation';
+import { setEventDataForServer } from '../utils';
 
 const createEventOnServer = async (eventData: CreateEventData) => {
-  eventData.startDate = toISOWithTimezone(eventData.startDate);
-  eventData.endDate = eventData.endDate ? toISOWithTimezone(eventData.endDate) : undefined;
+  setEventDataForServer(eventData);
   await axios.post(`${APIRoute.EVENTS}`, eventData);
 };
 
