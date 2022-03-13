@@ -40,10 +40,10 @@ export const requirePermissions = async (requiredPermissions: Permissions, req: 
 };
 
 export const getUserPermissions = async (user: UserInDb) => {
+  const userPermissions: Permissions = await getVisitorPermissions();
   const userRoles: RoleInDb[] = await db.find(rolesCollectionName, {
     _id: { $in: user.roleIds ?? [] },
   });
-  const userPermissions: Permissions = {};
   userRoles.forEach(role => {
     if (isAdminRole(role)) {
       Object.values(PermissionCategory).forEach(category => {
