@@ -1,5 +1,5 @@
-import { Event } from '@packages/data/event';
-import { dateHasNoTime, toInputDatetimeFormat } from '@packages/utils/format';
+import { CreateEventData, Event } from '@packages/data/event';
+import { dateHasNoTime, toInputDatetimeFormat, toISOWithTimezone } from '@packages/utils/format';
 
 export enum EventContext {
   LIST = 'list',
@@ -82,3 +82,8 @@ export const getEventFormData = (event: Event) => ({
   startDate: toInputDatetimeFormat(event.startDate),
   endDate: event.endDate ? toInputDatetimeFormat(event.endDate) : undefined,
 });
+
+export const setEventDataForServer = (eventData: CreateEventData) => {
+  eventData.startDate = toISOWithTimezone(eventData.startDate);
+  eventData.endDate = eventData.endDate ? toISOWithTimezone(eventData.endDate) : undefined;
+};
