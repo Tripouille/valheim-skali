@@ -19,7 +19,10 @@ const useUpdateEvent = (updatedEvent: Event) => {
     (previousEvents, newEvent) =>
       previousEvents?.map(event =>
         event._id === updatedEvent._id
-          ? { ...event, ...{ ...newEvent, _id: updatedEvent._id } }
+          ? {
+              ...event,
+              ...{ ...newEvent, _id: updatedEvent._id },
+            }
           : event,
       ) ?? [],
     "L'événement a bien été mis à jour.",

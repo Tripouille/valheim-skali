@@ -7,8 +7,8 @@ import { QueryKeys, QueryTypes } from '@packages/utils/queryClient';
 import useOptimisticMutation from '@packages/utils/hooks/useOptimisticMutation';
 import { displayErrorToast } from '@packages/utils/toast';
 
-const updateRoleOnServer = (updatedRole: Role) => async (updateRoleData: UpdateRoleData) => {
-  await axios.put(`${APIRoute.ROLES}/${updatedRole._id}`, updateRoleData);
+const updateRoleOnServer = (updatedRole: Role) => async (newRole: UpdateRoleData) => {
+  await axios.put(`${APIRoute.ROLES}/${updatedRole._id}`, newRole);
 };
 
 const useUpdateRole = (updatedRole: Role) => {
@@ -17,9 +17,14 @@ const useUpdateRole = (updatedRole: Role) => {
   const updateRoleMutate = useOptimisticMutation<QueryKeys.ROLES, UpdateRoleData>(
     QueryKeys.ROLES,
     updateRoleOnServer(updatedRole),
-    (previousRoles, updateRoleData) =>
+    (previousRoles, newRole) =>
       previousRoles?.map(role =>
-        role._id === updatedRole._id ? { ...role, ...updateRoleData } : role,
+        role._id === updatedRole._id
+          ? {
+              ...role,
+              ...{ ...newRole, _id: updatedRole._id },
+            }
+          : role,
       ) ?? [],
     'Le rôle a bien été mis à jour.',
     { onSettled: () => queryClient.invalidateQueries(QueryKeys.SESSION) },

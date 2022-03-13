@@ -11,6 +11,7 @@ import {
   isSpecialRole,
   PermissionCategory,
   PermissionPrivilege,
+  SpecialRoleName,
 } from '@packages/utils/auth';
 import { requirePermissions } from '@packages/api/auth';
 import { ServerException, updateOneInCollection } from '@packages/api/common';
@@ -34,7 +35,15 @@ const isUpdateRoleData = (data: unknown): data is UpdateRoleData => {
 
 const checkPermissionsIfRoleIsSpecial = async (role: RoleInDb, roleNewData: UpdateRoleData) => {
   if (isSpecialRole(role)) {
-    if (roleNewData.name || isAdminRole(role)) throw new ServerException(403);
+    if (
+      roleNewData.name !== role.name ||
+      (role.name === SpecialRoleName.VISITOR &&
+        roleNewData.requiredPermissionsToAssign &&
+        roleNewData.requiredPermissionsToAssign[PermissionCategory.USER] !==
+          role.requiredPermissionsToAssign[PermissionCategory.USER]) ||
+      isAdminRole(role)
+    )
+      throw new ServerException(403);
   }
 };
 
