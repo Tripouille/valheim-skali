@@ -7,6 +7,7 @@ import {
   isSpecialRole,
   PermissionCategory,
   PermissionPrivilege,
+  SpecialRoleName,
 } from '@packages/utils/auth';
 import Secured from '@packages/components/core/Authentication/Secured';
 import {
@@ -19,7 +20,7 @@ import {
 import { Table, Tbody, Td, Th, Tr } from '@packages/components/core/DataDisplay/Table';
 import Text from '@packages/components/core/Typography/Text';
 import Input from '@packages/components/core/Form/Input';
-import { darkerBackgroundColor, modalTableHeaderWidth } from '../utils';
+import { darkerBackgroundColor, getRoleFormData, modalTableHeaderWidth } from '../utils';
 import RolePermissionsForm from './RolePermissionsForm';
 import RoleModalFooter from './RoleModalFooter';
 import RoleModalReqPermsForm from './RoleModalReqPermsForm';
@@ -51,7 +52,7 @@ const RoleModal: React.FC<RoleModalProps> = ({
   onSubmit,
   onDelete,
 }: RoleModalProps) => {
-  const [roleData, setRoleData] = useState(role ?? defaultRoleData);
+  const [roleData, setRoleData] = useState(role ? getRoleFormData(role) : defaultRoleData);
 
   const roleHasUserWritePermission =
     (roleData.permissions[PermissionCategory.USER] ?? PermissionPrivilege.NONE) >=
@@ -59,7 +60,7 @@ const RoleModal: React.FC<RoleModalProps> = ({
     (!!role && isAdminRole(role));
 
   useEffect(() => {
-    if (isOpen) setRoleData(role ?? defaultRoleData);
+    if (isOpen) setRoleData(role ? getRoleFormData(role) : defaultRoleData);
   }, [role, isOpen]);
 
   useEffect(() => {
@@ -127,20 +128,22 @@ const RoleModal: React.FC<RoleModalProps> = ({
                   />
                 </Td>
               </Tr>
-              <Tr bgColor={darkerBackgroundColor}>
-                <Th>Permissions requises pour assigner ce rôle</Th>
-                <Td>
-                  <RoleModalReqPermsForm
-                    dataCy={dataCy}
-                    requiredPermissionsToAssign={roleData.requiredPermissionsToAssign}
-                    setRequiredPermissionsToAssign={requiredPermissionsToAssign =>
-                      setRoleData(prev => ({ ...prev, requiredPermissionsToAssign }))
-                    }
-                    isAdminRole={!!role && isAdminRole(role)}
-                    roleHasUserWritePermission={roleHasUserWritePermission}
-                  />
-                </Td>
-              </Tr>
+              {(!role || role.name !== SpecialRoleName.VISITOR) && (
+                <Tr bgColor={darkerBackgroundColor}>
+                  <Th>Permissions requises pour assigner ce rôle</Th>
+                  <Td>
+                    <RoleModalReqPermsForm
+                      dataCy={dataCy}
+                      requiredPermissionsToAssign={roleData.requiredPermissionsToAssign}
+                      setRequiredPermissionsToAssign={requiredPermissionsToAssign =>
+                        setRoleData(prev => ({ ...prev, requiredPermissionsToAssign }))
+                      }
+                      isAdminRole={!!role && isAdminRole(role)}
+                      roleHasUserWritePermission={roleHasUserWritePermission}
+                    />
+                  </Td>
+                </Tr>
+              )}
             </Tbody>
           </Table>
         </ModalBody>

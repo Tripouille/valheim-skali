@@ -32,3 +32,5 @@ export const canUserAssignRole = (
   role: Role,
   hasRequiredPermissions: UseSessionReturn['hasRequiredPermissions'],
 ) => hasRequiredPermissions(role.requiredPermissionsToAssign);
+
+export const getRoleFormData = (role: Role) => ({ ...role, _id: undefined });
