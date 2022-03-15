@@ -9253,6 +9253,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv@npm:^16.0.0":
+  version: 16.0.0
+  resolution: "dotenv@npm:16.0.0"
+  checksum: 664cebb51f0a9a1d1b930f51f0271e72e26d62feaecc9dc03df39453dd494b4e724809ca480fb3ec3213382b1ed3f791aaeb83569a137f9329ce58efd4853dbf
+  languageName: node
+  linkType: hard
+
 "dotenv@npm:^8.0.0":
   version: 8.6.0
   resolution: "dotenv@npm:8.6.0"
@@ -20602,6 +20609,7 @@ __metadata:
     bson: ^4.6.0
     chromatic: ^6.3.3
     cypress: ^9.2.0
+    dotenv: ^16.0.0
     eslint: ^8.5.0
     eslint-config-airbnb-typescript: ^16.1.0
     eslint-config-next: ^12.0.7

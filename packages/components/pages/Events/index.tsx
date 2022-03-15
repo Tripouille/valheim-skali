@@ -46,8 +46,8 @@ const Events = () => {
                 onSubmit={createEvent}
               />
             </Secured>
-            {eventsQuery.data?.map(event => (
-              <EventCard dataCy={getDataValue('event', event._id)} key={event._id} event={event} />
+            {eventsQuery.data?.map((event, index) => (
+              <EventCard dataCy={getDataValue('event', index)} key={event._id} event={event} />
             ))}
           </QueryHandler>
         </VStack>

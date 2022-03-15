@@ -23,6 +23,12 @@ declare global {
        * @example cy.dataCy('greeting')
        */
       dataCy(value: string): Chainable<JQuery<HTMLElement>>;
+      dataCyLike(value: string): Chainable<JQuery<HTMLElement>>;
+      /** Custom command to drop and populate collection in database */
+      seedCollection(collectionName: string, fixtureFileName: string): void;
+      /* Custom commands to login/logout by setting a custom cookie for next-auth. */
+      login(userType?: 'super_admin'): void;
+      logout(): void;
     }
   }
 }

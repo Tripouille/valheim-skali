@@ -19,11 +19,11 @@ function getDbUri(): string {
   return process.env.MONGODB_URI;
 }
 
-async function connectToDb(): Promise<Db> {
+async function connectToDb(uri: string = getDbUri()): Promise<Db> {
   const globalVariable = global as { cachedDb?: Db; dbConnectionPromise?: Promise<MongoClient> };
   if (!globalVariable.cachedDb) {
     if (!globalVariable.dbConnectionPromise)
-      globalVariable.dbConnectionPromise = MongoClient.connect(getDbUri());
+      globalVariable.dbConnectionPromise = MongoClient.connect(uri);
     const client = await globalVariable.dbConnectionPromise;
     globalVariable.cachedDb = client.db();
   }
