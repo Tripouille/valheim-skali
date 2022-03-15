@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Event1",
+    "discordLink": "https://discord.com/channels/843826987466227722/894670935842508831/907...",
+    "tags": ["Tag1", "Tag2"],
+    "startDate": "2100-01-02T20:30:00.000+01:00",
+    "continuous": false,
+    "description": "Une description 1"
+  },
+  {
+    "name": "Event2",
+    "tags": [],
+    "startDate": "2000-01-01T20:30:00.000+01:00",
+    "continuous": false,
+    "description": "Une description 2"
+  }
+]

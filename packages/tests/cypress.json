@@ -1,7 +1,7 @@
 {
   "projectId": "r3snoh",
-  "baseUrl": "http://localhost:4242",
-  "port": 4243,
+  "baseUrl": "http://localhost:4243",
+  "port": 4244,
   "watchForFileChanges": true,
 
   "defaultCommandTimeout": 1000,

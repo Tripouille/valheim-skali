@@ -3,4 +3,6 @@ export interface DataAttributes {
   dataCy: string;
 }
 
-export const getDataValue = (...identifiers: string[]) => identifiers.join('-');
+export const getDataValue = (...identifiers: (number | string)[]) => identifiers.join('-');
+
+export const noSpace = (str: string) => str.replaceAll(' ', '_');

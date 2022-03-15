@@ -1,5 +1,5 @@
 import { Role } from '@packages/data/role';
-import { getDataValue } from '@packages/utils/dataAttributes';
+import { getDataValue, noSpace } from '@packages/utils/dataAttributes';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import Secured from '@packages/components/core/Authentication/Secured';
 import { Table, Th, Thead, Tr, Tbody } from '@packages/components/core/DataDisplay/Table';
@@ -28,7 +28,7 @@ const RolesTable: React.FC<RolesTableProps> = ({ roles }) => {
       </Thead>
       <Tbody>
         {roles.map(role => (
-          <RoleRow dataCy={getDataValue('roles', role._id)} key={role._id} role={role} />
+          <RoleRow dataCy={getDataValue('roles', noSpace(role.name))} key={role._id} role={role} />
         ))}
       </Tbody>
     </Table>

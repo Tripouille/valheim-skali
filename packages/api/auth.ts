@@ -20,7 +20,11 @@ export const getVisitorPermissions = async (): Promise<Permissions> => {
     { name: SpecialRoleName.VISITOR },
     { projection: { _id: 0, permissions: 1 } },
   );
-  if (!visitorRole) throw new ServerException(404);
+
+  if (!visitorRole) {
+    console.error('Visitor role not found');
+    return {};
+  }
 
   return visitorRole.permissions;
 };

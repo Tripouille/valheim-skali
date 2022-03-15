@@ -12,7 +12,7 @@ const Carousel: React.FC<CarouselProps> = ({ dataCy, images, height }) => (
   <HStack spacing="4" py="4" overflow="auto">
     {images.map((imageAttributes, index) => (
       <ZoomableImage
-        dataCy={getDataValue(dataCy, 'zoomable_image', index.toString())}
+        dataCy={getDataValue(dataCy, 'zoomable_image', index)}
         key={imageAttributes.src}
         src={imageAttributes.src}
         alt={imageAttributes.alt}

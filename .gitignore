@@ -29,15 +29,13 @@ pages/api/dev.ts
 
 # local env files
 .env*
+packages/tests/cypress.env.json
 
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
-
-# secrets
-.env.local
 
 # storybook
 storybook-static

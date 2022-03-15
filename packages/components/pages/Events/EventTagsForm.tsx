@@ -96,7 +96,7 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
           label={tag}
           size="lg"
           onClose={removeTag(tag)}
-          dataCy={getDataValue(dataCy, 'tag', index.toString())}
+          dataCy={getDataValue(dataCy, 'tag', index)}
         />
       ))}
       {showTagInput ? (
