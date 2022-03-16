@@ -12,7 +12,7 @@ const createEvent = async (req: Req, res: Res) => {
 
   const newEventId = await db.insert<EventInDb>(eventsCollectionName, newEvent);
 
-  res.status(200).json({ ...newEvent, _id: newEventId });
+  res.status(201).json({ ...newEvent, _id: newEventId });
 };
 
 export default createEvent;

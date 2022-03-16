@@ -54,7 +54,7 @@ export const Default = StoryFactory({
     <>
       <ModalOverlay />
       <ModalContent>
-        <ModalCloseButton />
+        <ModalCloseButton dataCy="" />
         <ModalBody>
           <h1>Modal body</h1>
           <Text mt="3" mb="3">

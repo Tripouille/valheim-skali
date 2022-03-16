@@ -67,7 +67,7 @@ const RoleModalFooter: React.FC<RoleModalFooterProps> = ({
                     <PopoverBody>Êtes-vous sûr de vouloir supprimer le rôle ?</PopoverBody>
                     <PopoverFooter textAlign="end">
                       <Button
-                        dataCy={getDataValue(dataCy, 'delete')}
+                        dataCy={getDataValue(dataCy, 'delete', 'confirm')}
                         colorScheme="red"
                         onClick={onDelete}
                       >

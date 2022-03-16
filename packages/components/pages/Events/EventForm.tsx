@@ -93,7 +93,7 @@ const EventForm: React.FC<EventFormProps> = ({
     <Modal isOpen={isOpen} onClose={onClose} initialFocusRef={firstInputRef}>
       <ModalOverlay />
       <ModalContent>
-        <ModalCloseButton />
+        <ModalCloseButton dataCy={getDataValue(dataCy, 'close_button')} />
         <ModalHeader textAlign="center">Créer un événement</ModalHeader>
         <ModalBody>
           <Stack spacing="5">

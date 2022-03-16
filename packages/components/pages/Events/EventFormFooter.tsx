@@ -57,7 +57,7 @@ const EventFormFooter: React.FC<EventFormFooterProps> = ({
                   <PopoverBody>Êtes-vous sûr de vouloir supprimer l&apos;événement ?</PopoverBody>
                   <PopoverFooter textAlign="end">
                     <Button
-                      dataCy={getDataValue(dataCy, 'delete')}
+                      dataCy={getDataValue(dataCy, 'delete', 'confirm')}
                       colorScheme="red"
                       onClick={onDelete}
                     >
