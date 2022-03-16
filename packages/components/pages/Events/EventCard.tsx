@@ -88,7 +88,7 @@ const EventCard: React.FC<EventCardProps> = ({ dataCy, event }) => {
       <Modal isOpen={itemModal.isOpen} onClose={itemModal.onClose}>
         <ModalOverlay />
         <ModalContent border="2px white solid">
-          <ModalCloseButton />
+          <ModalCloseButton dataCy={getDataValue(dataCy, 'close_button')} />
           <ModalBody>
             <EventItem
               dataCy={getDataValue(dataCy, 'modal')}

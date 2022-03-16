@@ -64,7 +64,7 @@ const UserModalFooter: React.FC<UserModalFooterProps> = ({ dataCy, user, roles }
                 </PopoverBody>
                 <PopoverFooter textAlign="end">
                   <Button
-                    dataCy={getDataValue(dataCy, 'delete')}
+                    dataCy={getDataValue(dataCy, 'delete', 'confirm')}
                     colorScheme="red"
                     onClick={deleteUser}
                   >

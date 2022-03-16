@@ -32,6 +32,7 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
   continuous = false,
   nextInputRef,
 }) => {
+  const tagFormRef = useRef<HTMLFormElement>(null);
   const newTagInputRef = useRef<HTMLInputElement>(null);
   const tagInputErrorTimeoutId = useRef<number | undefined>();
   const [showTagInput, setShowTagInput] = useState(false);
@@ -49,7 +50,7 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
   }, []);
 
   useOutsideClick({
-    ref: newTagInputRef,
+    ref: tagFormRef,
     handler: () => setShowTagInput(false),
   });
 
@@ -66,6 +67,7 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
       if (newTag) {
         if (!oldTags.includes(newTag) && newTag !== CONTINUOUS_LABEL) {
           newTagInputRef.current.value = '';
+          newTagInputRef.current.focus();
           return [...oldTags, newTag];
         } else {
           startInvalidTagInputTimeout();
@@ -100,7 +102,7 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
         />
       ))}
       {showTagInput ? (
-        <form onSubmit={submitTagForm} onReset={() => setShowTagInput(false)}>
+        <form onSubmit={submitTagForm} onReset={() => setShowTagInput(false)} ref={tagFormRef}>
           <FormControl display="flex" isInvalid={showInvalidTagInput}>
             <Input
               dataCy={getDataValue(dataCy, 'add_tag', 'input')}

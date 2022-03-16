@@ -147,7 +147,7 @@ const RoleModal: React.FC<RoleModalProps> = ({
             </Tbody>
           </Table>
         </ModalBody>
-        <ModalCloseButton />
+        <ModalCloseButton dataCy={getDataValue(dataCy, 'close_button')} />
         <RoleModalFooter
           dataCy={dataCy}
           role={role}

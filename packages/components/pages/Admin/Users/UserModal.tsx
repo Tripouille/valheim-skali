@@ -36,7 +36,7 @@ const UserModal: React.FC<UserModalProps> = ({ dataCy, isOpen, onClose, user, ro
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalCloseButton />
+        <ModalCloseButton dataCy={getDataValue(dataCy, 'close_button')} />
         <ModalHeader>
           <Center>
             <UserAvatar dataCy={dataCy} src={user.image} />
