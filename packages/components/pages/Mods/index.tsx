@@ -367,7 +367,7 @@ Bref n'importe quelle implication significative de votre part pour faire vivre n
         <VStack align="start" w="full" spacing="3">
           <IconTitle title="Infos pratiques sur les mods" size="md" icon={HiCursorClick} />
           <Text>
-            Nous ne donnes de détails que sur les mods difficiles à découvrir seul. Pour le reste
+            Nous ne donnons de détails que sur les mods difficiles à découvrir seul. Pour le reste
             nous vous laissons explorer par vous même 😊
           </Text>
           <Box>
@@ -423,7 +423,8 @@ Bref n'importe quelle implication significative de votre part pour faire vivre n
           <Text>Tous les types de bois sont maintenant transformables en charbon.</Text>
           <Text>
             Vous pouvez passer en vue à la première personne en appuyant sur{' '}
-            <InlineKbd>F10</InlineKbd>.
+            <InlineKbd>F10</InlineKbd> (et enlever l&apos;interface en appuyant sur{' '}
+            <InlineKbd>Ctrl</InlineKbd> + <InlineKbd>F3</InlineKbd>).
           </Text>
         </VStack>
       </VStack>
