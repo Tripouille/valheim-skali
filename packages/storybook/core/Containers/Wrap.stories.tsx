@@ -1,5 +1,5 @@
-import { storybookSetup } from '@packages/utils/Storybook/setup';
-import { StoryCategory } from '@packages/utils/Storybook/constants';
+import { storybookSetup } from '@packages/storybook/config/setup';
+import { StoryCategory } from '@packages/storybook/config/constants';
 import { Wrap, WrapProps, WrapItem } from '@packages/components/core/Containers/Wrap';
 import Center from '@packages/components/core/Containers/Center';
 

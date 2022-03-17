@@ -1,7 +1,7 @@
 import { GiVikingHelmet } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
-import { storybookSetup } from '@packages/utils/Storybook/setup';
-import { StoryCategory } from '@packages/utils/Storybook/constants';
+import { storybookSetup } from '@packages/storybook/config/setup';
+import { StoryCategory } from '@packages/storybook/config/constants';
 import {
   MenuItem,
   MenuItemProps,

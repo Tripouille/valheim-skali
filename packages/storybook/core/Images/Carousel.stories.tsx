@@ -1,5 +1,5 @@
-import { storybookSetup } from '@packages/utils/Storybook/setup';
-import { StoryCategory } from '@packages/utils/Storybook/constants';
+import { storybookSetup } from '@packages/storybook/config/setup';
+import { StoryCategory } from '@packages/storybook/config/constants';
 import Carousel, { CarouselProps } from '@packages/components/core/Images/Carousel';
 
 const { defaultExport, StoryFactory } = storybookSetup<CarouselProps>(

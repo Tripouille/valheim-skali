@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import Switch, { SwitchProps } from '@packages/components/core/Form/Switch';
-import { storybookSetup } from '@packages/utils/Storybook/setup';
-import { StoryCategory } from '@packages/utils/Storybook/constants';
+import { storybookSetup } from '@packages/storybook/config/setup';
+import { StoryCategory } from '@packages/storybook/config/constants';
 
 const { defaultExport, StoryFactory } = storybookSetup<SwitchProps>(
   Switch,

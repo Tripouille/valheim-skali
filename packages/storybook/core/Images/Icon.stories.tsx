@@ -1,6 +1,6 @@
 import Icon, { IconProps } from '@packages/components/core/Images/Icon';
-import { storybookSetup } from '@packages/utils/Storybook/setup';
-import { StoryCategory } from '@packages/utils/Storybook/constants';
+import { storybookSetup } from '@packages/storybook/config/setup';
+import { StoryCategory } from '@packages/storybook/config/constants';
 import { GiVillage } from 'react-icons/gi';
 
 const { defaultExport, StoryFactory } = storybookSetup<IconProps>(Icon, StoryCategory.CORE_IMAGES);

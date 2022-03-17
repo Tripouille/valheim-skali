@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import Button, { ButtonProps } from '@packages/components/core/Interactive/Button';
-import { storybookSetup } from '@packages/utils/Storybook/setup';
-import { StoryCategory } from '@packages/utils/Storybook/constants';
+import { storybookSetup } from '@packages/storybook/config/setup';
+import { StoryCategory } from '@packages/storybook/config/constants';
 import { FaSpinner } from 'react-icons/fa';
 import { MdComputer } from 'react-icons/md';
 
