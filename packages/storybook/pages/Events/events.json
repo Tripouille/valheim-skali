@@ -1,0 +1,30 @@
+[
+  {
+    "_id": 0,
+    "name": "Event1",
+    "discordLink": "https://discord.com/channels/843826987466227722/894670935842508831/907...",
+    "tags": ["Tag1", "Tag2"],
+    "startDate": "3000-01-02T20:30:00.000+01:00",
+    "continuous": true,
+    "RPDescription": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus illum libero officiis dolor ex magni velit aut veritatis, in sunt blanditiis eaque iste totam explicabo asperiores enim corrupti! Minima cumque earum labore? Assumenda, ipsam velit fuga sint minima ducimus magni tempore. Ratione possimus minus eveniet modi suscipit et consectetur vel dolor inventore eligendi, aperiam reprehenderit impedit, maiores, excepturi ipsum totam fugit necessitatibus. Laudantium totam earum, nihil recusandae provident architecto nam est porro veniam. Qui tenetur cum asperiores animi perferendis blanditiis ea, impedit quod obcaecati labore similique consequatur iusto possimus nemo tempora sapiente eaque! Eum nam non cumque? Necessitatibus fuga modi quidem aspernatur quam tempora veritatis, accusantium, dicta doloribus laboriosam reiciendis, cum eveniet esse ullam quis. Magni saepe nulla nemo laborum ex consequuntur maiores numquam voluptatem fugit inventore optio vitae minima, laboriosam neque eaque dolorem voluptatibus ut? Impedit ratione inventore velit explicabo beatae, suscipit soluta animi culpa sint reiciendis ad, sed modi delectus, corporis neque aliquam? Quia ad quibusdam possimus at in fugiat amet architecto? Sequi assumenda, voluptates dolorem voluptatum dolores facilis enim explicabo illo nisi iste fuga mollitia itaque beatae eligendi soluta inventore molestias labore, deserunt doloribus optio porro numquam odit laboriosam. Aliquid excepturi voluptatibus placeat eius fuga sapiente voluptas.",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus illum libero officiis dolor ex magni velit aut veritatis, in sunt blanditiis eaque iste totam explicabo asperiores enim corrupti! Minima cumque earum labore? Assumenda, ipsam velit fuga sint minima ducimus magni tempore. Ratione possimus minus eveniet modi suscipit et consectetur vel dolor inventore eligendi, aperiam reprehenderit impedit, maiores, excepturi ipsum totam fugit necessitatibus. Laudantium totam earum, nihil recusandae provident architecto nam est porro veniam. Qui tenetur cum asperiores animi perferendis blanditiis ea, impedit quod obcaecati labore similique consequatur iusto possimus nemo tempora sapiente eaque! Eum nam non cumque? Necessitatibus fuga modi quidem aspernatur quam tempora veritatis, accusantium, dicta doloribus laboriosam reiciendis, cum eveniet esse ullam quis. Magni saepe nulla nemo laborum ex consequuntur maiores numquam voluptatem fugit inventore optio vitae minima, laboriosam neque eaque dolorem voluptatibus ut? Impedit ratione inventore velit explicabo beatae, suscipit soluta animi culpa sint reiciendis ad, sed modi delectus, corporis neque aliquam? Quia ad quibusdam possimus at in fugiat amet architecto? Sequi assumenda, voluptates dolorem voluptatum dolores facilis enim explicabo illo nisi iste fuga mollitia itaque beatae eligendi soluta inventore molestias labore, deserunt doloribus optio porro numquam odit laboriosam. Aliquid excepturi voluptatibus placeat eius fuga sapiente voluptas."
+  },
+  {
+    "_id": 1,
+    "name": "Event2",
+    "tags": [],
+    "startDate": "2000-01-01T20:30:00.000+01:00",
+    "continuous": false,
+    "description": "Une description 2"
+  },
+  {
+    "_id": 2,
+    "name": "Event 3 avec un très long titre Lorem ipsum dolor sit amet consectetur",
+    "tags": [],
+    "startDate": "3000-01-01T20:30:00.000+01:00",
+    "endDate": "3000-01-02T11:30:00.000+01:00",
+    "continuous": false,
+    "RPDescription": "Une courte description RP",
+    "description": "Une description 3"
+  }
+]

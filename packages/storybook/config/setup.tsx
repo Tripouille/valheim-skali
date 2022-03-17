@@ -1,4 +1,7 @@
+import { rest } from 'msw';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Permissions } from '@packages/utils/auth';
+import { APIRoute } from '@packages/utils/routes';
 import { StoryCategory } from './constants';
 
 const createTitle = (
@@ -27,9 +30,25 @@ export const storybookSetup = <Props,>(
 
   const Template: ComponentStory<typeof Component> = (args: Props) => <Component {...args} />;
 
-  const StoryFactory = (args: Props) => {
+  const StoryFactory = (
+    args: Props,
+    permissions?: Permissions,
+    requestResults?: { url: string; result: object }[],
+  ) => {
     const newTemplate = Template.bind({});
     newTemplate.args = args;
+    if (permissions) {
+      newTemplate.parameters = {
+        msw: {
+          handlers: {
+            visitor: rest.get(APIRoute.VISITOR, (req, res, ctx) => res(ctx.json(permissions))),
+            story: requestResults?.map(({ url, result }) =>
+              rest.get(url, (req, res, ctx) => res(ctx.json(result))),
+            ),
+          },
+        },
+      };
+    }
     return newTemplate;
   };
 

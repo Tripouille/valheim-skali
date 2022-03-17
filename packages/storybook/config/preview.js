@@ -1,8 +1,11 @@
 import React from 'react';
 import * as nextImage from 'next/image';
 import { RouterContext } from 'next/dist/shared/lib/router-context';
-import { ChakraProvider } from '@chakra-ui/react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { rest } from 'msw';
+import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon';
 import theme from '@packages/theme';
+import { APIRoute } from '@packages/utils/routes';
 import Fonts from '@packages/components/Layout/Fonts';
 
 Object.defineProperty(nextImage, 'default', {
@@ -43,13 +46,24 @@ export const parameters = {
   nextRouter: {
     Provider: RouterContext.Provider,
   },
+  chakra: { theme },
+  msw: {
+    handlers: {
+      session: rest.get(APIRoute.SESSION, (req, res, ctx) => res(ctx.json({}))),
+      visitor: rest.get(APIRoute.VISITOR, (req, res, ctx) => res(ctx.json({}))),
+    },
+  },
 };
 
+initializeMsw({ onUnhandledRequest: 'bypass' });
+const queryClient = new QueryClient();
+
 export const decorators = [
+  mswDecorator,
   Story => (
-    <ChakraProvider theme={theme} colorModeManager>
+    <QueryClientProvider client={queryClient}>
       <Fonts />
       <Story />
-    </ChakraProvider>
+    </QueryClientProvider>
   ),
 ];
