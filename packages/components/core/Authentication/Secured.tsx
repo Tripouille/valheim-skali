@@ -5,6 +5,7 @@ import { Permissions } from '@packages/utils/auth';
 export interface SecuredProps {
   permissions: Permissions;
   fallback?: Children;
+  children: Children;
 }
 
 const Secured: React.FC<SecuredProps> = ({ permissions, children, fallback }) => {
