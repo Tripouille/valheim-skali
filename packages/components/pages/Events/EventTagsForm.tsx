@@ -11,7 +11,7 @@ import { useOutsideClick } from '@chakra-ui/react';
 import { EVENT_TAG_MAX_LENGTH } from '@packages/data/event';
 import { DataAttributes, getDataValue } from '@packages/utils/dataAttributes';
 import { CONTINUOUS_LABEL } from '@packages/utils/constants';
-import { Wrap } from '@packages/components/core/Containers/Wrap';
+import { Wrap, WrapItem } from '@packages/components/core/Containers/Wrap';
 import Tag from '@packages/components/core/DataDisplay/Tag';
 import Button from '@packages/components/core/Interactive/Button';
 import Input from '@packages/components/core/Form/Input';
@@ -20,16 +20,18 @@ import IconButton from '@packages/components/core/Interactive/IconButton';
 
 export interface EventTagsFormProps extends DataAttributes {
   tags?: string[];
-  onChange: (fn: (oldTags: string[]) => string[]) => void;
+  onTagsChange: (fn: (oldTags: string[]) => string[]) => void;
   continuous?: boolean;
+  onContinuousChange: (continuous: boolean) => void;
   nextInputRef: RefObject<HTMLInputElement>;
 }
 
 const EventTagsForm: React.FC<EventTagsFormProps> = ({
   dataCy,
   tags = [],
-  onChange,
+  onTagsChange,
   continuous = false,
+  onContinuousChange,
   nextInputRef,
 }) => {
   const tagFormRef = useRef<HTMLFormElement>(null);
@@ -62,23 +64,32 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
 
   const submitTagForm: FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault();
-    onChange(oldTags => {
-      const newTag = newTagInputRef.current?.value;
-      if (newTag) {
-        if (!oldTags.includes(newTag) && newTag !== CONTINUOUS_LABEL) {
-          newTagInputRef.current.value = '';
-          newTagInputRef.current.focus();
-          return [...oldTags, newTag];
-        } else {
-          startInvalidTagInputTimeout();
-        }
+    const newTag = newTagInputRef.current?.value;
+    if (newTag) {
+      if (newTag === CONTINUOUS_LABEL) {
+        newTagInputRef.current.value = '';
+        newTagInputRef.current.focus();
+        onContinuousChange(true);
+      } else {
+        onTagsChange(oldTags => {
+          if (newTagInputRef.current) {
+            if (!oldTags.includes(newTag)) {
+              newTagInputRef.current.value = '';
+              newTagInputRef.current.focus();
+              newTagInputRef.current.focus();
+              return [...oldTags, newTag];
+            } else {
+              startInvalidTagInputTimeout();
+            }
+          }
+          return oldTags;
+        });
       }
-      return oldTags;
-    });
+    }
   };
 
   const removeTag = (removedTag: string) => () => {
-    onChange(oldTags => oldTags.filter(tag => tag !== removedTag));
+    onTagsChange(oldTags => oldTags.filter(tag => tag !== removedTag));
   };
 
   const handleNewTagInputKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
@@ -90,16 +101,26 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
   };
 
   return (
-    <Wrap w="full">
-      {continuous && <Tag label={CONTINUOUS_LABEL} size="lg" />}
+    <Wrap w="full" shouldWrapChildren={false}>
+      {continuous && (
+        <WrapItem>
+          <Tag
+            dataCy={getDataValue(dataCy, 'tag', 'continuous')}
+            label={CONTINUOUS_LABEL}
+            size="lg"
+            onClose={() => onContinuousChange(false)}
+          />
+        </WrapItem>
+      )}
       {tags.map((tag, index) => (
-        <Tag
-          key={tag}
-          label={tag}
-          size="lg"
-          onClose={removeTag(tag)}
-          dataCy={getDataValue(dataCy, 'tag', index)}
-        />
+        <WrapItem key={tag}>
+          <Tag
+            label={tag}
+            size="lg"
+            onClose={removeTag(tag)}
+            dataCy={getDataValue(dataCy, 'tag', index)}
+          />
+        </WrapItem>
       ))}
       {showTagInput ? (
         <form onSubmit={submitTagForm} onReset={() => setShowTagInput(false)} ref={tagFormRef}>

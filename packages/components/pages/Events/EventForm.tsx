@@ -155,10 +155,11 @@ const EventForm: React.FC<EventFormProps> = ({
               <EventTagsForm
                 dataCy={getDataValue(dataCy, 'tags')}
                 tags={eventData.tags}
-                onChange={(fn: (oldTags: string[]) => string[]) =>
+                onTagsChange={(fn: (oldTags: string[]) => string[]) =>
                   setEventData(prev => ({ ...prev, tags: fn(prev.tags ?? []) }))
                 }
                 continuous={eventData.continuous}
+                onContinuousChange={continuous => setEventData(prev => ({ ...prev, continuous }))}
                 nextInputRef={firstPostTagsInputRef}
               />
             </FormElement>
