@@ -20,16 +20,20 @@ const About = () => (
         <UnorderedList stylePosition="inside">
           <ListItem>
             Astrid (alias Chinimala, alias Hedda au Valhabba)
-            <ExternalLink href="https://www.linkedin.com/in/astrid-allemandou" ms="2">
+            <ExternalLink
+              href="https://www.linkedin.com/in/astrid-allemandou"
+              ariaLabel="Linkedin Astrid Allemandou"
+              ms="2"
+            >
               <Icon as={FaLinkedin} />
             </ExternalLink>
-            <ExternalLink href="https://github.com/Chinimala" ms="2">
+            <ExternalLink href="https://github.com/Chinimala" ariaLabel=" Chinimala" ms="2">
               <Icon as={FaGithub} />
             </ExternalLink>
           </ListItem>
           <ListItem>
             Jean-Michel (alias Tripouille)
-            <ExternalLink href="https://github.com/Tripouille" ms="2">
+            <ExternalLink href="https://github.com/Tripouille" ariaLabel="Github Tripouille" ms="2">
               <Icon as={FaGithub} />
             </ExternalLink>
           </ListItem>
@@ -38,7 +42,11 @@ const About = () => (
         <UnorderedList stylePosition="inside">
           <ListItem>
             Guillaume (alias GlaceCoding, alias Styrman au Valhabba)
-            <ExternalLink href="https://github.com/GlaceCoding" ms="2">
+            <ExternalLink
+              href="https://github.com/GlaceCoding"
+              ariaLabel="Github GlaceCoding"
+              ms="2"
+            >
               <Icon as={FaGithub} />
             </ExternalLink>
           </ListItem>

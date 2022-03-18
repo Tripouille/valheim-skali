@@ -5,13 +5,20 @@ import Link from '@packages/components/core/Interactive/Link';
 
 export interface ExternalLinkProps {
   href: string;
+  ariaLabel?: string;
   children: Children;
   className?: string;
 }
 
-const ExternalLink: React.FC<ExternalLinkProps> = ({ href, children, className }) => {
+const ExternalLink: React.FC<ExternalLinkProps> = ({ href, ariaLabel, children, className }) => {
   return (
-    <Link dataCy={getDataValue('about')} href={href} isExternal className={className}>
+    <Link
+      dataCy={getDataValue('about')}
+      href={href}
+      aria-label={ariaLabel}
+      isExternal
+      className={className}
+    >
       {children}
     </Link>
   );
