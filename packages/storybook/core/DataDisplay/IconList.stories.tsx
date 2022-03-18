@@ -15,3 +15,6 @@ export const Default = StoryFactory({
   icon: FaArrowCircleRight,
   iconColor: 'blue.200',
 });
+Default.argTypes = {
+  icon: { control: false },
+};
