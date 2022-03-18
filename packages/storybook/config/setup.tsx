@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { ArgTypes, ComponentMeta, ComponentStory } from '@storybook/react';
 import { Permissions } from '@packages/utils/auth';
 import { APIRoute } from '@packages/utils/routes';
 import { StoryCategory } from './constants';
@@ -37,6 +37,7 @@ export const storybookSetup = <Props,>(
   ) => {
     const newTemplate = Template.bind({});
     newTemplate.args = args;
+    newTemplate.argTypes = { children: { control: false } } as Partial<ArgTypes<Props>>;
     if (permissions) {
       newTemplate.parameters = {
         msw: {

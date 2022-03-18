@@ -38,6 +38,7 @@ Object.defineProperty(nextImage, 'default', {
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
+  chakra: { theme },
   controls: {
     matchers: {
       date: /Date$/,
@@ -46,11 +47,15 @@ export const parameters = {
   nextRouter: {
     Provider: RouterContext.Provider,
   },
-  chakra: { theme },
   msw: {
     handlers: {
       session: rest.get(APIRoute.SESSION, (req, res, ctx) => res(ctx.json({}))),
       visitor: rest.get(APIRoute.VISITOR, (req, res, ctx) => res(ctx.json({}))),
+    },
+  },
+  previewTabs: {
+    'storybook/docs/panel': {
+      hidden: true,
     },
   },
 };
