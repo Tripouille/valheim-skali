@@ -10,4 +10,5 @@ export enum StoryCategory {
   CORE_OVERLAY = 'core/Overlay',
   CORE_TYPOGRAPHY = 'core/Typography',
   PAGE = 'page',
+  LAYOUT = 'layout',
 }
