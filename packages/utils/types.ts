@@ -11,7 +11,7 @@ export type StrictReactNode =
   | ReactChild
   | Iterable<StrictReactNode>
   | ReactPortal
-  | false
+  | boolean
   | null
   | undefined;
 export type Children = StrictReactNode;

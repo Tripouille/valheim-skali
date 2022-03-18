@@ -10,7 +10,7 @@ import {
 export interface ToastProps extends RenderProps {
   title: UseToastOptions['title'];
   description: UseToastOptions['description'];
-  status: UseToastOptions['status'];
+  status: NonNullable<UseToastOptions['status']>;
 }
 
 const Toast: React.FC<ToastProps> = ({ id, onClose, title, description, status }) => {

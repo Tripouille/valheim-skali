@@ -27,7 +27,7 @@ const About = () => (
             >
               <Icon as={FaLinkedin} />
             </ExternalLink>
-            <ExternalLink href="https://github.com/Chinimala" ariaLabel=" Chinimala" ms="2">
+            <ExternalLink href="https://github.com/Chinimala" ariaLabel="Github Chinimala" ms="2">
               <Icon as={FaGithub} />
             </ExternalLink>
           </ListItem>

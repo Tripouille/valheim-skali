@@ -22,8 +22,8 @@ const { defaultExport, StoryFactory } = storybookSetup<TableProps>(
 export default defaultExport;
 
 export const Default = StoryFactory({
-  colorScheme: 'gray',
-  size: 'md',
+  colorScheme: 'blue',
+  size: 'sm',
   variant: 'simple',
   children: (
     <>
