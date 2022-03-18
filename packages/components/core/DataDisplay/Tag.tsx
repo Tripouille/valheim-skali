@@ -29,6 +29,7 @@ const Tag: React.FC<TagProps> = ({ dataCy, label, onClose, ...chakraTagProps }) 
     <ChakraTag
       bgColor={bgColor}
       color={autoTextColor(bgColor)}
+      h="full"
       overflow="hidden"
       data-cy={dataCy}
       {...chakraTagProps}

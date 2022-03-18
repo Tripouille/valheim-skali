@@ -75,7 +75,7 @@ Elles viennent de différents mods gracieusement mis à disposition par d'autres
               `L'équitation porcine est un sport reconnu, l'équitation lupine elle n'est accessible qu'aux plus méritants !`,
               <span key="lox_milking">
                 Les loxs peuvent être traits (mais ils ne font pas meuuuuuuh
-                <Icon as={SiHappycow} mx="2" boxSize={6} mb="-3px" />
+                <Icon as={SiHappycow} aria-label="Cow icon" mx="2" boxSize={6} mb="-3px" />
                 ).
               </span>,
             ]}

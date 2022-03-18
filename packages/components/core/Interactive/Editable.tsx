@@ -38,7 +38,13 @@ const Editable: React.FC<EditableProps> = ({ dataCy, initialValue, ...chakraEdit
   };
 
   return (
-    <ChakraEditable {...chakraEditableProps} value={value} onChange={handleChange} data-cy={dataCy}>
+    <ChakraEditable
+      fontSize="md"
+      {...chakraEditableProps}
+      value={value}
+      onChange={handleChange}
+      data-cy={dataCy}
+    >
       {value && <EditablePreview pe="5" />}
       <EditableInput />
       <EditableControls dataCy={dataCy} />

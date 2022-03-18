@@ -19,7 +19,7 @@ const Rules = () => (
   <Background>
     <VStack spacing="5" w="full">
       <PageTitle title="Règlement" />
-      <Tabs w="full" id="rulesTabs" isFitted size="md">
+      <Tabs w="full" id="rulesTabs" isFitted size="md" colorScheme="twitter">
         <TabList>
           {Object.keys(ruleParts).map(title => (
             <Tab key={title} fontSize={['2.8vw', 'md']}>

@@ -9,7 +9,7 @@ import {
 export type WrapProps = ChakraWrapProps;
 
 export const Wrap: React.FC<WrapProps> = chakraWrapProps => (
-  <ChakraWrap {...chakraWrapProps}></ChakraWrap>
+  <ChakraWrap shouldWrapChildren {...chakraWrapProps}></ChakraWrap>
 );
 
 export type WrapItemProps = ChakraWrapItemProps;
