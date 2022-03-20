@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Event } from '@packages/data/event';
 import { APIRoute } from '@packages/utils/routes';
 import { QueryKeys, QueryTypes } from '@packages/utils/queryClient';
+import useSession from '@packages/utils/hooks/useSession';
+import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import { eventComp } from '../utils';
 
 export const getEvents = async (): Promise<Event[]> => {
@@ -12,7 +14,7 @@ export const getEvents = async (): Promise<Event[]> => {
 };
 
 export const useEvents = () => {
-  // const session = useSession();
+  const session = useSession();
 
   const sortEvents = useCallback((events: QueryTypes[QueryKeys.EVENTS]) => {
     const now = new Date();
@@ -20,9 +22,9 @@ export const useEvents = () => {
   }, []);
 
   const eventsQuery = useQuery(QueryKeys.EVENTS, getEvents, {
-    // enabled: session.hasRequiredPermissions({
-    //   [PermissionCategory.ROLE]: PermissionPrivilege.READ,
-    // }),
+    enabled: session.hasRequiredPermissions({
+      [PermissionCategory.EVENT]: PermissionPrivilege.READ,
+    }),
     select: sortEvents,
   });
 

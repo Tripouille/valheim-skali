@@ -4,13 +4,14 @@ import {
   WrapProps as ChakraWrapProps,
   WrapItem as ChakraWrapItem,
   WrapItemProps as ChakraWrapItemProps,
+  forwardRef
 } from '@chakra-ui/react';
 
 export type WrapProps = ChakraWrapProps;
 
-export const Wrap: React.FC<WrapProps> = chakraWrapProps => (
-  <ChakraWrap shouldWrapChildren {...chakraWrapProps}></ChakraWrap>
-);
+export const Wrap = forwardRef<WrapProps, 'div'>((chakraWrapProps, ref) => (
+  <ChakraWrap shouldWrapChildren {...chakraWrapProps} ref={ref}></ChakraWrap>
+));
 
 export type WrapItemProps = ChakraWrapItemProps;
 
