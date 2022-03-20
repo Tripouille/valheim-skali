@@ -53,7 +53,6 @@ const EventForm: React.FC<EventFormProps> = ({
   onDelete,
 }: EventFormProps) => {
   const firstInputRef = useRef<HTMLInputElement>(null);
-  const firstPostTagsInputRef = useRef<HTMLInputElement>(null);
   const endDateInputRef = useRef<HTMLInputElement>(null);
 
   const [eventData, setEventData] = useState(event ? getEventFormData(event) : defaultEventData);
@@ -95,7 +94,7 @@ const EventForm: React.FC<EventFormProps> = ({
       <ModalContent>
         <ModalCloseButton dataCy={getDataValue(dataCy, 'close_button')} />
         <ModalHeader textAlign="center">Créer un événement</ModalHeader>
-        <ModalBody>
+        <ModalBody id="event-form-modal-body">
           <Stack spacing="5">
             <FormElement label="Nom" isRequired>
               <Input
@@ -160,7 +159,6 @@ const EventForm: React.FC<EventFormProps> = ({
                 }
                 continuous={eventData.continuous}
                 onContinuousChange={continuous => setEventData(prev => ({ ...prev, continuous }))}
-                nextInputRef={firstPostTagsInputRef}
               />
             </FormElement>
             <FormElement label="Description RP">
@@ -169,7 +167,6 @@ const EventForm: React.FC<EventFormProps> = ({
                 value={eventData.RPDescription ?? ''}
                 onChange={RPDescription => setEventData(prev => ({ ...prev, RPDescription }))}
                 maxLength={EVENT_VALUES_MAX_LENGTH.RPDescription}
-                ref={firstPostTagsInputRef}
               />
             </FormElement>
             <FormElement label="Description" isRequired>
