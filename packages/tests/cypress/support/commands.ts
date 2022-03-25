@@ -1,7 +1,7 @@
 import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from '@packages/utils/auth';
 
 Cypress.Commands.add('dataCy', value => cy.get(`[data-cy=${value}]`));
-Cypress.Commands.add('dataCyLike', value => cy.get(`[data-cy*=${value}]`));
+Cypress.Commands.add('main', () => cy.get('main'));
 
 const sessionCookieName = 'next-auth.session-token';
 
@@ -10,7 +10,6 @@ Cypress.Commands.add('login', (userType?: 'super_admin') => {
     sessionCookieName,
     Cypress.env(userType === 'super_admin' ? 'SUPER_ADMIN_SESSION_TOKEN' : 'TEST_SESSION_TOKEN'),
   );
-  // Cypress.Cookies.preserveOnce(sessionCookieName);
 });
 
 Cypress.Commands.add('logout', () => {

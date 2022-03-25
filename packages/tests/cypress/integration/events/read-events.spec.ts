@@ -1,33 +1,36 @@
 import { PermissionPrivilege, SpecialRoleName } from '@packages/utils/auth';
 import * as Action from './action';
-import * as Assert from './assert';
+import * as Select from './select';
 
 describe('events with read permission', () => {
   before(() => {
     cy.seedCollection('events', 'events');
   });
 
-  beforeEach(() => {
-    Action.visitEventsPage();
-  });
-
   context('as visitor without read permission', () => {
     before(() => {
       Action.setVisitorEventPermission(PermissionPrivilege.NONE);
+      Action.visitEventsPage(false);
     });
 
     it('should not display events', () => {
-      Assert.noEvents();
+      Select.eventsCards().should('not.exist');
+      Select.eventCreateButton().should('not.exist');
+      Select.eventEditButton(0).should('not.exist');
     });
   });
 
   context('as visitor with read permission', () => {
     before(() => {
       Action.setVisitorEventPermission(PermissionPrivilege.READ);
+      Action.visitEventsPage();
     });
 
-    it('should display read only events', () => {
-      Assert.readOnlyEvents();
+    it('should display events but not edition tools', () => {
+      cy.main().contains('Événements').should('be.visible');
+      Select.eventsCards().should('have.length', 2);
+      Select.eventCreateButton().should('not.exist');
+      Select.eventEditButton(0).should('not.exist');
     });
   });
 
@@ -37,10 +40,14 @@ describe('events with read permission', () => {
       Action.setMemberEventPermission(PermissionPrivilege.READ);
       cy.setUserRoles([SpecialRoleName.MEMBER]);
       cy.login();
+      Action.visitEventsPage();
     });
 
-    it('should display read only events', () => {
-      Assert.readOnlyEvents();
+    it('should display events but not edition tools', () => {
+      cy.main().contains('Événements').should('be.visible');
+      Select.eventsCards().should('have.length', 2);
+      Select.eventCreateButton().should('not.exist');
+      Select.eventEditButton(0).should('not.exist');
     });
   });
 });

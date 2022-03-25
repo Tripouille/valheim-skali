@@ -9,3 +9,8 @@ export const createModalElement = (identifier: string) =>
 
 export const editModalElement = (index: number, identifier: string) =>
   cy.dataCy(`event-${index}-edit_modal-${identifier}`);
+
+export const addTagButton = 'tags-add_tag_button';
+export const newTagInput = 'tags-new_tag-input';
+export const newTagSubmitButton = 'tags-new_tag-submit_button';
+export const tagCloseButton = (index: number) => `tags-tag-${index}-close_button`;

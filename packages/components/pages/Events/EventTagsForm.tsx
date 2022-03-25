@@ -21,17 +21,16 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
   continuous = false,
   onContinuousChange,
 }) => {
-  const newTagInputRef = useRef<HTMLInputElement>(null);
-
   /** Dislay "Add a tag" button OR new tag input (and submit button) */
   const [showTagInput, setShowTagInput] = useState(false);
+  const newTagInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (showTagInput) newTagInputRef.current?.focus();
   }, [showTagInput, newTagInputRef]);
 
   const onEventTagsFormBlur: FocusEventHandler<HTMLDivElement> = e => {
-    if (!e.currentTarget.contains(e.relatedTarget)) setShowTagInput(false);
+    if (e.relatedTarget && !e.currentTarget.contains(e.relatedTarget)) setShowTagInput(false);
   };
 
   /** Action to remove tag */
