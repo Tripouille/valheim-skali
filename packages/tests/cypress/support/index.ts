@@ -9,7 +9,8 @@ declare global {
        * @example cy.dataCy('greeting')
        */
       dataCy(value: string): Chainable<JQuery<HTMLElement>>;
-      dataCyLike(value: string): Chainable<JQuery<HTMLElement>>;
+
+      main(): Chainable<JQuery<HTMLElement>>;
 
       /* Login/logout by setting a custom cookie for next-auth */
       login(userType?: 'super_admin'): void;
