@@ -4,7 +4,7 @@ import {
   WrapProps as ChakraWrapProps,
   WrapItem as ChakraWrapItem,
   WrapItemProps as ChakraWrapItemProps,
-  forwardRef
+  forwardRef,
 } from '@chakra-ui/react';
 
 export type WrapProps = ChakraWrapProps;
