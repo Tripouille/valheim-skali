@@ -17,8 +17,10 @@
     "chromatic": "chromatic --exit-zero-on-changes",
     "jest": "jest --config packages/tests/jest/jest.config.js",
     "dev:test": "NODE_ENV=test next dev -p 4243",
-    "cypress:open": "yarn dev:test & cypress open -P ./packages/tests",
-    "cypress:run": "yarn dev:test & cypress run -P ./packages/tests"
+    "cypress:open": "yarn dev:test & cypress open -P ./packages/tests/integration",
+    "cypress:run": "yarn dev:test & cypress run -P ./packages/tests/integration",
+    "cypress:unit:open": "cypress open -P ./packages/tests/unit",
+    "cypress:unit:run": "cypress run -P ./packages/tests/unit"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.7.3",
@@ -48,12 +50,10 @@
     "@storybook/addon-links": "^6.4.9",
     "@storybook/react": "^6.4.9",
     "@types/babel__core": "^7",
-    "@types/jest": "^27.0.3",
     "@types/luxon": "^2",
     "@types/mdx-js__react": "^1",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
-    "babel-jest": "^27.4.5",
     "babel-loader": "^8.2.3",
     "chromatic": "^6.3.3",
     "cypress": "^9.2.0",
@@ -64,7 +64,6 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-local": "^1.0.0",
     "eslint-plugin-storybook": "^0.5.5",
-    "jest": "^27.4.5",
     "msw": "^0.39.2",
     "msw-storybook-addon": "^1.6.1",
     "prettier": "^2.5.1",
