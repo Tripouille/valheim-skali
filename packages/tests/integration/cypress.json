@@ -1,0 +1,25 @@
+{
+  "projectId": "r3snoh",
+  "baseUrl": "http://localhost:4243",
+  "port": 4244,
+  "watchForFileChanges": true,
+
+  "defaultCommandTimeout": 1000,
+  "execTimeout": 6000,
+  "taskTimeout": 6000,
+  "pageLoadTimeout": 20000,
+  "requestTimeout": 6000,
+  "responseTimeout": 6000,
+
+  "testFiles": ["**/*.spec.ts"],
+  "integrationFolder": "./tests",
+  "pluginsFile": "./plugins/index.ts",
+  "supportFile": "./support/index.ts",
+  "fixturesFolder": "./fixtures/",
+  "screenshotOnRunFailure": false,
+  "video": false,
+  "videoUploadOnPasses": false,
+
+  "viewportWidth": 1920,
+  "viewportHeight": 1080
+}
