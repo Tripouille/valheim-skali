@@ -4,11 +4,10 @@ import { CreateEventData } from '@packages/data/event';
 import { APIRoute } from '@packages/utils/routes';
 import { QueryKeys } from '@packages/utils/queryClient';
 import useOptimisticMutation from '@packages/utils/hooks/useOptimisticMutation';
-import { setEventDataForServer } from '../utils';
+import { getEventDataForServer } from '../utils';
 
 const createEventOnServer = async (eventData: CreateEventData) => {
-  setEventDataForServer(eventData);
-  await axios.post(`${APIRoute.EVENTS}`, eventData);
+  await axios.post(`${APIRoute.EVENTS}`, getEventDataForServer(eventData));
 };
 
 const useCreateEvent = (
