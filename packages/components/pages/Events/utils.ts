@@ -83,7 +83,8 @@ export const getEventFormData = (event: Event) => ({
   endDate: event.endDate ? toInputDatetimeFormat(event.endDate) : undefined,
 });
 
-export const setEventDataForServer = (eventData: CreateEventData) => {
-  eventData.startDate = toISOWithTimezone(eventData.startDate);
-  eventData.endDate = eventData.endDate ? toISOWithTimezone(eventData.endDate) : undefined;
-};
+export const getEventDataForServer = (eventData: CreateEventData) => ({
+  ...eventData,
+  startDate: toISOWithTimezone(eventData.startDate),
+  endDate: eventData.endDate ? toISOWithTimezone(eventData.endDate) : undefined,
+});
