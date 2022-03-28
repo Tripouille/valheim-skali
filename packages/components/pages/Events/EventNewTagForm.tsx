@@ -68,8 +68,9 @@ const EventNewTagForm: React.FC<EventNewTagFormProps> = ({
           return [...oldTags, value];
         } else {
           startInvalidTagInputTimeout();
+          newTagInputRef.current?.focus();
+          return oldTags;
         }
-        return oldTags;
       });
     }
   };
