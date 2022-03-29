@@ -1,30 +1,18 @@
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
-import {
-  CreateRoleData,
-  RoleInDb,
-  rolesCollectionName,
-  ROLE_NAME_IN_GAME_MAX_LENGTH,
-} from '@packages/data/role';
+import { RoleInDb, rolesCollectionName } from '@packages/data/role';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import { requirePermissions } from '@packages/api/auth';
 import { ServerException } from '@packages/api/common';
 import db from '@packages/api/db';
-import { checkRoleData, deleteNonePrivileges, isCreateRoleData } from './utils';
-
-const getRoleDataForDb = (roleData: CreateRoleData): RoleInDb => {
-  roleData.name = roleData.name?.substring(0, ROLE_NAME_IN_GAME_MAX_LENGTH);
-  deleteNonePrivileges(roleData.permissions);
-  deleteNonePrivileges(roleData.requiredPermissionsToAssign);
-  return roleData as RoleInDb;
-};
+import { checkRoleData, isCreateRoleData, transformRoleForDb } from './utils';
 
 const createRole = async (req: Req, res: Res) => {
   await requirePermissions({ [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE }, req);
 
-  const roleData: unknown = req.body;
-  if (!isCreateRoleData(roleData)) throw new ServerException(400);
+  const newRole: unknown = req.body;
+  if (!isCreateRoleData(newRole)) throw new ServerException(400);
 
-  const newRole = getRoleDataForDb(roleData);
+  transformRoleForDb(newRole);
   checkRoleData(newRole);
 
   /** Name cannot already exist */
