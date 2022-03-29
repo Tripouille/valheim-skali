@@ -26,10 +26,11 @@ import EventTagsForm from './EventTagsForm';
 import EventFormFooter from './EventFormFooter';
 import { getEventFormData } from './utils';
 
-const defaultEventData: Partial<CreateEventData> = {
+const getDefaultEventData = (): Partial<CreateEventData> => ({
   continuous: false,
   tags: [],
-};
+  startDate: DateTime.now().startOf('day').toISO({ includeOffset: false }),
+});
 
 export interface EventFormProps extends DataAttributes {
   /** Modal is open */
@@ -52,22 +53,16 @@ const EventForm: React.FC<EventFormProps> = ({
   onSubmit,
   onDelete,
 }: EventFormProps) => {
-  const firstInputRef = useRef<HTMLInputElement>(null);
   const endDateInputRef = useRef<HTMLInputElement>(null);
 
-  const [eventData, setEventData] = useState(event ? getEventFormData(event) : defaultEventData);
+  const [eventData, setEventData] = useState(
+    event ? getEventFormData(event) : getDefaultEventData(),
+  );
   const [validationError, setValidationError] = useState<string | null>(null);
 
   useEffect(() => {
     if (isOpen) {
-      setEventData(
-        event
-          ? getEventFormData(event)
-          : {
-              ...defaultEventData,
-              startDate: DateTime.now().startOf('day').toISO({ includeOffset: false }),
-            },
-      );
+      setEventData(event ? getEventFormData(event) : getDefaultEventData());
     }
   }, [event, isOpen]);
 
@@ -89,10 +84,9 @@ const EventForm: React.FC<EventFormProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} initialFocusRef={firstInputRef}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalCloseButton dataCy={getDataValue(dataCy, 'close_button')} />
         <ModalHeader textAlign="center">Créer un événement</ModalHeader>
         <ModalBody id="event-form-modal-body">
           <Stack spacing="5">
@@ -102,7 +96,6 @@ const EventForm: React.FC<EventFormProps> = ({
                 value={eventData.name ?? ''}
                 onChange={name => setEventData(prev => ({ ...prev, name }))}
                 maxLength={EVENT_VALUES_MAX_LENGTH.name}
-                ref={firstInputRef}
               />
             </FormElement>
             <FormElement
@@ -186,6 +179,7 @@ const EventForm: React.FC<EventFormProps> = ({
           onDelete={onDelete}
           error={validationError}
         />
+        <ModalCloseButton dataCy={getDataValue(dataCy, 'close_button')} />
       </ModalContent>
     </Modal>
   );
