@@ -87,7 +87,9 @@ const EventForm: React.FC<EventFormProps> = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader textAlign="center">Créer un événement</ModalHeader>
+        <ModalHeader textAlign="center">
+          {event ? "Modifier l'événement" : 'Créer un événement'}
+        </ModalHeader>
         <ModalBody id="event-form-modal-body">
           <Stack spacing="5">
             <FormElement label="Nom" isRequired>
