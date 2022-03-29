@@ -1,11 +1,14 @@
-import { RoleInDb, UpdateRoleData } from '@packages/data/role';
+import { RoleInDb, CreateRoleData } from '@packages/data/role';
 import {
   isAdminPrivilege,
   PermissionCategory,
   PermissionPrivilege,
   Permissions,
 } from '@packages/utils/auth';
-import { ServerException } from '../common';
+import { isFilled } from '@packages/utils/validation';
+import { isCreateData, ServerException } from '@packages/api/common';
+
+/** Validate body shape */
 
 const isPermissions = (value: unknown): value is Permissions => {
   return (
@@ -19,11 +22,16 @@ const isPermissions = (value: unknown): value is Permissions => {
   );
 };
 
-export const roleKeyToValueTypeCheck: Record<keyof UpdateRoleData, (value: unknown) => boolean> = {
+const roleKeyToValueTypeCheck: Record<keyof CreateRoleData, (value: unknown) => boolean> = {
   name: value => typeof value === 'string',
   permissions: value => isPermissions(value),
   requiredPermissionsToAssign: value => isPermissions(value),
 };
+
+export const isCreateRoleData = (data: unknown): data is CreateRoleData =>
+  isCreateData(data, roleKeyToValueTypeCheck);
+
+/** Clean a Permissions object of its categories of value none */
 
 export const deleteNonePrivileges = (permissions: Permissions) => {
   for (const [category, privilege] of Object.entries(permissions) as [
@@ -34,9 +42,11 @@ export const deleteNonePrivileges = (permissions: Permissions) => {
   }
 };
 
+/** Specific validations of role data */
+
 export const checkRoleData = (newRole: RoleInDb) => {
   /** Name cannot be empty */
-  if (newRole.name.length === 0) throw new ServerException(400);
+  if (!isFilled(newRole.name)) throw new ServerException(400);
   /** It is forbidden to give admin privileges */
   for (const privilege of Object.values(newRole.permissions)) {
     if (isAdminPrivilege(privilege)) throw new ServerException(403);

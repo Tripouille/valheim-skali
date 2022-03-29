@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getDataValue, DataAttributes } from '@packages/utils/dataAttributes';
 import { Callback } from '@packages/utils/types';
-import { CreateRoleData, Role, UpdateRoleData } from '@packages/data/role';
+import { CreateRoleData, Role } from '@packages/data/role';
 import {
   isAdminRole,
   isSpecialRole,
@@ -39,7 +39,7 @@ export interface RoleFormProps extends DataAttributes {
   /** If no role, this is a creation modal */
   role?: Role;
   /** Function to create or update role */
-  onSubmit: ((newRole: UpdateRoleData) => void) | ((newRole: CreateRoleData) => void);
+  onSubmit: (newRole: CreateRoleData) => void;
   /** Function to delete role */
   onDelete?: Callback;
 }
