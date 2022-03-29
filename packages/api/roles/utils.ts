@@ -1,4 +1,4 @@
-import { RoleInDb, CreateRoleData } from '@packages/data/role';
+import { CreateRoleData, ROLE_NAME_IN_GAME_MAX_LENGTH } from '@packages/data/role';
 import {
   isAdminPrivilege,
   PermissionCategory,
@@ -31,9 +31,9 @@ const roleKeyToValueTypeCheck: Record<keyof CreateRoleData, (value: unknown) => 
 export const isCreateRoleData = (data: unknown): data is CreateRoleData =>
   isCreateData(data, roleKeyToValueTypeCheck);
 
-/** Clean a Permissions object of its categories of value none */
+/** Prepare for DB */
 
-export const deleteNonePrivileges = (permissions: Permissions) => {
+const deleteNonePrivileges = (permissions: Permissions) => {
   for (const [category, privilege] of Object.entries(permissions) as [
     PermissionCategory,
     PermissionPrivilege,
@@ -42,9 +42,15 @@ export const deleteNonePrivileges = (permissions: Permissions) => {
   }
 };
 
+export const transformRoleForDb = (role: CreateRoleData) => {
+  role.name = role.name?.substring(0, ROLE_NAME_IN_GAME_MAX_LENGTH);
+  deleteNonePrivileges(role.permissions);
+  deleteNonePrivileges(role.requiredPermissionsToAssign);
+};
+
 /** Specific validations of role data */
 
-export const checkRoleData = (newRole: RoleInDb) => {
+export const checkRoleData = (newRole: CreateRoleData) => {
   /** Name cannot be empty */
   if (!isFilled(newRole.name)) throw new ServerException(400);
   /** It is forbidden to give admin privileges */
