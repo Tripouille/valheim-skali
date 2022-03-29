@@ -42,8 +42,8 @@ const Events = () => {
               <EventForm
                 dataCy={getDataValue('event', 'create', 'modal')}
                 isOpen={isOpen}
-                onClose={onClose}
                 onSubmit={createEvent}
+                onClose={onClose}
               />
             </Secured>
             {eventsQuery.data?.map((event, index) => (

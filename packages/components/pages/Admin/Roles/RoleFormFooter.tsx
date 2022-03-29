@@ -25,7 +25,7 @@ import Box from '@packages/components/core/Containers/Box';
 import Button from '@packages/components/core/Interactive/Button';
 import ButtonGroup from '@packages/components/core/Interactive/ButtonGroup';
 
-export interface RoleModalFooterProps extends DataAttributes {
+export interface RoleFormFooterProps extends DataAttributes {
   /** If no role, this is a creation modal */
   role?: Role;
   onSubmit: Callback;
@@ -33,7 +33,7 @@ export interface RoleModalFooterProps extends DataAttributes {
   isValid: boolean;
 }
 
-const RoleModalFooter: React.FC<RoleModalFooterProps> = ({
+const RoleFormFooter: React.FC<RoleFormFooterProps> = ({
   dataCy,
   role,
   onSubmit,
@@ -94,4 +94,4 @@ const RoleModalFooter: React.FC<RoleModalFooterProps> = ({
   );
 };
 
-export default RoleModalFooter;
+export default RoleFormFooter;
