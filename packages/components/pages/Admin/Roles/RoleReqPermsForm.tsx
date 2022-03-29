@@ -14,7 +14,7 @@ import Flex from '@packages/components/core/Containers/Flex';
 import Tooltip from '@packages/components/core/Overlay/Tooltip';
 import { modalTableHeaderWidth } from '../utils';
 
-export interface RoleModalReqPermsFormProps extends DataAttributes {
+export interface RoleReqPermsFormProps extends DataAttributes {
   requiredPermissionsToAssign: Permissions;
   setRequiredPermissionsToAssign: (requiredPermissionsToAssign: Permissions) => void;
   isAdminRole: boolean;
@@ -22,7 +22,7 @@ export interface RoleModalReqPermsFormProps extends DataAttributes {
 }
 
 /** "Required permissions to assign the role" form in role modal */
-const RoleModalReqPermsForm: React.FC<RoleModalReqPermsFormProps> = ({
+const RoleReqPermsForm: React.FC<RoleReqPermsFormProps> = ({
   dataCy,
   requiredPermissionsToAssign,
   setRequiredPermissionsToAssign,
@@ -84,4 +84,4 @@ const RoleModalReqPermsForm: React.FC<RoleModalReqPermsFormProps> = ({
   );
 };
 
-export default RoleModalReqPermsForm;
+export default RoleReqPermsForm;

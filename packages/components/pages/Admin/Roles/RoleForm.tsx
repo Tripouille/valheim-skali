@@ -22,8 +22,8 @@ import Text from '@packages/components/core/Typography/Text';
 import Input from '@packages/components/core/Form/Input';
 import { darkerBackgroundColor, getRoleFormData, modalTableHeaderWidth } from '../utils';
 import RolePermissionsForm from './RolePermissionsForm';
-import RoleModalFooter from './RoleModalFooter';
-import RoleModalReqPermsForm from './RoleModalReqPermsForm';
+import RoleFormFooter from './RoleFormFooter';
+import RoleReqPermsForm from './RoleReqPermsForm';
 
 const defaultRoleData: CreateRoleData = {
   name: '',
@@ -31,7 +31,7 @@ const defaultRoleData: CreateRoleData = {
   requiredPermissionsToAssign: { [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE },
 };
 
-export interface RoleModalProps extends DataAttributes {
+export interface RoleFormProps extends DataAttributes {
   /** Modal is open */
   isOpen: boolean;
   /** Function to close the modal */
@@ -44,14 +44,14 @@ export interface RoleModalProps extends DataAttributes {
   onDelete?: Callback;
 }
 
-const RoleModal: React.FC<RoleModalProps> = ({
+const RoleForm: React.FC<RoleFormProps> = ({
   dataCy,
   isOpen,
   onClose,
   role,
   onSubmit,
   onDelete,
-}: RoleModalProps) => {
+}: RoleFormProps) => {
   const [roleData, setRoleData] = useState(role ? getRoleFormData(role) : defaultRoleData);
 
   const roleHasUserWritePermission =
@@ -132,7 +132,7 @@ const RoleModal: React.FC<RoleModalProps> = ({
                 <Tr bgColor={darkerBackgroundColor}>
                   <Th>Permissions requises pour assigner ce rôle</Th>
                   <Td>
-                    <RoleModalReqPermsForm
+                    <RoleReqPermsForm
                       dataCy={dataCy}
                       requiredPermissionsToAssign={roleData.requiredPermissionsToAssign}
                       setRequiredPermissionsToAssign={requiredPermissionsToAssign =>
@@ -148,7 +148,7 @@ const RoleModal: React.FC<RoleModalProps> = ({
           </Table>
         </ModalBody>
         <ModalCloseButton dataCy={getDataValue(dataCy, 'close_button')} />
-        <RoleModalFooter
+        <RoleFormFooter
           dataCy={dataCy}
           role={role}
           onSubmit={() => onSubmit(roleData)}
@@ -160,4 +160,4 @@ const RoleModal: React.FC<RoleModalProps> = ({
   );
 };
 
-export default RoleModal;
+export default RoleForm;

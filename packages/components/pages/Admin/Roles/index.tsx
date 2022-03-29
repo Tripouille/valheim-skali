@@ -5,7 +5,7 @@ import { getDataValue } from '@packages/utils/dataAttributes';
 import Button from '@packages/components/core/Interactive/Button';
 import useCreateRole from '../hooks/useCreateRole';
 import RolesTable from './RolesTable';
-import RoleModal from './RoleModal';
+import RoleForm from './RoleForm';
 
 export interface RolesProps {
   roles?: Role[];
@@ -27,7 +27,7 @@ const Roles: React.FC<RolesProps> = ({ roles = [] }) => {
       >
         Créer un rôle
       </Button>
-      <RoleModal
+      <RoleForm
         dataCy={getDataValue('roles', 'create', 'modal')}
         isOpen={isOpen}
         onSubmit={createRole}

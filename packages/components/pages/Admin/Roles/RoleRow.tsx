@@ -17,7 +17,7 @@ import Tag from '@packages/components/core/DataDisplay/Tag';
 import useUpdateRole from '../hooks/useUpdateRole';
 import useDeleteRole from '../hooks/useDeleteRole';
 import { rowIconSize } from '../utils';
-import RoleModal from './RoleModal';
+import RoleForm from './RoleForm';
 
 export interface RoleRowProps extends DataAttributes {
   role: Role;
@@ -69,7 +69,7 @@ const RoleRow: React.FC<RoleRowProps> = ({ dataCy, role }) => {
             size={rowIconSize}
             onClick={onOpen}
           />
-          <RoleModal
+          <RoleForm
             dataCy={getDataValue(dataCy, 'modal')}
             isOpen={isOpen}
             onClose={onClose}
