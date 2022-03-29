@@ -8,17 +8,8 @@ import {
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import { requirePermissions } from '@packages/api/auth';
 import { ServerException } from '@packages/api/common';
-import db from '../db';
-import { checkRoleData, deleteNonePrivileges, roleKeyToValueTypeCheck } from './utils';
-
-const isCreateRoleData = (data: unknown): data is CreateRoleData => {
-  if (!data || typeof data !== 'object') return false;
-  if (!Object.keys(data).every(key => key in roleKeyToValueTypeCheck)) return false;
-  for (const roleKey in roleKeyToValueTypeCheck) {
-    if (!(roleKey in data)) return false;
-  }
-  return true;
-};
+import db from '@packages/api/db';
+import { checkRoleData, deleteNonePrivileges, isCreateRoleData } from './utils';
 
 const getRoleDataForDb = (roleData: CreateRoleData): RoleInDb => {
   roleData.name = roleData.name?.substring(0, ROLE_NAME_IN_GAME_MAX_LENGTH);

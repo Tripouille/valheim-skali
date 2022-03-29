@@ -1,20 +1,20 @@
 import { useCallback } from 'react';
 import { useQueryClient } from 'react-query';
 import axios from 'axios';
-import { Role, UpdateRoleData } from '@packages/data/role';
+import { CreateRoleData, Role } from '@packages/data/role';
 import { APIRoute } from '@packages/utils/routes';
 import { QueryKeys, QueryTypes } from '@packages/utils/queryClient';
 import useOptimisticMutation from '@packages/utils/hooks/useOptimisticMutation';
 import { displayErrorToast } from '@packages/utils/toast';
 
-const updateRoleOnServer = (updatedRole: Role) => async (newRole: UpdateRoleData) => {
+const updateRoleOnServer = (updatedRole: Role) => async (newRole: CreateRoleData) => {
   await axios.put(`${APIRoute.ROLES}/${updatedRole._id}`, newRole);
 };
 
 const useUpdateRole = (updatedRole: Role) => {
   const queryClient = useQueryClient();
 
-  const updateRoleMutate = useOptimisticMutation<QueryKeys.ROLES, UpdateRoleData>(
+  const updateRoleMutate = useOptimisticMutation<QueryKeys.ROLES, CreateRoleData>(
     QueryKeys.ROLES,
     updateRoleOnServer(updatedRole),
     (previousRoles, newRole) =>
@@ -31,7 +31,7 @@ const useUpdateRole = (updatedRole: Role) => {
   );
 
   const updateRole = useCallback(
-    (roleData: UpdateRoleData) => {
+    (roleData: CreateRoleData) => {
       const roles = queryClient.getQueryData<QueryTypes[QueryKeys.ROLES]>(QueryKeys.ROLES);
       if (
         roles &&

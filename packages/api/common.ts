@@ -44,3 +44,24 @@ export const replaceOneInCollection = async <T>(
 
   return result;
 };
+
+const isObject = (data: unknown): data is Record<string, unknown> => {
+  return !!data && typeof data === 'object';
+};
+
+type KeyToValueTypeCheckFunction = (value: unknown) => boolean;
+
+/**
+ * Checks that data (typically a request body) is an object of type T.
+ * @param keyToValueTypeCheckFunctions Record<T keys,
+ * functions that check the associated value in data>
+ */
+export const isCreateData = <T>(
+  data: unknown,
+  keyToValueTypeCheckFunctions: Record<keyof T, KeyToValueTypeCheckFunction>,
+): data is T =>
+  isObject(data) &&
+  Object.keys(data).every(key => key in keyToValueTypeCheckFunctions) &&
+  Object.entries(keyToValueTypeCheckFunctions).every(([key, checkFunction]) =>
+    (checkFunction as KeyToValueTypeCheckFunction)(data[key]),
+  );
