@@ -1,6 +1,8 @@
 import { ObjectId } from 'bson';
 import { Permissions, SpecialRoleName } from '@packages/utils/auth';
 
+/** Main types */
+
 export interface Role {
   _id: string;
   name: string;
@@ -14,9 +16,22 @@ export type RoleInDb = Omit<Role, '_id'> & {
 
 export type CreateRoleData = Omit<Role, '_id'>;
 
+/** Database */
+
 export const rolesCollectionName = 'roles';
 
+/** Data validation */
+
+export const getRoleValidationError = (roleFormData: Partial<CreateRoleData>): string | null => {
+  if (!roleFormData.name?.length) return 'Le nom est obligatoire.';
+  return null;
+};
+
+/** Data max length */
+
 export const ROLE_NAME_IN_GAME_MAX_LENGTH = 15;
+
+/** Sorting */
 
 export const compareRolesFromName = (role1?: Role, role2?: Role) => {
   if (role1 && role2) {

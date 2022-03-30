@@ -27,7 +27,7 @@ export type CreateEventData = Omit<Event, '_id'>;
 
 export const eventsCollectionName = 'events';
 
-/** Data valdation */
+/** Data validation */
 
 const eventRequiredFields: (keyof CreateEventData)[] = [
   'name',
