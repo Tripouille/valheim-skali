@@ -1,4 +1,8 @@
-import { CreateRoleData, ROLE_NAME_IN_GAME_MAX_LENGTH } from '@packages/data/role';
+import {
+  CreateRoleData,
+  getRoleValidationError,
+  ROLE_NAME_IN_GAME_MAX_LENGTH,
+} from '@packages/data/role';
 import {
   isAdminPrivilege,
   PermissionCategory,
@@ -52,6 +56,7 @@ export const transformRoleForDb = (role: CreateRoleData) => {
 
 export const checkRoleData = (newRole: CreateRoleData) => {
   /** Name cannot be empty */
+  if (getRoleValidationError(newRole) !== null) throw new ServerException(400);
   if (!isFilled(newRole.name)) throw new ServerException(400);
   /** It is forbidden to give admin privileges */
   for (const privilege of Object.values(newRole.permissions)) {
