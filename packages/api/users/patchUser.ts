@@ -8,19 +8,15 @@ import {
 } from '@packages/data/user';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import { requirePermissions } from '@packages/api/auth';
-import { ServerException, updateOneInCollection } from '@packages/api/common';
+import { isObject, ServerException, updateOneInCollection } from '@packages/api/common';
 import db from '@packages/api/db';
 
 const isUpdateUserDataProperty = ([key, value]: [key: string, value: unknown]) => {
   return key === 'nameInGame' && typeof value === 'string';
 };
-const isUpdateUserData = (data: unknown): data is UpdateUserData => {
-  if (!data || typeof data !== 'object') return false;
-  if (!Object.entries(data).every(isUpdateUserDataProperty)) {
-    return false;
-  }
-  return true;
-};
+
+const isUpdateUserData = (data: unknown): data is UpdateUserData =>
+  isObject(data) && Object.entries(data).every(isUpdateUserDataProperty);
 
 const getUserNewDataForDb = (userNewData: UpdateUserData): Partial<UserInDb> => {
   const userNewDataForDb: Partial<UserInDb> = {};
