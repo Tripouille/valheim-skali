@@ -45,7 +45,7 @@ export const replaceOneInCollection = async <T>(
   return result;
 };
 
-const isObject = (data: unknown): data is Record<string, unknown> => {
+export const isObject = (data: unknown): data is Record<string, unknown> => {
   return !!data && typeof data === 'object';
 };
 

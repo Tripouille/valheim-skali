@@ -10,18 +10,17 @@ import {
   Permissions,
 } from '@packages/utils/auth';
 import { isFilled } from '@packages/utils/validation';
-import { isCreateData, ServerException } from '@packages/api/common';
+import { isCreateData, ServerException, isObject } from '@packages/api/common';
 
 /** Validate body shape */
 
 const isPermissions = (value: unknown): value is Permissions => {
   return (
-    typeof value === 'object' &&
-    !!value &&
+    isObject(value) &&
     Object.entries(value).every(
       ([category, privilege]) =>
         Object.values(PermissionCategory).includes(category as PermissionCategory) &&
-        Object.values(PermissionPrivilege).includes(privilege),
+        Object.values(PermissionPrivilege).includes(privilege as PermissionPrivilege),
     )
   );
 };
