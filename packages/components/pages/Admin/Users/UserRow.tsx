@@ -14,7 +14,7 @@ import { Td, Tr } from '@packages/components/core/DataDisplay/Table';
 import Secured from '@packages/components/core/Authentication/Secured';
 import { getUserRoles, rowIconSize, UserQueryFilter } from '../utils';
 import useUpdateUser from '../hooks/useUpdateUser';
-import UserModal from './UserModal';
+import UserForm from './UserForm';
 import UserAvatar from './UserAvatar';
 
 export interface UserRowProps extends DataAttributes {
@@ -89,7 +89,7 @@ const UserRow: React.FC<UserRowProps> = ({ dataCy, user, roles, filter }) => {
           size={rowIconSize}
           onClick={onOpen}
         />
-        <UserModal
+        <UserForm
           dataCy={getDataValue(dataCy, 'modal')}
           isOpen={isOpen}
           onClose={onClose}

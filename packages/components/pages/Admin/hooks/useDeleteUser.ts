@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import axios from 'axios';
 import { User } from '@packages/data/user';
 import { APIRoute } from '@packages/utils/routes';
@@ -20,9 +19,7 @@ const useDeleteUser = (deletedUser: User) => {
     "L'utilisateur a bien été supprimé.",
   );
 
-  const deleteUser = useCallback(() => mutate(), [mutate]);
-
-  return deleteUser;
+  return mutate;
 };
 
 export default useDeleteUser;
