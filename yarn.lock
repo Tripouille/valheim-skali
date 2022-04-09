@@ -1514,7 +1514,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.14.8, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.5.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.14.0, @babel/runtime@npm:^7.14.8, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.5.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4":
   version: 7.16.5
   resolution: "@babel/runtime@npm:7.16.5"
   dependencies:
@@ -3555,7 +3555,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@panva/hkdf@npm:^1.0.0":
+"@panva/hkdf@npm:^1.0.1":
   version: 1.0.1
   resolution: "@panva/hkdf@npm:1.0.1"
   checksum: 883c423c006fdef48021ed3982938e814acac60b2b4820253064ef5d7d057c58684aa294af1aff767541a71cc23d878db60464e7243dc5150188d81c06c82196
@@ -12712,10 +12712,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jose@npm:^4.1.2, jose@npm:^4.1.4":
+"jose@npm:^4.1.4":
   version: 4.3.7
   resolution: "jose@npm:4.3.7"
   checksum: 3f62324bd1920d8c487641ab56fa568a48b4bdb149bf95e070cbbbc97b68b617d8562e64dbd02cc900f8f02f332a964819b42ccf03d23417ac30f4beaf0e3d9e
+  languageName: node
+  linkType: hard
+
+"jose@npm:^4.3.7":
+  version: 4.6.0
+  resolution: "jose@npm:4.6.0"
+  checksum: 7f48cb030c9e8586e825ad5cc71e792f7b71b420afd3c45913e0719fd4abe6a756179c732604d42fbbb53c64b63f78818669599eeef11c988c0c34dd1178fe43
   languageName: node
   linkType: hard
 
@@ -14300,27 +14307,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-auth@npm:4.0.0-beta.7":
-  version: 4.0.0-beta.7
-  resolution: "next-auth@npm:4.0.0-beta.7"
+"next-auth@npm:4.3.1":
+  version: 4.3.1
+  resolution: "next-auth@npm:4.3.1"
   dependencies:
-    "@babel/runtime": ^7.15.4
-    "@panva/hkdf": ^1.0.0
+    "@babel/runtime": ^7.16.3
+    "@panva/hkdf": ^1.0.1
     cookie: ^0.4.1
-    jose: ^4.1.2
+    jose: ^4.3.7
     oauth: ^0.9.15
-    openid-client: ^5.0.2
-    preact: ^10.5.14
+    openid-client: ^5.1.0
+    preact: ^10.6.3
     preact-render-to-string: ^5.1.19
     uuid: ^8.3.2
   peerDependencies:
     nodemailer: ^6.6.5
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    react: ^17.0.2 || ^18.0.0-0
+    react-dom: ^17.0.2 || ^18.0.0-0
   peerDependenciesMeta:
     nodemailer:
       optional: true
-  checksum: 8cdc179317470519549e2d1705372e57dccb1e114ee3a75b90ace99ce8b14d9188b8d082a17cc5a298937c996cac4510df57f7ec19f999d0486c557fe5166812
+  checksum: 0ff510a5e4c51467b536b31f085c2adb0d90a7a673e773d922af22cb0bf15a9dc55be5acdbf8af42d3e8938d4579adbb33fe31d69e327978ce077355eac603fd
   languageName: node
   linkType: hard
 
@@ -15169,15 +15176,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openid-client@npm:^5.0.2":
-  version: 5.1.0
-  resolution: "openid-client@npm:5.1.0"
+"openid-client@npm:^5.1.0":
+  version: 5.1.4
+  resolution: "openid-client@npm:5.1.4"
   dependencies:
     jose: ^4.1.4
     lru-cache: ^6.0.0
     object-hash: ^2.0.1
     oidc-token-hash: ^5.0.1
-  checksum: 911bc060eefa61c673d0ee51d24da07e68831e9329831e7d155bed3799f8745b4ac72b7e8f9538375df943a752e83a44be77a1469b42a681d6c3f3c7be6bc15c
+  checksum: 7e2d73c6416a92a57df9c78fa8c99afb4f772ca5b0eb6f53e0b93dd427d9e1989f00a90478200da2a4105cce7c88576f2ad761803ad78d06e147cbc379fd0921
   languageName: node
   linkType: hard
 
@@ -16006,10 +16013,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"preact@npm:^10.5.14":
-  version: 10.6.4
-  resolution: "preact@npm:10.6.4"
-  checksum: 09c496bb3cbe231fb6ef218b44d29af53a1f4bf1ae2e5929ef0faf70f9ecffaa475b4459ef72dd8f0f5396c255172c7c26de5c7d2eb6f6849e36e724c7aa86b7
+"preact@npm:^10.6.3":
+  version: 10.7.1
+  resolution: "preact@npm:10.7.1"
+  checksum: e99d08bd38372e78ce1c84e68685cad66adf076bd95069bc8bcd32c9903a4df09c01d5b04aad849527362b67cc2c09446b647f72de4e67d0578fdea0f904f28f
   languageName: node
   linkType: hard
 
@@ -19850,7 +19857,7 @@ __metadata:
     msw: ^0.39.2
     msw-storybook-addon: ^1.6.1
     next: ^12.0.7
-    next-auth: 4.0.0-beta.7
+    next-auth: 4.3.1
     prettier: ^2.5.1
     react: 17.0.2
     react-dom: 17.0.2

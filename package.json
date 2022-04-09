@@ -33,7 +33,7 @@
     "luxon": "^2.3.1",
     "mongodb": "^4.1.3",
     "next": "^12.0.7",
-    "next-auth": "4.0.0-beta.7",
+    "next-auth": "4.3.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",

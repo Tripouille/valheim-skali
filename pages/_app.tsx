@@ -9,21 +9,36 @@ import Layout from '@packages/components/Layout';
 import Fonts from '@packages/components/Layout/Fonts';
 import theme from '@packages/theme';
 import { queryClient, QueryKeys } from '@packages/utils/queryClient';
+import { HydrationProps } from '@packages/utils/types';
 
-const MyApp = ({ Component, pageProps }: AppProps) => (
+/** Page props are those of getServerSideProps (if defined in page),
+ * initial props are returned by MyApp.getInitialProps */
+const MyApp = ({
+  Component,
+  pageProps,
+  initialProps,
+}: AppProps & { initialProps: HydrationProps }) => (
   <ChakraProvider theme={theme}>
     <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <Head>
-          <title>Skali - Valhabba</title>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-          <link rel="preload" href="/fonts/Norse.otf" as="font" crossOrigin="" />
-        </Head>
-        <Fonts />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-        <ReactQueryDevtools />
+      <Hydrate state={initialProps.dehydratedState}>
+        <Hydrate
+          state={
+            pageProps && pageProps.dehydratedState
+              ? JSON.parse(pageProps.dehydratedState)
+              : undefined
+          }
+        >
+          <Head>
+            <title>Skali - Valhabba</title>
+            <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            <link rel="preload" href="/fonts/Norse.otf" as="font" crossOrigin="" />
+          </Head>
+          <Fonts />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+          <ReactQueryDevtools />
+        </Hydrate>
       </Hydrate>
     </QueryClientProvider>
   </ChakraProvider>
@@ -32,18 +47,12 @@ const MyApp = ({ Component, pageProps }: AppProps) => (
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const req = appContext.ctx.req;
 
-  // if (Component.getServerSideProps) {
-  //   Object.assign(appProps, await Component.getServerSideProps(ctx));
-  // }
-
   const serverQueryClient = new QueryClient();
-
   const session = await getSession({ req });
   serverQueryClient.setQueryData(QueryKeys.SESSION, session);
 
-  /** Consider https://github.com/tannerlinsley/react-query/issues/1458#issuecomment-747716357 in case of infinite query */
   return {
-    pageProps: {
+    initialProps: {
       dehydratedState: dehydrate(serverQueryClient),
     },
   };
