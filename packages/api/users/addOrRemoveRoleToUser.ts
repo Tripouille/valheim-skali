@@ -3,7 +3,7 @@ import { ObjectId } from 'bson';
 import { Role, rolesCollectionName } from '@packages/data/role';
 import { UpdateUserRolesData, UserInDb, usersCollectionName } from '@packages/data/user';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
-import { isObject, ServerException, updateOneInCollection } from '@packages/api/common';
+import { isCreateData, ServerException, updateOneInCollection } from '@packages/api/common';
 import { requirePermissions } from '@packages/api/auth';
 import db from '@packages/api/db';
 
@@ -11,6 +11,16 @@ export enum Action {
   ADD,
   REMOVE,
 }
+
+const updateUserRolesKeyToValueTypeCheck: Record<
+  keyof UpdateUserRolesData,
+  (value: unknown) => boolean
+> = {
+  roleId: value => typeof value === 'string',
+};
+
+const isUpdateUserRolesData = (data: unknown): data is UpdateUserRolesData =>
+  isCreateData(data, updateUserRolesKeyToValueTypeCheck);
 
 const getUserNewRoles: Record<
   Action,
@@ -20,9 +30,6 @@ const getUserNewRoles: Record<
   [Action.REMOVE]: (oldRoles, roleToRemoveId) =>
     oldRoles.filter(roleId => !roleId.equals(roleToRemoveId)),
 };
-
-const isUpdateUserRolesData = (data: unknown): data is UpdateUserRolesData =>
-  isObject(data) && typeof data.roleId === 'string';
 
 const addOrRemoveRoleToUser = async (action: Action, req: Req, res: Res) => {
   await requirePermissions(

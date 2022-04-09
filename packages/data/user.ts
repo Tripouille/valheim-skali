@@ -21,7 +21,7 @@ export const USER_NAME_IN_GAME_MAX_LENGTH = 20;
 
 /** The only keys that can be updated for a simple user patch */
 export type UpdateUserData = {
-  nameInGame: NonNullable<User['nameInGame']>;
+  nameInGame: User['nameInGame'];
 };
 
 export type UpdateUserRolesData = { roleId: string };
