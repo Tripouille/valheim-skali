@@ -10,7 +10,7 @@ import {
   Permissions,
 } from '@packages/utils/auth';
 import { isFilled } from '@packages/utils/validation';
-import { isCreateData, ServerException, isObject } from '@packages/api/common';
+import { isRequiredObjectType, ServerException, isObject } from '@packages/api/common';
 
 /** Validate body shape */
 
@@ -32,7 +32,7 @@ const roleKeyToValueTypeCheck: Record<keyof CreateRoleData, (value: unknown) => 
 };
 
 export const isCreateRoleData = (data: unknown): data is CreateRoleData =>
-  isCreateData(data, roleKeyToValueTypeCheck);
+  isRequiredObjectType(data, roleKeyToValueTypeCheck);
 
 /** Prepare for DB */
 

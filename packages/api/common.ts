@@ -56,7 +56,7 @@ type KeyToValueTypeCheckFunction = (value: unknown) => boolean;
  * @param keyToValueTypeCheckFunctions Record<T keys,
  * functions that check the associated value in data>
  */
-export const isCreateData = <T>(
+export const isRequiredObjectType = <T>(
   data: unknown,
   keyToValueTypeCheckFunctions: Record<keyof T, KeyToValueTypeCheckFunction>,
 ): data is T =>

@@ -8,7 +8,7 @@ import {
 } from '@packages/data/user';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
 import { requirePermissions } from '@packages/api/auth';
-import { isCreateData, ServerException, updateOneInCollection } from '@packages/api/common';
+import { isRequiredObjectType, ServerException, updateOneInCollection } from '@packages/api/common';
 import db from '@packages/api/db';
 
 const updateUserKeyToValueTypeCheck: Record<keyof UpdateUserData, (value: unknown) => boolean> = {
@@ -16,7 +16,7 @@ const updateUserKeyToValueTypeCheck: Record<keyof UpdateUserData, (value: unknow
 };
 
 const isUpdateUserData = (data: unknown): data is UpdateUserData =>
-  isCreateData(data, updateUserKeyToValueTypeCheck);
+  isRequiredObjectType(data, updateUserKeyToValueTypeCheck);
 
 const transformUserDataForDb = (userNewData: UpdateUserData) => {
   userNewData.nameInGame = userNewData.nameInGame?.substring(0, USER_NAME_IN_GAME_MAX_LENGTH);

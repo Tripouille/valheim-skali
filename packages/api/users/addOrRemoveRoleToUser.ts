@@ -3,7 +3,7 @@ import { ObjectId } from 'bson';
 import { Role, rolesCollectionName } from '@packages/data/role';
 import { UpdateUserRolesData, UserInDb, usersCollectionName } from '@packages/data/user';
 import { PermissionCategory, PermissionPrivilege } from '@packages/utils/auth';
-import { isCreateData, ServerException, updateOneInCollection } from '@packages/api/common';
+import { isRequiredObjectType, ServerException, updateOneInCollection } from '@packages/api/common';
 import { requirePermissions } from '@packages/api/auth';
 import db from '@packages/api/db';
 
@@ -20,7 +20,7 @@ const updateUserRolesKeyToValueTypeCheck: Record<
 };
 
 const isUpdateUserRolesData = (data: unknown): data is UpdateUserRolesData =>
-  isCreateData(data, updateUserRolesKeyToValueTypeCheck);
+  isRequiredObjectType(data, updateUserRolesKeyToValueTypeCheck);
 
 const getUserNewRoles: Record<
   Action,

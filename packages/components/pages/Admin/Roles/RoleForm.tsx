@@ -45,7 +45,9 @@ export type RoleFormProps = DataAttributes & {
 const RoleForm: React.FC<RoleFormProps> = (props: RoleFormProps) => {
   const { dataCy, isOpen, onClose, role, onSubmit } = props;
 
-  const [roleFormData, setRoleFormData] = useState(role ? getRoleFormData(role) : defaultRoleFormData);
+  const [roleFormData, setRoleFormData] = useState(
+    role ? getRoleFormData(role) : defaultRoleFormData,
+  );
 
   const roleHasUserWritePermission =
     (roleFormData.permissions[PermissionCategory.USER] ?? PermissionPrivilege.NONE) >=
