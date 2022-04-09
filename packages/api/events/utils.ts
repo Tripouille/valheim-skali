@@ -5,7 +5,7 @@ import {
   EVENT_VALUES_MAX_LENGTH,
   getEventValidationError,
 } from '@packages/data/event';
-import { isCreateData, ServerException } from '@packages/api/common';
+import { isRequiredObjectType, ServerException } from '@packages/api/common';
 
 const eventKeyToValueTypeCheck: Record<keyof CreateEventData, (value: unknown) => boolean> = {
   name: value => typeof value === 'string',
@@ -20,7 +20,7 @@ const eventKeyToValueTypeCheck: Record<keyof CreateEventData, (value: unknown) =
 };
 
 const isCreateEventData = (data: unknown): data is CreateEventData =>
-  isCreateData(data, eventKeyToValueTypeCheck);
+  isRequiredObjectType(data, eventKeyToValueTypeCheck);
 
 const isValidEvent = (eventData: CreateEventData) => getEventValidationError(eventData) === null;
 
