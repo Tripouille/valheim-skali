@@ -19,3 +19,7 @@ export type Children = StrictReactNode;
 export type OneOrMany<T> = T | T[];
 
 export type Setter<T> = Dispatch<SetStateAction<T>>;
+
+export interface HydrationProps {
+  dehydratedState: string;
+}

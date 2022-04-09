@@ -1,4 +1,4 @@
-import { NextApiRequest as Req } from 'next';
+import { IncomingMessage } from 'http';
 import { getSession } from 'next-auth/react';
 import { UserInDb } from '@packages/data/user';
 import { RoleInDb, rolesCollectionName } from '@packages/data/role';
@@ -29,7 +29,10 @@ export const getVisitorPermissions = async (): Promise<Permissions> => {
   return visitorRole.permissions;
 };
 
-export const requirePermissions = async (requiredPermissions: Permissions, req: Req) => {
+export const requirePermissions = async (
+  requiredPermissions: Permissions,
+  req: IncomingMessage,
+) => {
   const session = await getSession({ req });
   if (session) {
     if (!permissionsMeetRequirement(session.permissions, requiredPermissions)) {
