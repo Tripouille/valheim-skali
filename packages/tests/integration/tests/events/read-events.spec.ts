@@ -23,7 +23,7 @@ describe('events with read permission', () => {
   context('as visitor with read permission', () => {
     before(() => {
       Action.setVisitorEventPermission(PermissionPrivilege.READ);
-      Action.visitEventsPage();
+      Action.visitEventsPage(false);
     });
 
     it('should display events but not edition tools', () => {
