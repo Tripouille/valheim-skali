@@ -3,10 +3,8 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { BiLinkExternal } from 'react-icons/bi';
 import Background from '@packages/components/core/Containers/Background';
 import { VStack } from '@packages/components/core/Containers/Stack';
-import Box from '@packages/components/core/Containers/Box';
 import PageTitle from '@packages/components/core/Typography/PageTitle';
 import Text from '@packages/components/core/Typography/Text';
-import Heading from '@packages/components/core/Typography/Heading';
 import { UnorderedList, ListItem } from '@packages/components/core/DataDisplay/List';
 import Icon from '@packages/components/core/Images/Icon';
 import ExternalLink from './ExternalLink';
@@ -74,21 +72,6 @@ const About = () => (
         Si vous constatez le moindre bug ou souhaitez proposer une amélioration, contactez Hedda
         l&apos;Itinérante (Chinimala#5652) sur Discord.
       </Text>
-      <Box>
-        <Heading size="md" my="4">
-          Dernières mises à jour :
-        </Heading>
-        <UnorderedList stylePosition="inside" spacing="2">
-          <ListItem>
-            Page &quot;A propos&quot;, ajout de rôles et d&apos;un back-office pour les
-            administrateurs
-          </ListItem>
-          <ListItem>
-            Première publication : page d&apos;accueil, règlement, événements, commerce, mods,
-            monde, connexion par discord
-          </ListItem>
-        </UnorderedList>
-      </Box>
     </VStack>
   </Background>
 );
