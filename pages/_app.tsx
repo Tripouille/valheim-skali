@@ -2,7 +2,7 @@ import { AppContext, AppProps } from 'next/app';
 import Head from 'next/head';
 import { getSession } from 'next-auth/react';
 import React from 'react';
-import { QueryClientProvider, dehydrate, QueryClient, Hydrate } from 'react-query';
+import { QueryClientProvider, Hydrate } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { ChakraProvider } from '@chakra-ui/react';
 import Layout from '@packages/components/Layout';
@@ -16,46 +16,57 @@ import { HydrationProps } from '@packages/utils/types';
 const MyApp = ({
   Component,
   pageProps,
-  initialProps,
-}: AppProps & { initialProps: HydrationProps }) => (
-  <ChakraProvider theme={theme}>
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={initialProps.dehydratedState}>
-        <Hydrate
-          state={
-            pageProps && pageProps.dehydratedState
-              ? JSON.parse(pageProps.dehydratedState)
-              : undefined
-          }
-        >
-          <Head>
-            <title>Skali - Valhabba</title>
-            <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-            <link rel="preload" href="/fonts/Norse.otf" as="font" crossOrigin="" />
-          </Head>
-          <Fonts />
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-          <ReactQueryDevtools />
+  layoutProps,
+}: AppProps & { layoutProps: HydrationProps }) => {
+  const layoutState =
+    layoutProps && layoutProps.dehydratedState
+      ? JSON.parse(layoutProps.dehydratedState)
+      : undefined;
+  const pageState =
+    pageProps && pageProps.dehydratedState ? JSON.parse(pageProps.dehydratedState) : undefined;
+
+  return (
+    <ChakraProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={layoutState}>
+          <Hydrate state={pageState}>
+            <Head>
+              <title>Skali - Valhabba</title>
+              <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+              <link rel="preload" href="/fonts/Norse.otf" as="font" crossOrigin="" />
+            </Head>
+            <Fonts />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+            <ReactQueryDevtools />
+          </Hydrate>
         </Hydrate>
-      </Hydrate>
-    </QueryClientProvider>
-  </ChakraProvider>
-);
+      </QueryClientProvider>
+    </ChakraProvider>
+  );
+};
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const req = appContext.ctx.req;
 
-  const serverQueryClient = new QueryClient();
-  const session = await getSession({ req });
-  serverQueryClient.setQueryData(QueryKeys.SESSION, session);
+  if (req) {
+    // If req is defined, this code runs server side. Dynamically import packages then only.
+    const { default: getHydrationProps } = await import('@packages/utils/hydration');
+    const { getVisitorPermissions } = await import('@packages/api/auth');
+    return {
+      layoutProps: await getHydrationProps(async serverQueryClient => {
+        const session = await getSession({ req });
+        serverQueryClient.setQueryData(QueryKeys.SESSION, session);
+        if (!session) {
+          const visitorPermissions = await getVisitorPermissions();
+          serverQueryClient.setQueryData(QueryKeys.VISITOR, visitorPermissions);
+        }
+      }),
+    };
+  }
 
-  return {
-    initialProps: {
-      dehydratedState: dehydrate(serverQueryClient),
-    },
-  };
+  return {};
 };
 
 export default MyApp;

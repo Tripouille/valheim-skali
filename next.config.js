@@ -15,4 +15,10 @@ module.exports = {
       },
     ];
   },
+  webpack: function (config, { isServer, webpack }) {
+    if (!isServer) {
+      config.plugins.push(new webpack.IgnorePlugin({ resourceRegExp: /mongodb/ }));
+    }
+    return config;
+  },
 };
