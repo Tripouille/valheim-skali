@@ -30,7 +30,7 @@ enum MenuType {
 
 const NavBar = () => {
   const session = useSession();
-  const menuType = useBreakpointValue({ base: MenuType.DRAWER, lg: MenuType.HEADER });
+  const menuType = useBreakpointValue({ base: MenuType.DRAWER, lg: MenuType.HEADER }, 'lg');
 
   return (
     <chakra.header height="header" bgColor={theme.colors.overlay}>
