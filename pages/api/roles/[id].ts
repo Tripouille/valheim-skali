@@ -1,7 +1,7 @@
 import { NextApiHandler } from 'next';
-import { ServerException } from '@packages/api/common';
-import putRole from '@packages/api/roles/putRole';
-import deleteRole from '@packages/api/roles/deleteRole';
+import { ServerException } from 'api/common';
+import putRole from 'api/roles/putRole';
+import deleteRole from 'api/roles/deleteRole';
 
 const rolesHandler: NextApiHandler = async (req, res) => {
   try {

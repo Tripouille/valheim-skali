@@ -1,5 +1,5 @@
 import React from 'react';
-import Home from '@packages/components/pages/Home';
+import Home from 'components/pages/Home';
 
 const ServerHomePage: React.FC = () => <Home />;
 

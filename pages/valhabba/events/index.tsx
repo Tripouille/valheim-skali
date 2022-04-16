@@ -1,9 +1,9 @@
 import { GetServerSideProps } from 'next';
 import React from 'react';
-import getEvents from '@packages/api/events/getEvents';
-import getHydrationProps from '@packages/utils/hydration';
-import { QueryKeys } from '@packages/utils/queryClient';
-import Events from '@packages/components/pages/Events';
+import getEvents from 'api/events/getEvents';
+import getHydrationProps from 'utils/hydration';
+import { QueryKeys } from 'utils/queryClient';
+import Events from 'components/pages/Events';
 
 const EventsPage = () => <Events />;
 

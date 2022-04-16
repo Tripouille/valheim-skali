@@ -1,5 +1,5 @@
 import React from 'react';
-import Admin from '@packages/components/pages/Admin';
+import Admin from 'components/pages/Admin';
 
 const AdminPage = () => <Admin />;
 

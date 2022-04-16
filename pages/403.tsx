@@ -1,5 +1,5 @@
 import React from 'react';
-import Error from '@packages/components/core/Feedback/Error';
+import Error from 'components/core/Feedback/Error';
 
 const ForbiddenPage: React.FC = () => (
   <Error>

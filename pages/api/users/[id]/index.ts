@@ -1,7 +1,7 @@
 import { NextApiHandler, NextApiRequest as Req, NextApiResponse as Res } from 'next';
-import { ServerException } from '@packages/api/common';
-import patchUser from '@packages/api/users/patchUser';
-import deleteUser from '@packages/api/users/deleteUser';
+import { ServerException } from 'api/common';
+import patchUser from 'api/users/patchUser';
+import deleteUser from 'api/users/deleteUser';
 
 const userHandler: NextApiHandler = async (req: Req, res: Res) => {
   try {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Trade from '@packages/components/pages/Trade';
+import Trade from 'components/pages/Trade';
 
 const TradePage = () => <Trade />;
 

@@ -5,11 +5,11 @@ import React from 'react';
 import { QueryClientProvider, Hydrate } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { ChakraProvider } from '@chakra-ui/react';
-import Layout from '@packages/components/Layout';
-import Fonts from '@packages/components/Layout/Fonts';
-import theme from '@packages/theme';
-import { queryClient, QueryKeys } from '@packages/utils/queryClient';
-import { HydrationProps } from '@packages/utils/types';
+import Layout from 'components/Layout';
+import Fonts from 'components/Layout/Fonts';
+import theme from 'theme';
+import { queryClient, QueryKeys } from 'utils/queryClient';
+import { HydrationProps } from 'utils/types';
 
 /** Page props are those of getServerSideProps (if defined in page),
  * initial props are returned by MyApp.getInitialProps */
@@ -52,8 +52,8 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
 
   if (req) {
     // If req is defined, this code runs server side. Dynamically import packages then only.
-    const { default: getHydrationProps } = await import('@packages/utils/hydration');
-    const { getVisitorPermissions } = await import('@packages/api/auth');
+    const { default: getHydrationProps } = await import('utils/hydration');
+    const { getVisitorPermissions } = await import('api/auth');
     return {
       layoutProps: await getHydrationProps(async serverQueryClient => {
         const session = await getSession({ req });

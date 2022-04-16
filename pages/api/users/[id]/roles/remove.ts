@@ -1,6 +1,6 @@
 import { NextApiHandler, NextApiRequest as Req, NextApiResponse as Res } from 'next';
-import { ServerException } from '@packages/api/common';
-import addOrRemoveRoleToUser, { Action } from '@packages/api/users/addOrRemoveRoleToUser';
+import { ServerException } from 'api/common';
+import addOrRemoveRoleToUser, { Action } from 'api/users/addOrRemoveRoleToUser';
 
 const userRolesHandler: NextApiHandler = async (req: Req, res: Res) => {
   try {

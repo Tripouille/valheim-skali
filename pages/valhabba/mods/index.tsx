@@ -1,5 +1,5 @@
 import React from 'react';
-import Mods from '@packages/components/pages/Mods';
+import Mods from 'components/pages/Mods';
 
 const ModsPage = () => <Mods />;
 
