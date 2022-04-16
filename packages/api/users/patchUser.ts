@@ -37,7 +37,7 @@ const patchUser = async (req: Req, res: Res) => {
   const result = await updateOneInCollection<UserInDb>(usersCollectionName, id, userNewData);
   if (!result.ok) throw new ServerException(500);
 
-  res.status(200).json(result.value);
+  res.status(200).end();
 };
 
 export default patchUser;
