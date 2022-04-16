@@ -24,6 +24,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     },
     callbacks: {
       async session({ session, token }) {
+        delete session.user.email;
         const user = await db.findOne<UserInDb>('users', {
           _id: new ObjectId(token.sub),
         });
