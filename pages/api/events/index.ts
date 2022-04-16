@@ -1,7 +1,7 @@
 import { NextApiHandler } from 'next';
-import { ServerException } from 'api/common';
-import getEvents from 'api/events/getEvents';
-import createEvent from 'api/events/createEvent';
+import { ServerException } from 'api-utils/common';
+import getEvents from 'api-utils/events/getEvents';
+import createEvent from 'api-utils/events/createEvent';
 
 const eventsHandler: NextApiHandler = async (req, res) => {
   try {

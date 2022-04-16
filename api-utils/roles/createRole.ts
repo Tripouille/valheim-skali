@@ -1,9 +1,9 @@
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { RoleInDb, rolesCollectionName } from 'data/role';
 import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
-import { requirePermissions } from 'api/auth';
-import { ServerException } from 'api/common';
-import db from 'api/db';
+import { requirePermissions } from 'api-utils/auth';
+import { ServerException } from 'api-utils/common';
+import db from 'api-utils/db';
 import { checkRoleData, isCreateRoleData, transformRoleForDb } from './utils';
 
 const createRole = async (req: Req, res: Res) => {

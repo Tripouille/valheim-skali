@@ -7,9 +7,9 @@ import {
   USER_NAME_IN_GAME_MAX_LENGTH,
 } from 'data/user';
 import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
-import { requirePermissions } from 'api/auth';
-import { isRequiredObjectType, ServerException, updateOneInCollection } from 'api/common';
-import db from 'api/db';
+import { requirePermissions } from 'api-utils/auth';
+import { isRequiredObjectType, ServerException, updateOneInCollection } from 'api-utils/common';
+import db from 'api-utils/db';
 
 const updateUserKeyToValueTypeCheck: Record<keyof UpdateUserData, (value: unknown) => boolean> = {
   nameInGame: value => value === undefined || typeof value === 'string',

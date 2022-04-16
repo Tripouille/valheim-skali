@@ -1,7 +1,7 @@
 import { CreateRoleData, getRoleValidationError, ROLE_NAME_IN_GAME_MAX_LENGTH } from 'data/role';
 import { isAdminPrivilege, PermissionCategory, PermissionPrivilege, Permissions } from 'utils/auth';
 import { isFilled } from 'utils/validation';
-import { isRequiredObjectType, ServerException, isObject } from 'api/common';
+import { isRequiredObjectType, ServerException, isObject } from 'api-utils/common';
 
 /** Validate body shape */
 

@@ -1,5 +1,5 @@
 import { dehydrate, QueryClient } from 'react-query';
-import { ServerException } from 'api/common';
+import { ServerException } from 'api-utils/common';
 import { HydrationProps } from 'utils/types';
 
 const getHydrationProps = async (

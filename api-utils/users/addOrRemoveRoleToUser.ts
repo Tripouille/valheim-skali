@@ -3,9 +3,9 @@ import { ObjectId } from 'bson';
 import { Role, rolesCollectionName } from 'data/role';
 import { UpdateUserRolesData, UserInDb, usersCollectionName } from 'data/user';
 import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
-import { isRequiredObjectType, ServerException, updateOneInCollection } from 'api/common';
-import { requirePermissions } from 'api/auth';
-import db from 'api/db';
+import { isRequiredObjectType, ServerException, updateOneInCollection } from 'api-utils/common';
+import { requirePermissions } from 'api-utils/auth';
+import db from 'api-utils/db';
 
 export enum Action {
   ADD,
