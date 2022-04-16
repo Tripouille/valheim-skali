@@ -1,4 +1,3 @@
-import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { ObjectId } from 'bson';
 import { ModifyResult, WithoutId } from 'mongodb';
 import db from '@packages/api/db';
@@ -14,12 +13,6 @@ export class ServerException extends Error {
 }
 
 export type AddResponse = { _id: string };
-
-export const pullCollection = async <T>(collectionName: string, req: Req, res: Res) => {
-  const response = await db.find<T>(collectionName);
-
-  res.status(200).json(response);
-};
 
 export const updateOneInCollection = async <T>(
   collectionName: string,

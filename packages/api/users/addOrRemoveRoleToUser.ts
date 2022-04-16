@@ -64,7 +64,7 @@ const addOrRemoveRoleToUser = async (action: Action, req: Req, res: Res) => {
   });
   if (!result.ok) throw new ServerException(500);
 
-  res.status(200).json(result.value);
+  res.status(200).end();
 };
 
 export default addOrRemoveRoleToUser;
