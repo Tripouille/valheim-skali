@@ -2,8 +2,8 @@ import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { ObjectId } from 'bson';
 import { EventInDb, eventsCollectionName } from 'data/event';
 import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
-import { requirePermissions } from 'api/auth';
-import { ServerException, replaceOneInCollection } from 'api/common';
+import { requirePermissions } from 'api-utils/auth';
+import { ServerException, replaceOneInCollection } from 'api-utils/common';
 import db from '../db';
 import { getNewEventFromBody } from './utils';
 

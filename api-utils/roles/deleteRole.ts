@@ -3,9 +3,9 @@ import { ObjectId } from 'bson';
 import { RoleInDb, rolesCollectionName } from 'data/role';
 import { UserInDb, usersCollectionName } from 'data/user';
 import { isSpecialRole, PermissionCategory, PermissionPrivilege } from 'utils/auth';
-import { requirePermissions } from 'api/auth';
-import { ServerException } from 'api/common';
-import db from 'api/db';
+import { requirePermissions } from 'api-utils/auth';
+import { ServerException } from 'api-utils/common';
+import db from 'api-utils/db';
 
 const deleteRole = async (req: Req, res: Res) => {
   await requirePermissions({ [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE }, req);

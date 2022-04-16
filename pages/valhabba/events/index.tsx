@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import React from 'react';
-import getEvents from 'api/events/getEvents';
+import getEvents from 'api-utils/events/getEvents';
 import getHydrationProps from 'utils/hydration';
 import { QueryKeys } from 'utils/queryClient';
 import Events from 'components/pages/Events';

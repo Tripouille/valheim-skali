@@ -3,7 +3,7 @@ import { OptionalId } from 'mongodb';
 import { RoleInDb, rolesCollectionName } from 'data/role';
 import { UserInDb, usersCollectionName } from 'data/user';
 import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
-import db from 'api/db';
+import db from 'api-utils/db';
 
 dotenv.config({ path: '../../.env.test' });
 

@@ -1,6 +1,6 @@
 import { NextApiHandler } from 'next';
-import { ServerException } from 'api/common';
-import getUsers from 'api/users/getUsers';
+import { ServerException } from 'api-utils/common';
+import getUsers from 'api-utils/users/getUsers';
 
 const usersHandler: NextApiHandler = async (req, res) => {
   try {

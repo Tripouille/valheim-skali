@@ -1,6 +1,6 @@
 import { ObjectId } from 'bson';
 import { ModifyResult, WithoutId } from 'mongodb';
-import db from 'api/db';
+import db from 'api-utils/db';
 
 export class ServerException extends Error {
   statusCode: number;

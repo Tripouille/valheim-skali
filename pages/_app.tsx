@@ -53,7 +53,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   if (req) {
     // If req is defined, this code runs server side. Dynamically import packages then only.
     const { default: getHydrationProps } = await import('utils/hydration');
-    const { getVisitorPermissions } = await import('api/auth');
+    const { getVisitorPermissions } = await import('api-utils/auth');
     return {
       layoutProps: await getHydrationProps(async serverQueryClient => {
         const session = await getSession({ req });

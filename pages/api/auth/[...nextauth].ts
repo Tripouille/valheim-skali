@@ -4,8 +4,8 @@ import { ObjectId } from 'bson';
 import DiscordProvider from 'next-auth/providers/discord';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import { UserInDb } from 'data/user';
-import db from 'api/db';
-import { getUserPermissions } from 'api/auth';
+import db from 'api-utils/db';
+import { getUserPermissions } from 'api-utils/auth';
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   const nextAuth = NextAuth(req, res, {

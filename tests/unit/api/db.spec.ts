@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { MongoClient, ObjectId } from 'mongodb';
-import db from 'api/db';
+import db from 'api-utils/db';
 import Sinon = require('cypress/types/sinon');
 
 const uri = 'example_uri';

@@ -11,8 +11,8 @@ import {
   ADMIN_ROLE_TO_PRIVILEGE,
   SpecialRoleName,
 } from 'utils/auth';
-import { ServerException } from 'api/common';
-import db from 'api/db';
+import { ServerException } from 'api-utils/common';
+import db from 'api-utils/db';
 
 export const getVisitorPermissions = async (): Promise<Permissions> => {
   const visitorRole = await db.findOne<RoleInDb>(
