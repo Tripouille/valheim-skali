@@ -21,4 +21,7 @@ module.exports = {
     }
     return config;
   },
+  eslint: {
+    dirs: ['api', 'components', 'data', 'pages', 'storybook', 'test', 'theme', 'types', 'utils'],
+  },
 };

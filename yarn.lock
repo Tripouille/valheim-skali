@@ -3519,42 +3519,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@packages/api@workspace:packages/api":
-  version: 0.0.0-use.local
-  resolution: "@packages/api@workspace:packages/api"
-  languageName: unknown
-  linkType: soft
-
-"@packages/components@workspace:packages/components":
-  version: 0.0.0-use.local
-  resolution: "@packages/components@workspace:packages/components"
-  languageName: unknown
-  linkType: soft
-
-"@packages/data@workspace:packages/data":
-  version: 0.0.0-use.local
-  resolution: "@packages/data@workspace:packages/data"
-  languageName: unknown
-  linkType: soft
-
-"@packages/storybook@workspace:packages/storybook":
-  version: 0.0.0-use.local
-  resolution: "@packages/storybook@workspace:packages/storybook"
-  languageName: unknown
-  linkType: soft
-
-"@packages/theme@workspace:packages/theme":
-  version: 0.0.0-use.local
-  resolution: "@packages/theme@workspace:packages/theme"
-  languageName: unknown
-  linkType: soft
-
-"@packages/utils@workspace:packages/utils":
-  version: 0.0.0-use.local
-  resolution: "@packages/utils@workspace:packages/utils"
-  languageName: unknown
-  linkType: soft
-
 "@panva/hkdf@npm:^1.0.1":
   version: 1.0.1
   resolution: "@panva/hkdf@npm:1.0.1"

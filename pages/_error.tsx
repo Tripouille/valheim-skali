@@ -1,4 +1,4 @@
-import Error from '@packages/components/core/Feedback/Error';
+import Error from 'components/core/Feedback/Error';
 import React from 'react';
 
 const ErrorPage: React.FC = () => (

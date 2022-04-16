@@ -1,5 +1,5 @@
 import React from 'react';
-import World from '@packages/components/pages/World';
+import World from 'components/pages/World';
 
 const WorldPage = () => <World />;
 
