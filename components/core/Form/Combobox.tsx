@@ -1,9 +1,13 @@
 import { RefObject, useCallback, useEffect, useState } from 'react';
-import { PopoverAnchor } from '@chakra-ui/react'; //TODO
 import { Children } from 'utils/types';
 import { positiveModulo } from 'utils/number';
 import { scrollIntoViewIfNeeded } from 'utils/window';
-import { Popover, PopoverBody, PopoverContent } from 'components/core/Overlay/Popover';
+import {
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverAnchor,
+} from 'components/core/Overlay/Popover';
 import { ListItem, UnorderedList } from 'components/core/DataDisplay/List';
 import Tag from 'components/core/DataDisplay/Tag';
 import { InputProps } from 'components/core/Form/Input';

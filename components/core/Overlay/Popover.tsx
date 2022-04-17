@@ -15,6 +15,7 @@ import {
   PopoverArrowProps as ChakraPopoverArrowProps,
   PopoverCloseButton as ChakraPopoverCloseButton,
   PopoverCloseButtonProps as ChakraPopoverCloseButtonProps,
+  PopoverAnchor as ChakraPopoverAnchor,
 } from '@chakra-ui/react';
 
 export type PopoverProps = ChakraPopoverProps;
@@ -63,4 +64,8 @@ export const PopoverCloseButton: React.FC<
   PopoverCloseButtonProps
 > = chakraPopoverCloseButtonProps => (
   <ChakraPopoverCloseButton {...chakraPopoverCloseButtonProps}></ChakraPopoverCloseButton>
+);
+
+export const PopoverAnchor: React.FC = chakraPopoverAnchorProps => (
+  <ChakraPopoverAnchor {...chakraPopoverAnchorProps}></ChakraPopoverAnchor>
 );
