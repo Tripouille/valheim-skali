@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
-import { Box } from '@chakra-ui/react';
 import { storybookSetup } from 'storybook/config/setup';
 import { StoryCategory } from 'storybook/config/constants';
+import Box from 'components/core/Containers/Box';
 import ImageModal, { ImageModalProps } from 'components/core/Overlay/ImageModal';
 
 const { defaultExport, StoryFactory } = storybookSetup<ImageModalProps>(

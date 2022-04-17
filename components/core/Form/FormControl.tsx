@@ -16,7 +16,6 @@ export const FormControl: React.FC<FormControlProps> = chakraFormControlProps =>
 
 export type FormLabelProps = ChakraFormLabelProps;
 
-// TODO: remove m="0" once the remaining standalone FormLabel have been removed
 export const FormLabel: React.FC<FormLabelProps> = chakraFormLabelProps => (
   <ChakraFormLabel m="0" {...chakraFormLabelProps}></ChakraFormLabel>
 );
