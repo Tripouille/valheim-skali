@@ -6,7 +6,6 @@ import { CgInfo } from 'react-icons/cg';
 import { chakra, useBreakpointValue } from '@chakra-ui/react';
 import theme from 'theme';
 import useSession from 'utils/hooks/useSession';
-import { getDataValue } from 'utils/dataAttributes';
 import { SessionStatus, ROUTES_TO_PERMISSIONS } from 'utils/auth';
 import { MenuRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
 import Center from 'components/core/Containers/Center';
@@ -27,13 +26,13 @@ const NavBar = () => {
   const menuType = useBreakpointValue({ base: MenuType.DRAWER, lg: MenuType.HEADER }, 'lg');
 
   return (
-    <chakra.header height="header" bgColor={theme.colors.overlay}>
+    <chakra.header height="header" bgColor={theme.colors.overlay} data-cy="nav-bar">
       <Center justifyContent="space-between" h="full">
         {menuType === MenuType.HEADER && <HeaderMenu serverName={serverName} />}
         {menuType === MenuType.DRAWER && <DrawerMenu serverName={serverName} />}
         <Menu id="account-menu" isLazy>
           <MenuButton
-            dataCy={getDataValue('nav_bar', 'menu', 'button')}
+            data-cy="menu"
             as={IconButton}
             variant="ghost"
             aria-label="Gérer mon compte"
@@ -45,28 +44,17 @@ const NavBar = () => {
             rightIcon={<BiChevronDown />}
           />
           <MenuList>
-            <SignInOut
-              dataCy={getDataValue('nav_bar', 'menu', 'dropdown')}
-              isConnected={session.status === SessionStatus.AUTHENTICATED}
-            />
+            <SignInOut isConnected={session.status === SessionStatus.AUTHENTICATED} />
             <MenuDivider />
             <Secured permissions={ROUTES_TO_PERMISSIONS[MenuRoute.ADMIN]}>
               <NextLink href={`/${serverName}${MenuRoute.ADMIN}`} passHref>
-                <MenuItem
-                  dataCy={getDataValue('nav_bar', 'menu', 'dropdown', 'admin')}
-                  as="a"
-                  icon={<GiStakeHammer size="20" />}
-                >
+                <MenuItem data-cy="admin" as="a" icon={<GiStakeHammer size="20" />}>
                   {ROUTES_TO_LABEL[MenuRoute.ADMIN]}
                 </MenuItem>
               </NextLink>
             </Secured>
             <NextLink href={MenuRoute.ABOUT} passHref>
-              <MenuItem
-                dataCy={getDataValue('nav_bar', 'menu', 'dropdown', 'about')}
-                as="a"
-                icon={<CgInfo size="20" />}
-              >
+              <MenuItem data-cy="about" as="a" icon={<CgInfo size="20" />}>
                 {ROUTES_TO_LABEL[MenuRoute.ABOUT]}
               </MenuItem>
             </NextLink>

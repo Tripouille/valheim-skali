@@ -30,11 +30,10 @@ import Code from 'components/core/DataDisplay/Code';
 import Icon from 'components/core/Images/Icon';
 import ZoomableImage from 'components/core/Images/ZoomableImage';
 import Figure from 'components/core/Images/Figure';
-import { getDataValue } from 'utils/dataAttributes';
 
 const Mods = () => {
   return (
-    <Background textAlign="justify">
+    <Background data-cy="mods" textAlign="justify">
       <VStack spacing="10">
         <PageTitle title="Mods" />
         <Alert status="warning" w="5xl">
@@ -218,7 +217,7 @@ Elles viennent de différents mods gracieusement mis à disposition par d'autres
           />
           <Figure legend="Voici à quoi ressemble une partie de ces bêtes !">
             <ZoomableImage
-              dataCy={getDataValue('mods', 'monsters', 'zoomable_image')}
+              data-cy="monsters"
               src="https://cdn.discordapp.com/attachments/883463860642799678/887248665406750760/SPOILER_unknown.png"
               alt="Images des monstres des mods"
               height={200}
@@ -249,7 +248,7 @@ Elles viennent de différents mods gracieusement mis à disposition par d'autres
           </Text>
           <Figure legend="Et voici l'image de la plupart d'entre eux :">
             <ZoomableImage
-              dataCy={getDataValue('mods', 'monsters', 'loots', 'zoomable_image')}
+              data-cy="loots"
               src="https://cdn.discordapp.com/attachments/883463860642799678/887254362940899338/SPOILER_SPOILER_unknown.png"
               alt="Images des loots des monstres"
               height={200}
@@ -295,7 +294,7 @@ Bref n'importe quelle implication significative de votre part pour faire vivre n
                   étoiles (voire même plus). Cet éloignement est déterminé par des zones :
                 </Text>
                 <ZoomableImage
-                  dataCy={getDataValue('mods', 'changes', 'zones', 'zoomable_image')}
+                  data-cy="zones"
                   src="https://cdn.discordapp.com/attachments/843847641766690856/864466400918372372/unknown.png"
                   alt="Images des monstres des mods"
                   height={200}

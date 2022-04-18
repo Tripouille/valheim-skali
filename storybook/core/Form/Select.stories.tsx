@@ -11,7 +11,6 @@ const { defaultExport, StoryFactory } = storybookSetup<SelectProps<string>>(
 export default defaultExport;
 
 export const Default = StoryFactory({
-  dataCy: '',
   onChange: action('Changed'),
   errorBorderColor: 'red.500',
   focusBorderColor: 'blue.500',

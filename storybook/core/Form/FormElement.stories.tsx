@@ -12,7 +12,7 @@ const { defaultExport, StoryFactory } = storybookSetup<FormElementProps>(
       Story => (
         <Modal isOpen={true} onClose={() => {}}>
           <ModalOverlay />
-          <ModalContent>
+          <ModalContent data-cy="">
             <ModalBody>
               <Story />
             </ModalBody>
@@ -32,5 +32,5 @@ export const Default = StoryFactory({
   isInvalid: false,
   isReadOnly: false,
   isRequired: false,
-  children: <Input dataCy="" />,
+  children: <Input />,
 });

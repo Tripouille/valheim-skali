@@ -1,16 +1,13 @@
-export const eventsCards = () => cy.get(`[data-cy$=card]`);
+export const eventCards = () => cy.get(`[data-cy^=event-]`);
 
-export const eventCreateButton = () => cy.dataCy('event-create-button');
+export const createEventButton = () => cy.dataCy('events').dataCy('create-event', 'button');
 
-export const eventEditButton = (index: number) => cy.dataCy(`event-${index}-edit_button`);
+export const createEventModal = () => cy.dataCy('create-event-modal');
 
-export const createModalElement = (identifier: string) =>
-  cy.dataCy(`event-create-modal-${identifier}`);
+export const editEventButton = (index: number) =>
+  cy.dataCy('events').dataCy(`event-${index}`).dataCy('edit', 'button');
 
-export const editModalElement = (index: number, identifier: string) =>
-  cy.dataCy(`event-${index}-edit_modal-${identifier}`);
+export const editEventModal = () => cy.dataCy('edit-event-modal');
 
-export const addTagButton = 'tags-add_tag_button';
-export const newTagInput = 'tags-new_tag-input';
-export const newTagSubmitButton = 'tags-new_tag-submit_button';
-export const tagCloseButton = (index: number) => `tags-tag-${index}-close_button`;
+export const tagCloseButton = (container: Cypress.Chainable<JQuery<HTMLElement>>, index: number) =>
+  container.dataCy(`tag-${index}`).dataCy('close', 'button');

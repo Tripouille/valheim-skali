@@ -1,7 +1,6 @@
 import React from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { useDisclosure } from '@chakra-ui/react';
-import { getDataValue } from 'utils/dataAttributes';
 import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
 import PageTitle from 'components/core/Typography/PageTitle';
 import Background from 'components/core/Containers/Background';
@@ -21,13 +20,13 @@ const Events = () => {
 
   return (
     <Secured permissions={{ [PermissionCategory.EVENT]: PermissionPrivilege.READ }}>
-      <Background>
+      <Background data-cy="events">
         <VStack spacing="7" position="relative">
           <PageTitle title="Événements" />
           <QueryHandler query={eventsQuery}>
             <Secured permissions={{ [PermissionCategory.EVENT]: PermissionPrivilege.READ_WRITE }}>
               <Button
-                dataCy={getDataValue('event', 'create', 'button')}
+                data-cy="create-event"
                 position="absolute"
                 top={0}
                 right={0}
@@ -40,14 +39,14 @@ const Events = () => {
                 Créer un événement
               </Button>
               <EventForm
-                dataCy={getDataValue('event', 'create', 'modal')}
+                data-cy="create-event"
                 isOpen={isOpen}
                 onSubmit={createEvent}
                 onClose={onClose}
               />
             </Secured>
             {eventsQuery.data?.map((event, index) => (
-              <EventCard dataCy={getDataValue('event', index)} key={event._id} event={event} />
+              <EventCard data-cy={`event-${index}`} key={event._id} event={event} />
             ))}
           </QueryHandler>
         </VStack>

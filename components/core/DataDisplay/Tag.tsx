@@ -7,22 +7,21 @@ import {
 } from '@chakra-ui/react';
 import { TagColors } from 'utils/constants';
 import { autoBgColor, autoTextColor } from 'utils/color';
-import { DataAttributes, getDataValue } from 'utils/dataAttributes';
-import { Callback } from 'utils/types';
+import { CypressProps, Callback } from 'utils/types';
 
 export type TagProps = ChakraTagProps &
   (
     | ({
         label: string;
         onClose?: never;
-      } & Partial<DataAttributes>)
+      } & Partial<CypressProps>)
     | ({
         label: string;
         onClose: Callback;
-      } & DataAttributes)
+      } & CypressProps)
   );
 
-const Tag: React.FC<TagProps> = ({ dataCy, label, onClose, ...chakraTagProps }) => {
+const Tag: React.FC<TagProps> = ({ 'data-cy': dataCy, label, onClose, ...chakraTagProps }) => {
   const bgColor = TagColors[label] ?? autoBgColor(label);
 
   return (
@@ -31,16 +30,11 @@ const Tag: React.FC<TagProps> = ({ dataCy, label, onClose, ...chakraTagProps }) 
       color={autoTextColor(bgColor)}
       h="full"
       overflow="hidden"
-      data-cy={dataCy}
       {...chakraTagProps}
+      data-cy={dataCy}
     >
       <TagLabel>{label}</TagLabel>
-      {onClose && (
-        <TagCloseButton
-          data-cy={getDataValue(dataCy as string, 'close_button')}
-          onClick={onClose}
-        />
-      )}
+      {onClose && <TagCloseButton data-cy="close" onClick={onClose} />}
     </ChakraTag>
   );
 };

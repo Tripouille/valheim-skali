@@ -7,11 +7,10 @@ import Paragraphs from 'components/core/Typography/Paragraphs';
 import IconList from 'components/core/DataDisplay/IconList';
 import Figure from 'components/core/Images/Figure';
 import ZoomableImage from 'components/core/Images/ZoomableImage';
-import { getDataValue } from 'utils/dataAttributes';
 
 const World = () => {
   return (
-    <Background textAlign="justify">
+    <Background data-cy="world" textAlign="justify">
       <VStack spacing="10">
         <PageTitle title="Les îles du Valhabba" />
         <Alert status="warning" w="5xl">
@@ -112,7 +111,7 @@ const World = () => {
           ].map(image => (
             <Figure key={image.id} legend={image.legend}>
               <ZoomableImage
-                dataCy={getDataValue('world', image.id, 'zoomable_image')}
+                data-cy={`map-${image.id}`}
                 src={image.src}
                 alt={image.legend}
                 height={400}

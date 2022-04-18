@@ -3,7 +3,7 @@ import { BiEdit } from 'react-icons/bi';
 import { GiArmorUpgrade } from 'react-icons/gi';
 import { useDisclosure } from '@chakra-ui/react';
 import { limitedWidthVariant } from 'theme/components/LimitedWidthText';
-import { getDataValue, DataAttributes } from 'utils/dataAttributes';
+import { CypressProps } from 'utils/types';
 import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
 import { User } from 'data/user';
 import { compareRolesFromName, Role } from 'data/role';
@@ -17,13 +17,13 @@ import useUpdateUser from '../hooks/useUpdateUser';
 import UserForm from './UserForm';
 import UserAvatar from './UserAvatar';
 
-export interface UserRowProps extends DataAttributes {
+export interface UserRowProps extends CypressProps {
   user: User;
   roles: Role[];
   filter: UserQueryFilter;
 }
 
-const UserRow: React.FC<UserRowProps> = ({ dataCy, user, roles, filter }) => {
+const UserRow: React.FC<UserRowProps> = ({ 'data-cy': dataCy, user, roles, filter }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { addRoleToUser } = useUpdateUser(user);
 
@@ -41,9 +41,9 @@ const UserRow: React.FC<UserRowProps> = ({ dataCy, user, roles, filter }) => {
   };
 
   return (
-    <Tr cursor="pointer" onClick={onOpen}>
+    <Tr cursor="pointer" onClick={onOpen} data-cy={dataCy}>
       <Td>
-        <UserAvatar dataCy={dataCy} src={user.image} />
+        <UserAvatar src={user.image} />
       </Td>
       <Td textAlign="center" {...limitedWidthVariant}>
         {user.nameInGame}
@@ -68,7 +68,7 @@ const UserRow: React.FC<UserRowProps> = ({ dataCy, user, roles, filter }) => {
         <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
           <Td textAlign="center">
             <IconButton
-              dataCy={getDataValue(dataCy, 'promote')}
+              data-cy="promote"
               aria-label="Promouvoir comme Viking"
               title="Promouvoir comme Viking"
               icon={<GiArmorUpgrade size="30" />}
@@ -81,7 +81,7 @@ const UserRow: React.FC<UserRowProps> = ({ dataCy, user, roles, filter }) => {
       )}
       <Td>
         <IconButton
-          dataCy={getDataValue(dataCy, 'edit')}
+          data-cy="edit"
           aria-label="Modifier l'utilisateur"
           title="Modifier l'utilisateur"
           icon={<BiEdit size="30" />}
@@ -89,13 +89,7 @@ const UserRow: React.FC<UserRowProps> = ({ dataCy, user, roles, filter }) => {
           size={rowIconSize}
           onClick={onOpen}
         />
-        <UserForm
-          dataCy={getDataValue(dataCy, 'modal')}
-          isOpen={isOpen}
-          onClose={onClose}
-          user={user}
-          roles={roles}
-        />
+        <UserForm data-cy="edit-user" isOpen={isOpen} onClose={onClose} user={user} roles={roles} />
       </Td>
     </Tr>
   );

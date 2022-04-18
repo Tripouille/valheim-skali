@@ -38,37 +38,40 @@ describe('events with edit permission', () => {
 
     /* Create event with only required fields */
     cy.intercept('POST', APIRoute.EVENTS).as('createEvent');
-    Select.eventCreateButton().click();
-    Select.createModalElement('submit').should('exist').and('be.disabled');
-    Select.createModalElement('name-input').type(event1.name);
-    Select.createModalElement('start_date-input').should('not.have.value', '');
-    Select.createModalElement('description-textarea').type(event1.description);
+    Select.createEventButton().click();
+    Select.createEventModal().dataCy('submit', 'button').should('exist').and('be.disabled');
+    Select.createEventModal().dataCy('name', 'input').type(event1.name);
+    Select.createEventModal().dataCy('start_date', 'input').should('not.have.value', '');
+    Select.createEventModal().dataCy('description', 'textarea').type(event1.description);
 
-    Select.createModalElement('submit').click();
+    Select.createEventModal().dataCy('submit', 'button').click();
     cy.wait('@createEvent').its('response.statusCode').should('eq', 201);
-    Select.eventsCards().should('have.length', 3).contains(event1.name);
+    Select.eventCards().should('have.length', 3).contains(event1.name);
 
     /* Create event with all fields */
-    Select.eventCreateButton().click();
-    Select.createModalElement('submit').should('exist').and('be.disabled');
-    Select.createModalElement('name-input').type(event2.name);
-    Select.createModalElement('discord_link-input').type(event2.discordLink);
-    Select.createModalElement('start_date-input').type(event2.startDate.slice(0, 16));
-    Select.createModalElement('end_date-input').type(event2.endDate.slice(0, 16));
-    Select.createModalElement('continuous-switch').click();
-    Select.createModalElement('location-input').type(event2.location);
-    Select.createModalElement(Select.addTagButton).click();
-    Select.createModalElement(Select.newTagInput).type(`${event2.tags[0]}{enter}`);
+    Select.createEventButton().click();
+    Select.createEventModal().dataCy('submit', 'button').should('exist').and('be.disabled');
+    Select.createEventModal().dataCy('name', 'input').type(event2.name);
+    Select.createEventModal().dataCy('discord_link', 'input').type(event2.discordLink);
+    Select.createEventModal().dataCy('start_date', 'input').type(event2.startDate.slice(0, 16));
+    Select.createEventModal().dataCy('end_date', 'input').type(event2.endDate.slice(0, 16));
+    Select.createEventModal().dataCy('continuous-switch').click();
+    Select.createEventModal().dataCy('location', 'input').type(event2.location);
+    Select.createEventModal().dataCy('add-tag', 'button').click();
+    Select.createEventModal().dataCy('new-tag', 'input').type(`${event2.tags[0]}{enter}`);
     cy.focused().type(`${event2.tags[1]}{enter}`);
-    Select.createModalElement('RPDescription-textarea').focus().type(event2.RPDescription);
-    Select.createModalElement('description-textarea').type(event2.description);
+    Select.createEventModal()
+      .dataCy('RPDescription', 'textarea')
+      .focus()
+      .type(event2.RPDescription);
+    Select.createEventModal().dataCy('description', 'textarea').type(event2.description);
 
-    Select.createModalElement('submit').click();
+    Select.createEventModal().dataCy('submit', 'button').click();
     cy.wait('@createEvent').should(xhr => {
       expect(xhr.response?.statusCode).to.eq(201);
       expect(xhr.request.body).to.eql(event2);
     });
-    Select.eventsCards()
+    Select.eventCards()
       .should('have.length', 4)
       .and('contain', event2.name)
       .and('contain', event2.tags[1]);
@@ -87,57 +90,60 @@ describe('events with edit permission', () => {
     };
 
     cy.intercept('PUT', `${APIRoute.EVENTS}/*`).as('updateEvent');
-    Select.eventEditButton(0).should('be.visible').click();
-    Select.editModalElement(0, 'name-input').clear().type(event3.name);
-    Select.editModalElement(0, 'discord_link-input').clear().type(event3.discordLink);
-    Select.editModalElement(0, 'start_date-input').clear().type(event3.startDate.slice(0, 16));
-    Select.editModalElement(0, 'end_date-input').clear();
-    Select.editModalElement(0, 'continuous-switch').click();
-    Select.editModalElement(0, 'location-input').clear().type(event3.location);
-    Select.editModalElement(0, Select.tagCloseButton(2)).click();
-    Select.editModalElement(0, Select.tagCloseButton(1)).click();
-    Select.editModalElement(0, Select.tagCloseButton(0)).click();
-    Select.editModalElement(0, 'RPDescription-textarea').clear().type(event3.RPDescription);
-    Select.editModalElement(0, 'description-textarea').clear().type(event3.description);
+    Select.editEventButton(0).should('be.visible').click();
+    Select.editEventModal().dataCy('name', 'input').clear().type(event3.name);
+    Select.editEventModal().dataCy('discord_link', 'input').clear().type(event3.discordLink);
+    Select.editEventModal()
+      .dataCy('start_date', 'input')
+      .clear()
+      .type(event3.startDate.slice(0, 16));
+    Select.editEventModal().dataCy('end_date', 'input').clear();
+    Select.editEventModal().dataCy('continuous-switch').click();
+    Select.editEventModal().dataCy('location', 'input').clear().type(event3.location);
+    Select.tagCloseButton(Select.editEventModal(), 2).click();
+    Select.tagCloseButton(Select.editEventModal(), 1).click();
+    Select.tagCloseButton(Select.editEventModal(), 0).click();
+    Select.editEventModal().dataCy('RPDescription', 'textarea').clear().type(event3.RPDescription);
+    Select.editEventModal().dataCy('description', 'textarea').clear().type(event3.description);
 
-    Select.editModalElement(0, 'submit').click();
+    Select.editEventModal().dataCy('submit', 'button').click();
     cy.wait('@updateEvent').should(xhr => {
       expect(xhr.response?.statusCode).to.eq(200);
       expect(xhr.request.body).to.eql(event3);
     });
-    Select.editModalElement(0, 'close_button').click().should('not.exist');
-    Select.eventsCards().should('have.length', 2).and('contain', event3.name);
+    Select.editEventModal().dataCy('close-modal').click().should('not.exist');
+    Select.eventCards().should('have.length', 2).and('contain', event3.name);
   });
 
   it('should be able to delete events', () => {
     cy.intercept('DELETE', `${APIRoute.EVENTS}/*`).as('deleteEvent');
-    Select.eventEditButton(0).click();
-    Select.editModalElement(0, 'delete').click();
-    Select.editModalElement(0, 'delete-confirm').click();
+    Select.editEventButton(0).click();
+    Select.editEventModal().dataCy('delete', 'button').click();
+    Select.editEventModal().dataCy('confirm-delete', 'button').click();
     cy.wait('@deleteEvent').its('response.statusCode').should('eq', 200);
-    Select.eventsCards().should('have.length', 1);
+    Select.eventCards().should('have.length', 1);
   });
 
   it('should be able to use tags form and its combobox', () => {
-    Select.eventCreateButton().click();
+    Select.createEventButton().click();
 
     /** Can add entered tag with enter */
-    Select.createModalElement(Select.addTagButton).click();
-    Select.createModalElement(Select.newTagInput).type('Tag1{enter}');
+    Select.createEventModal().dataCy('add-tag', 'button').click();
+    Select.createEventModal().dataCy('new-tag', 'input').type('Tag1{enter}');
     cy.focused().type('Tag2{enter}');
     cy.focused().should('have.value', '');
-    Select.createModalElement(Select.tagCloseButton(0)).should('exist');
-    Select.createModalElement(Select.tagCloseButton(1)).should('exist');
+    Select.tagCloseButton(Select.createEventModal(), 0).should('exist');
+    Select.tagCloseButton(Select.createEventModal(), 1).should('exist');
 
     /** Can add tag with click on submit button */
     cy.focused().type('Tag3').should('have.value', 'Tag3');
-    Select.createModalElement(Select.newTagSubmitButton).click();
-    Select.createModalElement(Select.tagCloseButton(2)).should('exist');
-    Select.createModalElement(Select.newTagInput).should('have.focus').and('have.value', '');
+    Select.createEventModal().dataCy('submit-new-tag', 'button').click();
+    Select.tagCloseButton(Select.createEventModal(), 2).should('exist');
+    Select.createEventModal().dataCy('new-tag', 'input').should('have.focus').and('have.value', '');
 
     /** Can close tag and still have focus on input */
-    Select.createModalElement(Select.tagCloseButton(0)).click();
-    Select.createModalElement(Select.newTagInput).should('have.focus');
+    Select.tagCloseButton(Select.createEventModal(), 0).click();
+    Select.createEventModal().dataCy('new-tag', 'input').should('have.focus');
 
     cy.fixture('events').then(events => {
       /** Listbox displays suggestions based on input */
@@ -163,7 +169,7 @@ describe('events with edit permission', () => {
 
       /** Can use down arrow and add first tag with menu selection */
       cy.focused().type('{downArrow}{enter}').should('have.focus').and('have.value', '');
-      Select.createModalElement(Select.tagCloseButton(2)).should('exist');
+      Select.tagCloseButton(Select.createEventModal(), 2).should('exist');
     });
   });
 });

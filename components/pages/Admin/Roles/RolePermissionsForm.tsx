@@ -1,4 +1,3 @@
-import { getDataValue, DataAttributes } from 'utils/dataAttributes';
 import {
   isAdminPrivilege,
   PermissionCategory,
@@ -12,14 +11,13 @@ import { FormLabel } from 'components/core/Form/FormControl';
 import Select from 'components/core/Form/Select';
 import { modalTableHeaderWidth } from '../utils';
 
-export interface RolePermissionsFormProps extends DataAttributes {
+export interface RolePermissionsFormProps {
   isAdminRole: boolean;
   permissions: Permissions;
   onChange: (category: PermissionCategory) => (newPrivilege: PermissionPrivilege) => void;
 }
 
 const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
-  dataCy,
   isAdminRole,
   permissions,
   onChange,
@@ -66,7 +64,6 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
             </Th>
             <Td>
               <Select
-                dataCy={getDataValue(dataCy, category, 'select')}
                 id={category}
                 maxW="sm"
                 value={isAdminRole ? PermissionPrivilege.ADMIN : permissions[category]}

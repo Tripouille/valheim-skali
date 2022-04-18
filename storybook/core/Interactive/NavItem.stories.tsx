@@ -12,7 +12,7 @@ const { defaultExport, StoryFactory } = storybookSetup<NavItemProps>(
 export default defaultExport;
 
 export const Default = StoryFactory({
-  dataCy: '',
+  'data-cy': '',
   root: '/valhabba',
   route: NavRoute.EVENTS,
   onClick: action('Clicked'),

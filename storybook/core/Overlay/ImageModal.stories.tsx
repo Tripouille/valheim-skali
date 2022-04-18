@@ -21,7 +21,7 @@ const { defaultExport, StoryFactory } = storybookSetup<ImageModalProps>(
 export default defaultExport;
 
 export const Default = StoryFactory({
-  dataCy: '',
+  'data-cy': '',
   src: '/images/valheim-background-q60.jpg',
   alt: 'Valheim background',
   onClick: action('clicked'),

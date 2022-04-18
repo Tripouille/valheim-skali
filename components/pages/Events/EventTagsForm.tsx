@@ -1,13 +1,12 @@
 import { FocusEventHandler, useEffect, useRef, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
-import { DataAttributes, getDataValue } from 'utils/dataAttributes';
 import { CONTINUOUS_LABEL } from 'utils/constants';
 import { Wrap, WrapItem } from 'components/core/Containers/Wrap';
 import Tag from 'components/core/DataDisplay/Tag';
 import Button from 'components/core/Interactive/Button';
 import EventNewTagForm from './EventNewTagForm';
 
-export interface EventTagsFormProps extends DataAttributes {
+export interface EventTagsFormProps {
   tags?: string[];
   onTagsChange: (fn: (oldTags: string[]) => string[]) => void;
   continuous?: boolean;
@@ -15,7 +14,6 @@ export interface EventTagsFormProps extends DataAttributes {
 }
 
 const EventTagsForm: React.FC<EventTagsFormProps> = ({
-  dataCy,
   tags = [],
   onTagsChange,
   continuous = false,
@@ -45,7 +43,7 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
       {continuous && (
         <WrapItem>
           <Tag
-            dataCy={getDataValue(dataCy, 'tag', 'continuous')}
+            data-cy="tag-continuous"
             label={CONTINUOUS_LABEL}
             size="lg"
             onClose={removeTag(CONTINUOUS_LABEL)}
@@ -54,18 +52,12 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
       )}
       {tags.map((tag, index) => (
         <WrapItem key={tag}>
-          <Tag
-            label={tag}
-            size="lg"
-            onClose={removeTag(tag)}
-            dataCy={getDataValue(dataCy, 'tag', index)}
-          />
+          <Tag label={tag} size="lg" onClose={removeTag(tag)} data-cy={`tag-${index}`} />
         </WrapItem>
       ))}
       <WrapItem>
         {showTagInput ? (
           <EventNewTagForm
-            dataCy={getDataValue(dataCy, 'new_tag')}
             newTagInputRef={newTagInputRef}
             tags={tags}
             continuous={continuous}
@@ -74,7 +66,7 @@ const EventTagsForm: React.FC<EventTagsFormProps> = ({
           />
         ) : (
           <Button
-            dataCy={getDataValue(dataCy, 'add_tag_button')}
+            data-cy="add-tag"
             leftIcon={<BsPlusLg />}
             colorScheme="green"
             onClick={() => setShowTagInput(true)}

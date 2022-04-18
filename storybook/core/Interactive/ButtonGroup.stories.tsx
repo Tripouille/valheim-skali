@@ -16,10 +16,8 @@ export const Default = StoryFactory({
   spacing: '0.5rem',
   children: (
     <>
-      <Button colorScheme="blue" dataCy="">
-        Save
-      </Button>
-      <Button dataCy="">Cancel</Button>
+      <Button colorScheme="blue">Save</Button>
+      <Button>Cancel</Button>
     </>
   ),
 });
@@ -31,8 +29,8 @@ export const FlushedTogether = StoryFactory({
   variant: 'outline',
   children: (
     <>
-      <Button dataCy="">Save</Button>
-      <Button dataCy="">Cancel</Button>
+      <Button>Save</Button>
+      <Button>Cancel</Button>
     </>
   ),
 });

@@ -11,7 +11,6 @@ const { defaultExport, StoryFactory } = storybookSetup<EditableProps>(
 export default defaultExport;
 
 export const Default = StoryFactory({
-  dataCy: '',
   defaultValue: 'Some text',
   isDisabled: false,
   isPreviewFocusable: true,

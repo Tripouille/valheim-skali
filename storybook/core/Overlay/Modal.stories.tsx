@@ -21,7 +21,7 @@ const { defaultExport, StoryFactory } = storybookSetup<ModalProps>(
       Story => (
         <Box h="800px">
           <Story />
-          <Button dataCy="">Test button for focus</Button>
+          <Button>Test button for focus</Button>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis praesentium voluptatum
             earum dignissimos reprehenderit magnam at asperiores corporis rem eius laudantium
@@ -53,8 +53,8 @@ export const Default = StoryFactory({
   children: (
     <>
       <ModalOverlay />
-      <ModalContent>
-        <ModalCloseButton dataCy="" />
+      <ModalContent data-cy="">
+        <ModalCloseButton />
         <ModalBody>
           <h1>Modal body</h1>
           <Text mt="3" mb="3">

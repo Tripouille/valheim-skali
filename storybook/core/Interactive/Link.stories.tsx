@@ -10,7 +10,6 @@ const { defaultExport, StoryFactory } = storybookSetup<LinkProps>(
 export default defaultExport;
 
 export const Default = StoryFactory({
-  dataCy: '',
   children: 'Nom du lien',
   href: '#',
   isExternal: false,

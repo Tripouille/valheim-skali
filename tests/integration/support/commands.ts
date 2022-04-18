@@ -1,6 +1,13 @@
 import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
 
-Cypress.Commands.add('dataCy', value => cy.get(`[data-cy=${value}]`));
+Cypress.Commands.add('dataCy', { prevSubject: 'optional' }, (subject, value, selector = '') => {
+  if (subject)
+    return (subject as Cypress.Chainable<JQuery<HTMLElement>>).find(
+      `${selector}[data-cy=${value}]`,
+    );
+  return cy.get(`${selector}[data-cy=${value}]`);
+});
+
 Cypress.Commands.add('main', () => cy.get('main'));
 
 const sessionCookieName = 'next-auth.session-token';

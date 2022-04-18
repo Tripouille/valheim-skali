@@ -2,7 +2,6 @@ import Secured from 'components/core/Authentication/Secured';
 import { Table, Th, Thead, Tr, Tbody } from 'components/core/DataDisplay/Table';
 import { User } from 'data/user';
 import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
-import { getDataValue } from 'utils/dataAttributes';
 import {
   avatarSize,
   getCellWidth,
@@ -55,9 +54,9 @@ const UsersTable: React.FC<UsersTableProps> = ({ users = [], filter }) => {
         </Tr>
       </Thead>
       <Tbody>
-        {users.map(user => (
+        {users.map((user, index) => (
           <UserRow
-            dataCy={getDataValue('users', user._id)}
+            data-cy={`user-${index}`}
             key={user._id}
             user={user}
             roles={roles}

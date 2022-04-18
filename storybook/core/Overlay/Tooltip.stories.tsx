@@ -28,5 +28,5 @@ export const Default = StoryFactory({
   onClose: action('Close'),
   openDelay: 0,
   placement: 'bottom',
-  children: <Button dataCy="">A button</Button>,
+  children: <Button>A button</Button>,
 });

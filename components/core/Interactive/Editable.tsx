@@ -7,27 +7,21 @@ import {
   EditableProps as ChakraEditableProps,
   useEditableControls,
 } from '@chakra-ui/react';
-import { getDataValue, DataAttributes } from 'utils/dataAttributes';
 import IconButton from 'components/core/Interactive/IconButton';
 
-const EditableControls: React.FC<DataAttributes> = ({ dataCy }) => {
+const EditableControls = () => {
   const { isEditing, getEditButtonProps } = useEditableControls();
 
   return isEditing ? null : (
-    <IconButton
-      dataCy={getDataValue(dataCy, 'edit_button')}
-      aria-label="Modifier"
-      icon={<BiEdit size="1.5em" />}
-      {...getEditButtonProps()}
-    />
+    <IconButton aria-label="Modifier" icon={<BiEdit size="1.5em" />} {...getEditButtonProps()} />
   );
 };
 
 export type EditableProps = Omit<ChakraEditableProps, 'value'> & {
   initialValue?: ChakraEditableProps['value'];
-} & DataAttributes;
+};
 
-const Editable: React.FC<EditableProps> = ({ dataCy, initialValue, ...chakraEditableProps }) => {
+const Editable: React.FC<EditableProps> = ({ initialValue, ...chakraEditableProps }) => {
   const [value, setValue] = useState(initialValue);
 
   useEffect(() => setValue(initialValue), [initialValue]);
@@ -38,16 +32,10 @@ const Editable: React.FC<EditableProps> = ({ dataCy, initialValue, ...chakraEdit
   };
 
   return (
-    <ChakraEditable
-      fontSize="md"
-      {...chakraEditableProps}
-      value={value}
-      onChange={handleChange}
-      data-cy={dataCy}
-    >
+    <ChakraEditable fontSize="md" {...chakraEditableProps} value={value} onChange={handleChange}>
       {value && <EditablePreview pe="5" />}
       <EditableInput />
-      <EditableControls dataCy={dataCy} />
+      <EditableControls />
     </ChakraEditable>
   );
 };

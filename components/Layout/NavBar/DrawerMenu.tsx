@@ -1,7 +1,6 @@
 import { chakra, useDisclosure } from '@chakra-ui/react';
 import { RiMenuLine } from 'react-icons/ri';
 import theme from 'theme';
-import { getDataValue } from 'utils/dataAttributes';
 import { NavRoute } from 'utils/routes';
 import { ROUTES_TO_PERMISSIONS } from 'utils/auth';
 import IconButton from 'components/core/Interactive/IconButton';
@@ -27,7 +26,7 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ serverName }) => {
   return (
     <>
       <IconButton
-        dataCy={getDataValue('nav_bar_drawer', 'open')}
+        data-cy="open-drawer-menu"
         aria-label="Open menu"
         icon={<RiMenuLine />}
         onClick={onOpen}
@@ -45,7 +44,7 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ serverName }) => {
                 {Object.values(NavRoute).map(route => (
                   <Secured key={route} permissions={ROUTES_TO_PERMISSIONS[route]}>
                     <NavItem
-                      dataCy={getDataValue('nav_bar_drawer', 'nav_item', route)}
+                      data-cy={route}
                       root={`/${serverName}`}
                       route={route}
                       onClick={onClose}
@@ -56,12 +55,7 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ serverName }) => {
             </chakra.nav>
           </DrawerBody>
           <DrawerFooter>
-            <Button
-              dataCy={getDataValue('nav_bar_drawer', 'nav_item', 'close')}
-              fontSize="3xl"
-              w="full"
-              onClick={onClose}
-            >
+            <Button data-cy="close-menu" fontSize="3xl" w="full" onClick={onClose}>
               Fermer
             </Button>
           </DrawerFooter>

@@ -1,12 +1,9 @@
 import NextImage, { ImageProps as NextImageProps } from 'next/image';
 import { chakra } from '@chakra-ui/react';
-import { DataAttributes } from 'utils/dataAttributes';
 
-export type ImageProps = NextImageProps & DataAttributes;
+export type ImageProps = NextImageProps;
 
-const Image: React.FC<ImageProps> = ({ dataCy, ...props }) => (
-  <NextImage {...props} data-cy={dataCy}></NextImage>
-);
+const Image: React.FC<ImageProps> = imageProps => <NextImage {...imageProps}></NextImage>;
 
 /** Any other props will be interpreted by Chakra (for css) */
 export default chakra(Image, {
@@ -23,6 +20,5 @@ export default chakra(Image, {
       'placeholder',
       'blurDataURL',
       'loader',
-      'dataCy',
     ].includes(prop),
 });

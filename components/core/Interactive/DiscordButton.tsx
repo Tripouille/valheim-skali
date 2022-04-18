@@ -1,15 +1,19 @@
 import { useBoolean } from '@chakra-ui/react';
 import { FaDiscord } from 'react-icons/fa';
-import { DataAttributes } from 'utils/dataAttributes';
+import { CypressProps } from 'utils/types';
 import Button from 'components/core/Interactive/Button';
 import Spinner from 'components/core/Feedback/Spinner';
 
-export interface DiscordButtonProps extends DataAttributes {
+export interface DiscordButtonProps extends CypressProps {
   href: string;
   label?: string;
 }
 
-const DiscordButton: React.FC<DiscordButtonProps> = ({ dataCy, href, label = 'Lien discord' }) => {
+const DiscordButton: React.FC<DiscordButtonProps> = ({
+  'data-cy': dataCy,
+  href,
+  label = 'Lien discord',
+}) => {
   const [isLoading, setLoading] = useBoolean();
 
   const openLink = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,7 +45,7 @@ const DiscordButton: React.FC<DiscordButtonProps> = ({ dataCy, href, label = 'Li
 
   return (
     <Button
-      dataCy={dataCy}
+      data-cy={dataCy}
       as="a"
       href={href}
       leftIcon={isLoading ? <Spinner size="sm" emptyColor="blue.200" /> : <FaDiscord />}

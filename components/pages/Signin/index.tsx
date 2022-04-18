@@ -6,7 +6,6 @@ import Background from 'components/core/Containers/Background';
 import Center from 'components/core/Containers/Center';
 import Button from 'components/core/Interactive/Button';
 import Text from 'components/core/Typography/Text';
-import { getDataValue } from 'utils/dataAttributes';
 import { getRouteParameterAsString } from 'utils/routes';
 import { getAuthErrorMessage } from './utils';
 
@@ -18,16 +17,12 @@ const Signin = () => {
   };
 
   return (
-    <Background h="full">
+    <Background data-cy="signin" h="full">
       <Center h="full" flexDirection="column">
         {router.query.error && (
           <Text mb="3">{getAuthErrorMessage(getRouteParameterAsString(router.query.error))}</Text>
         )}
-        <Button
-          dataCy={getDataValue('signin', 'button')}
-          leftIcon={<GiVikingHelmet />}
-          onClick={onClick}
-        >
+        <Button data-cy="signin" leftIcon={<GiVikingHelmet />} onClick={onClick}>
           Cliquez ici pour vous connecter avec Discord
         </Button>
       </Center>

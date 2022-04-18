@@ -9,11 +9,10 @@ import Paragraphs from 'components/core/Typography/Paragraphs';
 import IconTitle from 'components/core/Typography/IconTitle';
 import DiscordButton from 'components/core/Interactive/DiscordButton';
 import ZoomableImage from 'components/core/Images/ZoomableImage';
-import { getDataValue } from 'utils/dataAttributes';
 
 const Trade = () => {
   return (
-    <Background textAlign="justify">
+    <Background data-cy="trade" textAlign="justify">
       <VStack spacing="8">
         <PageTitle title="Commerce" />
         <Text w="full">
@@ -29,7 +28,7 @@ const Trade = () => {
           <Text>
             Cette liste est à disposition des vikings membres du Valhabba :{' '}
             <DiscordButton
-              dataCy={getDataValue('trade, price_list', 'discord_button')}
+              data-cy="price-list"
               href="https://discord.com/channels/843826987466227722/855814293416443914/932766189153812541"
               label="Lien vers les tarifs de référence"
             />
@@ -57,7 +56,7 @@ const Trade = () => {
             ]}
           />
           <ZoomableImage
-            dataCy={getDataValue('trade', 'oglaf', 'zoomable_image')}
+            data-cy="oglaf"
             src="https://cdn.discordapp.com/attachments/843851399943290921/929479675951063080/SPOILER_unknown.png"
             alt="Image de l'hôtel des ventes"
             height={220}

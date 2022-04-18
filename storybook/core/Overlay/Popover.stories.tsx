@@ -49,7 +49,7 @@ export const Default = StoryFactory({
   children: (
     <>
       <PopoverTrigger>
-        <Button dataCy="">Popover triggering button</Button>
+        <Button>Popover triggering button</Button>
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />

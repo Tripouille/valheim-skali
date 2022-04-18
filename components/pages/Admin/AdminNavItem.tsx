@@ -1,7 +1,6 @@
 import NextLink from 'next/link';
 import { AdminNavRoute, MenuRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
 import { ROUTES_TO_PERMISSIONS } from 'utils/auth';
-import { getDataValue } from 'utils/dataAttributes';
 import Secured from 'components/core/Authentication/Secured';
 import Button from 'components/core/Interactive/Button';
 import Box from 'components/core/Containers/Box';
@@ -17,13 +16,7 @@ const AdminNavItem: React.FC<AdminNavItemProps> = ({ route, hint }) => {
     <Secured permissions={ROUTES_TO_PERMISSIONS[route]}>
       <Flex align="center">
         <NextLink href={`/${serverName}${MenuRoute.ADMIN}${route}`} passHref>
-          <Button
-            dataCy={getDataValue('admin', 'nav', route)}
-            as="a"
-            fontSize="3xl"
-            size="lg"
-            w="full"
-          >
+          <Button data-cy={route} as="a" fontSize="3xl" size="lg" w="full">
             {ROUTES_TO_LABEL[route]}
           </Button>
         </NextLink>

@@ -53,6 +53,7 @@ const Admin = () => {
   return (
     <Flex maxW="full" direction={{ base: 'column', lg: 'row' }} justify="center" h="min-content">
       <Background
+        data-cy="admin-nav"
         bgColor={theme.colors.opaqueBackground}
         as="nav"
         minW="xs"
@@ -78,7 +79,12 @@ const Admin = () => {
           ))}
         </Stack>
       </Background>
-      <Background flex={{ base: 1, lg: 'initial' }} py={[2, 4, 4, 6]} textAlign="center">
+      <Background
+        data-cy="admin"
+        flex={{ base: 1, lg: 'initial' }}
+        py={[2, 4, 4, 6]}
+        textAlign="center"
+      >
         <Secured permissions={ROUTES_TO_PERMISSIONS[route]}>
           <PageTitle title={ROUTES_TO_LABEL[route]} size="xl" mb="4" />
           <QueryHandler query={routeToQuery[route]}>{routeToComponent[route]}</QueryHandler>

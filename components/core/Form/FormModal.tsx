@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Callback, Children } from 'utils/types';
-import { getDataValue, DataAttributes } from 'utils/dataAttributes';
+import { Callback, Children, CypressProps } from 'utils/types';
 import {
   Modal,
   ModalCloseButton,
@@ -15,7 +14,7 @@ import ButtonGroup from 'components/core/Interactive/ButtonGroup';
 import DeletePopover from './DeletePopover';
 
 /** T = CreateObjectData */
-export type FormModalProps<T> = DataAttributes & {
+export type FormModalProps<T> = CypressProps & {
   /** Set initial focus to close button or first tabbable element in modal */
   initialFocusOnCloseButton?: boolean;
   /** Modal is open */
@@ -41,7 +40,14 @@ export type FormModalProps<T> = DataAttributes & {
   );
 
 const FormModal = <T extends object>(props: FormModalProps<T>) => {
-  const { dataCy, formData, getValidationError, canSubmit = true, onSubmit, children } = props;
+  const {
+    'data-cy': dataCy,
+    formData,
+    getValidationError,
+    canSubmit = true,
+    onSubmit,
+    children,
+  } = props;
 
   const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -63,7 +69,7 @@ const FormModal = <T extends object>(props: FormModalProps<T>) => {
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose} initialFocusRef={testRef}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent data-cy={dataCy}>
         {children}
         {(canSubmit || canDelete) && (
           <ModalFooter>
@@ -72,7 +78,6 @@ const FormModal = <T extends object>(props: FormModalProps<T>) => {
                 {canDelete && (
                   <Box>
                     <DeletePopover
-                      dataCy={dataCy}
                       onDelete={props.onDelete}
                       deleteLabel={props.deleteLabel}
                       deletePopoverBody={props.deletePopoverBody}
@@ -81,7 +86,7 @@ const FormModal = <T extends object>(props: FormModalProps<T>) => {
                 )}
                 {canSubmit && (
                   <Button
-                    dataCy={getDataValue(dataCy, 'submit')}
+                    data-cy="submit"
                     colorScheme="green"
                     onClick={handleSubmit}
                     isDisabled={!!validationError}
@@ -94,10 +99,7 @@ const FormModal = <T extends object>(props: FormModalProps<T>) => {
             </Center>
           </ModalFooter>
         )}
-        <ModalCloseButton
-          dataCy={getDataValue(dataCy, 'close_button')}
-          tabIndex={props.initialFocusOnCloseButton ? 1 : 0}
-        />
+        <ModalCloseButton tabIndex={props.initialFocusOnCloseButton ? 1 : 0} />
       </ModalContent>
     </Modal>
   );

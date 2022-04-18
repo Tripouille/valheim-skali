@@ -1,6 +1,5 @@
 import { PlacementWithLogical, useBreakpointValue } from '@chakra-ui/react';
 import { Callback } from 'utils/types';
-import { DataAttributes, getDataValue } from 'utils/dataAttributes';
 import {
   Popover,
   PopoverArrow,
@@ -13,14 +12,13 @@ import {
 } from 'components/core/Overlay/Popover';
 import Button from 'components/core/Interactive/Button';
 
-export interface DeletePopoverProps extends DataAttributes {
+export interface DeletePopoverProps {
   onDelete: Callback;
   deleteLabel: string;
   deletePopoverBody: string;
 }
 
 const DeletePopover: React.FC<DeletePopoverProps> = ({
-  dataCy,
   onDelete,
   deleteLabel,
   deletePopoverBody,
@@ -33,7 +31,7 @@ const DeletePopover: React.FC<DeletePopoverProps> = ({
   return (
     <Popover placement={deletePopoverPlacement} preventOverflow>
       <PopoverTrigger>
-        <Button dataCy={getDataValue(dataCy, 'delete')} colorScheme="red">
+        <Button data-cy="delete" colorScheme="red">
           {deleteLabel}
         </Button>
       </PopoverTrigger>
@@ -43,11 +41,7 @@ const DeletePopover: React.FC<DeletePopoverProps> = ({
         <PopoverHeader>{deleteLabel}</PopoverHeader>
         <PopoverBody>{deletePopoverBody}</PopoverBody>
         <PopoverFooter textAlign="end">
-          <Button
-            dataCy={getDataValue(dataCy, 'delete', 'confirm')}
-            colorScheme="red"
-            onClick={onDelete}
-          >
+          <Button data-cy="confirm-delete" colorScheme="red" onClick={onDelete}>
             Confirmer la suppression
           </Button>
         </PopoverFooter>

@@ -1,18 +1,17 @@
-import { ImageAttributes } from 'utils/types';
-import { DataAttributes, getDataValue } from 'utils/dataAttributes';
+import { ImageAttributes, CypressProps } from 'utils/types';
 import ZoomableImage, { ZoomableImageProps } from 'components/core/Images/ZoomableImage';
 import { HStack } from 'components/core/Containers/Stack';
 
-export interface CarouselProps extends DataAttributes {
+export interface CarouselProps extends CypressProps {
   images: ImageAttributes[];
   height: ZoomableImageProps['height'];
 }
 
-const Carousel: React.FC<CarouselProps> = ({ dataCy, images, height }) => (
-  <HStack spacing="4" py="4" overflow="auto">
+const Carousel: React.FC<CarouselProps> = ({ 'data-cy': dataCy, images, height }) => (
+  <HStack spacing="4" py="4" overflow="auto" data-cy={dataCy}>
     {images.map((imageAttributes, index) => (
       <ZoomableImage
-        dataCy={getDataValue(dataCy, 'zoomable_image', index)}
+        data-cy={`image-${index}`}
         key={imageAttributes.src}
         src={imageAttributes.src}
         alt={imageAttributes.alt}
