@@ -14,9 +14,10 @@ describe('events with read permission', () => {
     });
 
     it('should not display events', () => {
-      Select.eventsCards().should('not.exist');
-      Select.eventCreateButton().should('not.exist');
-      Select.eventEditButton(0).should('not.exist');
+      Select.eventCards().should('not.exist');
+      cy.dataCy('events').should('not.exist');
+      cy.dataCy('create-event').should('not.exist');
+      cy.dataCy('edit').should('not.exist');
     });
   });
 
@@ -28,9 +29,9 @@ describe('events with read permission', () => {
 
     it('should display events but not edition tools', () => {
       cy.main().contains('Événements').should('be.visible');
-      Select.eventsCards().should('have.length', 2);
-      Select.eventCreateButton().should('not.exist');
-      Select.eventEditButton(0).should('not.exist');
+      Select.eventCards().should('have.length', 2);
+      Select.createEventButton().should('not.exist');
+      Select.editEventButton(0).should('not.exist');
     });
   });
 
@@ -45,9 +46,9 @@ describe('events with read permission', () => {
 
     it('should display events but not edition tools', () => {
       cy.main().contains('Événements').should('be.visible');
-      Select.eventsCards().should('have.length', 2);
-      Select.eventCreateButton().should('not.exist');
-      Select.eventEditButton(0).should('not.exist');
+      Select.eventCards().should('have.length', 2);
+      Select.createEventButton().should('not.exist');
+      Select.editEventButton(0).should('not.exist');
     });
   });
 });

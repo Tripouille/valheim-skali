@@ -1,11 +1,8 @@
 import React from 'react';
 import { Box as ChakraBox, BoxProps as ChakraBoxProps } from '@chakra-ui/react';
-import { DataAttributes } from 'utils/dataAttributes';
 
-export type BoxProps = ChakraBoxProps & Partial<DataAttributes>;
+export type BoxProps = ChakraBoxProps;
 
-const Box: React.FC<BoxProps> = ({ dataCy, ...chakraBoxProps }) => (
-  <ChakraBox {...chakraBoxProps} data-cy={dataCy}></ChakraBox>
-);
+const Box: React.FC<BoxProps> = chakraBoxProps => <ChakraBox {...chakraBoxProps}></ChakraBox>;
 
 export default Box;

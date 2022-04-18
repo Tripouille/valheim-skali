@@ -1,18 +1,20 @@
 import React from 'react';
 import { Switch as ChakraSwitch, SwitchProps as ChakraSwitchProps } from '@chakra-ui/react';
-import { DataAttributes } from 'utils/dataAttributes';
+import { CypressProps } from 'utils/types';
 
 export type SwitchProps = Omit<ChakraSwitchProps, 'onChange'> &
-  DataAttributes & {
+  CypressProps & {
     onChange: (newValue: boolean) => void;
   };
 
-const Switch: React.FC<SwitchProps> = ({ dataCy, onChange, ...chakraSwitchProps }) => {
+const Switch: React.FC<SwitchProps> = ({ 'data-cy': dataCy, onChange, ...chakraSwitchProps }) => {
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
     onChange(e.target.checked);
   };
 
-  return <ChakraSwitch {...chakraSwitchProps} data-cy={dataCy} onChange={handleChange} />;
+  return (
+    <ChakraSwitch {...chakraSwitchProps} onChange={handleChange} data-cy={`${dataCy}-switch`} />
+  );
 };
 
 export default Switch;

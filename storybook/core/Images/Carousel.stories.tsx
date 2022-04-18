@@ -15,7 +15,7 @@ const landscapeImage = {
 };
 
 export const Default = StoryFactory({
-  dataCy: '',
+  'data-cy': '',
   images: [
     { src: '/images/valheim-background-q60.jpg', alt: 'Valheim background' },
     landscapeImage,
@@ -24,13 +24,13 @@ export const Default = StoryFactory({
 });
 
 export const WithNoImage = StoryFactory({
-  dataCy: '',
+  'data-cy': '',
   images: [],
   height: 250,
 });
 
 export const WithManyImages = StoryFactory({
-  dataCy: '',
+  'data-cy': '',
   images: Array.from(Array(10).keys()).map(i => ({
     ...landscapeImage,
     src: landscapeImage.src + '#'.repeat(i),

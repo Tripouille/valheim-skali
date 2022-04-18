@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getDataValue, DataAttributes } from 'utils/dataAttributes';
-import { Callback } from 'utils/types';
+import { CypressProps, Callback } from 'utils/types';
 import { CreateRoleData, getRoleValidationError, Role } from 'data/role';
 import {
   isAdminRole,
@@ -25,7 +24,7 @@ const defaultRoleFormData: CreateRoleData = {
   requiredPermissionsToAssign: { [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE },
 };
 
-export type RoleFormProps = DataAttributes & {
+export type RoleFormProps = CypressProps & {
   /** Modal is open */
   isOpen: boolean;
   /** Function to close the modal */
@@ -43,7 +42,7 @@ export type RoleFormProps = DataAttributes & {
   );
 
 const RoleForm: React.FC<RoleFormProps> = (props: RoleFormProps) => {
-  const { dataCy, isOpen, onClose, role, onSubmit } = props;
+  const { 'data-cy': dataCy, isOpen, onClose, role, onSubmit } = props;
 
   const [roleFormData, setRoleFormData] = useState(
     role ? getRoleFormData(role) : defaultRoleFormData,
@@ -82,7 +81,7 @@ const RoleForm: React.FC<RoleFormProps> = (props: RoleFormProps) => {
 
   return (
     <FormModal
-      dataCy={dataCy}
+      data-cy={dataCy}
       isOpen={isOpen}
       onClose={onClose}
       formData={roleFormData}
@@ -119,7 +118,7 @@ const RoleForm: React.FC<RoleFormProps> = (props: RoleFormProps) => {
                   }
                 >
                   <Input
-                    dataCy={getDataValue(dataCy, 'name', 'input')}
+                    data-cy="name"
                     id="role_name"
                     value={roleFormData.name}
                     onChange={name => setRoleFormData(prev => ({ ...prev, name }))}
@@ -131,7 +130,6 @@ const RoleForm: React.FC<RoleFormProps> = (props: RoleFormProps) => {
               <Th></Th>
               <Td>
                 <RolePermissionsForm
-                  dataCy={getDataValue(dataCy, 'permissions')}
                   isAdminRole={!!role && isAdminRole(role)}
                   permissions={roleFormData.permissions}
                   onChange={changePermissions}
@@ -143,7 +141,6 @@ const RoleForm: React.FC<RoleFormProps> = (props: RoleFormProps) => {
                 <Th>Permissions requises pour assigner ce rôle</Th>
                 <Td>
                   <RoleReqPermsForm
-                    dataCy={dataCy}
                     requiredPermissionsToAssign={roleFormData.requiredPermissionsToAssign}
                     setRequiredPermissionsToAssign={requiredPermissionsToAssign =>
                       setRoleFormData(prev => ({ ...prev, requiredPermissionsToAssign }))

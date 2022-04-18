@@ -1,7 +1,7 @@
 import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
 import { Role } from 'data/role';
-import { getDataValue, DataAttributes } from 'utils/dataAttributes';
+import { CypressProps } from 'utils/types';
 import {
   isAdminRole,
   PermissionCategory,
@@ -19,11 +19,11 @@ import useDeleteRole from '../hooks/useDeleteRole';
 import { rowIconSize } from '../utils';
 import RoleForm from './RoleForm';
 
-export interface RoleRowProps extends DataAttributes {
+export interface RoleRowProps extends CypressProps {
   role: Role;
 }
 
-const RoleRow: React.FC<RoleRowProps> = ({ dataCy, role }) => {
+const RoleRow: React.FC<RoleRowProps> = ({ 'data-cy': dataCy, role }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { hasRequiredPermissions } = useSession();
   const updateRole = useUpdateRole(role);
@@ -34,7 +34,7 @@ const RoleRow: React.FC<RoleRowProps> = ({ dataCy, role }) => {
   });
 
   return (
-    <Tr cursor={hasRoleWritePermission ? 'pointer' : 'auto'} onClick={onOpen}>
+    <Tr cursor={hasRoleWritePermission ? 'pointer' : 'auto'} onClick={onOpen} data-cy={dataCy}>
       <Td textAlign="center">
         <Tag label={role.name} />
       </Td>
@@ -61,7 +61,7 @@ const RoleRow: React.FC<RoleRowProps> = ({ dataCy, role }) => {
       <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE }}>
         <Td>
           <IconButton
-            dataCy={getDataValue(dataCy, 'edit')}
+            data-cy="edit"
             aria-label="Modifier le rôle"
             title="Modifier le rôle"
             icon={<BiEdit size="30" />}
@@ -70,7 +70,7 @@ const RoleRow: React.FC<RoleRowProps> = ({ dataCy, role }) => {
             onClick={onOpen}
           />
           <RoleForm
-            dataCy={getDataValue(dataCy, 'modal')}
+            data-cy="edit-role"
             isOpen={isOpen}
             onClose={onClose}
             role={role}

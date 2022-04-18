@@ -4,7 +4,7 @@ describe('connect', () => {
   });
 
   it('Connect button should be display', () => {
-    cy.dataCy('nav_bar-menu-button').click();
-    cy.dataCy('nav_bar-menu-dropdown-sign_in_out').should('be.visible');
+    cy.dataCy('nav-bar').dataCy('menu', 'button').click();
+    cy.dataCy('nav-bar').dataCy('sign-in-out').should('be.visible');
   });
 });

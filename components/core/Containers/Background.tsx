@@ -1,17 +1,18 @@
 import React from 'react';
 import { As, chakra, shouldForwardProp } from '@chakra-ui/react';
-import { Children } from 'utils/types';
+import { CypressProps, Children } from 'utils/types';
 import Box from 'components/core/Containers/Box';
 import theme from 'theme';
 
-export interface BackgroundProps {
+export interface BackgroundProps extends Partial<CypressProps> {
   className?: string;
   as?: As;
   children: Children;
 }
 
-const Background: React.FC<BackgroundProps> = ({ children, className, as }) => (
+const Background: React.FC<BackgroundProps> = ({ 'data-cy': dataCy, children, className, as }) => (
   <Box
+    data-cy={dataCy}
     as={as}
     bgColor={theme.colors.background}
     h="min-content"

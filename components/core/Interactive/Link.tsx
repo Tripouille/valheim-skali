@@ -1,11 +1,8 @@
 import React from 'react';
 import { Link as ChakraLink, LinkProps as ChakraLinkProps } from '@chakra-ui/react';
-import { DataAttributes } from 'utils/dataAttributes';
 
-export type LinkProps = ChakraLinkProps & DataAttributes;
+export type LinkProps = ChakraLinkProps;
 
-const Link: React.FC<LinkProps> = ({ dataCy, ...chakraLinkProps }) => (
-  <ChakraLink {...chakraLinkProps} data-cy={dataCy}></ChakraLink>
-);
+const Link: React.FC<LinkProps> = chakraLinkProps => <ChakraLink {...chakraLinkProps}></ChakraLink>;
 
 export default Link;

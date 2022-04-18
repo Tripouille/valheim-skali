@@ -22,7 +22,6 @@ const { defaultExport, StoryFactory } = storybookSetup<TextareaProps>(
 export default defaultExport;
 
 export const Default = StoryFactory({
-  dataCy: '',
   id: 'textarea_story',
   onChange: action('Changed'),
   errorBorderColor: 'red.500',

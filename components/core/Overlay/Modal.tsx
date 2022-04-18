@@ -16,7 +16,7 @@ import {
   ModalFooterProps as ChakraModalFooterProps,
 } from '@chakra-ui/react';
 import theme from 'theme';
-import { DataAttributes } from 'utils/dataAttributes';
+import { CypressProps } from 'utils/types';
 
 export type ModalProps = ChakraModalProps;
 
@@ -33,25 +33,26 @@ export const ModalOverlay: React.FC<ModalOverlayProps> = chakraModalOverlayProps
   ></ChakraModalOverlay>
 );
 
-export type ModalContentProps = ChakraModalContentProps;
+export type ModalContentProps = ChakraModalContentProps & CypressProps;
 
-export const ModalContent: React.FC<ModalContentProps> = chakraModalContentProps => (
+export const ModalContent: React.FC<ModalContentProps> = ({
+  'data-cy': dataCy,
+  ...chakraModalContentProps
+}) => (
   <ChakraModalContent
     bgColor={theme.colors.opaqueBackground}
     border="1px silver solid"
     {...chakraModalContentProps}
+    data-cy={`${dataCy}-modal`}
   ></ChakraModalContent>
 );
 
-export type ModalCloseButtonProps = ChakraModalCloseButtonProps & DataAttributes;
+export type ModalCloseButtonProps = ChakraModalCloseButtonProps;
 
-export const ModalCloseButton: React.FC<ModalCloseButtonProps> = ({
-  dataCy,
-  ...chakraModalCloseButtonProps
-}) => (
+export const ModalCloseButton: React.FC<ModalCloseButtonProps> = chakraModalCloseButtonProps => (
   <ChakraModalCloseButton
     {...chakraModalCloseButtonProps}
-    data-cy={dataCy}
+    data-cy="close-modal"
   ></ChakraModalCloseButton>
 );
 

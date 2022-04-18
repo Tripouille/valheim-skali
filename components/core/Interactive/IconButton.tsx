@@ -4,15 +4,12 @@ import {
   IconButton as ChakraIconButton,
   IconButtonProps as ChakraIconButtonProps,
 } from '@chakra-ui/react';
-import { DataAttributes } from 'utils/dataAttributes';
 
-export type IconButtonProps = ChakraIconButtonProps & DataAttributes;
+export type IconButtonProps = ChakraIconButtonProps;
 
-const IconButton = forwardRef<IconButtonProps, 'button'>(
-  ({ dataCy, ...chakraIconButtonProps }, ref) => (
-    <ChakraIconButton {...chakraIconButtonProps} data-cy={dataCy} ref={ref}></ChakraIconButton>
-  ),
-);
+const IconButton = forwardRef<IconButtonProps, 'button'>((chakraIconButtonProps, ref) => (
+  <ChakraIconButton {...chakraIconButtonProps} ref={ref}></ChakraIconButton>
+));
 
 IconButton.displayName = 'IconButton';
 export default IconButton;

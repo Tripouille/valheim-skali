@@ -6,7 +6,6 @@ import {
   PERMISSION_CATEGORY_TO_LABEL,
   PERMISSION_PRIVILEGE_TO_LABEL,
 } from 'utils/auth';
-import { DataAttributes, getDataValue } from 'utils/dataAttributes';
 import { Table, Tbody, Td, Th, Tr } from 'components/core/DataDisplay/Table';
 import { FormLabel } from 'components/core/Form/FormControl';
 import Select from 'components/core/Form/Select';
@@ -14,7 +13,7 @@ import Flex from 'components/core/Containers/Flex';
 import Tooltip from 'components/core/Overlay/Tooltip';
 import { modalTableHeaderWidth } from '../utils';
 
-export interface RoleReqPermsFormProps extends DataAttributes {
+export interface RoleReqPermsFormProps {
   requiredPermissionsToAssign: Permissions;
   setRequiredPermissionsToAssign: (requiredPermissionsToAssign: Permissions) => void;
   isAdminRole: boolean;
@@ -23,7 +22,6 @@ export interface RoleReqPermsFormProps extends DataAttributes {
 
 /** "Required permissions to assign the role" form in role modal */
 const RoleReqPermsForm: React.FC<RoleReqPermsFormProps> = ({
-  dataCy,
   requiredPermissionsToAssign,
   setRequiredPermissionsToAssign,
   roleHasUserWritePermission,
@@ -47,7 +45,6 @@ const RoleReqPermsForm: React.FC<RoleReqPermsFormProps> = ({
           <Td>
             <Flex align="center">
               <Select
-                dataCy={getDataValue(dataCy, 'required_to_assign', 'select')}
                 id="required_to_assign"
                 maxW="sm"
                 value={requiredPermissionsToAssign[PermissionCategory.USER]}

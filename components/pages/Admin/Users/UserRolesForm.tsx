@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { User } from 'data/user';
 import { compareRolesFromName, Role } from 'data/role';
-import { getDataValue, DataAttributes } from 'utils/dataAttributes';
 import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
 import useSession from 'utils/hooks/useSession';
 import { Wrap } from 'components/core/Containers/Wrap';
@@ -13,12 +12,12 @@ import Button from 'components/core/Interactive/Button';
 import useUpdateUser from '../hooks/useUpdateUser';
 import { canUserAssignRole, getUserRoles } from '../utils';
 
-export interface UserRolesFormProps extends DataAttributes {
+export interface UserRolesFormProps {
   user: User;
   roles: Role[];
 }
 
-const UserRolesForm: React.FC<UserRolesFormProps> = ({ dataCy, user, roles }) => {
+const UserRolesForm: React.FC<UserRolesFormProps> = ({ user, roles }) => {
   const session = useSession();
   const { addRoleToUser, removeRoleFromUser } = useUpdateUser(user);
 
@@ -50,27 +49,21 @@ const UserRolesForm: React.FC<UserRolesFormProps> = ({ dataCy, user, roles }) =>
             label={role.name}
             size="lg"
             onClose={canRemoveRole(role) ? removeRoleFromUser(role) : undefined}
-            dataCy={getDataValue(dataCy, 'roles', role._id)}
+            data-cy={role.name}
           />
         ) : null;
       })}
       {addableRoles.length > 0 && (
         <Box>
           <Menu placement="bottom" gutter={0}>
-            <MenuButton
-              dataCy={getDataValue(dataCy, 'add_role')}
-              as={Button}
-              leftIcon={<BsPlusLg />}
-              lineHeight="1em"
-              colorScheme="green"
-            >
+            <MenuButton as={Button} leftIcon={<BsPlusLg />} lineHeight="1em" colorScheme="green">
               Ajouter un rôle
             </MenuButton>
             <MenuList minW="min-content">
               {addableRoles.map(role => (
                 <MenuItem
                   key={role._id}
-                  dataCy={getDataValue(dataCy, 'add_role', role._id)}
+                  data-cy={`add-role-${role.name}`}
                   justifyContent="center"
                   onClick={addRoleToUser(role)}
                 >

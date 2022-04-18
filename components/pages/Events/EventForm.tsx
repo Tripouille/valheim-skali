@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { DateTime } from 'luxon';
-import { getDataValue, DataAttributes } from 'utils/dataAttributes';
+import { CypressProps, Callback } from 'utils/types';
 import { CONTINUOUS_LABEL } from 'utils/constants';
-import { Callback } from 'utils/types';
 import {
   CreateEventData,
   Event,
@@ -25,7 +24,7 @@ const getDefaultEventFormData = (): Partial<CreateEventData> => ({
   startDate: DateTime.now().startOf('day').toISO({ includeOffset: false }),
 });
 
-export type EventFormProps = DataAttributes & {
+export type EventFormProps = CypressProps & {
   /** Modal is open */
   isOpen: boolean;
   /** Function to close the modal */
@@ -43,7 +42,7 @@ export type EventFormProps = DataAttributes & {
   );
 
 const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
-  const { dataCy, isOpen, onClose, event, onSubmit } = props;
+  const { 'data-cy': dataCy, isOpen, onClose, event, onSubmit } = props;
 
   const endDateInputRef = useRef<HTMLInputElement>(null);
 
@@ -62,7 +61,7 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
 
   return (
     <FormModal
-      dataCy={dataCy}
+      data-cy={dataCy}
       isOpen={isOpen}
       onClose={onClose}
       formData={eventFormData}
@@ -84,7 +83,7 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
         <Stack spacing="5">
           <FormElement label="Nom" isRequired>
             <Input
-              dataCy={getDataValue(dataCy, 'name', 'input')}
+              data-cy="name"
               value={eventFormData.name ?? ''}
               onChange={name => setEventFormData(prev => ({ ...prev, name }))}
               maxLength={EVENT_VALUES_MAX_LENGTH.name}
@@ -95,7 +94,7 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
             hint="Exemple: https://discord.com/channels/843826987466227722/885962703330508811/916087663176593458"
           >
             <Input
-              dataCy={getDataValue(dataCy, 'discord_link', 'input')}
+              data-cy="discord_link"
               value={eventFormData.discordLink ?? ''}
               onChange={discordLink => setEventFormData(prev => ({ ...prev, discordLink }))}
               maxLength={EVENT_VALUES_MAX_LENGTH.discordLink}
@@ -103,7 +102,7 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
           </FormElement>
           <FormElement label="Date de début" isRequired>
             <Input
-              dataCy={getDataValue(dataCy, 'start_date', 'input')}
+              data-cy="start_date"
               type="datetime-local"
               value={eventFormData.startDate ?? ''}
               onChange={startDate => setEventFormData(prev => ({ ...prev, startDate }))}
@@ -111,7 +110,7 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
           </FormElement>
           <FormElement label="Date de fin">
             <Input
-              dataCy={getDataValue(dataCy, 'end_date', 'input')}
+              data-cy="end_date"
               type="datetime-local"
               value={eventFormData.endDate ?? ''}
               onChange={endDate => setEventFormData(prev => ({ ...prev, endDate }))}
@@ -120,7 +119,7 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
           </FormElement>
           <FormElement label={`${CONTINUOUS_LABEL} ?`}>
             <Switch
-              dataCy={getDataValue(dataCy, 'continuous', 'switch')}
+              data-cy="continuous"
               isChecked={eventFormData.continuous}
               onChange={continuous => setEventFormData(prev => ({ ...prev, continuous }))}
               w="full"
@@ -129,7 +128,7 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
           </FormElement>
           <FormElement label="Lieu">
             <Input
-              dataCy={getDataValue(dataCy, 'location', 'input')}
+              data-cy="location"
               value={eventFormData.location ?? ''}
               onChange={location => setEventFormData(prev => ({ ...prev, location }))}
               maxLength={EVENT_VALUES_MAX_LENGTH.location}
@@ -137,7 +136,6 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
           </FormElement>
           <FormElement label="Tags">
             <EventTagsForm
-              dataCy={getDataValue(dataCy, 'tags')}
               tags={eventFormData.tags}
               onTagsChange={(fn: (oldTags: string[]) => string[]) =>
                 setEventFormData(prev => ({ ...prev, tags: fn(prev.tags ?? []) }))
@@ -148,7 +146,7 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
           </FormElement>
           <FormElement label="Description RP">
             <Textarea
-              dataCy={getDataValue(dataCy, 'RPDescription', 'textarea')}
+              data-cy="RPDescription"
               value={eventFormData.RPDescription ?? ''}
               onChange={RPDescription => setEventFormData(prev => ({ ...prev, RPDescription }))}
               maxLength={EVENT_VALUES_MAX_LENGTH.RPDescription}
@@ -156,7 +154,7 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
           </FormElement>
           <FormElement label="Description" isRequired>
             <Textarea
-              dataCy={getDataValue(dataCy, 'description', 'textarea')}
+              data-cy="description"
               value={eventFormData.description ?? ''}
               onChange={description => setEventFormData(prev => ({ ...prev, description }))}
               maxLength={EVENT_VALUES_MAX_LENGTH.description}

@@ -1,7 +1,7 @@
 import React, { KeyboardEventHandler, MouseEventHandler } from 'react';
 import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
-import { getDataValue, DataAttributes } from 'utils/dataAttributes';
+import { CypressProps } from 'utils/types';
 import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
 import { Event } from 'data/event';
 import Secured from 'components/core/Authentication/Secured';
@@ -21,11 +21,11 @@ import { editIconSize, EventContext, isEventClosed } from './utils';
 import EventItem from './EventItem';
 import EventForm from './EventForm';
 
-export interface EventCardProps extends DataAttributes {
+export interface EventCardProps extends CypressProps {
   event: Event;
 }
 
-const EventCard: React.FC<EventCardProps> = ({ dataCy, event }) => {
+const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event }) => {
   const itemModal = useDisclosure();
   const editModal = useDisclosure();
 
@@ -49,7 +49,7 @@ const EventCard: React.FC<EventCardProps> = ({ dataCy, event }) => {
   return (
     <>
       <Box
-        dataCy={getDataValue(dataCy, 'card')}
+        data-cy={dataCy}
         role="button"
         tabIndex={0}
         position="relative"
@@ -65,7 +65,7 @@ const EventCard: React.FC<EventCardProps> = ({ dataCy, event }) => {
       >
         <Secured permissions={{ [PermissionCategory.EVENT]: PermissionPrivilege.READ_WRITE }}>
           <IconButton
-            dataCy={getDataValue(dataCy, 'edit_button')}
+            data-cy="edit"
             position="absolute"
             top="3"
             right="3"
@@ -78,29 +78,19 @@ const EventCard: React.FC<EventCardProps> = ({ dataCy, event }) => {
             onKeyPress={e => e.stopPropagation()}
           />
         </Secured>
-        <EventItem
-          dataCy={getDataValue(dataCy, 'card')}
-          event={event}
-          context={EventContext.LIST}
-          eventIsClosed={eventIsClosed}
-        />
+        <EventItem event={event} context={EventContext.LIST} eventIsClosed={eventIsClosed} />
       </Box>
       <Modal isOpen={itemModal.isOpen} onClose={itemModal.onClose}>
         <ModalOverlay />
-        <ModalContent border="2px white solid">
-          <ModalCloseButton dataCy={getDataValue(dataCy, 'close_button')} />
+        <ModalContent data-cy={dataCy} border="2px white solid">
+          <ModalCloseButton />
           <ModalBody>
-            <EventItem
-              dataCy={getDataValue(dataCy, 'modal')}
-              event={event}
-              context={EventContext.MODAL}
-              eventIsClosed={eventIsClosed}
-            />
+            <EventItem event={event} context={EventContext.MODAL} eventIsClosed={eventIsClosed} />
           </ModalBody>
         </ModalContent>
       </Modal>
       <EventForm
-        dataCy={getDataValue(dataCy, 'edit_modal')}
+        data-cy="edit-event"
         event={event}
         isOpen={editModal.isOpen}
         onClose={editModal.onClose}

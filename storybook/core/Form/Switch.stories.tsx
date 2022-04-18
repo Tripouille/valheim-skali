@@ -11,7 +11,7 @@ const { defaultExport, StoryFactory } = storybookSetup<SwitchProps>(
 export default defaultExport;
 
 export const Default = StoryFactory({
-  dataCy: '',
+  'data-cy': '',
   onChange: action('Changed'),
   colorScheme: 'blue',
   isDisabled: false,

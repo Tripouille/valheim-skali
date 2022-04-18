@@ -1,7 +1,6 @@
 import { BsPlusLg } from 'react-icons/bs';
 import { useDisclosure } from '@chakra-ui/react';
 import { Role } from 'data/role';
-import { getDataValue } from 'utils/dataAttributes';
 import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
 import Button from 'components/core/Interactive/Button';
 import Secured from 'components/core/Authentication/Secured';
@@ -22,7 +21,7 @@ const Roles: React.FC<RolesProps> = ({ roles = [] }) => {
       <RolesTable roles={roles} />
       <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE }}>
         <Button
-          dataCy={getDataValue('roles', 'create', 'button')}
+          data-cy="create-role"
           leftIcon={<BsPlusLg />}
           colorScheme="green"
           mt="5"
@@ -30,12 +29,7 @@ const Roles: React.FC<RolesProps> = ({ roles = [] }) => {
         >
           Créer un rôle
         </Button>
-        <RoleForm
-          dataCy={getDataValue('roles', 'create', 'modal')}
-          isOpen={isOpen}
-          onSubmit={createRole}
-          onClose={onClose}
-        />
+        <RoleForm data-cy="create-role" isOpen={isOpen} onSubmit={createRole} onClose={onClose} />
       </Secured>
     </>
   );

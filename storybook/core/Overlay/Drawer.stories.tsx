@@ -20,7 +20,7 @@ const { defaultExport, StoryFactory } = storybookSetup<DrawerProps>(
       Story => (
         <Box h="800px">
           <Story />
-          <Button dataCy="">Test button for focus</Button>
+          <Button>Test button for focus</Button>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis praesentium voluptatum
             earum dignissimos reprehenderit magnam at asperiores corporis rem eius laudantium

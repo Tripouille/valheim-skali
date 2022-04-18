@@ -2,14 +2,13 @@ import React, { KeyboardEventHandler, RefObject, useEffect, useRef, useState } f
 import { BsPlusLg } from 'react-icons/bs';
 import { EVENT_TAG_MAX_LENGTH } from 'data/event';
 import { CONTINUOUS_LABEL } from 'utils/constants';
-import { DataAttributes, getDataValue } from 'utils/dataAttributes';
 import { FormControl } from 'components/core/Form/FormControl';
 import Combobox from 'components/core/Form/Combobox';
 import Input from 'components/core/Form/Input';
 import IconButton from 'components/core/Interactive/IconButton';
 import useFilteredTags from './hooks/useFilteredTags';
 
-export interface EventNewTagFormProps extends DataAttributes {
+export interface EventNewTagFormProps {
   tags: string[];
   onTagsChange: (fn: (oldTags: string[]) => string[]) => void;
   continuous: boolean;
@@ -18,7 +17,6 @@ export interface EventNewTagFormProps extends DataAttributes {
 }
 
 const EventNewTagForm: React.FC<EventNewTagFormProps> = ({
-  dataCy,
   tags,
   onTagsChange,
   continuous,
@@ -93,7 +91,7 @@ const EventNewTagForm: React.FC<EventNewTagFormProps> = ({
       >
         {({ getInputProps }) => (
           <Input
-            dataCy={getDataValue(dataCy, 'input')}
+            data-cy="new-tag"
             w="36"
             showInvalidOverFocus
             maxLength={EVENT_TAG_MAX_LENGTH}
@@ -103,7 +101,7 @@ const EventNewTagForm: React.FC<EventNewTagFormProps> = ({
         )}
       </Combobox>
       <IconButton
-        dataCy={getDataValue(dataCy, 'submit_button')}
+        data-cy="submit-new-tag"
         aria-label="Ajouter le tag"
         icon={<BsPlusLg />}
         colorScheme="green"

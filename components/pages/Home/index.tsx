@@ -1,5 +1,4 @@
 import React from 'react';
-import { getDataValue } from 'utils/dataAttributes';
 import Heading from 'components/core/Typography/Heading';
 import Box from 'components/core/Containers/Box';
 import PageTitle from 'components/core/Typography/PageTitle';
@@ -9,7 +8,7 @@ import Carousel from 'components/core/Images/Carousel';
 import { VStack } from 'components/core/Containers/Stack';
 
 const Home = () => (
-  <Background textAlign="justify">
+  <Background data-cy="home" textAlign="justify">
     <VStack spacing="8">
       <PageTitle title="Bienvenue au Skali du Valhabba" />
 
@@ -33,7 +32,7 @@ const Home = () => (
           Quelques souvenirs
         </Heading>
         <Carousel
-          dataCy={getDataValue('home', 'memory', 'carousel')}
+          data-cy="memory"
           images={[
             {
               src: 'https://media.discordapp.net/attachments/843884013122486352/919186234646097940/A8.png',
@@ -109,7 +108,7 @@ const Home = () => (
           Quelques paysages
         </Heading>
         <Carousel
-          dataCy={getDataValue('home', 'landscape', 'carousel')}
+          data-cy="landscape"
           images={[
             {
               src: 'https://media.discordapp.net/attachments/894670894012727357/916819870811815946/paysage_gd_nord.png',
@@ -173,7 +172,7 @@ const Home = () => (
           Quelques statistiques
         </Heading>
         <Carousel
-          dataCy={getDataValue('home', 'statistics', 'carousel')}
+          data-cy="statistics"
           images={[
             {
               src: 'https://media.discordapp.net/attachments/843884013122486352/917910351889170542/unknown.png',

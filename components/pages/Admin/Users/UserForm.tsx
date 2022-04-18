@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
-import { getDataValue, DataAttributes } from 'utils/dataAttributes';
-import { Callback } from 'utils/types';
+import { CypressProps, Callback } from 'utils/types';
 import { User } from 'data/user';
 import { Role } from 'data/role';
 import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
@@ -23,14 +22,14 @@ import {
   canUserAssignRole,
 } from '../utils';
 
-export interface UserFormProps extends DataAttributes {
+export interface UserFormProps extends CypressProps {
   isOpen: boolean;
   onClose: Callback;
   user: User;
   roles: Role[];
 }
 
-const UserForm: React.FC<UserFormProps> = ({ dataCy, isOpen, onClose, user, roles }) => {
+const UserForm: React.FC<UserFormProps> = ({ 'data-cy': dataCy, isOpen, onClose, user, roles }) => {
   const { updateUserNameInGame } = useUpdateUser(user);
   const deleteUser = useDeleteUser(user);
   const session = useSession();
@@ -45,7 +44,7 @@ const UserForm: React.FC<UserFormProps> = ({ dataCy, isOpen, onClose, user, role
 
   return (
     <FormModal
-      dataCy={dataCy}
+      data-cy={dataCy}
       initialFocusOnCloseButton
       isOpen={isOpen}
       onClose={onClose}
@@ -58,7 +57,7 @@ const UserForm: React.FC<UserFormProps> = ({ dataCy, isOpen, onClose, user, role
     >
       <ModalHeader>
         <Center>
-          <UserAvatar dataCy={dataCy} src={user.image} />
+          <UserAvatar src={user.image} />
           <Text px="5" maxW="80%" variant="limitedWidth">
             {user.name}
           </Text>
@@ -74,11 +73,7 @@ const UserForm: React.FC<UserFormProps> = ({ dataCy, isOpen, onClose, user, role
                   permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}
                   fallback={<Text>{user.nameInGame}</Text>}
                 >
-                  <Editable
-                    dataCy={getDataValue(dataCy, 'name_in_game', 'editable')}
-                    initialValue={user.nameInGame}
-                    onSubmit={updateUserNameInGame}
-                  />
+                  <Editable initialValue={user.nameInGame} onSubmit={updateUserNameInGame} />
                 </Secured>
               </Td>
             </Tr>
@@ -86,7 +81,7 @@ const UserForm: React.FC<UserFormProps> = ({ dataCy, isOpen, onClose, user, role
               <Tr>
                 <Th>Rôles</Th>
                 <Td>
-                  <UserRolesForm dataCy={dataCy} user={user} roles={roles} />
+                  <UserRolesForm user={user} roles={roles} />
                 </Td>
               </Tr>
             </Secured>

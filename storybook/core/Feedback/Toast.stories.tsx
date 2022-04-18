@@ -18,22 +18,17 @@ export const Default: ComponentStory<typeof Toast> = () => {
 
   return (
     <HStack>
-      <Input dataCy="" placeholder="Toast title" value={title} onChange={setTitle} w="300px" />
+      <Input placeholder="Toast title" value={title} onChange={setTitle} w="300px" />
       <Input
-        dataCy=""
         placeholder="Toast description"
         value={description}
         onChange={setDescription}
         w="300px"
       />
-      <Button dataCy="" colorScheme="red" onClick={() => displayErrorToast({ title, description })}>
+      <Button colorScheme="red" onClick={() => displayErrorToast({ title, description })}>
         Create error toast
       </Button>
-      <Button
-        dataCy=""
-        colorScheme="green"
-        onClick={() => displaySuccessToast({ title, description })}
-      >
+      <Button colorScheme="green" onClick={() => displaySuccessToast({ title, description })}>
         Create success toast
       </Button>
     </HStack>

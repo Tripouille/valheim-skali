@@ -4,12 +4,11 @@ import {
   ButtonProps as ChakraButtonProps,
   forwardRef,
 } from '@chakra-ui/react';
-import { DataAttributes } from 'utils/dataAttributes';
 
-export type ButtonProps = ChakraButtonProps & DataAttributes;
+export type ButtonProps = ChakraButtonProps;
 
-const Button = forwardRef<ButtonProps, 'button'>(({ dataCy, ...chakraButtonProps }, ref) => (
-  <ChakraButton {...chakraButtonProps} data-cy={dataCy} ref={ref} />
+const Button = forwardRef<ButtonProps, 'button'>((chakraButtonProps, ref) => (
+  <ChakraButton {...chakraButtonProps} ref={ref} />
 ));
 
 Button.displayName = 'Button';

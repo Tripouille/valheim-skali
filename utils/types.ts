@@ -23,3 +23,8 @@ export type Setter<T> = Dispatch<SetStateAction<T>>;
 export interface HydrationProps {
   dehydratedState: string;
 }
+
+export interface CypressProps {
+  /** Cypress */
+  'data-cy': string;
+}

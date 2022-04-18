@@ -18,7 +18,6 @@ const { defaultExport, StoryFactory } = storybookSetup<InputProps>(Input, StoryC
 export default defaultExport;
 
 export const Default = StoryFactory({
-  dataCy: '',
   id: 'input_story',
   onChange: action('Changed'),
   errorBorderColor: 'red.500',
