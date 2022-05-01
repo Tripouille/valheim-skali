@@ -28,12 +28,12 @@ const EventItem: React.FC<EventItemProps> = ({ event, context, eventIsClosed }) 
 
   return (
     <Stack>
-      <Flex direction={{ base: 'column', md: 'row' }} align="center">
+      <Flex direction={{ base: 'column', md: 'row' }} align="center" gap={{ base: 2, md: 6 }}>
         <Box w={{ base: '', md: '22%' }} textAlign="left">
           {event.discordLink && <DiscordButton data-cy="discord-link" href={event.discordLink} />}
         </Box>
         <Heading
-          w="56%"
+          w={{ base: 'full', md: '56%' }}
           size="lg"
           textAlign="center"
           variant="limitedWidth"
