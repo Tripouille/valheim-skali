@@ -28,12 +28,13 @@ const EventItem: React.FC<EventItemProps> = ({ event, context, eventIsClosed }) 
 
   return (
     <Stack>
-      <Flex direction={{ base: 'column', md: 'row' }} align="center" gap={{ base: 2, md: 6 }}>
+      <Flex direction={{ base: 'column', md: 'row' }} align="center" gap={{ base: 2, md: 0 }}>
         <Box w={{ base: '', md: '22%' }} textAlign="left">
           {event.discordLink && <DiscordButton data-cy="discord-link" href={event.discordLink} />}
         </Box>
         <Heading
           w={{ base: 'full', md: '56%' }}
+          px="4"
           size="lg"
           textAlign="center"
           variant="limitedWidth"
@@ -42,12 +43,14 @@ const EventItem: React.FC<EventItemProps> = ({ event, context, eventIsClosed }) 
           {event.name} {eventIsClosed && '(terminé)'}
         </Heading>
       </Flex>
-      <Wrap justify="center">
-        {event.tags.map(tag => (
-          <Tag key={tag} label={tag} />
-        ))}
-        {event.continuous && <Tag label={CONTINUOUS_LABEL} />}
-      </Wrap>
+      {event.tags.length && (
+        <Wrap justify="center">
+          {event.tags.map(tag => (
+            <Tag key={tag} label={tag} />
+          ))}
+          {event.continuous && <Tag label={CONTINUOUS_LABEL} />}
+        </Wrap>
+      )}
       <Text textAlign="center" fontStyle="italic" pb="2">
         {formatDateInterval(event.startDate, event.endDate, !event.continuous)}
         {event.location && ` - ${event.location}`}
