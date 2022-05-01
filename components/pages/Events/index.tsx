@@ -23,28 +23,25 @@ const Events = () => {
       <Background data-cy="events">
         <VStack spacing="7" position="relative">
           <PageTitle title="Événements" />
+          <Secured permissions={{ [PermissionCategory.EVENT]: PermissionPrivilege.READ_WRITE }}>
+            <Button
+              data-cy="create-event"
+              alignSelf={{ base: 'center', md: 'end' }}
+              mt={{ base: '1rem !important', md: '0 !important' }}
+              leftIcon={<BsPlusLg />}
+              colorScheme="green"
+              onClick={onOpen}
+            >
+              Créer un événement
+            </Button>
+            <EventForm
+              data-cy="create-event"
+              isOpen={isOpen}
+              onSubmit={createEvent}
+              onClose={onClose}
+            />
+          </Secured>
           <QueryHandler query={eventsQuery}>
-            <Secured permissions={{ [PermissionCategory.EVENT]: PermissionPrivilege.READ_WRITE }}>
-              <Button
-                data-cy="create-event"
-                position="absolute"
-                top={0}
-                right={0}
-                mt="0 !important"
-                leftIcon={<BsPlusLg />}
-                colorScheme="green"
-                alignSelf="end"
-                onClick={onOpen}
-              >
-                Créer un événement
-              </Button>
-              <EventForm
-                data-cy="create-event"
-                isOpen={isOpen}
-                onSubmit={createEvent}
-                onClose={onClose}
-              />
-            </Secured>
             {eventsQuery.data?.map((event, index) => (
               <EventCard data-cy={`event-${index}`} key={event._id} event={event} />
             ))}
