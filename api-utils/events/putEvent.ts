@@ -5,7 +5,7 @@ import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
 import { requirePermissions } from 'api-utils/auth';
 import { ServerException, replaceOneInCollection } from 'api-utils/common';
 import db from '../db';
-import { getNewEventFromBody } from './utils';
+import { getNewEventFromBody, revalidateEventsPage } from './utils';
 
 const putEvent = async (req: Req, res: Res) => {
   await requirePermissions({ [PermissionCategory.EVENT]: PermissionPrivilege.READ_WRITE }, req);
@@ -20,6 +20,8 @@ const putEvent = async (req: Req, res: Res) => {
   if (!result.ok) throw new ServerException(500);
 
   res.status(200).json(result.value);
+
+  revalidateEventsPage(res);
 };
 
 export default putEvent;
