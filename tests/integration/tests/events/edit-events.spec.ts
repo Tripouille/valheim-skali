@@ -12,7 +12,9 @@ describe('events with edit permission', () => {
   beforeEach(() => {
     Action.seedEvents();
     cy.login();
+    cy.intercept('GET', APIRoute.EVENTS).as('events');
     Action.visitEventsPage();
+    cy.wait('@events');
   });
 
   it('should be able to create events', () => {
