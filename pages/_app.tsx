@@ -11,8 +11,8 @@ import theme from 'theme';
 import { queryClient, QueryKeys } from 'utils/queryClient';
 import { HydrationProps } from 'utils/types';
 
-/** Page props are those of getServerSideProps (if defined in page),
- * initial props are returned by MyApp.getInitialProps */
+/** Page props are those of getStaticProps (if defined in page),
+ * layout props are returned by MyApp.getInitialProps */
 const MyApp = ({
   Component,
   pageProps,
@@ -56,7 +56,9 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
     const { getVisitorPermissions } = await import('api-utils/auth');
     return {
       layoutProps: await getHydrationProps(async serverQueryClient => {
-        const session = await getSession({ req });
+        // Avoid warning at build where request has no cookie
+        // (because getSession calls an api route and requires header with cookies or no header)
+        const session = req.headers.cookie ? await getSession({ req }) : null;
         serverQueryClient.setQueryData(QueryKeys.SESSION, session);
         if (!session) {
           const visitorPermissions = await getVisitorPermissions();
