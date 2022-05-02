@@ -15,7 +15,7 @@ const Home = () => (
       <Box w="full">
         <Paragraphs
           paragraphs={[
-            `Mis en ligne le 20 mai par plusieurs joueurs expérimentés, Valhabba est un serveur de jeu
+            `Mis en ligne le 20 mai 2021 par plusieurs joueurs expérimentés, Valhabba est un serveur de jeu
         Valheim mêlant différents principes et mods pour étendre la durée et la difficulté du jeu en
         fonction de la progression du joueur, le tout en préservant le charme originel de Valheim.`,
             `Aujourd'hui cette communauté regroupe des joueurs débutants comme expérimentés,
