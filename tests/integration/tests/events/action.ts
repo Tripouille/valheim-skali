@@ -9,10 +9,8 @@ export const setVisitorEventPermission = (permissionPrivilege: PermissionPrivile
 export const setMemberEventPermission = (permissionPrivilege: PermissionPrivilege) =>
   cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.EVENT, permissionPrivilege);
 
-export const visitEventsPage = (asMember = true) => {
-  cy.intercept(APIRoute.SESSION).as('session');
-  if (!asMember) cy.intercept(APIRoute.VISITOR).as('visitor');
+export const visitEventsPageAndWaitFor = (routeToWaitFor: APIRoute) => {
+  cy.intercept(routeToWaitFor).as(routeToWaitFor);
   cy.visit(`/${serverName}${NavRoute.EVENTS}`);
-  cy.wait('@session');
-  if (!asMember) cy.wait('@visitor');
+  cy.wait(`@${routeToWaitFor}`);
 };
