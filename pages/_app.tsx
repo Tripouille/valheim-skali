@@ -59,8 +59,9 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
         // Avoid warning at build where request has no cookie
         // (because getSession calls an api route and requires header with cookies or no header)
         const session = req.headers.cookie ? await getSession({ req }) : null;
-        serverQueryClient.setQueryData(QueryKeys.SESSION, session);
-        if (!session) {
+        if (session) {
+          serverQueryClient.setQueryData(QueryKeys.SESSION, session);
+        } else {
           const visitorPermissions = await getVisitorPermissions();
           serverQueryClient.setQueryData(QueryKeys.VISITOR, visitorPermissions);
         }

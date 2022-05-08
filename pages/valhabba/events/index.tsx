@@ -11,6 +11,8 @@ import Events from 'components/pages/Events';
 const EventsPage = () => <Events />;
 
 // TODO: refactor this logic once applied to another page
+// When using getStaticProps, the _app getInitialProps is not re-run and
+// is used at its build version (visitor permissions only)
 export const getStaticProps: GetStaticProps = async () => {
   return {
     props: await getHydrationProps(async queryClient => {
