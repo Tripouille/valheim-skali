@@ -5,7 +5,7 @@ export const Table = {
   variants: {
     simple: {
       tbody: {
-        'th, td': { borderColor: 'transparent' },
+        'th, td': { borderColor: 'transparent', wordBreak: 'break-word' },
       },
     },
     striped: (props: StyleFunctionProps) => {
