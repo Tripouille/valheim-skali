@@ -21,4 +21,8 @@ export default chakra(Image, {
       'blurDataURL',
       'loader',
     ].includes(prop),
+  baseStyle: {
+    fontSize: '0.65rem',
+    fontWeight: 'normal',
+  },
 });
