@@ -47,7 +47,11 @@ const Admin = () => {
   };
 
   return (
-    <AdminLayout>
+    <AdminLayout
+      members={membersQuery.data}
+      nonMembers={nonMembersQuery.data}
+      roles={rolesQuery.data}
+    >
       <Secured permissions={ROUTES_TO_PERMISSIONS[route]}>
         <PageTitle title={ROUTES_TO_LABEL[route]} size="xl" mb="4" />
         <QueryHandler query={routeToQuery[route]}>{routeToComponent[route]}</QueryHandler>
