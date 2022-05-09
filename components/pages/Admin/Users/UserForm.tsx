@@ -36,6 +36,10 @@ const UserForm: React.FC<UserFormProps> = ({ 'data-cy': dataCy, isOpen, onClose,
 
   const canDeleteUser = useMemo(() => {
     const userRoles = getUserRoles(user, roles);
+    if (
+      !session.hasRequiredPermissions({ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE })
+    )
+      return false;
     for (const role of userRoles) {
       if (role && !canUserAssignRole(role, session.hasRequiredPermissions)) return false;
     }
