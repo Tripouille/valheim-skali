@@ -1,4 +1,3 @@
-import { UseQueryResult } from 'react-query';
 import theme from 'theme';
 import { User } from 'data/user';
 import { Role } from 'data/role';
@@ -7,24 +6,20 @@ import { Children } from 'utils/types';
 import Background from 'components/core/Containers/Background';
 import Flex from 'components/core/Containers/Flex';
 import { Stack } from 'components/core/Containers/Stack';
-import { UserQueryFilter } from './utils';
-import { useUsers } from './hooks/useUsers';
-import { useRoles } from './hooks/useRoles';
 import AdminNavItem from './AdminNavItem';
 
 export interface AdminLayoutProps {
+  members?: User[];
+  nonMembers?: User[];
+  roles?: Role[];
   children: Children;
 }
 
-const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
-  const membersQuery = useUsers(UserQueryFilter.MEMBER);
-  const nonMembersQuery = useUsers(UserQueryFilter.NON_MEMBER);
-  const rolesQuery = useRoles();
-
-  const routeToQuery: Record<AdminNavRoute, UseQueryResult<User[] | Role[]>> = {
-    [AdminNavRoute.MEMBERS]: membersQuery,
-    [AdminNavRoute.NON_MEMBERS]: nonMembersQuery,
-    [AdminNavRoute.ROLES]: rolesQuery,
+const AdminLayout: React.FC<AdminLayoutProps> = ({ members, nonMembers, roles, children }) => {
+  const routeToData: Record<AdminNavRoute, User[] | Role[] | undefined> = {
+    [AdminNavRoute.MEMBERS]: members,
+    [AdminNavRoute.NON_MEMBERS]: nonMembers,
+    [AdminNavRoute.ROLES]: roles,
   };
 
   return (
@@ -51,7 +46,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             <AdminNavItem
               key={navRoute}
               route={navRoute}
-              hint={routeToQuery[navRoute].data?.length.toString() ?? '?'}
+              hint={routeToData[navRoute]?.length.toString() ?? '?'}
             />
           ))}
         </Stack>
