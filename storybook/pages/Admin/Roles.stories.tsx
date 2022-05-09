@@ -5,7 +5,13 @@ import { APIRoute } from 'utils/routes';
 import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
 import roles from './roles.json';
 
-const { defaultExport, StoryFactory } = storybookSetup(Admin, StoryCategory.PAGE, {});
+const { defaultExport, StoryFactory } = storybookSetup(
+  Admin,
+  StoryCategory.PAGE_ADMIN,
+  {},
+  undefined,
+  'Roles',
+);
 
 export default defaultExport;
 
