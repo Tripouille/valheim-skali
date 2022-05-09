@@ -50,7 +50,10 @@ const UsersTable: React.FC<UsersTableProps> = ({ users = [], filter }) => {
               <Th textAlign="center">Promouvoir</Th>
             </Secured>
           )}
-          <Th width={getCellWidth(rowIconWidth)}></Th>
+          <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
+            <Th width={getCellWidth(rowIconWidth)}></Th>
+          </Secured>
+          <Th width={0}>{/* For modal in td */}</Th>
         </Tr>
       </Thead>
       <Tbody>
