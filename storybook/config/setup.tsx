@@ -1,3 +1,4 @@
+import { NextRouter } from 'next/router';
 import { rest } from 'msw';
 import { ArgTypes, ComponentMeta, ComponentStory } from '@storybook/react';
 import { Permissions } from 'utils/auth';
@@ -32,25 +33,33 @@ export const storybookSetup = <Props,>(
 
   const StoryFactory = (
     args: Props,
-    permissions?: Permissions,
-    requestResults?: { url: string; result: object }[],
+    parameters?: {
+      permissions?: Permissions;
+      requestResults?: { url: string; result: object }[];
+      router?: Partial<NextRouter>;
+    },
   ) => {
-    const newTemplate = Template.bind({});
-    newTemplate.args = args;
-    newTemplate.argTypes = { children: { control: false } } as Partial<ArgTypes<Props>>;
-    if (permissions) {
-      newTemplate.parameters = {
-        msw: {
-          handlers: {
-            visitor: rest.get(APIRoute.VISITOR, (req, res, ctx) => res(ctx.json(permissions))),
-            story: requestResults?.map(({ url, result }) =>
-              rest.get(url, (req, res, ctx) => res(ctx.json(result))),
-            ),
-          },
+    const template = Template.bind({});
+    template.args = args;
+    template.argTypes = { children: { control: false } } as Partial<ArgTypes<Props>>;
+    template.parameters = {};
+
+    if (parameters?.permissions || parameters?.requestResults) {
+      template.parameters.msw = {
+        handlers: {
+          visitor: rest.get(APIRoute.VISITOR, (req, res, ctx) =>
+            res(ctx.json(parameters.permissions)),
+          ),
+          story: parameters.requestResults?.map(({ url, result }) =>
+            rest.get(url, (req, res, ctx) => res(ctx.json(result))),
+          ),
         },
       };
     }
-    return newTemplate;
+
+    template.parameters.nextRouter = parameters?.router;
+
+    return template;
   };
 
   return { defaultExport, StoryFactory };
