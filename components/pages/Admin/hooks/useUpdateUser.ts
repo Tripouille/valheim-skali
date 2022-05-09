@@ -83,8 +83,10 @@ const useUpdateUser = (updatedUser: User) => {
 
   const updateUserNameInGame = useCallback(
     (newNameInGame: string) => {
-      if (updatedUser.nameInGame === undefined || updatedUser.nameInGame !== newNameInGame)
-        updateUserMutate({ nameInGame: newNameInGame });
+      const nameInGameHasChanged =
+        updatedUser.nameInGame !== newNameInGame &&
+        (newNameInGame.length || updatedUser.nameInGame?.length);
+      if (nameInGameHasChanged) updateUserMutate({ nameInGame: newNameInGame });
     },
     [updateUserMutate, updatedUser],
   );
