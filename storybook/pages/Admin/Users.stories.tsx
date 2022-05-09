@@ -13,7 +13,10 @@ export default defaultExport;
 export const NonMembersEmpty = StoryFactory(
   {},
   {
-    permissions: { [PermissionCategory.USER]: PermissionPrivilege.READ },
+    permissions: {
+      [PermissionCategory.USER]: PermissionPrivilege.READ,
+      [PermissionCategory.ROLE]: PermissionPrivilege.READ,
+    },
     requestResults: [{ url: APIRoute.USERS, result: [] }],
     router: { query: { route: 'non-members' } },
   },
@@ -22,7 +25,10 @@ export const NonMembersEmpty = StoryFactory(
 export const NonMembersReadOnly = StoryFactory(
   {},
   {
-    permissions: { [PermissionCategory.USER]: PermissionPrivilege.READ },
+    permissions: {
+      [PermissionCategory.USER]: PermissionPrivilege.READ,
+      [PermissionCategory.ROLE]: PermissionPrivilege.READ,
+    },
     requestResults: [{ url: APIRoute.USERS, result: users }],
     router: { query: { route: 'non-members' } },
   },
@@ -48,25 +54,13 @@ export const MembersEmpty = StoryFactory(
   {
     permissions: {
       [PermissionCategory.USER]: PermissionPrivilege.READ,
+      [PermissionCategory.ROLE]: PermissionPrivilege.READ,
     },
     requestResults: [{ url: APIRoute.USERS, result: [] }],
   },
 );
 
-export const MembersReadOnlyNoRoles = StoryFactory(
-  {},
-  {
-    permissions: {
-      [PermissionCategory.USER]: PermissionPrivilege.READ,
-    },
-    requestResults: [
-      { url: APIRoute.USERS, result: users },
-      { url: APIRoute.ROLES, result: roles },
-    ],
-  },
-);
-
-export const MembersReadOnlyWithRoles = StoryFactory(
+export const MembersReadOnly = StoryFactory(
   {},
   {
     permissions: {
