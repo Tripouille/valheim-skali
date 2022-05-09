@@ -8,32 +8,11 @@ import theme from 'theme';
 import { APIRoute } from 'utils/routes';
 import Fonts from 'components/Layout/Fonts';
 
+const OriginalNextImage = nextImage.default;
+
 Object.defineProperty(nextImage, 'default', {
   configurable: true,
-  value: props => (
-    <img
-      {...Object.keys(props)
-        .filter(
-          prop =>
-            ![
-              'layout',
-              'objectFit',
-              'objectPosition',
-              'quality',
-              'placeholder',
-              'blurDataURL',
-              'loader',
-            ].includes(prop),
-        )
-        .reduce((obj, key) => ({ ...obj, [key]: props[key] }), {})}
-      style={{
-        maxHeight: '100%',
-        maxWidth: '100%',
-        objectFit: props.objectFit,
-        objectPosition: props.objectPosition,
-      }}
-    />
-  ),
+  value: props => <OriginalNextImage {...props} unoptimized />,
 });
 
 export const parameters = {
