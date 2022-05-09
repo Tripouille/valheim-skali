@@ -40,6 +40,8 @@ const UserRolesForm: React.FC<UserRolesFormProps> = ({ user, roles }) => {
     return hasUserWritePermission && canUserAssignRole(role, session.hasRequiredPermissions);
   };
 
+  if (userRoles.length === 0 && addableRoles.length === 0) return <>Aucun rôle</>;
+
   return (
     <Wrap>
       {userRoles.map(role => {
@@ -74,7 +76,6 @@ const UserRolesForm: React.FC<UserRolesFormProps> = ({ user, roles }) => {
           </Menu>
         </Box>
       )}
-      {userRoles.length === 0 && addableRoles.length === 0 && 'Aucun rôle'}
     </Wrap>
   );
 };
