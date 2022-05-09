@@ -9,16 +9,22 @@ import PageTitle from 'components/core/Typography/PageTitle';
 import nonMembers from './nonMembers.json';
 import roles from './roles.json';
 
-const { defaultExport, StoryFactory } = storybookSetup(UsersTable, StoryCategory.PAGE_ADMIN, {
-  decorators: [
-    Story => (
-      <AdminLayout>
-        <PageTitle title={ROUTES_TO_LABEL[AdminNavRoute.NON_MEMBERS]} size="xl" mb="4" />
-        <Story />
-      </AdminLayout>
-    ),
-  ],
-});
+const { defaultExport, StoryFactory } = storybookSetup(
+  UsersTable,
+  StoryCategory.PAGE_ADMIN,
+  {
+    decorators: [
+      Story => (
+        <AdminLayout nonMembers={nonMembers}>
+          <PageTitle title={ROUTES_TO_LABEL[AdminNavRoute.NON_MEMBERS]} size="xl" mb="4" />
+          <Story />
+        </AdminLayout>
+      ),
+    ],
+  },
+  undefined,
+  'Non Members',
+);
 
 export default defaultExport;
 

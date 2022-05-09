@@ -5,13 +5,17 @@ import { Permissions } from 'utils/auth';
 import { APIRoute } from 'utils/routes';
 import { StoryCategory } from './constants';
 
+const getComponentName = (displayName?: string) => {
+  const match = displayName?.match(/Styled\((.*)\)/);
+  return match?.length === 2 ? match[1] : displayName;
+};
+
 const createTitle = (
   storyCategory: StoryCategory,
   storySubCategory?: string,
   displayName?: string,
 ) => {
-  const match = displayName?.match(/Styled\((.*)\)/);
-  const componentName = match?.length === 2 ? match[1] : displayName;
+  const componentName = getComponentName(displayName);
   return storySubCategory
     ? `${storyCategory}/${storySubCategory}/${componentName}`
     : `${storyCategory}/${componentName}`;
@@ -22,9 +26,12 @@ export const storybookSetup = <Props,>(
   storyCategory: StoryCategory,
   componentMeta?: ComponentMeta<typeof Component>,
   storySubCategory?: string,
+  title?: string,
 ) => {
   const defaultExport: ComponentMeta<typeof Component> = {
-    title: createTitle(storyCategory, storySubCategory, Component.displayName),
+    title: title
+      ? `${storyCategory}/${title}`
+      : createTitle(storyCategory, storySubCategory, Component.displayName),
     component: Component,
     ...componentMeta,
   };
