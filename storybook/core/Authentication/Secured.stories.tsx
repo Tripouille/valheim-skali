@@ -18,7 +18,7 @@ export const WithRights = StoryFactory(
     permissions: requiredPermissions,
     children: 'I have the rights !',
   },
-  requiredPermissions,
+  { permissions: requiredPermissions },
 );
 
 export const WithoutRights = StoryFactory({
