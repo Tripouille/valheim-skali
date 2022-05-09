@@ -64,8 +64,8 @@ const UserRow: React.FC<UserRowProps> = ({ 'data-cy': dataCy, user, roles, filte
           </Td>
         </Secured>
       )}
-      {filter === UserQueryFilter.NON_MEMBER && (
-        <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
+      <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
+        {filter === UserQueryFilter.NON_MEMBER && (
           <Td textAlign="center">
             <IconButton
               data-cy="promote"
@@ -77,18 +77,20 @@ const UserRow: React.FC<UserRowProps> = ({ 'data-cy': dataCy, user, roles, filte
               onClick={handlePromoteClick}
             />
           </Td>
-        </Secured>
-      )}
+        )}
+        <Td>
+          <IconButton
+            data-cy="edit"
+            aria-label="Modifier l'utilisateur"
+            title="Modifier l'utilisateur"
+            icon={<BiEdit size="30" />}
+            variant="ghost"
+            size={rowIconSize}
+            onClick={onOpen}
+          />
+        </Td>
+      </Secured>
       <Td>
-        <IconButton
-          data-cy="edit"
-          aria-label="Modifier l'utilisateur"
-          title="Modifier l'utilisateur"
-          icon={<BiEdit size="30" />}
-          variant="ghost"
-          size={rowIconSize}
-          onClick={onOpen}
-        />
         <UserForm data-cy="edit-user" isOpen={isOpen} onClose={onClose} user={user} roles={roles} />
       </Td>
     </Tr>
