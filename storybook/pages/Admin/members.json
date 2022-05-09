@@ -10,7 +10,8 @@
     "name": "A very long name with lots of words but also with space A very long name with lots of words but also with space A very long name with lots of words but also with space",
     "email": "",
     "image": "unknown",
-    "nameInGame": "test"
+    "nameInGame": "test",
+    "roleIds": ["1", "3"]
   },
   {
     "_id": "2",
@@ -27,12 +28,5 @@
     "image": "https://cdn.discordapp.com/avatars/184702831331115008/e8e97d93a4f4536c6d30dac08330c76a.png",
     "nameInGame": "AverylongnamewithoutspaceloremipsumdolorsitametAverylongnamewithoutspaceloremipsumdolorsitametAverylongnamewithoutspaceloremipsumdolorsitamet",
     "roleIds": ["1", "2"]
-  },
-  {
-    "_id": "4",
-    "name": "Name 2",
-    "email": "",
-    "image": "unknown",
-    "roleIds": ["1", "3"]
   }
 ]
