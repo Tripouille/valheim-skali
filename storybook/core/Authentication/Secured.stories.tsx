@@ -6,6 +6,7 @@ import { PermissionCategory, PermissionPrivilege, Permissions } from 'utils/auth
 const { defaultExport, StoryFactory } = storybookSetup<SecuredProps>(
   Secured,
   StoryCategory.CORE_AUTHENTICATION,
+  { parameters: { chromatic: { disableSnapshot: true } } },
 );
 
 export default defaultExport;
