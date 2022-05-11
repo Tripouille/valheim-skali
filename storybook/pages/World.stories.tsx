@@ -2,7 +2,9 @@ import { storybookSetup } from 'storybook/config/setup';
 import { StoryCategory } from 'storybook/config/constants';
 import WorldPage from 'components/pages/World';
 
-const { defaultExport, StoryFactory } = storybookSetup(WorldPage, StoryCategory.PAGE);
+const { defaultExport, StoryFactory } = storybookSetup(WorldPage, StoryCategory.PAGE, {
+  parameters: { chromatic: { delay: 3000 } },
+});
 
 export default defaultExport;
 
