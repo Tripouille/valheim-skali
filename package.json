@@ -19,7 +19,7 @@
     "cypress:unit:run": "cypress run -P ./tests/unit"
   },
   "dependencies": {
-    "@chakra-ui/react": "^1.7.3",
+    "@chakra-ui/react": "^1.8",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@next-auth/mongodb-adapter": "^0.0.2-next.285",
