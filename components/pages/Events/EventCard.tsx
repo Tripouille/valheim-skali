@@ -14,7 +14,6 @@ import {
 } from 'components/core/Overlay/Modal';
 import Box from 'components/core/Containers/Box';
 import IconButton from 'components/core/Interactive/IconButton';
-import theme from 'theme';
 import useUpdateEvent from './hooks/useUpdateEvent';
 import useDeleteEvent from './hooks/useDeleteEvent';
 import { editIconSize, EventContext, isEventClosed } from './utils';
@@ -59,7 +58,7 @@ const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event }) => {
         p="4"
         opacity={eventIsClosed ? 0.6 : 1}
         cursor="pointer"
-        _hover={{ backgroundColor: theme.colors.backgroundHover, borderColor: 'white' }}
+        _hover={{ backgroundColor: 'backgroundHover', borderColor: 'white' }}
         onClick={itemModal.onOpen}
         onKeyPress={handleCardKeyPress}
       >

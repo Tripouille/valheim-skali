@@ -4,7 +4,6 @@ import { GiStakeHammer, GiVikingHelmet } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
 import { CgInfo } from 'react-icons/cg';
 import { chakra, useBreakpointValue } from '@chakra-ui/react';
-import theme from 'theme';
 import useSession from 'utils/hooks/useSession';
 import { SessionStatus, ROUTES_TO_PERMISSIONS } from 'utils/auth';
 import { MenuRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
@@ -26,7 +25,7 @@ const NavBar = () => {
   const menuType = useBreakpointValue({ base: MenuType.DRAWER, lg: MenuType.HEADER }, 'lg');
 
   return (
-    <chakra.header height="header" bgColor={theme.colors.overlay} data-cy="nav-bar">
+    <chakra.header height="header" bgColor="overlay" data-cy="nav-bar">
       <Center justifyContent="space-between" h="full">
         {menuType === MenuType.HEADER && <HeaderMenu serverName={serverName} />}
         {menuType === MenuType.DRAWER && <DrawerMenu serverName={serverName} />}

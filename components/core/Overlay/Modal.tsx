@@ -15,7 +15,6 @@ import {
   ModalFooter as ChakraModalFooter,
   ModalFooterProps as ChakraModalFooterProps,
 } from '@chakra-ui/react';
-import theme from 'theme';
 import { CypressProps } from 'utils/types';
 
 export type ModalProps = ChakraModalProps;
@@ -27,10 +26,7 @@ export const Modal: React.FC<ModalProps> = chakraModalProps => (
 export type ModalOverlayProps = ChakraModalOverlayProps;
 
 export const ModalOverlay: React.FC<ModalOverlayProps> = chakraModalOverlayProps => (
-  <ChakraModalOverlay
-    bgColor={theme.colors.overlay}
-    {...chakraModalOverlayProps}
-  ></ChakraModalOverlay>
+  <ChakraModalOverlay bgColor="overlay" {...chakraModalOverlayProps}></ChakraModalOverlay>
 );
 
 export type ModalContentProps = ChakraModalContentProps & CypressProps;
@@ -40,7 +36,7 @@ export const ModalContent: React.FC<ModalContentProps> = ({
   ...chakraModalContentProps
 }) => (
   <ChakraModalContent
-    bgColor={theme.colors.opaqueBackground}
+    bgColor="opaqueBackground"
     border="1px silver solid"
     {...chakraModalContentProps}
     data-cy={`${dataCy}-modal`}
