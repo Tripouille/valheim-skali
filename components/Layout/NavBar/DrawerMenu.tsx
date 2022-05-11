@@ -1,6 +1,5 @@
 import { chakra, useDisclosure } from '@chakra-ui/react';
 import { RiMenuLine } from 'react-icons/ri';
-import theme from 'theme';
 import { NavRoute } from 'utils/routes';
 import { ROUTES_TO_PERMISSIONS } from 'utils/auth';
 import IconButton from 'components/core/Interactive/IconButton';
@@ -37,7 +36,7 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ serverName }) => {
       />
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
-        <DrawerContent bgColor={theme.colors.opaqueBackground} fontFamily="Norse">
+        <DrawerContent bgColor="opaqueBackground" fontFamily="Norse">
           <DrawerBody mt="2" px={{ base: 3, sm: 6 }}>
             <chakra.nav>
               <VStack align="stretch">

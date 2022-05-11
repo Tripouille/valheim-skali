@@ -1,4 +1,3 @@
-import theme from 'theme';
 import { User } from 'data/user';
 import { Role } from 'data/role';
 import { AdminNavRoute } from 'utils/routes';
@@ -26,7 +25,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ members, nonMembers, roles, c
     <Flex maxW="full" direction={{ base: 'column', lg: 'row' }} justify="center" h="min-content">
       <Background
         data-cy="admin-nav"
-        bgColor={theme.colors.opaqueBackground}
+        bgColor="opaqueBackground"
         as="nav"
         minW="xs"
         maxW={{ base: 'full', lg: '15%' }}

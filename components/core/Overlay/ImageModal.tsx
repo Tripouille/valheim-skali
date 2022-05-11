@@ -5,7 +5,6 @@ import Portal from 'components/core/Overlay/Portal';
 import Box from 'components/core/Containers/Box';
 import Center from 'components/core/Containers/Center';
 import Image from 'components/core/Images/Image';
-import theme from 'theme';
 
 export interface ImageModalProps extends CypressProps {
   src: NextImageProps['src'];
@@ -20,7 +19,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ 'data-cy': dataCy, src, alt, on
       top="0"
       height="full"
       width="full"
-      bgColor={theme.colors.overlay}
+      bgColor="overlay"
       cursor="pointer"
       onClick={onClick}
       data-cy={`${dataCy}-modal`}

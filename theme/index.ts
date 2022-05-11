@@ -52,11 +52,13 @@ const options = {
     body: 'Lucida Sans, sans-serif',
     heading: 'Lucida Sans, sans-serif',
   },
-  colors: {
-    overlay: 'rgba(49, 130, 206, 0.7)', // blue.500
-    background: 'rgba(44, 82, 130, 0.95)', // blue.700
-    opaqueBackground: 'blue.700',
-    backgroundHover: 'rgb(34, 72, 120)',
+  semanticTokens: {
+    colors: {
+      overlay: 'rgba(49, 130, 206, 0.7)', // blue.500
+      background: 'rgba(44, 82, 130, 0.95)', // blue.700
+      opaqueBackground: 'blue.700',
+      backgroundHover: 'rgb(34, 72, 120)',
+    },
   },
 };
 
