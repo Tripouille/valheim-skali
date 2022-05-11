@@ -3,6 +3,7 @@ import { BiEdit } from 'react-icons/bi';
 import {
   Editable as ChakraEditable,
   EditableInput,
+  EditableInputProps,
   EditablePreview,
   EditableProps as ChakraEditableProps,
   useEditableControls,
@@ -19,9 +20,14 @@ const EditableControls = () => {
 
 export type EditableProps = Omit<ChakraEditableProps, 'value'> & {
   initialValue?: ChakraEditableProps['value'];
+  inputProps?: EditableInputProps;
 };
 
-const Editable: React.FC<EditableProps> = ({ initialValue, ...chakraEditableProps }) => {
+const Editable: React.FC<EditableProps> = ({
+  initialValue,
+  inputProps,
+  ...chakraEditableProps
+}) => {
   const [value, setValue] = useState(initialValue);
 
   useEffect(() => setValue(initialValue), [initialValue]);
@@ -34,7 +40,7 @@ const Editable: React.FC<EditableProps> = ({ initialValue, ...chakraEditableProp
   return (
     <ChakraEditable fontSize="md" {...chakraEditableProps} value={value} onChange={handleChange}>
       {value && <EditablePreview pe="5" />}
-      <EditableInput />
+      <EditableInput {...inputProps} />
       <EditableControls />
     </ChakraEditable>
   );
