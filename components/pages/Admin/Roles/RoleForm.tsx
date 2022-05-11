@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { CypressProps, Callback } from 'utils/types';
-import { CreateRoleData, getRoleValidationError, Role } from 'data/role';
+import {
+  CreateRoleData,
+  getRoleValidationError,
+  Role,
+  ROLE_NAME_IN_GAME_MAX_LENGTH,
+} from 'data/role';
 import {
   isAdminRole,
   isSpecialRole,
@@ -120,6 +125,7 @@ const RoleForm: React.FC<RoleFormProps> = (props: RoleFormProps) => {
                   <Input
                     data-cy="name"
                     id="role_name"
+                    maxLength={ROLE_NAME_IN_GAME_MAX_LENGTH}
                     value={roleFormData.name}
                     onChange={name => setRoleFormData(prev => ({ ...prev, name }))}
                   />
