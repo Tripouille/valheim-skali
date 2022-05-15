@@ -14,7 +14,7 @@ const HeaderMenu: React.FC<HeaderMenuProps> = ({ serverName }) => (
     <ButtonGroup variant="ghost">
       {Object.values(NavRoute).map(route => (
         <Secured key={route} permissions={ROUTES_TO_PERMISSIONS[route]}>
-          <NavItem data-cy={route} root={`/${serverName}`} route={route} />
+          <NavItem root={`/${serverName}`} route={route} />
         </Secured>
       ))}
     </ButtonGroup>

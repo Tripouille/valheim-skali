@@ -42,12 +42,7 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ serverName }) => {
               <VStack align="stretch">
                 {Object.values(NavRoute).map(route => (
                   <Secured key={route} permissions={ROUTES_TO_PERMISSIONS[route]}>
-                    <NavItem
-                      data-cy={route}
-                      root={`/${serverName}`}
-                      route={route}
-                      onClick={onClose}
-                    />
+                    <NavItem root={`/${serverName}`} route={route} onClick={onClose} />
                   </Secured>
                 ))}
               </VStack>
