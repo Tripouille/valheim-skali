@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "622372a54fd4e3e67cc47afd",
+    "name": "Visiteur",
+    "permissions": { "EVENT": "1_READ" },
+    "requiredPermissionsToAssign": { "USER": "4_SUPER_ADMIN" }
+  },
+  {
+    "_id": "6228cb385f506b78affc05f1",
+    "name": "Viking",
+    "permissions": { "EVENT": "1_READ" },
+    "requiredPermissionsToAssign": { "USER": "2_READ_WRITE" }
+  },
+  {
+    "_id": "6228cb385f506b78affc05f2",
+    "name": "Modo",
+    "permissions": { "ROLE": "1_READ", "USER": "2_READ_WRITE", "EVENT": "2_READ_WRITE" },
+    "requiredPermissionsToAssign": { "USER": "3_ADMIN" }
+  },
+  {
+    "_id": "6228cb385f506b78affc05f3",
+    "name": "Admin",
+    "permissions": {},
+    "requiredPermissionsToAssign": { "USER": "4_SUPER_ADMIN" }
+  },
+  {
+    "_id": "6228cb385f506b78affc05f4",
+    "name": "SuperAdmin",
+    "permissions": {},
+    "requiredPermissionsToAssign": { "USER": "4_SUPER_ADMIN" }
+  }
+]
