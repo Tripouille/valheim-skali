@@ -10,7 +10,7 @@ dotenv.config({ path: '../../.env.test' });
 
 interface SeedCollectionDto<T> {
   collectionName: string;
-  data: OptionalId<T>[];
+  data: (OptionalId<T> & Record<string, ObjectId[]>)[];
 }
 
 interface SetPermissionDto {
