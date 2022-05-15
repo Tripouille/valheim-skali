@@ -104,7 +104,7 @@ describe('roles page', () => {
     it('should be able to edit a role', () => {
       cy.intercept('PUT', `${APIRoute.ROLES}/*`).as('updateRole');
 
-      cy.dataCy('role-1').dataCy('edit', 'button').click();
+      cy.dataCy('role-2').dataCy('edit', 'button').click();
       cy.dataCy('edit-role-modal').dataCy('name', 'input').should('have.value', 'Modo').type('2');
       Select.permissionsFormSelect('USER').select('1_READ');
       Select.reqPermissionsFormSelect().select('2_READ_WRITE');
@@ -149,7 +149,7 @@ describe('roles page', () => {
       Select.permissionsFormSelect('ROLE').select('1_READ');
 
       cy.dataCy('edit-role-modal').dataCy('submit', 'button').click();
-      cy.wait('@updateRole');
+      cy.wait('@updateRole').its('response.statusCode').should('eq', 200);
       cy.dataCy('edit-role-modal').dataCy('close-modal', 'button').click();
       cy.dataCy('edit-role-modal').should('not.exist');
       cy.contains(SpecialRoleName.VISITOR)

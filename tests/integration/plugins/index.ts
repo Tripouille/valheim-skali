@@ -30,7 +30,9 @@ const plugins = (on: Cypress.PluginEvents) => {
         data.map((item: OptionalId<T> & Record<string, ObjectId[]>) => ({
           ...item,
           _id: new ObjectId(item._id),
-          roleIds: item.roleIds && item.roleIds.map(roleId => new ObjectId(roleId)),
+          ...(item.roleIds
+            ? { roleIds: item.roleIds && item.roleIds.map(roleId => new ObjectId(roleId)) }
+            : {}),
         })),
       );
       return null;
