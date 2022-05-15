@@ -16,7 +16,7 @@ const AdminNavItem: React.FC<AdminNavItemProps> = ({ route, hint }) => {
     <Secured permissions={ROUTES_TO_PERMISSIONS[route]}>
       <Flex align="center">
         <NextLink href={`/${serverName}${MenuRoute.ADMIN}${route}`} passHref>
-          <Button data-cy={route} as="a" fontSize="3xl" size="lg" w="full">
+          <Button data-cy={ROUTES_TO_LABEL[route]} as="a" fontSize="3xl" size="lg" w="full">
             {ROUTES_TO_LABEL[route]}
           </Button>
         </NextLink>
