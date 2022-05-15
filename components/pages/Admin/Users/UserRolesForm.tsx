@@ -43,7 +43,7 @@ const UserRolesForm: React.FC<UserRolesFormProps> = ({ user, roles }) => {
   if (userRoles.length === 0 && addableRoles.length === 0) return <>Aucun rôle</>;
 
   return (
-    <Wrap>
+    <Wrap data-cy="roles-form">
       {userRoles.map(role => {
         return role ? (
           <Tag
@@ -58,7 +58,13 @@ const UserRolesForm: React.FC<UserRolesFormProps> = ({ user, roles }) => {
       {addableRoles.length > 0 && (
         <Box>
           <Menu placement="bottom" gutter={0}>
-            <MenuButton as={Button} leftIcon={<BsPlusLg />} lineHeight="1em" colorScheme="green">
+            <MenuButton
+              data-cy="add-role"
+              as={Button}
+              leftIcon={<BsPlusLg />}
+              lineHeight="1em"
+              colorScheme="green"
+            >
               Ajouter un rôle
             </MenuButton>
             <MenuList minW="min-content">

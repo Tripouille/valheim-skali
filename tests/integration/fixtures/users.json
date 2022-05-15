@@ -1,0 +1,36 @@
+[
+  {
+    "_id": "6230b7f8d9758180e91b6b20",
+    "name": "TestUser",
+    "image": "https://cdn.discordapp.com/embed/avatars/2.png",
+    "roleIds": [],
+    "nameInGame": "TestUser name in game"
+  },
+  {
+    "_id": "61a39fbfc2b465b017a81b9f",
+    "name": "User1",
+    "image": "https://cdn.discordapp.com/embed/avatars/2.png",
+    "roleIds": [],
+    "nameInGame": "User1 name in game"
+  },
+  {
+    "_id": "62027f53f2b2c29ab3ff9ef3",
+    "name": "User2",
+    "image": "https://cdn.discordapp.com/embed/avatars/2.png",
+    "roleIds": ["6228cb385f506b78affc05f1"]
+  },
+  {
+    "_id": "6202bebf77bf75b3aa47c2ae",
+    "name": "User3",
+    "image": "https://cdn.discordapp.com/embed/avatars/2.png",
+    "roleIds": ["6228cb385f506b78affc05f1", "6228cb385f506b78affc05f3"],
+    "nameInGame": ""
+  },
+  {
+    "_id": "621e68836bffb1495ac47c9b",
+    "name": "User4",
+    "image": "https://cdn.discordapp.com/embed/avatars/2.png",
+    "roleIds": ["6228cb385f506b78affc05f1", "6228cb385f506b78affc05f4"],
+    "nameInGame": "User4 name in game"
+  }
+]

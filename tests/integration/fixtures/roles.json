@@ -18,6 +18,12 @@
     "requiredPermissionsToAssign": { "USER": "3_ADMIN" }
   },
   {
+    "_id": "6228cb385f506b78affc05f5",
+    "name": "Event redactor",
+    "permissions": { "EVENT": "2_READ_WRITE" },
+    "requiredPermissionsToAssign": { "USER": "2_READ_WRITE" }
+  },
+  {
     "_id": "6228cb385f506b78affc05f3",
     "name": "Admin",
     "permissions": {},

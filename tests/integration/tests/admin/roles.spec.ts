@@ -1,5 +1,5 @@
 import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
-import { AdminNavRoute, APIRoute } from 'utils/routes';
+import { APIRoute } from 'utils/routes';
 import * as Action from './action';
 import * as Select from './select';
 
@@ -17,15 +17,15 @@ describe('roles page', () => {
   context('with only read permission on roles', () => {
     beforeEach(() => {
       cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, PermissionPrivilege.READ);
-      Action.visitAdminPage(AdminNavRoute.ROLES);
+      Action.visitRolesPage();
     });
 
     it('should display roles and not edition tools', () => {
       cy.dataCy('admin').should('contain.text', 'Rôles');
-      Select.roleLines().should('have.length', 4);
+      Select.roleLines().should('have.length', 5);
       cy.dataCy('admin').should('not.contain.text', 'SuperAdmin');
       cy.dataCy('create-role').should('not.exist');
-      cy.dataCy('edit').should('not.exist');
+      cy.dataCy('edit', 'button').should('not.exist');
       cy.dataCy('role-0').click();
       cy.dataCy('edit-role-modal').should('not.exist');
     });
@@ -34,13 +34,13 @@ describe('roles page', () => {
   context('with admin permission on roles', () => {
     beforeEach(() => {
       cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, PermissionPrivilege.ADMIN);
-      Action.visitAdminPage(AdminNavRoute.ROLES);
+      Action.visitRolesPage();
     });
 
     it('should display roles and edition tools', () => {
       cy.dataCy('admin').should('contain.text', 'Rôles');
-      Select.roleLines().should('have.length', 4);
-      cy.dataCy('edit').should('have.length', 4);
+      Select.roleLines().should('have.length', 5);
+      cy.dataCy('edit', 'button').should('have.length', 5);
       cy.dataCy('create-role').should('be.visible');
       cy.dataCy('role-0').click();
       cy.dataCy('edit-role-modal').should('be.visible');
@@ -73,7 +73,7 @@ describe('roles page', () => {
           requiredPermissionsToAssign: { USER: '2_READ_WRITE' },
         });
       });
-      Select.roleLines().should('have.length', 5).and('contain', 'New role');
+      Select.roleLines().should('have.length', 6).and('contain', 'New role');
     });
 
     it('should be able to create a role with user write permission', () => {
@@ -98,7 +98,7 @@ describe('roles page', () => {
           requiredPermissionsToAssign: { USER: '3_ADMIN' },
         });
       });
-      Select.roleLines().should('have.length', 5).and('contain', 'New role');
+      Select.roleLines().should('have.length', 6).and('contain', 'New role');
     });
 
     it('should be able to edit a role', () => {
@@ -118,7 +118,7 @@ describe('roles page', () => {
           requiredPermissionsToAssign: { USER: '2_READ_WRITE' },
         });
       });
-      Select.roleLines().should('have.length', 4).and('contain', 'Modo2');
+      Select.roleLines().should('have.length', 5).and('contain', 'Modo2');
     });
 
     it('should be able to delete a role', () => {
@@ -128,7 +128,7 @@ describe('roles page', () => {
       cy.dataCy('edit-role-modal').dataCy('delete', 'button').click();
       cy.dataCy('edit-role-modal').dataCy('confirm-delete', 'button').click();
       cy.wait('@deleteRole').its('response.statusCode').should('eq', 200);
-      Select.roleLines().should('have.length', 3);
+      Select.roleLines().should('have.length', 4);
     });
 
     it('should not be able to edit admin role', () => {

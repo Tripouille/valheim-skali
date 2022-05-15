@@ -26,7 +26,13 @@ const plugins = (on: Cypress.PluginEvents) => {
       try {
         await collection.drop();
       } catch (e) {} // Drop throws error if collection doesn't exit
-      await collection.insertMany(data.map(item => ({ ...item, _id: new ObjectId(item._id) })));
+      await collection.insertMany(
+        data.map((item: OptionalId<T> & Record<string, ObjectId[]>) => ({
+          ...item,
+          _id: new ObjectId(item._id),
+          roleIds: item.roleIds && item.roleIds.map(roleId => new ObjectId(roleId)),
+        })),
+      );
       return null;
     },
 

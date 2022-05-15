@@ -18,7 +18,7 @@ describe('events with read permission', () => {
       Select.eventCards().should('not.exist');
       cy.dataCy('events').should('not.exist');
       cy.dataCy('create-event').should('not.exist');
-      cy.dataCy('edit').should('not.exist');
+      cy.dataCy('edit', 'button').should('not.exist');
     });
   });
 

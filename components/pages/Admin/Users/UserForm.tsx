@@ -78,6 +78,7 @@ const UserForm: React.FC<UserFormProps> = ({ 'data-cy': dataCy, isOpen, onClose,
                   fallback={<Text>{user.nameInGame}</Text>}
                 >
                   <Editable
+                    data-cy="name-in-game"
                     initialValue={user.nameInGame}
                     onSubmit={updateUserNameInGame}
                     inputProps={{ maxLength: USER_NAME_IN_GAME_MAX_LENGTH }}
