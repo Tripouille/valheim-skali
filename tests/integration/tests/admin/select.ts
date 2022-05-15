@@ -1,3 +1,5 @@
+/** Roles */
+
 export const roleLines = () => cy.get(`[data-cy^=role-]`);
 
 export const permissionsFormSelect = (category: string) =>
@@ -8,3 +10,7 @@ export const permissionsFormOption = (category: string, value: string) =>
 
 export const reqPermissionsFormSelect = () =>
   cy.dataCy('required-permissions-form').dataCy('required-to-assign', 'select');
+
+/** Users */
+
+export const usersLines = () => cy.get(`[data-cy^=user-]`);
