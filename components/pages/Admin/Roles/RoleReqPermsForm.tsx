@@ -34,7 +34,7 @@ const RoleReqPermsForm: React.FC<RoleReqPermsFormProps> = ({
   };
 
   return (
-    <Table>
+    <Table data-cy="required-permissions-form">
       <Tbody>
         <Tr>
           <Th w={modalTableHeaderWidth}>
@@ -45,6 +45,7 @@ const RoleReqPermsForm: React.FC<RoleReqPermsFormProps> = ({
           <Td>
             <Flex align="center">
               <Select
+                data-cy="required-to-assign"
                 id="required_to_assign"
                 maxW="sm"
                 value={requiredPermissionsToAssign[PermissionCategory.USER]}
@@ -68,7 +69,7 @@ const RoleReqPermsForm: React.FC<RoleReqPermsFormProps> = ({
                   label="Le rôle Admin est obligatoire pour assigner le rôle si ce rôle peut modifier les utilisateurs."
                   placement="end"
                 >
-                  <span style={{ marginLeft: '1em' }}>
+                  <span style={{ marginLeft: '1em' }} data-cy="req-permissions-help">
                     <FiHelpCircle />
                   </span>
                 </Tooltip>

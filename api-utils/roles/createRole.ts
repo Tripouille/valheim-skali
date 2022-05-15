@@ -21,7 +21,7 @@ const createRole = async (req: Req, res: Res) => {
 
   const newRoleId = await db.insert<RoleInDb>(rolesCollectionName, newRole);
 
-  res.status(200).json({ ...newRole, _id: newRoleId });
+  res.status(201).json({ ...newRole, _id: newRoleId });
 };
 
 export default createRole;

@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+import { ObjectId } from 'bson';
 import { OptionalId } from 'mongodb';
 import { RoleInDb, rolesCollectionName } from 'data/role';
 import { UserInDb, usersCollectionName } from 'data/user';
@@ -25,7 +26,7 @@ const plugins = (on: Cypress.PluginEvents) => {
       try {
         await collection.drop();
       } catch (e) {} // Drop throws error if collection doesn't exit
-      await collection.insertMany(data);
+      await collection.insertMany(data.map(item => ({ ...item, _id: new ObjectId(item._id) })));
       return null;
     },
 

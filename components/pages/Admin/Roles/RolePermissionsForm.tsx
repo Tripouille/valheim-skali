@@ -51,7 +51,7 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
   };
 
   return (
-    <Table>
+    <Table data-cy="permissions-form">
       <Tbody>
         <Tr>
           <Th>Catégorie</Th>
@@ -64,6 +64,7 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
             </Th>
             <Td>
               <Select
+                data-cy={category}
                 id={category}
                 maxW="sm"
                 value={isAdminRole ? PermissionPrivilege.ADMIN : permissions[category]}
