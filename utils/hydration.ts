@@ -15,6 +15,8 @@ const getHydrationProps = async (
     else throw e;
   }
 
+  queryClient.invalidateQueries();
+
   return { dehydratedState: JSON.stringify(dehydrate(queryClient)) };
 };
 
