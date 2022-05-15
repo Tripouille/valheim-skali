@@ -35,7 +35,7 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
       return 'Réservé aux Admins';
     if (
       category === PermissionCategory.USER &&
-      privilege >= PermissionPrivilege.READ_WRITE &&
+      privilege >= PermissionPrivilege.READ &&
       (permissions[PermissionCategory.ROLE] ?? PermissionPrivilege.NONE) < PermissionPrivilege.READ
     )
       return 'Doit pouvoir lire les rôles';

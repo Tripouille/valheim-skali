@@ -1,5 +1,5 @@
 import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
-import { APIRoute } from 'utils/routes';
+import { AdminNavRoute, APIRoute } from 'utils/routes';
 import * as Action from './action';
 import * as Select from './select';
 
@@ -17,7 +17,7 @@ describe('roles page', () => {
   context('with only read permission on roles', () => {
     beforeEach(() => {
       cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, PermissionPrivilege.READ);
-      Action.visitRolesPage();
+      Action.visitAdminPage(AdminNavRoute.ROLES);
     });
 
     it('should display roles and not edition tools', () => {
@@ -34,7 +34,7 @@ describe('roles page', () => {
   context('with admin permission on roles', () => {
     beforeEach(() => {
       cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, PermissionPrivilege.ADMIN);
-      Action.visitRolesPage();
+      Action.visitAdminPage(AdminNavRoute.ROLES);
     });
 
     it('should display roles and edition tools', () => {
@@ -46,7 +46,7 @@ describe('roles page', () => {
       cy.dataCy('edit-role-modal').should('be.visible');
     });
 
-    it('should be able to create a role with user read permission', () => {
+    it('should be able to create a role without user permission', () => {
       cy.intercept('POST', APIRoute.ROLES).as('createRole');
 
       cy.dataCy('create-role').click();
@@ -56,19 +56,20 @@ describe('roles page', () => {
       Select.permissionsFormOption('ROLE', '2_READ_WRITE')
         .should('be.disabled')
         .and('contain.text', 'Réservé aux Admins');
+      Select.permissionsFormOption('USER', '1_READ')
+        .should('be.disabled')
+        .and('contain.text', 'Doit pouvoir lire les rôles');
       Select.permissionsFormOption('USER', '2_READ_WRITE')
         .should('be.disabled')
         .and('contain.text', 'Doit pouvoir lire les rôles');
-      Select.permissionsFormSelect('USER').select('1_READ').should('have.value', '1_READ');
-      Select.reqPermissionsFormSelect().should('be.enabled');
-      cy.dataCy('req-permissions-help').should('not.exist');
+      Select.permissionsFormSelect('EVENT').select('1_READ');
 
       cy.dataCy('create-role-modal').dataCy('submit', 'button').click();
       cy.wait('@createRole').should(xhr => {
         expect(xhr.response?.statusCode).to.eq(201);
         expect(xhr.request.body).to.eql({
           name: 'New role',
-          permissions: { USER: '1_READ' },
+          permissions: { EVENT: '1_READ' },
           requiredPermissionsToAssign: { USER: '2_READ_WRITE' },
         });
       });
@@ -145,7 +146,7 @@ describe('roles page', () => {
       cy.dataCy('edit-role-modal').find('input:enabled').should('not.exist');
       cy.dataCy('edit-role-modal').dataCy('delete', 'button').should('not.exist');
       cy.dataCy('req-permissions-form').should('not.exist');
-      Select.permissionsFormSelect('USER').select('1_READ');
+      Select.permissionsFormSelect('ROLE').select('1_READ');
 
       cy.dataCy('edit-role-modal').dataCy('submit', 'button').click();
       cy.wait('@updateRole');
@@ -153,7 +154,7 @@ describe('roles page', () => {
       cy.dataCy('edit-role-modal').should('not.exist');
       cy.contains(SpecialRoleName.VISITOR)
         .closest('tr')
-        .contains('Utilisateurs')
+        .contains('Rôles')
         .closest('tr')
         .contains('Lecture');
     });
@@ -162,7 +163,7 @@ describe('roles page', () => {
       cy.contains(SpecialRoleName.MEMBER).closest('tr').dataCy('edit', 'button').click();
       cy.dataCy('edit-role-modal').find('input:enabled').should('not.exist');
       cy.dataCy('edit-role-modal').dataCy('delete', 'button').should('not.exist');
-      Select.permissionsFormSelect('USER').select('1_READ');
+      Select.permissionsFormSelect('ROLE').select('1_READ');
       Select.reqPermissionsFormSelect().select('3_ADMIN');
       cy.dataCy('edit-role-modal').dataCy('submit', 'button').should('be.enabled');
     });

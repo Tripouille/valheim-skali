@@ -52,12 +52,12 @@ export const checkRoleData = (newRole: CreateRoleData) => {
   for (const privilege of Object.values(newRole.permissions)) {
     if (isAdminPrivilege(privilege)) throw new ServerException(403);
   }
-  /** It is forbidden to have USER READ_WRITE but not ROLE READ on a role,
-   * because editing a user means assigning roles to it
+  /** It is forbidden to have USER READ but not ROLE READ on a role,
+   * because seeing a user means seeing its roles
    */
   if (
     (newRole.permissions[PermissionCategory.USER] ?? PermissionPrivilege.NONE) >=
-      PermissionPrivilege.READ_WRITE &&
+      PermissionPrivilege.READ &&
     (newRole.permissions[PermissionCategory.ROLE] ?? PermissionPrivilege.NONE) <
       PermissionPrivilege.READ
   ) {
