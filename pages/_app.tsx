@@ -33,6 +33,10 @@ const MyApp = ({
             <Head>
               <title>Skali - Valhabba</title>
               <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+              <meta
+                name="description"
+                content="Skali est le site web du Valhabba, un serveur Valheim français."
+              />
               <link rel="preload" href="/fonts/Norse.otf" as="font" crossOrigin="" />
             </Head>
             <Fonts />

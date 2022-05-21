@@ -6,6 +6,10 @@ module.exports = {
   images: {
     domains: ['cdn.discordapp.com', 'media.discordapp.net', 'puu.sh', 'i.imgur.com'],
   },
+  i18n: {
+    locales: ['fr'],
+    defaultLocale: 'fr',
+  },
   async redirects() {
     return [
       {
