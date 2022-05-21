@@ -1,25 +1,36 @@
 import Router from 'next/router';
 import React, { useEffect, useRef } from 'react';
+import { useBoolean } from '@chakra-ui/react';
 import NavBar from './NavBar';
 import Flex from 'components/core/Containers/Flex';
 import Box from 'components/core/Containers/Box';
+import Progress from 'components/core/Feedback/Progress';
 
 const Layout: React.FC = ({ children }) => {
   const main = useRef<HTMLDivElement>(null);
+  const [showLoadingBar, setShowLoadingBar] = useBoolean(false);
 
-  useEffect(
-    () =>
-      Router.events.on('routeChangeComplete', () => {
-        main.current?.scroll({
-          top: 0,
-          left: 0,
-        });
-      }),
-    [],
-  );
+  useEffect(() => {
+    const routeChangeStart = () => setShowLoadingBar.on();
+    const routeChangeEnd = () => {
+      setShowLoadingBar.off();
+      main.current?.scroll({ top: 0, left: 0 });
+    };
+
+    Router.events.on('routeChangeStart', routeChangeStart);
+    Router.events.on('routeChangeComplete', routeChangeEnd);
+    Router.events.on('routeChangeError', routeChangeEnd);
+
+    return () => {
+      Router.events.off('routeChangeStart', routeChangeStart);
+      Router.events.off('routeChangeComplete', routeChangeEnd);
+      Router.events.off('routeChangeError', routeChangeEnd);
+    };
+  }, [setShowLoadingBar]);
 
   return (
     <Box
+      position="relative"
       h="100vh"
       bgImage="/images/valheim-background-q60.jpg"
       bgAttachment="fixed"
@@ -27,6 +38,7 @@ const Layout: React.FC = ({ children }) => {
       bgPos="bottom"
     >
       <NavBar />
+      {showLoadingBar && <Progress position="absolute" width="100%" size="xs" isIndeterminate />}
       <Flex
         as="main"
         ref={main}
