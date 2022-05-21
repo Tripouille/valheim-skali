@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { chakra } from '@chakra-ui/react';
 import Heading, { HeadingProps } from 'components/core/Typography/Heading';
 
@@ -8,16 +9,21 @@ export interface PageTitleProps {
 }
 
 const PageTitle: React.FC<PageTitleProps> = ({ title, size, className }) => (
-  <Heading
-    as="h1"
-    size={size ?? '2xl'}
-    fontFamily="Norse"
-    textAlign="center"
-    fontWeight="normal"
-    className={className}
-  >
-    {title}
-  </Heading>
+  <>
+    <Head>
+      <title>Skali - {title}</title>
+    </Head>
+    <Heading
+      as="h1"
+      size={size ?? '2xl'}
+      fontFamily="Norse"
+      textAlign="center"
+      fontWeight="normal"
+      className={className}
+    >
+      {title}
+    </Heading>
+  </>
 );
 
 export default chakra(PageTitle);
