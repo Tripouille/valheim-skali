@@ -5,7 +5,7 @@
     "dev": "next dev --port 4242",
     "build": "next build",
     "start": "next start --port 4242",
-    "start:ci": "NODE_ENV=test next start --port 4243",
+    "start:ci": "next start --port 4243",
     "lint": "next lint",
     "format:w": "yarn prettier -w '**/*.{ts,tsx,yml,json,md}'",
     "format:c": "yarn prettier -c '**/*.{ts,tsx,yml,json,md}'",
