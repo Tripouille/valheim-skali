@@ -26,8 +26,9 @@ const Events = () => {
           <Secured permissions={{ [PermissionCategory.EVENT]: PermissionPrivilege.READ_WRITE }}>
             <Button
               data-cy="create-event"
+              position={{ md: 'absolute' }}
               alignSelf={{ base: 'center', md: 'end' }}
-              mt={{ base: '1rem !important', md: '0 !important' }}
+              mt="1rem !important"
               leftIcon={<BsPlusLg />}
               colorScheme="green"
               onClick={onOpen}
