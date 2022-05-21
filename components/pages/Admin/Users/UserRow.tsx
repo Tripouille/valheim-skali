@@ -2,7 +2,6 @@ import { MouseEventHandler, useMemo } from 'react';
 import { BiEdit } from 'react-icons/bi';
 import { GiArmorUpgrade } from 'react-icons/gi';
 import { useDisclosure } from '@chakra-ui/react';
-import { limitedWidthVariant } from 'theme/components/LimitedWidthText';
 import { CypressProps } from 'utils/types';
 import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
 import { User } from 'data/user';
@@ -12,6 +11,7 @@ import IconButton from 'components/core/Interactive/IconButton';
 import Tag from 'components/core/DataDisplay/Tag';
 import { Td, Tr } from 'components/core/DataDisplay/Table';
 import Secured from 'components/core/Authentication/Secured';
+import Text from 'components/core/Typography/Text';
 import { getUserRoles, rowIconSize, UserQueryFilter } from '../utils';
 import useUpdateUser from '../hooks/useUpdateUser';
 import UserForm from './UserForm';
@@ -45,11 +45,11 @@ const UserRow: React.FC<UserRowProps> = ({ 'data-cy': dataCy, user, roles, filte
       <Td>
         <UserAvatar src={user.image} />
       </Td>
-      <Td textAlign="center" {...limitedWidthVariant}>
-        {user.nameInGame}
+      <Td textAlign="center">
+        <Text noOfLines={1}>{user.nameInGame}</Text>
       </Td>
-      <Td textAlign="center" display={{ base: 'none', md: 'table-cell' }} {...limitedWidthVariant}>
-        {user.name}
+      <Td textAlign="center" display={{ base: 'none', md: 'table-cell' }}>
+        <Text noOfLines={1}>{user.name}</Text>
       </Td>
       {filter === UserQueryFilter.MEMBER && (
         <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ }}>

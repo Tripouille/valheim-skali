@@ -62,7 +62,7 @@ const UserForm: React.FC<UserFormProps> = ({ 'data-cy': dataCy, isOpen, onClose,
       <ModalHeader>
         <Center>
           <UserAvatar src={user.image} />
-          <Text px="5" maxW="80%" variant="limitedWidth">
+          <Text px="5" maxW="80%" noOfLines={1}>
             {user.name}
           </Text>
         </Center>

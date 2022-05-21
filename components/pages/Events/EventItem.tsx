@@ -37,8 +37,7 @@ const EventItem: React.FC<EventItemProps> = ({ event, context, eventIsClosed }) 
           px="4"
           size="lg"
           textAlign="center"
-          variant="limitedWidth"
-          whiteSpace={context === EventContext.LIST ? 'nowrap' : 'initial'}
+          noOfLines={context === EventContext.LIST ? 1 : undefined}
         >
           {event.name} {eventIsClosed && '(terminé)'}
         </Heading>
