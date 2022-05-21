@@ -1,7 +1,7 @@
 import { RefObject, useCallback, useEffect, useState } from 'react';
 import { Children } from 'utils/types';
-import { positiveModulo } from 'utils/number';
 import { scrollIntoViewIfNeeded } from 'utils/window';
+import useCircularCounter from 'utils/hooks/useCircularCounter';
 import {
   Popover,
   PopoverBody,
@@ -46,20 +46,21 @@ const Combobox: React.FC<ComboboxProps> = ({
   const listLength = Math.min(maxSuggestionsNb, suggestions.length);
 
   /** Keyboard selection of suggestion item */
-  const [selectedItemIndex, setSelectedItemIndex] = useState<number>();
+  const [selectedItemIndex, selectNextItem, selectPrevItem, unselectItem] =
+    useCircularCounter(listLength);
 
   useEffect(() => {
-    setSelectedItemIndex(undefined);
+    unselectItem();
     if (listLength > 0) setPopoverOpen(true);
     else setPopoverOpen(false);
-  }, [listLength]);
+  }, [listLength, unselectItem]);
 
   const select = useCallback(
     (value: string) => {
       onItemSelection(value);
-      setSelectedItemIndex(undefined);
+      unselectItem();
     },
-    [onItemSelection],
+    [onItemSelection, unselectItem],
   );
 
   /** Keyboard events */
@@ -71,20 +72,14 @@ const Combobox: React.FC<ComboboxProps> = ({
           break;
         case 'ArrowDown':
           setPopoverOpen(true);
-          if (listLength)
-            setSelectedItemIndex(prev =>
-              prev === undefined ? 0 : positiveModulo(prev + 1, listLength),
-            );
+          if (listLength) selectNextItem();
           break;
         case 'ArrowUp':
           setPopoverOpen(true);
-          if (listLength)
-            setSelectedItemIndex(prev =>
-              prev === undefined ? listLength - 1 : positiveModulo(prev - 1, listLength),
-            );
+          if (listLength) selectPrevItem();
           break;
         case 'Escape':
-          setSelectedItemIndex(undefined);
+          unselectItem();
           setPopoverOpen(false);
           break;
         case 'Tab':
@@ -93,7 +88,16 @@ const Combobox: React.FC<ComboboxProps> = ({
           setPopoverOpen(true);
       }
     },
-    [listLength, entry, selectedItemIndex, suggestions, select],
+    [
+      select,
+      selectedItemIndex,
+      suggestions,
+      entry,
+      listLength,
+      selectNextItem,
+      selectPrevItem,
+      unselectItem,
+    ],
   );
 
   /** Make popover width match input width */
