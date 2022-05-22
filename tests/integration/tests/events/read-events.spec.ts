@@ -25,14 +25,19 @@ describe('events with read permission', () => {
   context('as visitor with read permission', () => {
     before(() => {
       Action.setVisitorEventPermission(PermissionPrivilege.READ);
-      Action.visitEventsPageAndWaitFor(APIRoute.EVENTS);
     });
 
     it('should display events but not edition tools', () => {
+      Action.visitEventsPageAndWaitFor(APIRoute.EVENTS);
       cy.main().contains('Événements').should('be.visible');
       Select.eventCards().should('have.length', 2);
       Select.createEventButton().should('not.exist');
       Select.editEventButton(0).should('not.exist');
+    });
+
+    it('should open event modal when visiting events with id', () => {
+      Action.visitEventsPageAndWaitFor(APIRoute.EVENTS, '6228cb385f506b78affc05f2');
+      cy.dataCy('event-1-modal').should('be.visible');
     });
   });
 
