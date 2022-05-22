@@ -12,9 +12,9 @@ const Layout: React.FC = ({ children }) => {
 
   useEffect(() => {
     const routeChangeStart = () => setShowLoadingBar.on();
-    const routeChangeEnd = () => {
+    const routeChangeEnd = (url: unknown, { shallow }: { shallow: boolean }) => {
       setShowLoadingBar.off();
-      main.current?.scroll({ top: 0, left: 0 });
+      if (!shallow) main.current?.scroll({ top: 0, left: 0 });
     };
 
     Router.events.on('routeChangeStart', routeChangeStart);
