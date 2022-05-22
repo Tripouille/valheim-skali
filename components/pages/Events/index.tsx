@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { useDisclosure } from '@chakra-ui/react';
@@ -14,9 +15,13 @@ import EventForm from './EventForm';
 import EventCard from './EventCard';
 
 const Events = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
+  const eventId = router.query.id ?? undefined;
+
+  const createModal = useDisclosure();
+
   const eventsQuery = useEvents();
-  const createEvent = useCreateEvent(onClose);
+  const createEvent = useCreateEvent(createModal.onClose);
 
   return (
     <Secured permissions={{ [PermissionCategory.EVENT]: PermissionPrivilege.READ }}>
@@ -31,20 +36,25 @@ const Events = () => {
               mt="1rem !important"
               leftIcon={<BsPlusLg />}
               colorScheme="green"
-              onClick={onOpen}
+              onClick={createModal.onOpen}
             >
               Créer un événement
             </Button>
             <EventForm
               data-cy="create-event"
-              isOpen={isOpen}
+              isOpen={createModal.isOpen}
               onSubmit={createEvent}
-              onClose={onClose}
+              onClose={createModal.onClose}
             />
           </Secured>
           <QueryHandler query={eventsQuery}>
             {eventsQuery.data?.map((event, index) => (
-              <EventCard data-cy={`event-${index}`} key={event._id} event={event} />
+              <EventCard
+                data-cy={`event-${index}`}
+                key={event._id}
+                event={event}
+                isOpen={eventId === event._id}
+              />
             ))}
           </QueryHandler>
         </VStack>
