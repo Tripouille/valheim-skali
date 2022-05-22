@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Callback, Children, CypressProps } from 'utils/types';
 import {
   Modal,
@@ -64,10 +64,8 @@ const FormModal = <T extends object>(props: FormModalProps<T>) => {
 
   const canDelete = props.isEdition && (props.canDelete ?? true);
 
-  const testRef = useRef(null);
-
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose} initialFocusRef={testRef}>
+    <Modal isOpen={props.isOpen} onClose={props.onClose}>
       <ModalOverlay />
       <ModalContent data-cy={dataCy}>
         {children}
