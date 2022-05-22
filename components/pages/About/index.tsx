@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { BiLinkExternal } from 'react-icons/bi';
+import { MenuRoute, ROUTES_TO_LABEL } from 'utils/routes';
 import Background from 'components/core/Containers/Background';
 import { VStack } from 'components/core/Containers/Stack';
 import PageTitle from 'components/core/Typography/PageTitle';
@@ -11,7 +12,7 @@ import ExternalLink from './ExternalLink';
 
 const About = () => (
   <Background w="4xl">
-    <PageTitle title="A propos du site" />
+    <PageTitle title={ROUTES_TO_LABEL[MenuRoute.ABOUT]} />
     <VStack mt="8" spacing="6" align="start">
       <VStack align="start">
         <Text>Skali a été produit par :</Text>

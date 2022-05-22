@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { useDisclosure } from '@chakra-ui/react';
+import { NavRoute, ROUTES_TO_LABEL } from 'utils/routes';
 import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
 import PageTitle from 'components/core/Typography/PageTitle';
 import Background from 'components/core/Containers/Background';
@@ -27,7 +28,7 @@ const Events = () => {
     <Secured permissions={{ [PermissionCategory.EVENT]: PermissionPrivilege.READ }}>
       <Background data-cy="events">
         <VStack spacing="7" position="relative">
-          <PageTitle title="Événements" />
+          <PageTitle title={ROUTES_TO_LABEL[NavRoute.EVENTS]} />
           <Secured permissions={{ [PermissionCategory.EVENT]: PermissionPrivilege.READ_WRITE }}>
             <Button
               data-cy="create-event"

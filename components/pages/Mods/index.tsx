@@ -14,6 +14,7 @@ import { SiHappycow } from 'react-icons/si';
 import { HiCursorClick } from 'react-icons/hi';
 import { BsSun } from 'react-icons/bs';
 import { MdShareLocation } from 'react-icons/md';
+import { NavRoute, ROUTES_TO_LABEL } from 'utils/routes';
 import Background from 'components/core/Containers/Background';
 import Box from 'components/core/Containers/Box';
 import { VStack } from 'components/core/Containers/Stack';
@@ -35,7 +36,7 @@ const Mods = () => {
   return (
     <Background data-cy="mods" textAlign="justify">
       <VStack spacing="10">
-        <PageTitle title="Mods" />
+        <PageTitle title={ROUTES_TO_LABEL[NavRoute.MODS]} />
         <Alert status="warning" w="5xl">
           <AlertIcon />
           <AlertTitle whiteSpace="nowrap" me="5">

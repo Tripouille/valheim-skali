@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavRoute, ROUTES_TO_LABEL } from 'utils/routes';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from 'components/core/Disclosure/Tabs';
 import { VStack } from 'components/core/Containers/Stack';
 import PageTitle from 'components/core/Typography/PageTitle';
@@ -18,7 +19,7 @@ const ruleParts: Record<string, JSX.Element> = {
 const Rules = () => (
   <Background>
     <VStack spacing="5" w="full">
-      <PageTitle title="Règlement" />
+      <PageTitle title={ROUTES_TO_LABEL[NavRoute.RULES]} />
       <Tabs w="full" id="rulesTabs" isFitted size="md" colorScheme="twitter">
         <TabList>
           {Object.keys(ruleParts).map(title => (
