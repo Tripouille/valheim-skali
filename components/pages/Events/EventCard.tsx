@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { KeyboardEventHandler, MouseEventHandler } from 'react';
 import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
@@ -22,10 +23,17 @@ import EventForm from './EventForm';
 
 export interface EventCardProps extends CypressProps {
   event: Event;
+  isOpen: boolean;
 }
 
-const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event }) => {
-  const itemModal = useDisclosure();
+const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event, isOpen }) => {
+  const router = useRouter();
+
+  const itemModal = useDisclosure({
+    isOpen,
+    onOpen: () => router.push(`events?id=${event._id}`, undefined, { shallow: true }),
+    onClose: () => router.push('events', undefined, { shallow: true }),
+  });
   const editModal = useDisclosure();
 
   const updateEvent = useUpdateEvent(event);
