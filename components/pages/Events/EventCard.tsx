@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { KeyboardEventHandler, MouseEventHandler } from 'react';
+import React, { KeyboardEventHandler, MouseEventHandler, useEffect, useRef } from 'react';
 import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
 import { CypressProps } from 'utils/types';
@@ -40,6 +40,11 @@ const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event, isOpen 
   const deleteEvent = useDeleteEvent(event);
 
   const eventIsClosed = isEventClosed(event, new Date());
+
+  const eventCardRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (isOpen) eventCardRef.current?.scrollIntoView({ block: 'center' });
+  }, [isOpen]);
 
   const handleCardKeyPress: KeyboardEventHandler<HTMLDivElement> = e => {
     if (e.key === 'Enter') {
@@ -85,7 +90,12 @@ const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event, isOpen 
             onKeyPress={e => e.stopPropagation()}
           />
         </Secured>
-        <EventItem event={event} context={EventContext.LIST} eventIsClosed={eventIsClosed} />
+        <EventItem
+          event={event}
+          context={EventContext.LIST}
+          eventIsClosed={eventIsClosed}
+          ref={eventCardRef}
+        />
       </Box>
       <Modal isOpen={itemModal.isOpen} onClose={itemModal.onClose}>
         <ModalOverlay />
