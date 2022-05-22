@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavRoute, ROUTES_TO_LABEL } from 'utils/routes';
 import { GiPilgrimHat, GiStabbedNote } from 'react-icons/gi';
 import { BsShopWindow } from 'react-icons/bs';
 import Background from 'components/core/Containers/Background';
@@ -14,7 +15,7 @@ const Trade = () => {
   return (
     <Background data-cy="trade" textAlign="justify">
       <VStack spacing="8">
-        <PageTitle title="Commerce" />
+        <PageTitle title={ROUTES_TO_LABEL[NavRoute.TRADE]} />
         <Text w="full">
           Au Valhabba, le commerce, que ce soit sous forme de troc ou d&apos;achat et vente contre
           des piastres, est libre.
