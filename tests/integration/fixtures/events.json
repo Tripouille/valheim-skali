@@ -1,5 +1,6 @@
 [
   {
+    "_id": "6228cb385f506b78affc05f1",
     "name": "Event1",
     "discordLink": "https://discord.com/channels/843826987466227722/894670935842508831/907...",
     "tags": ["Tag", "Tga", "abc"],
@@ -9,6 +10,7 @@
     "description": "Une description 1"
   },
   {
+    "_id": "6228cb385f506b78affc05f2",
     "name": "Event2",
     "tags": [],
     "startDate": "2000-01-01T20:30:00.000+01:00",
