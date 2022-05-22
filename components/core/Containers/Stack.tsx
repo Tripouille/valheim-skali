@@ -4,13 +4,15 @@ import {
   HStack as ChakraHStack,
   VStack as ChakraVStack,
   StackProps as ChakraStackProps,
+  forwardRef,
 } from '@chakra-ui/react';
 
 export type StackProps = ChakraStackProps;
 
-export const Stack: React.FC<StackProps> = chakraStackProps => (
-  <ChakraStack {...chakraStackProps}></ChakraStack>
-);
+export const Stack = forwardRef<StackProps, 'div'>((chakraStackProps, ref) => (
+  <ChakraStack {...chakraStackProps} ref={ref}></ChakraStack>
+));
+Stack.displayName = 'Stack';
 
 export const HStack: React.FC<StackProps> = chakraStackProps => (
   <ChakraHStack {...chakraStackProps}></ChakraHStack>
