@@ -1,3 +1,4 @@
+import NextLink from 'next/link';
 import React from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import Secured from 'components/core/Authentication/Secured';
@@ -8,6 +9,7 @@ import PageTitle from 'components/core/Typography/PageTitle';
 import Text from 'components/core/Typography/Text';
 import Button from 'components/core/Interactive/Button';
 import WikiLinksGroup from './WikiLinksGroup';
+import { NavRoute, serverName } from 'utils/routes';
 
 const Wiki = () => {
   return (
@@ -32,14 +34,11 @@ const Wiki = () => {
             <WikiLinksGroup title="Les plus populaires" />
           </SimpleGrid>
           <Secured permissions={{}}>
-            <Button
-              data-cy="create-page"
-              leftIcon={<BsPlusLg />}
-              colorScheme="green"
-              onClick={undefined}
-            >
-              Proposer une nouvelle page wiki
-            </Button>
+            <NextLink href={`/${serverName}${NavRoute.WIKI}/new`}>
+              <Button data-cy="create-page" as="a" leftIcon={<BsPlusLg />} colorScheme="green">
+                Proposer une nouvelle page wiki
+              </Button>
+            </NextLink>
           </Secured>
         </VStack>
       </Background>
