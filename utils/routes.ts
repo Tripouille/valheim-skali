@@ -7,6 +7,7 @@ export enum APIRoute {
   USERS = '/api/users',
   ROLES = '/api/roles',
   EVENTS = '/api/events',
+  WIKI = '/api/wiki',
   SESSION = '/api/auth/session',
   VISITOR = '/api/auth/visitor',
 }
@@ -18,6 +19,7 @@ export enum NavRoute {
   TRADE = '/trade',
   MODS = '/mods',
   WORLD = '/world',
+  WIKI = '/wiki',
 }
 export enum AdminNavRoute {
   MEMBERS = '/members',
@@ -41,6 +43,7 @@ export const ROUTES_TO_LABEL: Record<Route, string> = {
   [NavRoute.TRADE]: 'Commerce',
   [NavRoute.MODS]: 'Mods',
   [NavRoute.WORLD]: 'Monde',
+  [NavRoute.WIKI]: 'Wiki',
   [AdminNavRoute.MEMBERS]: 'Vikings',
   [AdminNavRoute.NON_MEMBERS]: 'Âmes perdues',
   [AdminNavRoute.ROLES]: 'Rôles',
