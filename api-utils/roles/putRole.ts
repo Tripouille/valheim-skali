@@ -11,7 +11,12 @@ import {
 import { requirePermissions } from 'api-utils/auth';
 import { ServerException, updateOneInCollection } from 'api-utils/common';
 import db from 'api-utils/db';
-import { checkRoleData, isCreateRoleData, transformRoleForDb } from './utils';
+import {
+  checkRoleData,
+  isCreateRoleData,
+  revalidatePermissionsDependentPages,
+  transformRoleForDb,
+} from './utils';
 
 const checkPermissionsIfRoleIsSpecial = async (role: RoleInDb, roleNewData: CreateRoleData) => {
   if (isSpecialRole(role)) {
@@ -54,6 +59,8 @@ const putRole = async (req: Req, res: Res) => {
   if (!result.ok) throw new ServerException(500);
 
   res.status(200).json(result.value);
+
+  revalidatePermissionsDependentPages(res);
 };
 
 export default putRole;
