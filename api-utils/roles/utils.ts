@@ -1,7 +1,9 @@
+import { NextApiResponse as Res } from 'next';
 import { CreateRoleData, getRoleValidationError, ROLE_NAME_IN_GAME_MAX_LENGTH } from 'data/role';
 import { isAdminPrivilege, PermissionCategory, PermissionPrivilege, Permissions } from 'utils/auth';
 import { isFilled } from 'utils/validation';
 import { isRequiredObjectType, ServerException, isObject } from 'api-utils/common';
+import { revalidateEventsPage } from 'api-utils/events/utils';
 
 /** Validate body shape */
 
@@ -79,4 +81,8 @@ export const checkRoleData = (newRole: CreateRoleData) => {
   ) {
     throw new ServerException(403);
   }
+};
+
+export const revalidatePermissionsDependentPages = (res: Res) => {
+  revalidateEventsPage(res);
 };
