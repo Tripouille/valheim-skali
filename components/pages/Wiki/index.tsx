@@ -11,7 +11,7 @@ import Button from 'components/core/Interactive/Button';
 import WikiLinksGroup from './WikiLinksGroup';
 import { NavRoute, serverName } from 'utils/routes';
 
-const Wiki = () => {
+const WikiHome = () => {
   return (
     <Secured permissions={{}}>
       <Background data-cy="wiki">
@@ -46,4 +46,4 @@ const Wiki = () => {
   );
 };
 
-export default Wiki;
+export default WikiHome;

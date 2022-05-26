@@ -1,6 +1,6 @@
 import React from 'react';
-import Wiki from 'components/pages/Wiki';
+import WikiHome from 'components/pages/Wiki';
 
-const WikiPage = () => <Wiki />;
+const WikiHomePage = () => <WikiHome />;
 
-export default WikiPage;
+export default WikiHomePage;
