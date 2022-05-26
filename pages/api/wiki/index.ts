@@ -4,10 +4,7 @@ import createWikiPage from 'api-utils/wiki/createWikiPage';
 
 const wikiHandler: NextApiHandler = async (req, res) => {
   try {
-    /*if (req.method === 'GET') {
-      const events = await getEvents(req);
-      res.status(200).json(events);
-    } else */ if (req.method === 'POST') {
+    if (req.method === 'POST') {
       await createWikiPage(req, res);
     } else {
       throw new ServerException(501);

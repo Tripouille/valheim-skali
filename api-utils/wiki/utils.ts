@@ -1,9 +1,11 @@
-import { isRequiredObjectType, ServerException } from 'api-utils/common';
 import {
   CreateWikiPageData,
+  CreateWikiPageDataWithSlug,
   getWikiPageValidationError,
   WIKI_PAGE_VALUES_MAX_LENGTH,
 } from 'data/wiki';
+import { isRequiredObjectType, ServerException } from 'api-utils/common';
+import { slugify } from 'utils/format';
 
 const wikiPageKeyToValueTypeCheck: Record<keyof CreateWikiPageData, (value: unknown) => boolean> = {
   title: value => typeof value === 'string',
@@ -21,11 +23,11 @@ const shortenTextData = (newWikiPage: CreateWikiPageData) => {
   newWikiPage.content = newWikiPage.content.substring(0, WIKI_PAGE_VALUES_MAX_LENGTH.content);
 };
 
-export const getNewWikiPageFromBody = (body: unknown): CreateWikiPageData => {
-  const newWikiPage: unknown = body;
+export const getNewWikiPageFromBody = (body: unknown): CreateWikiPageDataWithSlug => {
+  if (!isCreateWikiPageData(body)) throw new ServerException(400);
+  if (!isValidWikiPage(body)) throw new ServerException(400);
 
-  if (!isCreateWikiPageData(newWikiPage)) throw new ServerException(400);
-  if (!isValidWikiPage(newWikiPage)) throw new ServerException(400);
+  const newWikiPage: CreateWikiPageDataWithSlug = { ...body, slug: slugify(body.title) };
   shortenTextData(newWikiPage);
 
   return newWikiPage;

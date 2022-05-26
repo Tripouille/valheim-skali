@@ -7,11 +7,13 @@ export interface WikiPage {
   _id: string;
   title: string;
   content: string;
+  slug: string;
 }
 
 export type WikiPageInDb = Omit<WikiPage, '_id'> & { _id: ObjectId };
 
-export type CreateWikiPageData = Omit<WikiPage, '_id'>;
+export type CreateWikiPageData = Omit<WikiPage, '_id' | 'slug'>;
+export type CreateWikiPageDataWithSlug = CreateWikiPageData & Pick<WikiPage, 'slug'>;
 
 /** Database */
 
