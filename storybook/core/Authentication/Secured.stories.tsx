@@ -1,7 +1,7 @@
 import { storybookSetup } from 'storybook/config/setup';
 import { StoryCategory } from 'storybook/config/constants';
 import Secured, { SecuredProps } from 'components/core/Authentication/Secured';
-import { PermissionCategory, PermissionPrivilege, Permissions } from 'utils/auth';
+import { eventPrivilege, PermissionCategory, Permissions } from 'utils/permissions';
 
 const { defaultExport, StoryFactory } = storybookSetup<SecuredProps>(
   Secured,
@@ -23,7 +23,7 @@ export const WithRights = StoryFactory(
 );
 
 export const WithoutRights = StoryFactory({
-  permissions: { [PermissionCategory.EVENT]: PermissionPrivilege.SUPER_ADMIN },
+  permissions: { [PermissionCategory.EVENT]: eventPrivilege.SUPER_ADMIN },
   children: 'I have the rights !',
   fallback: "I don't have the rights :(",
 });

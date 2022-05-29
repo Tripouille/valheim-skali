@@ -1,11 +1,11 @@
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { UserInDb, usersCollectionName } from 'data/user';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { PermissionCategory, userPrivilege } from 'utils/permissions';
 import { requirePermissions } from 'api-utils/auth';
 import db from 'api-utils/db';
 
 const getUsers = async (req: Req, res: Res) => {
-  await requirePermissions({ [PermissionCategory.USER]: PermissionPrivilege.READ }, req);
+  await requirePermissions({ [PermissionCategory.USER]: userPrivilege.READ }, req);
 
   const users = await db.find<UserInDb>(usersCollectionName);
 

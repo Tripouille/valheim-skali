@@ -1,10 +1,10 @@
 import * as dotenv from 'dotenv';
 import { ObjectId } from 'bson';
 import { OptionalId } from 'mongodb';
-import { RoleInDb, rolesCollectionName } from 'data/role';
-import { UserInDb, usersCollectionName } from 'data/user';
-import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
 import db from 'api-utils/db';
+import { RoleInDb, rolesCollectionName, SpecialRoleName } from 'data/role';
+import { UserInDb, usersCollectionName } from 'data/user';
+import { PermissionCategory, Permissions } from 'utils/permissions';
 
 dotenv.config({ path: '../../.env.test' });
 
@@ -13,10 +13,10 @@ interface SeedCollectionDto<T> {
   data: (OptionalId<T> & Record<string, ObjectId[]>)[];
 }
 
-interface SetPermissionDto {
+interface SetPermissionDto<C extends PermissionCategory> {
   roleName: SpecialRoleName;
-  permissionCategory: PermissionCategory;
-  permissionPrivilege: PermissionPrivilege;
+  permissionCategory: C;
+  permissionPrivilege: Permissions[C];
 }
 
 const plugins = (on: Cypress.PluginEvents) => {
@@ -38,11 +38,11 @@ const plugins = (on: Cypress.PluginEvents) => {
       return null;
     },
 
-    setPermission: async ({
+    setPermission: async <C extends PermissionCategory>({
       roleName,
       permissionCategory,
       permissionPrivilege,
-    }: SetPermissionDto) => {
+    }: SetPermissionDto<C>) => {
       await db.updateOne<RoleInDb>(
         rolesCollectionName,
         { name: roleName },

@@ -1,11 +1,11 @@
 import { FiHelpCircle } from 'react-icons/fi';
 import {
   PermissionCategory,
-  PermissionPrivilege,
   Permissions,
   PERMISSION_CATEGORY_TO_LABEL,
   PERMISSION_PRIVILEGE_TO_LABEL,
-} from 'utils/auth';
+  userPrivilege,
+} from 'utils/permissions';
 import { Table, Tbody, Td, Th, Tr } from 'components/core/DataDisplay/Table';
 import { FormLabel } from 'components/core/Form/FormControl';
 import Select from 'components/core/Form/Select';
@@ -27,7 +27,9 @@ const RoleReqPermsForm: React.FC<RoleReqPermsFormProps> = ({
   roleHasUserWritePermission,
   isAdminRole,
 }) => {
-  const changeRequiredPermissionsToAssign = (newPrivilege: PermissionPrivilege) => {
+  const changeRequiredPermissionsToAssign = (
+    newPrivilege: NonNullable<Permissions[PermissionCategory.USER]>,
+  ) => {
     setRequiredPermissionsToAssign({
       [PermissionCategory.USER]: newPrivilege,
     });
@@ -52,15 +54,19 @@ const RoleReqPermsForm: React.FC<RoleReqPermsFormProps> = ({
                 onChange={changeRequiredPermissionsToAssign}
                 isDisabled={roleHasUserWritePermission}
               >
-                <option value={PermissionPrivilege.READ_WRITE}>
-                  {PERMISSION_PRIVILEGE_TO_LABEL[PermissionPrivilege.READ_WRITE]}
+                <option value={userPrivilege.READ_WRITE}>
+                  {PERMISSION_PRIVILEGE_TO_LABEL[PermissionCategory.USER][userPrivilege.READ_WRITE]}
                 </option>
-                <option value={PermissionPrivilege.ADMIN}>
-                  {PERMISSION_PRIVILEGE_TO_LABEL[PermissionPrivilege.ADMIN]}
+                <option value={userPrivilege.ADMIN}>
+                  {PERMISSION_PRIVILEGE_TO_LABEL[PermissionCategory.USER][userPrivilege.ADMIN]}
                 </option>
                 {isAdminRole && (
-                  <option value={PermissionPrivilege.SUPER_ADMIN}>
-                    {PERMISSION_PRIVILEGE_TO_LABEL[PermissionPrivilege.SUPER_ADMIN]}
+                  <option value={userPrivilege.SUPER_ADMIN}>
+                    {
+                      PERMISSION_PRIVILEGE_TO_LABEL[PermissionCategory.USER][
+                        userPrivilege.SUPER_ADMIN
+                      ]
+                    }
                   </option>
                 )}
               </Select>

@@ -6,7 +6,7 @@ import {
   usersCollectionName,
   USER_NAME_IN_GAME_MAX_LENGTH,
 } from 'data/user';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { PermissionCategory, userPrivilege } from 'utils/permissions';
 import { requirePermissions } from 'api-utils/auth';
 import { isRequiredObjectType, ServerException, updateOneInCollection } from 'api-utils/common';
 import db from 'api-utils/db';
@@ -23,7 +23,7 @@ const transformUserDataForDb = (userNewData: UpdateUserData) => {
 };
 
 const patchUser = async (req: Req, res: Res) => {
-  await requirePermissions({ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }, req);
+  await requirePermissions({ [PermissionCategory.USER]: userPrivilege.READ_WRITE }, req);
 
   const { id } = req.query as { id: string };
 

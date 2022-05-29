@@ -1,4 +1,5 @@
-import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
+import { SpecialRoleName } from 'data/role';
+import { PermissionCategory, Permissions } from 'utils/permissions';
 
 Cypress.Commands.add('dataCy', { prevSubject: 'optional' }, (subject, value, selector = '') => {
   if (subject)
@@ -24,10 +25,10 @@ Cypress.Commands.add('seedCollection', <T>(collectionName: string, fixtureFileNa
 
 Cypress.Commands.add(
   'setPermission',
-  (
+  <C extends PermissionCategory>(
     roleName: string,
-    permissionCategory: PermissionCategory,
-    permissionPrivilege: PermissionPrivilege,
+    permissionCategory: C,
+    permissionPrivilege: Permissions[C],
   ) => {
     cy.task('setPermission', { roleName, permissionCategory, permissionPrivilege });
   },

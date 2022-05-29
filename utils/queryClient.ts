@@ -7,7 +7,7 @@ import { Role } from 'data/role';
 import { Event } from 'data/event';
 import { getMessageFromError } from './error';
 import { displayErrorToast } from './toast';
-import { Permissions } from './auth';
+import { Permissions } from './permissions';
 
 export const queryErrorHandler = (error: unknown) => {
   const id = axios.isAxiosError(error) ? error.config.url : undefined;

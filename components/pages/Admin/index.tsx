@@ -8,7 +8,7 @@ import {
   isAdminNavRoute,
   ROUTES_TO_LABEL,
 } from 'utils/routes';
-import { ROUTES_TO_PERMISSIONS } from 'utils/auth';
+import { ROUTES_TO_PERMISSIONS } from 'utils/permissions';
 import { Children } from 'utils/types';
 import Secured from 'components/core/Authentication/Secured';
 import PageTitle from 'components/core/Typography/PageTitle';

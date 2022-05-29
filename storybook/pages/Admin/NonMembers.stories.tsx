@@ -1,7 +1,7 @@
 import { storybookSetup } from 'storybook/config/setup';
 import { StoryCategory } from 'storybook/config/constants';
 import { AdminNavRoute, APIRoute, ROUTES_TO_LABEL } from 'utils/routes';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
 import UsersTable from 'components/pages/Admin/Users/UsersTable';
 import { UserQueryFilter } from 'components/pages/Admin/utils';
 import AdminLayout from 'components/pages/Admin/AdminLayout';
@@ -31,21 +31,21 @@ export default defaultExport;
 export const NonMembersEmpty = StoryFactory(
   { filter: UserQueryFilter.NON_MEMBER },
   {
-    permissions: { [PermissionCategory.USER]: PermissionPrivilege.READ },
+    permissions: { [PermissionCategory.USER]: userPrivilege.READ },
   },
 );
 
 export const NonMembersReadOnly = StoryFactory(
   { filter: UserQueryFilter.NON_MEMBER, users: nonMembers },
-  { permissions: { [PermissionCategory.USER]: PermissionPrivilege.READ } },
+  { permissions: { [PermissionCategory.USER]: userPrivilege.READ } },
 );
 
 export const NonMembersCanEdit = StoryFactory(
   { filter: UserQueryFilter.NON_MEMBER, users: nonMembers },
   {
     permissions: {
-      [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE,
-      [PermissionCategory.ROLE]: PermissionPrivilege.READ,
+      [PermissionCategory.USER]: userPrivilege.READ_WRITE,
+      [PermissionCategory.ROLE]: rolePrivilege.READ,
     },
     requestResults: [{ url: APIRoute.ROLES, result: roles }],
   },

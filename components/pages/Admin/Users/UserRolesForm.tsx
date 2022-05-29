@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { User } from 'data/user';
 import { compareRolesFromName, Role } from 'data/role';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { PermissionCategory, userPrivilege } from 'utils/permissions';
 import useSession from 'utils/hooks/useSession';
 import { Wrap } from 'components/core/Containers/Wrap';
 import Box from 'components/core/Containers/Box';
@@ -27,7 +27,7 @@ const UserRolesForm: React.FC<UserRolesFormProps> = ({ user, roles }) => {
   );
 
   const hasUserWritePermission = session.hasRequiredPermissions({
-    [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE,
+    [PermissionCategory.USER]: userPrivilege.READ_WRITE,
   });
 
   const addableRoles = useMemo(() => {

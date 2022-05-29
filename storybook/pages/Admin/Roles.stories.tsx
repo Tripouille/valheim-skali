@@ -2,7 +2,7 @@ import { storybookSetup } from 'storybook/config/setup';
 import { StoryCategory } from 'storybook/config/constants';
 import Admin from 'components/pages/Admin';
 import { APIRoute } from 'utils/routes';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { rolePrivilege, PermissionCategory } from 'utils/permissions';
 import roles from './roles.json';
 
 const { defaultExport, StoryFactory } = storybookSetup(
@@ -18,7 +18,7 @@ export default defaultExport;
 export const RolesEmpty = StoryFactory(
   {},
   {
-    permissions: { [PermissionCategory.ROLE]: PermissionPrivilege.READ },
+    permissions: { [PermissionCategory.ROLE]: rolePrivilege.READ },
     requestResults: [{ url: APIRoute.ROLES, result: [] }],
     router: { query: { route: 'roles' } },
   },
@@ -27,7 +27,7 @@ export const RolesEmpty = StoryFactory(
 export const RolesReadOnly = StoryFactory(
   {},
   {
-    permissions: { [PermissionCategory.ROLE]: PermissionPrivilege.READ },
+    permissions: { [PermissionCategory.ROLE]: rolePrivilege.READ },
     requestResults: [{ url: APIRoute.ROLES, result: roles }],
     router: { query: { route: 'roles' } },
   },
@@ -36,7 +36,7 @@ export const RolesReadOnly = StoryFactory(
 export const RolesCanEdit = StoryFactory(
   {},
   {
-    permissions: { [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE },
+    permissions: { [PermissionCategory.ROLE]: rolePrivilege.ADMIN },
     requestResults: [{ url: APIRoute.ROLES, result: roles }],
     router: { query: { route: 'roles' } },
   },

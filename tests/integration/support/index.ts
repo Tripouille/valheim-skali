@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
+import { SpecialRoleName } from 'data/role';
+import { PermissionCategory, Permissions } from 'utils/permissions';
 
 declare global {
   namespace Cypress {
@@ -17,10 +18,10 @@ declare global {
 
       // Populate collections in database
       seedCollection(collectionName: string, fixtureFileName: string): void;
-      setPermission(
+      setPermission<C extends PermissionCategory>(
         roleName: string,
-        permissionCategory: PermissionCategory,
-        permissionPrivilege: PermissionPrivilege,
+        permissionCategory: C,
+        permissionPrivilege: Permissions[C],
       ): void;
       setUserRoles(roleNames: SpecialRoleName[]): void;
     }

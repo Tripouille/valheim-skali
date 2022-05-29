@@ -1,5 +1,5 @@
 import { Role } from 'data/role';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { rolePrivilege, PermissionCategory } from 'utils/permissions';
 import Secured from 'components/core/Authentication/Secured';
 import { Table, Th, Thead, Tr, Tbody } from 'components/core/DataDisplay/Table';
 import { adminTableStyleProps, getCellWidth, rowIconWidth } from '../utils';
@@ -20,7 +20,7 @@ const RolesTable: React.FC<RolesTableProps> = ({ roles }) => {
             Nom
           </Th>
           <Th>Permissions</Th>
-          <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE }}>
+          <Secured permissions={{ [PermissionCategory.ROLE]: rolePrivilege.ADMIN }}>
             <Th width={getCellWidth(rowIconWidth)}></Th>
           </Secured>
         </Tr>

@@ -1,10 +1,11 @@
-import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
+import { SpecialRoleName } from 'data/role';
+import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
 
-describe('menu', () => {
+describe('aside menu', () => {
   context('when signed out', () => {
     before(() => {
-      cy.setPermission(SpecialRoleName.VISITOR, PermissionCategory.USER, PermissionPrivilege.NONE);
-      cy.setPermission(SpecialRoleName.VISITOR, PermissionCategory.ROLE, PermissionPrivilege.NONE);
+      cy.setPermission(SpecialRoleName.VISITOR, PermissionCategory.USER, userPrivilege.NONE);
+      cy.setPermission(SpecialRoleName.VISITOR, PermissionCategory.ROLE, rolePrivilege.NONE);
     });
 
     beforeEach(() => {
@@ -51,8 +52,8 @@ describe('menu', () => {
 
 context('when signed in as user with user read permission', () => {
   before(() => {
-    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, PermissionPrivilege.NONE);
-    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.USER, PermissionPrivilege.READ);
+    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, rolePrivilege.NONE);
+    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.USER, userPrivilege.READ);
     cy.setUserRoles([SpecialRoleName.MEMBER]);
   });
 

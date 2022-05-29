@@ -3,16 +3,18 @@ import { CypressProps, Callback } from 'utils/types';
 import {
   CreateRoleData,
   getRoleValidationError,
-  Role,
-  ROLE_NAME_IN_GAME_MAX_LENGTH,
-} from 'data/role';
-import {
   isAdminRole,
   isSpecialRole,
+  Role,
+  ROLE_NAME_IN_GAME_MAX_LENGTH,
+  SpecialRoleName,
+} from 'data/role';
+import {
   PermissionCategory,
   PermissionPrivilege,
-  SpecialRoleName,
-} from 'utils/auth';
+  rolePrivilege,
+  userPrivilege,
+} from 'utils/permissions';
 import Secured from 'components/core/Authentication/Secured';
 import { ModalBody } from 'components/core/Overlay/Modal';
 import { Table, Tbody, Td, Th, Tr } from 'components/core/DataDisplay/Table';
@@ -26,7 +28,7 @@ import RoleReqPermsForm from './RoleReqPermsForm';
 const defaultRoleFormData: CreateRoleData = {
   name: '',
   permissions: {},
-  requiredPermissionsToAssign: { [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE },
+  requiredPermissionsToAssign: { [PermissionCategory.USER]: userPrivilege.READ_WRITE },
 };
 
 export type RoleFormProps = CypressProps & {
@@ -54,27 +56,35 @@ const RoleForm: React.FC<RoleFormProps> = (props: RoleFormProps) => {
   );
 
   const roleHasUserWritePermission =
-    (roleFormData.permissions[PermissionCategory.USER] ?? PermissionPrivilege.NONE) >=
-      PermissionPrivilege.READ_WRITE ||
+    (roleFormData.permissions[PermissionCategory.USER] ?? userPrivilege.NONE) >=
+      userPrivilege.READ_WRITE ||
     (!!role && isAdminRole(role));
 
-  useEffect(() => {
-    if (isOpen) setRoleFormData(role ? getRoleFormData(role) : defaultRoleFormData);
-  }, [role, isOpen]);
+  useEffect(
+    function prefillFormData() {
+      if (isOpen) setRoleFormData(role ? getRoleFormData(role) : defaultRoleFormData);
+    },
+    [role, isOpen],
+  );
 
-  useEffect(() => {
-    if (
-      isOpen &&
-      roleHasUserWritePermission &&
-      (roleFormData.requiredPermissionsToAssign[PermissionCategory.USER] ??
-        PermissionPrivilege.NONE) < PermissionPrivilege.ADMIN
-    ) {
-      setRoleFormData(prev => ({
-        ...prev,
-        requiredPermissionsToAssign: { [PermissionCategory.USER]: PermissionPrivilege.ADMIN },
-      }));
-    }
-  }, [roleHasUserWritePermission, roleFormData, isOpen]);
+  useEffect(
+    function setAdminRequiredPermissionIfRoleHasUserWritePermission() {
+      if (
+        isOpen &&
+        roleHasUserWritePermission &&
+        (roleFormData.requiredPermissionsToAssign[PermissionCategory.USER] ?? userPrivilege.NONE) <
+          userPrivilege.ADMIN
+      ) {
+        setRoleFormData(prev => ({
+          ...prev,
+          requiredPermissionsToAssign: {
+            [PermissionCategory.USER]: userPrivilege.ADMIN,
+          },
+        }));
+      }
+    },
+    [roleHasUserWritePermission, roleFormData, isOpen],
+  );
 
   const changePermissions =
     (category: PermissionCategory) => (newPrivilege: PermissionPrivilege) => {
@@ -112,9 +122,7 @@ const RoleForm: React.FC<RoleFormProps> = (props: RoleFormProps) => {
                 <Secured
                   permissions={{
                     [PermissionCategory.ROLE]:
-                      role && isSpecialRole(role)
-                        ? PermissionPrivilege.SUPER_ADMIN
-                        : PermissionPrivilege.READ_WRITE,
+                      role && isSpecialRole(role) ? rolePrivilege.SUPER_ADMIN : rolePrivilege.ADMIN,
                   }}
                   fallback={
                     <Text fontSize="md" m="3">
