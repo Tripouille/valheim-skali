@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  CreateWikiPageData,
+  WikiPageContent,
   getWikiPageValidationError,
   WIKI_PAGE_VALUES_MAX_LENGTH,
 } from 'data/wiki';
@@ -18,7 +18,7 @@ import useCreateWikiPage from './hooks/useCreateWikiPage';
 const WikiForm = () => {
   const createWikiPage = useCreateWikiPage();
 
-  const [formData, setFormData] = useState<Partial<CreateWikiPageData>>({});
+  const [formData, setFormData] = useState<Partial<WikiPageContent>>({});
   const [validationError, setValidationError] = useState<string | null>(null);
 
   useEffect(() => setValidationError(getWikiPageValidationError(formData)), [formData]);

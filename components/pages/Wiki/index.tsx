@@ -10,6 +10,7 @@ import Text from 'components/core/Typography/Text';
 import Button from 'components/core/Interactive/Button';
 import WikiLinksGroup from './WikiLinksGroup';
 import { NavRoute, serverName } from 'utils/routes';
+import Link from 'next/link';
 
 const WikiHome = () => {
   return (
@@ -40,6 +41,9 @@ const WikiHome = () => {
               </Button>
             </NextLink>
           </Secured>
+          <Link href={`/${serverName}/${NavRoute.WIKI}/all`}>
+            Temp: lien pour voir toutes les pages
+          </Link>
         </VStack>
       </Background>
     </Secured>

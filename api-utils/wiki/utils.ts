@@ -1,34 +1,33 @@
 import {
-  CreateWikiPageData,
-  CreateWikiPageDataWithSlug,
   getWikiPageValidationError,
   WIKI_PAGE_VALUES_MAX_LENGTH,
+  WikiPageContent,
 } from 'data/wiki';
 import { isRequiredObjectType, ServerException } from 'api-utils/common';
-import { slugify } from 'utils/format';
 
-const wikiPageKeyToValueTypeCheck: Record<keyof CreateWikiPageData, (value: unknown) => boolean> = {
+const wikiPageContentKeyToValueTypeCheck: Record<
+  keyof WikiPageContent,
+  (value: unknown) => boolean
+> = {
   title: value => typeof value === 'string',
   content: value => typeof value === 'string',
 };
 
-const isCreateWikiPageData = (data: unknown): data is CreateWikiPageData =>
-  isRequiredObjectType(data, wikiPageKeyToValueTypeCheck);
+const isWikiPageContent = (data: unknown): data is WikiPageContent =>
+  isRequiredObjectType(data, wikiPageContentKeyToValueTypeCheck);
 
-const isValidWikiPage = (wikiPageData: CreateWikiPageData) =>
+const isValidWikiPageContent = (wikiPageData: WikiPageContent) =>
   getWikiPageValidationError(wikiPageData) === null;
 
-const shortenTextData = (newWikiPage: CreateWikiPageData) => {
+const shortenTextData = (newWikiPage: WikiPageContent) => {
   newWikiPage.title = newWikiPage.title.substring(0, WIKI_PAGE_VALUES_MAX_LENGTH.title);
   newWikiPage.content = newWikiPage.content.substring(0, WIKI_PAGE_VALUES_MAX_LENGTH.content);
 };
 
-export const getNewWikiPageFromBody = (body: unknown): CreateWikiPageDataWithSlug => {
-  if (!isCreateWikiPageData(body)) throw new ServerException(400);
-  if (!isValidWikiPage(body)) throw new ServerException(400);
+export const getWikiPageContentFromBody = (body: unknown): WikiPageContent => {
+  if (!isWikiPageContent(body)) throw new ServerException(400);
+  if (!isValidWikiPageContent(body)) throw new ServerException(400);
+  shortenTextData(body);
 
-  const newWikiPage: CreateWikiPageDataWithSlug = { ...body, slug: slugify(body.title) };
-  shortenTextData(newWikiPage);
-
-  return newWikiPage;
+  return body;
 };
