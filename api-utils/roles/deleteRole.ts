@@ -1,14 +1,14 @@
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { ObjectId } from 'bson';
-import { RoleInDb, rolesCollectionName } from 'data/role';
+import { isSpecialRole, RoleInDb, rolesCollectionName } from 'data/role';
 import { UserInDb, usersCollectionName } from 'data/user';
-import { isSpecialRole, PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { PermissionCategory, rolePrivilege } from 'utils/permissions';
 import { requirePermissions } from 'api-utils/auth';
 import { ServerException } from 'api-utils/common';
 import db from 'api-utils/db';
 
 const deleteRole = async (req: Req, res: Res) => {
-  await requirePermissions({ [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE }, req);
+  await requirePermissions({ [PermissionCategory.ROLE]: rolePrivilege.ADMIN }, req);
 
   const { id } = req.query as { id: string };
 

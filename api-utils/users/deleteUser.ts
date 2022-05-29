@@ -2,13 +2,13 @@ import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { ObjectId } from 'bson';
 import { UserInDb, usersCollectionName } from 'data/user';
 import { RoleInDb, rolesCollectionName } from 'data/role';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { PermissionCategory, userPrivilege } from 'utils/permissions';
 import { requirePermissions } from 'api-utils/auth';
 import { ServerException } from 'api-utils/common';
 import db from 'api-utils/db';
 
 const deleteUser = async (req: Req, res: Res) => {
-  await requirePermissions({ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }, req);
+  await requirePermissions({ [PermissionCategory.USER]: userPrivilege.READ_WRITE }, req);
 
   const { id } = req.query as { id: string };
 

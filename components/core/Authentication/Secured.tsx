@@ -1,6 +1,6 @@
 import useSession from 'utils/hooks/useSession';
 import { Children } from 'utils/types';
-import { Permissions } from 'utils/auth';
+import { Permissions } from 'utils/permissions';
 
 export interface SecuredProps {
   permissions: Permissions;

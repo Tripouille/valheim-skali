@@ -5,7 +5,7 @@ import { Event } from 'data/event';
 import { APIRoute } from 'utils/routes';
 import { QueryKeys, QueryTypes } from 'utils/queryClient';
 import useSession from 'utils/hooks/useSession';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { eventPrivilege, PermissionCategory } from 'utils/permissions';
 import { eventComp } from '../utils';
 
 export const getEvents = async (): Promise<Event[]> => {
@@ -23,7 +23,7 @@ export const useEvents = () => {
 
   const eventsQuery = useQuery(QueryKeys.EVENTS, getEvents, {
     enabled: session.hasRequiredPermissions({
-      [PermissionCategory.EVENT]: PermissionPrivilege.READ,
+      [PermissionCategory.EVENT]: eventPrivilege.READ,
     }),
     select: sortEvents,
   });

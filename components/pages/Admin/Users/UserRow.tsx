@@ -3,9 +3,9 @@ import { BiEdit } from 'react-icons/bi';
 import { GiArmorUpgrade } from 'react-icons/gi';
 import { useDisclosure } from '@chakra-ui/react';
 import { CypressProps } from 'utils/types';
-import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
 import { User } from 'data/user';
-import { compareRolesFromName, Role } from 'data/role';
+import { compareRolesFromName, Role, SpecialRoleName } from 'data/role';
+import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
 import { Wrap } from 'components/core/Containers/Wrap';
 import IconButton from 'components/core/Interactive/IconButton';
 import Tag from 'components/core/DataDisplay/Tag';
@@ -52,7 +52,7 @@ const UserRow: React.FC<UserRowProps> = ({ 'data-cy': dataCy, user, roles, filte
         <Text noOfLines={1}>{user.name}</Text>
       </Td>
       {filter === UserQueryFilter.MEMBER && (
-        <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ }}>
+        <Secured permissions={{ [PermissionCategory.ROLE]: rolePrivilege.READ }}>
           <Td display={{ base: 'none', sm: 'table-cell' }}>
             {
               <Wrap justify="center">
@@ -64,7 +64,7 @@ const UserRow: React.FC<UserRowProps> = ({ 'data-cy': dataCy, user, roles, filte
           </Td>
         </Secured>
       )}
-      <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
+      <Secured permissions={{ [PermissionCategory.USER]: userPrivilege.READ_WRITE }}>
         {filter === UserQueryFilter.NON_MEMBER && (
           <Td textAlign="center">
             <IconButton

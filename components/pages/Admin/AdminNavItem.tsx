@@ -1,6 +1,6 @@
 import NextLink from 'next/link';
 import { AdminNavRoute, MenuRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
-import { ROUTES_TO_PERMISSIONS } from 'utils/auth';
+import { ROUTES_TO_PERMISSIONS } from 'utils/permissions';
 import Secured from 'components/core/Authentication/Secured';
 import Button from 'components/core/Interactive/Button';
 import Box from 'components/core/Containers/Box';

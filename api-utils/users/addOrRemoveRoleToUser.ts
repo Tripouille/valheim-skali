@@ -2,7 +2,7 @@ import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { ObjectId } from 'bson';
 import { Role, rolesCollectionName } from 'data/role';
 import { UpdateUserRolesData, UserInDb, usersCollectionName } from 'data/user';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
 import { isRequiredObjectType, ServerException, updateOneInCollection } from 'api-utils/common';
 import { requirePermissions } from 'api-utils/auth';
 import db from 'api-utils/db';
@@ -34,8 +34,8 @@ const getUserNewRoles: Record<
 const addOrRemoveRoleToUser = async (action: Action, req: Req, res: Res) => {
   await requirePermissions(
     {
-      [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE,
-      [PermissionCategory.ROLE]: PermissionPrivilege.READ,
+      [PermissionCategory.USER]: userPrivilege.READ_WRITE,
+      [PermissionCategory.ROLE]: rolePrivilege.READ,
     },
     req,
   );

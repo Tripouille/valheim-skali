@@ -3,9 +3,10 @@ import { Session } from 'next-auth';
 import { useCallback, useMemo } from 'react';
 import { useQuery, UseQueryOptions } from 'react-query';
 import axios from 'axios';
-import { APIRoute, getSigninRoute } from '../routes';
-import { AuthError, Permissions, SessionStatus, permissionsMeetRequirement } from '../auth';
-import { QueryKeys, QueryTypes } from '../queryClient';
+import { AuthError, SessionStatus } from 'utils/auth';
+import { Permissions, permissionsMeetRequirement } from 'utils/permissions';
+import { QueryKeys, QueryTypes } from 'utils/queryClient';
+import { APIRoute, getSigninRoute } from 'utils/routes';
 
 export async function getSessionFromServer(): Promise<QueryTypes[QueryKeys.SESSION]> {
   const { data: session } = await axios.get<Session | Record<string, never>>(APIRoute.SESSION);

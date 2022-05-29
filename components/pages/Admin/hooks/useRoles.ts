@@ -4,7 +4,7 @@ import { compareRolesFromName, Role } from 'data/role';
 import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
 import useSession from 'utils/hooks/useSession';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { PermissionCategory, rolePrivilege } from 'utils/permissions';
 
 export const getRoles = async (): Promise<Role[]> => {
   const { data } = await axios.get<Role[]>(APIRoute.ROLES);
@@ -16,7 +16,7 @@ export const useRoles = () => {
 
   const rolesQuery = useQuery(QueryKeys.ROLES, getRoles, {
     enabled: session.hasRequiredPermissions({
-      [PermissionCategory.ROLE]: PermissionPrivilege.READ,
+      [PermissionCategory.ROLE]: rolePrivilege.READ,
     }),
     select: data => data.sort(compareRolesFromName),
   });

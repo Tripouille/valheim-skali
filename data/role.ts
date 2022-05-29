@@ -1,5 +1,5 @@
 import { ObjectId } from 'bson';
-import { Permissions, SpecialRoleName } from 'utils/auth';
+import { CommonPermissionPrivilege, Permissions } from 'utils/permissions';
 
 /** Main types */
 
@@ -30,6 +30,32 @@ export const getRoleValidationError = (roleFormData: Partial<CreateRoleData>): s
 /** Data max length */
 
 export const ROLE_NAME_IN_GAME_MAX_LENGTH = 15;
+
+/** Special roles */
+
+export enum SpecialRoleName {
+  /** Dev who has access to database, has all permissions to SuperAdmin level */
+  SUPER_ADMIN = 'SuperAdmin',
+  /** Has all permissions to Admin level
+   * (this is the only role with write access on roles) */
+  ADMIN = 'Admin',
+  MEMBER = 'Viking',
+  VISITOR = 'Visiteur',
+}
+
+export const isSpecialRole = (role: Role | RoleInDb) => {
+  return Object.values(SpecialRoleName).includes(role.name as SpecialRoleName);
+};
+
+type AdminRole = (Role | RoleInDb) & { name: SpecialRoleName.ADMIN | SpecialRoleName.SUPER_ADMIN };
+
+export const ADMIN_ROLE_TO_PRIVILEGE: Record<AdminRole['name'], CommonPermissionPrivilege> = {
+  [SpecialRoleName.ADMIN]: CommonPermissionPrivilege.ADMIN,
+  [SpecialRoleName.SUPER_ADMIN]: CommonPermissionPrivilege.SUPER_ADMIN,
+};
+
+export const isAdminRole = (role: Role | RoleInDb): role is AdminRole =>
+  role.name === SpecialRoleName.ADMIN || role.name === SpecialRoleName.SUPER_ADMIN;
 
 /** Sorting */
 

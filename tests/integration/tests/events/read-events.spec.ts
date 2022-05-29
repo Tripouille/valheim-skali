@@ -1,4 +1,5 @@
-import { PermissionPrivilege, SpecialRoleName } from 'utils/auth';
+import { SpecialRoleName } from 'data/role';
+import { eventPrivilege } from 'utils/permissions';
 import { APIRoute } from 'utils/routes';
 import * as Action from './action';
 import * as Select from './select';
@@ -10,7 +11,7 @@ describe('events with read permission', () => {
 
   context('as visitor without read permission', () => {
     before(() => {
-      Action.setVisitorEventPermission(PermissionPrivilege.NONE);
+      Action.setVisitorEventPermission(eventPrivilege.NONE);
       Action.visitEventsPageAndWaitFor(APIRoute.VISITOR);
     });
 
@@ -24,7 +25,7 @@ describe('events with read permission', () => {
 
   context('as visitor with read permission', () => {
     before(() => {
-      Action.setVisitorEventPermission(PermissionPrivilege.READ);
+      Action.setVisitorEventPermission(eventPrivilege.READ);
     });
 
     it('should display events but not edition tools', () => {
@@ -43,8 +44,8 @@ describe('events with read permission', () => {
 
   context('as member with read permission', () => {
     before(() => {
-      Action.setVisitorEventPermission(PermissionPrivilege.NONE);
-      Action.setMemberEventPermission(PermissionPrivilege.READ);
+      Action.setVisitorEventPermission(eventPrivilege.NONE);
+      Action.setMemberEventPermission(eventPrivilege.READ);
       cy.setUserRoles([SpecialRoleName.MEMBER]);
       cy.login();
       Action.visitEventsPageAndWaitFor(APIRoute.EVENTS);

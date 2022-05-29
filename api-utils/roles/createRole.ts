@@ -1,13 +1,13 @@
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { RoleInDb, rolesCollectionName } from 'data/role';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { PermissionCategory, rolePrivilege } from 'utils/permissions';
 import { requirePermissions } from 'api-utils/auth';
 import { ServerException } from 'api-utils/common';
 import db from 'api-utils/db';
 import { checkRoleData, isCreateRoleData, transformRoleForDb } from './utils';
 
 const createRole = async (req: Req, res: Res) => {
-  await requirePermissions({ [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE }, req);
+  await requirePermissions({ [PermissionCategory.ROLE]: rolePrivilege.ADMIN }, req);
 
   const newRole: unknown = req.body;
   if (!isCreateRoleData(newRole)) throw new ServerException(400);

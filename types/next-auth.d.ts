@@ -1,5 +1,5 @@
 import { DefaultSession } from 'next-auth';
-import { Permissions } from 'utils/auth';
+import { Permissions } from 'utils/permissions';
 
 declare module 'next-auth' {
   interface Session {

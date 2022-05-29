@@ -1,18 +1,21 @@
 import { IncomingMessage } from 'http';
 import { getSession } from 'next-auth/react';
-import { UserInDb } from 'data/user';
-import { RoleInDb, rolesCollectionName } from 'data/role';
-import {
-  Permissions,
-  permissionsMeetRequirement,
-  PermissionCategory,
-  PermissionPrivilege,
-  isAdminRole,
-  ADMIN_ROLE_TO_PRIVILEGE,
-  SpecialRoleName,
-} from 'utils/auth';
 import { ServerException } from 'api-utils/common';
 import db from 'api-utils/db';
+import { UserInDb } from 'data/user';
+import {
+  ADMIN_ROLE_TO_PRIVILEGE,
+  isAdminRole,
+  RoleInDb,
+  rolesCollectionName,
+  SpecialRoleName,
+} from 'data/role';
+import {
+  permissionsMeetRequirement,
+  PermissionCategory,
+  CommonPermissionPrivilege,
+  Permissions,
+} from 'utils/permissions';
 
 export const getVisitorPermissions = async (): Promise<Permissions> => {
   const visitorRole = await db.findOne<RoleInDb>(
@@ -46,6 +49,19 @@ export const requirePermissions = async (
   }
 };
 
+const assignPermission = <C extends PermissionCategory>(
+  userPermissions: Permissions,
+  category: C,
+  privilege: Permissions[C],
+) => {
+  if (privilege !== undefined) {
+    const actualUserPermissionForCategory =
+      userPermissions[category] ?? CommonPermissionPrivilege.NONE;
+    userPermissions[category] =
+      actualUserPermissionForCategory > privilege ? actualUserPermissionForCategory : privilege;
+  }
+};
+
 export const getUserPermissions = async (user: UserInDb) => {
   const userPermissions: Permissions = await getVisitorPermissions();
   const userRoles: RoleInDb[] = await db.find(rolesCollectionName, {
@@ -57,18 +73,9 @@ export const getUserPermissions = async (user: UserInDb) => {
         userPermissions[category] = ADMIN_ROLE_TO_PRIVILEGE[role.name];
       });
     } else {
-      (Object.entries(role.permissions) as [PermissionCategory, PermissionPrivilege][]).forEach(
-        ([category, privilege]) => {
-          if (privilege !== undefined) {
-            const actualUserPermissionForCategory =
-              userPermissions[category] ?? PermissionPrivilege.NONE;
-            userPermissions[category] =
-              actualUserPermissionForCategory > privilege
-                ? actualUserPermissionForCategory
-                : privilege;
-          }
-        },
-      );
+      Object.entries(role.permissions).forEach(([category, privilege]) => {
+        assignPermission(userPermissions, category as PermissionCategory, privilege);
+      });
     }
   });
 

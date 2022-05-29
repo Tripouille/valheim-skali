@@ -1,10 +1,11 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import axios from 'axios';
 import { User } from 'data/user';
+import { SpecialRoleName } from 'data/role';
 import { APIRoute } from 'utils/routes';
 import { QueryKeys, QueryTypes } from 'utils/queryClient';
 import useSession from 'utils/hooks/useSession';
-import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
+import { PermissionCategory, userPrivilege } from 'utils/permissions';
 import { getUserRoles, UserQueryFilter } from '../utils';
 import { useRoles } from './useRoles';
 
@@ -32,7 +33,7 @@ export const useUsers = (filter: UserQueryFilter | false) => {
 
   const usersQuery = useQuery(QueryKeys.USERS, getUsers, {
     enabled: session.hasRequiredPermissions({
-      [PermissionCategory.USER]: PermissionPrivilege.READ,
+      [PermissionCategory.USER]: userPrivilege.READ,
     }),
     select: filterUsers,
   });

@@ -3,7 +3,7 @@ import React from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { useDisclosure } from '@chakra-ui/react';
 import { NavRoute, ROUTES_TO_LABEL } from 'utils/routes';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { eventPrivilege, PermissionCategory } from 'utils/permissions';
 import PageTitle from 'components/core/Typography/PageTitle';
 import Background from 'components/core/Containers/Background';
 import { VStack } from 'components/core/Containers/Stack';
@@ -25,11 +25,11 @@ const Events = () => {
   const createEvent = useCreateEvent(createModal.onClose);
 
   return (
-    <Secured permissions={{ [PermissionCategory.EVENT]: PermissionPrivilege.READ }}>
+    <Secured permissions={{ [PermissionCategory.EVENT]: eventPrivilege.READ }}>
       <Background data-cy="events">
         <VStack spacing="7" position="relative">
           <PageTitle title={ROUTES_TO_LABEL[NavRoute.EVENTS]} />
-          <Secured permissions={{ [PermissionCategory.EVENT]: PermissionPrivilege.READ_WRITE }}>
+          <Secured permissions={{ [PermissionCategory.EVENT]: eventPrivilege.READ_WRITE }}>
             <Button
               data-cy="create-event"
               position={{ md: 'absolute' }}

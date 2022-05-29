@@ -1,11 +1,12 @@
-import { PermissionPrivilege, SpecialRoleName } from 'utils/auth';
+import { SpecialRoleName } from 'data/role';
+import { eventPrivilege } from 'utils/permissions';
 import { APIRoute } from 'utils/routes';
 import * as Action from './action';
 import * as Select from './select';
 
 describe('events with edit permission', () => {
   before(() => {
-    Action.setMemberEventPermission(PermissionPrivilege.READ_WRITE);
+    Action.setMemberEventPermission(eventPrivilege.READ_WRITE);
     cy.setUserRoles([SpecialRoleName.MEMBER]);
   });
 

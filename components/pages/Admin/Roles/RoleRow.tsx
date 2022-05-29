@@ -1,14 +1,13 @@
 import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
-import { Role } from 'data/role';
+import { isAdminRole, Role } from 'data/role';
 import { CypressProps } from 'utils/types';
 import {
-  isAdminRole,
+  rolePrivilege,
   PermissionCategory,
-  PermissionPrivilege,
   PERMISSION_CATEGORY_TO_LABEL,
   PERMISSION_PRIVILEGE_TO_LABEL,
-} from 'utils/auth';
+} from 'utils/permissions';
 import useSession from 'utils/hooks/useSession';
 import Secured from 'components/core/Authentication/Secured';
 import IconButton from 'components/core/Interactive/IconButton';
@@ -30,7 +29,7 @@ const RoleRow: React.FC<RoleRowProps> = ({ 'data-cy': dataCy, role }) => {
   const deleteRole = useDeleteRole(role);
 
   const hasRoleWritePermission = hasRequiredPermissions({
-    [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE,
+    [PermissionCategory.ROLE]: rolePrivilege.ADMIN,
   });
 
   return (
@@ -44,21 +43,21 @@ const RoleRow: React.FC<RoleRowProps> = ({ 'data-cy': dataCy, role }) => {
         ) : (
           <Table>
             <Tbody>
-              {(
-                Object.entries(role.permissions) as [PermissionCategory, PermissionPrivilege][]
-              ).map(([category, privilege]) => (
+              {Object.entries(role.permissions).map(([category, privilege]) => (
                 <Tr key={category}>
                   <Th w="28" ps="0">
-                    {PERMISSION_CATEGORY_TO_LABEL[category]}
+                    {PERMISSION_CATEGORY_TO_LABEL[category as PermissionCategory]}
                   </Th>
-                  <Td>{PERMISSION_PRIVILEGE_TO_LABEL[privilege]}</Td>
+                  <Td>
+                    {PERMISSION_PRIVILEGE_TO_LABEL[category as PermissionCategory][privilege]}
+                  </Td>
                 </Tr>
               ))}
             </Tbody>
           </Table>
         )}
       </Td>
-      <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE }}>
+      <Secured permissions={{ [PermissionCategory.ROLE]: rolePrivilege.ADMIN }}>
         <Td>
           <IconButton
             data-cy="edit"

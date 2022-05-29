@@ -1,6 +1,7 @@
-import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
+import { SpecialRoleName } from 'data/role';
+import { eventPrivilege, PermissionCategory } from 'utils/permissions';
 
-describe('menu', () => {
+describe('nav menu', () => {
   beforeEach(() => {
     cy.visit('/');
   });
@@ -12,7 +13,7 @@ describe('menu', () => {
 
   context('without event permission', () => {
     before(() => {
-      cy.setPermission(SpecialRoleName.VISITOR, PermissionCategory.EVENT, PermissionPrivilege.NONE);
+      cy.setPermission(SpecialRoleName.VISITOR, PermissionCategory.EVENT, eventPrivilege.NONE);
     });
 
     // TOFIX for ci
@@ -24,7 +25,7 @@ describe('menu', () => {
 
   context('with event permission', () => {
     before(() => {
-      cy.setPermission(SpecialRoleName.VISITOR, PermissionCategory.EVENT, PermissionPrivilege.READ);
+      cy.setPermission(SpecialRoleName.VISITOR, PermissionCategory.EVENT, eventPrivilege.READ);
     });
 
     it('should be able to visit events page', () => {

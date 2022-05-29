@@ -1,7 +1,7 @@
 import { BsPlusLg } from 'react-icons/bs';
 import { useDisclosure } from '@chakra-ui/react';
 import { Role } from 'data/role';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { rolePrivilege, PermissionCategory } from 'utils/permissions';
 import Button from 'components/core/Interactive/Button';
 import Secured from 'components/core/Authentication/Secured';
 import useCreateRole from '../hooks/useCreateRole';
@@ -19,7 +19,7 @@ const Roles: React.FC<RolesProps> = ({ roles = [] }) => {
   return (
     <>
       <RolesTable roles={roles} />
-      <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE }}>
+      <Secured permissions={{ [PermissionCategory.ROLE]: rolePrivilege.ADMIN }}>
         <Button
           data-cy="create-role"
           leftIcon={<BsPlusLg />}

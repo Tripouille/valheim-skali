@@ -1,6 +1,15 @@
 import { NextApiResponse as Res } from 'next';
 import { CreateRoleData, getRoleValidationError, ROLE_NAME_IN_GAME_MAX_LENGTH } from 'data/role';
-import { isAdminPrivilege, PermissionCategory, PermissionPrivilege, Permissions } from 'utils/auth';
+import {
+  isAdminPrivilege,
+  PermissionCategory,
+  Permissions,
+  CommonPermissionPrivilege,
+  rolePrivilege,
+  userPrivilege,
+  getSortedCategoryPrivileges,
+  PermissionPrivilege,
+} from 'utils/permissions';
 import { isFilled } from 'utils/validation';
 import { isRequiredObjectType, ServerException, isObject } from 'api-utils/common';
 import { revalidateEventsPage } from 'api-utils/events/utils';
@@ -10,11 +19,14 @@ import { revalidateEventsPage } from 'api-utils/events/utils';
 const isPermissions = (value: unknown): value is Permissions => {
   return (
     isObject(value) &&
-    Object.entries(value).every(
-      ([category, privilege]) =>
+    Object.entries(value).every(([category, privilege]) => {
+      return (
         Object.values(PermissionCategory).includes(category as PermissionCategory) &&
-        Object.values(PermissionPrivilege).includes(privilege as PermissionPrivilege),
-    )
+        getSortedCategoryPrivileges(category as PermissionCategory).includes(
+          privilege as PermissionPrivilege,
+        )
+      );
+    })
   );
 };
 
@@ -30,11 +42,9 @@ export const isCreateRoleData = (data: unknown): data is CreateRoleData =>
 /** Prepare for DB */
 
 const deleteNonePrivileges = (permissions: Permissions) => {
-  for (const [category, privilege] of Object.entries(permissions) as [
-    PermissionCategory,
-    PermissionPrivilege,
-  ][]) {
-    if (privilege === PermissionPrivilege.NONE) delete permissions[category];
+  for (const [category, privilege] of Object.entries(permissions)) {
+    if (privilege === CommonPermissionPrivilege.NONE)
+      delete permissions[category as PermissionCategory];
   }
 };
 
@@ -58,26 +68,24 @@ export const checkRoleData = (newRole: CreateRoleData) => {
    * because seeing a user means seeing its roles
    */
   if (
-    (newRole.permissions[PermissionCategory.USER] ?? PermissionPrivilege.NONE) >=
-      PermissionPrivilege.READ &&
-    (newRole.permissions[PermissionCategory.ROLE] ?? PermissionPrivilege.NONE) <
-      PermissionPrivilege.READ
+    (newRole.permissions[PermissionCategory.USER] ?? userPrivilege.NONE) >= userPrivilege.READ &&
+    (newRole.permissions[PermissionCategory.ROLE] ?? rolePrivilege.NONE) < rolePrivilege.READ
   ) {
     throw new ServerException(403);
   }
   /** A role must require at least user write permission to be assigned */
   if (
-    (newRole.requiredPermissionsToAssign[PermissionCategory.USER] ?? PermissionPrivilege.NONE) <
-    PermissionPrivilege.READ_WRITE
+    (newRole.requiredPermissionsToAssign[PermissionCategory.USER] ?? userPrivilege.NONE) <
+    userPrivilege.READ_WRITE
   ) {
     throw new ServerException(403);
   }
   /** A role with user write permission must require admin privilege to be assigned */
   if (
-    (newRole.permissions[PermissionCategory.USER] ?? PermissionPrivilege.NONE) >=
-      PermissionPrivilege.READ_WRITE &&
-    (newRole.requiredPermissionsToAssign[PermissionCategory.USER] ?? PermissionPrivilege.NONE) <
-      PermissionPrivilege.ADMIN
+    (newRole.permissions[PermissionCategory.USER] ?? userPrivilege.NONE) >=
+      userPrivilege.READ_WRITE &&
+    (newRole.requiredPermissionsToAssign[PermissionCategory.USER] ?? userPrivilege.NONE) <
+      userPrivilege.ADMIN
   ) {
     throw new ServerException(403);
   }

@@ -1,7 +1,7 @@
 import Secured from 'components/core/Authentication/Secured';
 import { Table, Th, Thead, Tr, Tbody } from 'components/core/DataDisplay/Table';
 import { User } from 'data/user';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
 import {
   avatarSize,
   getCellWidth,
@@ -39,18 +39,18 @@ const UsersTable: React.FC<UsersTableProps> = ({ users = [], filter }) => {
             Pseudo discord
           </Th>
           {filter === UserQueryFilter.MEMBER && (
-            <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ }}>
+            <Secured permissions={{ [PermissionCategory.ROLE]: rolePrivilege.READ }}>
               <Th textAlign="center" display={{ base: 'none', sm: 'table-cell' }}>
                 Rôles
               </Th>
             </Secured>
           )}
           {filter === UserQueryFilter.NON_MEMBER && (
-            <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
+            <Secured permissions={{ [PermissionCategory.USER]: userPrivilege.READ_WRITE }}>
               <Th textAlign="center">Promouvoir</Th>
             </Secured>
           )}
-          <Secured permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}>
+          <Secured permissions={{ [PermissionCategory.USER]: userPrivilege.READ_WRITE }}>
             <Th width={getCellWidth(rowIconWidth)}></Th>
           </Secured>
           <Th width={0}>{/* For modal in td */}</Th>

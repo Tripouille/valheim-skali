@@ -1,11 +1,15 @@
 import {
+  CommonPermissionPrivilege,
+  getSortedCategoryPrivileges,
   isAdminPrivilege,
   PermissionCategory,
   PermissionPrivilege,
   Permissions,
   PERMISSION_CATEGORY_TO_LABEL,
   PERMISSION_PRIVILEGE_TO_LABEL,
-} from 'utils/auth';
+  rolePrivilege,
+  userPrivilege,
+} from 'utils/permissions';
 import { Table, Tbody, Td, Th, Tr } from 'components/core/DataDisplay/Table';
 import { FormLabel } from 'components/core/Form/FormControl';
 import Select from 'components/core/Form/Select';
@@ -14,7 +18,9 @@ import { modalTableHeaderWidth } from '../utils';
 export interface RolePermissionsFormProps {
   isAdminRole: boolean;
   permissions: Permissions;
-  onChange: (category: PermissionCategory) => (newPrivilege: PermissionPrivilege) => void;
+  onChange: <C extends PermissionCategory>(
+    category: C,
+  ) => (newPrivilege: PermissionPrivilege<C>) => void;
 }
 
 const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
@@ -22,32 +28,32 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
   permissions,
   onChange,
 }) => {
-  const availablePermissions = Object.values(PermissionPrivilege).filter(
-    privilege => isAdminRole || !isAdminPrivilege(privilege),
-  );
+  const getAvailablePrivileges = <C extends PermissionCategory>(category: C) => {
+    return getSortedCategoryPrivileges(category)
+      .filter(privilege => isAdminRole || !isAdminPrivilege(privilege))
+      .sort();
+  };
 
-  const isPrivilegeForbiddenAndWhy = (
-    category: PermissionCategory,
-    privilege: PermissionPrivilege,
+  const isPrivilegeForbiddenAndWhy = <C extends PermissionCategory>(
+    category: C,
+    privilege: PermissionPrivilege<C>,
   ): false | string => {
     if (isAdminRole) return false;
-    if (category === PermissionCategory.ROLE && privilege >= PermissionPrivilege.READ_WRITE)
-      return 'Réservé aux Admins';
     if (
       category === PermissionCategory.USER &&
-      privilege >= PermissionPrivilege.READ &&
-      (permissions[PermissionCategory.ROLE] ?? PermissionPrivilege.NONE) < PermissionPrivilege.READ
+      privilege >= userPrivilege.READ &&
+      (permissions[PermissionCategory.ROLE] ?? rolePrivilege.NONE) < rolePrivilege.READ
     )
       return 'Doit pouvoir lire les rôles';
     return false;
   };
 
-  const downgradePermissionInCategory = (category: PermissionCategory) => {
-    const privilegesArray = Object.values(PermissionPrivilege);
-    const privilegeIndex = privilegesArray.indexOf(
-      permissions[category] ?? PermissionPrivilege.NONE,
+  const downgradePermissionInCategory = <C extends PermissionCategory>(category: C) => {
+    const categoryPrivileges = getSortedCategoryPrivileges(category);
+    const privilegeIndex = categoryPrivileges.indexOf(
+      permissions[category] ?? (CommonPermissionPrivilege.NONE as PermissionPrivilege<C>),
     );
-    if (privilegeIndex > 0) onChange(category)(privilegesArray[privilegeIndex - 1]);
+    if (privilegeIndex > 0) onChange(category)(categoryPrivileges[privilegeIndex - 1]);
   };
 
   return (
@@ -57,7 +63,7 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
           <Th>Catégorie</Th>
           <Th>Permissions sur la catégorie</Th>
         </Tr>
-        {Object.values(PermissionCategory).map(category => (
+        {Object.values(PermissionCategory).map(<C extends PermissionCategory>(category: C) => (
           <Tr key={category}>
             <Th w={modalTableHeaderWidth}>
               <FormLabel htmlFor={category}>{PERMISSION_CATEGORY_TO_LABEL[category]}</FormLabel>
@@ -67,18 +73,18 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
                 data-cy={category}
                 id={category}
                 maxW="sm"
-                value={isAdminRole ? PermissionPrivilege.ADMIN : permissions[category]}
+                value={isAdminRole ? CommonPermissionPrivilege.ADMIN : permissions[category]}
                 onChange={onChange(category)}
                 isDisabled={isAdminRole}
               >
-                {availablePermissions.map(privilege => {
+                {getAvailablePrivileges(category).map(privilege => {
                   const forbiddenPrivilegeReason = isPrivilegeForbiddenAndWhy(category, privilege);
                   if (forbiddenPrivilegeReason && permissions[category] === privilege)
                     downgradePermissionInCategory(category);
                   return (
                     <option key={privilege} value={privilege} disabled={!!forbiddenPrivilegeReason}>
-                      {PERMISSION_PRIVILEGE_TO_LABEL[privilege]}{' '}
-                      {forbiddenPrivilegeReason ? `(${forbiddenPrivilegeReason})` : null}
+                      {PERMISSION_PRIVILEGE_TO_LABEL[category][privilege]}
+                      {forbiddenPrivilegeReason ? ` (${forbiddenPrivilegeReason})` : null}
                     </option>
                   );
                 })}

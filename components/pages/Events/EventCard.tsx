@@ -3,7 +3,7 @@ import React, { KeyboardEventHandler, MouseEventHandler, useEffect, useRef } fro
 import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
 import { CypressProps } from 'utils/types';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { eventPrivilege, PermissionCategory } from 'utils/permissions';
 import { Event } from 'data/event';
 import Secured from 'components/core/Authentication/Secured';
 import {
@@ -75,7 +75,7 @@ const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event, isOpen 
         onClick={itemModal.onOpen}
         onKeyPress={handleCardKeyPress}
       >
-        <Secured permissions={{ [PermissionCategory.EVENT]: PermissionPrivilege.READ_WRITE }}>
+        <Secured permissions={{ [PermissionCategory.EVENT]: eventPrivilege.READ_WRITE }}>
           <IconButton
             data-cy="edit"
             position="absolute"

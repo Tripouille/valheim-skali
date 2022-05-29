@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { CypressProps, Callback } from 'utils/types';
 import { User, USER_NAME_IN_GAME_MAX_LENGTH } from 'data/user';
 import { Role } from 'data/role';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
+import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
 import useSession from 'utils/hooks/useSession';
 import Secured from 'components/core/Authentication/Secured';
 import Center from 'components/core/Containers/Center';
@@ -36,9 +36,7 @@ const UserForm: React.FC<UserFormProps> = ({ 'data-cy': dataCy, isOpen, onClose,
 
   const canDeleteUser = useMemo(() => {
     const userRoles = getUserRoles(user, roles);
-    if (
-      !session.hasRequiredPermissions({ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE })
-    )
+    if (!session.hasRequiredPermissions({ [PermissionCategory.USER]: userPrivilege.READ_WRITE }))
       return false;
     for (const role of userRoles) {
       if (role && !canUserAssignRole(role, session.hasRequiredPermissions)) return false;
@@ -74,7 +72,7 @@ const UserForm: React.FC<UserFormProps> = ({ 'data-cy': dataCy, isOpen, onClose,
               <Th w={modalTableHeaderWidth}>Pseudo en jeu</Th>
               <Td>
                 <Secured
-                  permissions={{ [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE }}
+                  permissions={{ [PermissionCategory.USER]: userPrivilege.READ_WRITE }}
                   fallback={<Text>{user.nameInGame}</Text>}
                 >
                   <Editable
@@ -86,7 +84,7 @@ const UserForm: React.FC<UserFormProps> = ({ 'data-cy': dataCy, isOpen, onClose,
                 </Secured>
               </Td>
             </Tr>
-            <Secured permissions={{ [PermissionCategory.ROLE]: PermissionPrivilege.READ }}>
+            <Secured permissions={{ [PermissionCategory.ROLE]: rolePrivilege.READ }}>
               <Tr>
                 <Th>Rôles</Th>
                 <Td>
