@@ -1,11 +1,11 @@
 import { NextApiHandler } from 'next';
 import { ServerException } from 'api-utils/common';
-import createWikiPage from 'api-utils/wiki/createWikiPage';
+import proposeWikiPage from 'api-utils/wiki/proposeWikiPage';
 
 const wikiHandler: NextApiHandler = async (req, res) => {
   try {
     if (req.method === 'POST') {
-      await createWikiPage(req, res);
+      await proposeWikiPage(req, res);
     } else {
       throw new ServerException(501);
     }
