@@ -12,6 +12,7 @@ import PageTitle from 'components/core/Typography/PageTitle';
 import FormElement from 'components/core/Form/FormElement';
 import Input from 'components/core/Form/Input';
 import Textarea from 'components/core/Form/Textarea';
+import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import Button from 'components/core/Interactive/Button';
 import useCreateWikiPage from './hooks/useCreateWikiPage';
 
@@ -28,7 +29,7 @@ const WikiForm = () => {
   };
 
   return (
-    <Secured permissions={{}}>
+    <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.PROPOSE }}>
       <Background data-cy="wiki-creation-form">
         <PageTitle title="Proposer une nouvelle page wiki" />
         <Stack spacing="5" align="start" mt="10">
