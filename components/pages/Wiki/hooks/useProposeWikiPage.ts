@@ -6,7 +6,7 @@ import { APIRoute, NavRoute, serverName } from 'utils/routes';
 import { displayErrorToast, displaySuccessToast } from 'utils/toast';
 
 const createWikiPageOnServer = async (pageData: unknown) => {
-  await axios.post(`${APIRoute.WIKI}`, pageData);
+  await axios.post(`${APIRoute.WIKI}/proposals`, pageData);
 };
 
 const useCreateWikiPage = () => {

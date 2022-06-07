@@ -56,6 +56,9 @@ export const Table = {
               },
             },
           },
+          '> tr.greyed': {
+            opacity: '0.5',
+          },
         },
       };
     },

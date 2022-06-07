@@ -14,10 +14,10 @@ import Input from 'components/core/Form/Input';
 import Textarea from 'components/core/Form/Textarea';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import Button from 'components/core/Interactive/Button';
-import useCreateWikiPage from './hooks/useCreateWikiPage';
+import useProposeWikiPage from './hooks/useProposeWikiPage';
 
 const WikiForm = () => {
-  const createWikiPage = useCreateWikiPage();
+  const createWikiPage = useProposeWikiPage();
 
   const [formData, setFormData] = useState<Partial<WikiPageContent>>({});
   const [validationError, setValidationError] = useState<string | null>(null);
