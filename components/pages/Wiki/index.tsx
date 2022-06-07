@@ -8,10 +8,9 @@ import SimpleGrid from 'components/core/Containers/SimpleGrid';
 import PageTitle from 'components/core/Typography/PageTitle';
 import Text from 'components/core/Typography/Text';
 import Button from 'components/core/Interactive/Button';
-import WikiLinksGroup from './WikiLinksGroup';
 import { NavRoute, serverName } from 'utils/routes';
-import Link from 'next/link';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
+import WikiLinksGroup from './WikiLinksGroup';
 
 const WikiHome = () => {
   return (
@@ -35,15 +34,15 @@ const WikiHome = () => {
           <WikiLinksGroup title="Les plus populaires" />
         </SimpleGrid>
         <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.PROPOSE }}>
-          <NextLink href={`/${serverName}${NavRoute.WIKI}/new`}>
+          <NextLink href={`/${serverName}${NavRoute.WIKI}/new`} passHref>
             <Button data-cy="create-page" as="a" leftIcon={<BsPlusLg />} colorScheme="green">
               Proposer une nouvelle page wiki
             </Button>
           </NextLink>
         </Secured>
-        <Link href={`/${serverName}/${NavRoute.WIKI}/all`}>
+        <NextLink href={`/${serverName}${NavRoute.WIKI}/all`}>
           Temp: lien pour voir toutes les pages
-        </Link>
+        </NextLink>
       </VStack>
     </Background>
   );
