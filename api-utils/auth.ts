@@ -32,7 +32,7 @@ export const getVisitorPermissions = async (): Promise<Permissions> => {
   return visitorRole.permissions;
 };
 
-export const getPermissionsFromReq = async (req: IncomingMessage) => {
+const getPermissionsFromRequest = async (req: IncomingMessage) => {
   const session = await getSession({ req });
   if (session) return session.permissions;
   const visitorPermissions = await getVisitorPermissions();
@@ -43,7 +43,7 @@ export const requirePermissions = async (
   requiredPermissions: Permissions,
   req: IncomingMessage,
 ) => {
-  const permissions = await getPermissionsFromReq(req);
+  const permissions = await getPermissionsFromRequest(req);
   if (!permissionsMeetRequirement(permissions, requiredPermissions)) {
     throw new ServerException(401);
   }

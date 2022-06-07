@@ -25,6 +25,7 @@ export enum AdminNavRoute {
   MEMBERS = '/members',
   NON_MEMBERS = '/non-members',
   ROLES = '/roles',
+  WIKI = '/wiki',
 }
 export enum MenuRoute {
   ABOUT = '/about',
@@ -47,6 +48,7 @@ export const ROUTES_TO_LABEL: Record<Route, string> = {
   [AdminNavRoute.MEMBERS]: 'Vikings',
   [AdminNavRoute.NON_MEMBERS]: 'Âmes perdues',
   [AdminNavRoute.ROLES]: 'Rôles',
+  [AdminNavRoute.WIKI]: 'Wiki',
   [MenuRoute.ABOUT]: 'A propos du site',
   [MenuRoute.ADMIN]: 'Administration',
   [AuthRoute.SIGNIN]: 'Connexion',

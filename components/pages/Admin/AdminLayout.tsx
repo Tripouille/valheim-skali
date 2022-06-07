@@ -1,24 +1,34 @@
 import { User } from 'data/user';
 import { Role } from 'data/role';
+import { WikiProposal } from 'data/wiki';
 import { AdminNavRoute } from 'utils/routes';
 import { Children } from 'utils/types';
 import Background from 'components/core/Containers/Background';
 import Flex from 'components/core/Containers/Flex';
 import { Stack } from 'components/core/Containers/Stack';
 import AdminNavItem from './AdminNavItem';
+import { AdminObject } from './utils';
 
 export interface AdminLayoutProps {
   members?: User[];
   nonMembers?: User[];
   roles?: Role[];
+  wikiProposals?: WikiProposal[];
   children: Children;
 }
 
-const AdminLayout: React.FC<AdminLayoutProps> = ({ members, nonMembers, roles, children }) => {
-  const routeToData: Record<AdminNavRoute, User[] | Role[] | undefined> = {
+const AdminLayout: React.FC<AdminLayoutProps> = ({
+  members,
+  nonMembers,
+  roles,
+  wikiProposals,
+  children,
+}) => {
+  const routeToData: Record<AdminNavRoute, AdminObject | undefined> = {
     [AdminNavRoute.MEMBERS]: members,
     [AdminNavRoute.NON_MEMBERS]: nonMembers,
     [AdminNavRoute.ROLES]: roles,
+    [AdminNavRoute.WIKI]: wikiProposals,
   };
 
   return (
