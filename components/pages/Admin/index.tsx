@@ -17,7 +17,7 @@ import WikiProposalsTable from './WikiProposals/WikiProposalsTable';
 
 const Admin = () => {
   const router = useRouter();
-  const urlEndPoint = '/' + getRouteParameterAsString(router.query.route);
+  const urlEndPoint = '/' + (getRouteParameterAsString(router.query.route) ?? '');
 
   const route = isAdminNavRoute(urlEndPoint) ? urlEndPoint : AdminNavRoute.MEMBERS;
 

@@ -62,6 +62,10 @@ export const getSigninRoute = (error: AuthError, callbackUrl?: string) =>
     ? `${AuthRoute.SIGNIN}?error=${error}&callbackUrl=${callbackUrl}`
     : `${AuthRoute.SIGNIN}?error=${error}`;
 
-export const getRouteParameterAsString = (routeParameterValue?: OneOrMany<string>) => {
-  return Array.isArray(routeParameterValue) ? routeParameterValue[0] : routeParameterValue ?? '';
-};
+export function getRouteParameterAsString(routeParameterValue: OneOrMany<string>): string;
+export function getRouteParameterAsString(
+  routeParameterValue?: OneOrMany<string>,
+): string | undefined;
+export function getRouteParameterAsString(routeParameterValue?: OneOrMany<string>) {
+  return Array.isArray(routeParameterValue) ? routeParameterValue[0] : routeParameterValue;
+}
