@@ -5,6 +5,7 @@ import Loading from 'components/core/Feedback/Loading';
 
 export interface QueryHandlerProps<T> {
   query: UseQueryResult<T, unknown>;
+  fallbackData?: T | null;
   children: Children;
   loadingComponent?: Children;
 }
@@ -14,11 +15,13 @@ export interface QueryHandlerProps<T> {
  */
 const QueryHandler = <T extends object>({
   query,
+  fallbackData,
   children,
   loadingComponent = <Loading />,
 }: QueryHandlerProps<T>) => {
   switch (query.status) {
     case 'loading':
+      if (fallbackData) return <>{children}</>;
       return <>{loadingComponent}</>;
     case 'success':
       return <>{children}</>;
@@ -26,6 +29,7 @@ const QueryHandler = <T extends object>({
       if (query.isFetching) return <>{loadingComponent}</>;
       return <ErrorAlert error={query.error} />;
     default:
+      if (fallbackData) return <>{children}</>;
       return <Loading />;
   }
 };
