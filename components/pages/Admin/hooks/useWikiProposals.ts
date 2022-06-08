@@ -12,7 +12,9 @@ export const getWikiProposals = async (): Promise<WikiProposal[]> => {
   return data;
 };
 
-export const useWikiProposals = (): UseQueryResult<WikiProposalWithAuthor[]> => {
+export const useWikiProposals = (options?: {
+  unhandled?: boolean;
+}): UseQueryResult<WikiProposalWithAuthor[]> => {
   const session = useSession();
   const { data: users } = useUsers(false);
 
@@ -20,15 +22,19 @@ export const useWikiProposals = (): UseQueryResult<WikiProposalWithAuthor[]> => 
     enabled: session.hasRequiredPermissions({
       [PermissionCategory.WIKI]: wikiPrivilege.WRITE,
     }),
-    select: data =>
-      sortWikiProposals(data).map(wikiProposal => {
+    select: data => {
+      const selectedWikiProposals = options?.unhandled
+        ? data.filter(wikiProposal => wikiProposal.status === 'proposed')
+        : data;
+      return sortWikiProposals(selectedWikiProposals).map(wikiProposal => {
         let authorName;
         if (users) {
           const author = users.find(user => user._id === wikiProposal.authorId);
           if (author) authorName = author.nameInGame ?? author.name;
         }
         return { ...wikiProposal, authorName };
-      }),
+      });
+    },
   });
 
   return wikiProposalsQuery;

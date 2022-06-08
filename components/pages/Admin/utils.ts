@@ -1,10 +1,7 @@
 import theme from 'theme';
 import { Role } from 'data/role';
 import { User } from 'data/user';
-import { WikiProposal } from 'data/wiki';
 import { UseSessionReturn } from 'utils/hooks/useSession';
-
-export type AdminObject = User[] | Role[] | WikiProposal[];
 
 export const tableSize = 'sm';
 export const cellXPadding = theme.sizes[theme.components.Table.sizes[tableSize].td.px]; // 1rem

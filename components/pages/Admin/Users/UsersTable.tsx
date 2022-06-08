@@ -10,14 +10,16 @@ import {
   adminTableStyleProps,
 } from '../utils';
 import { useRoles } from '../hooks/useRoles';
+import { useUsers } from '../hooks/useUsers';
 import UserRow from './UserRow';
 
 export interface UsersTableProps {
-  users?: User[];
   filter: UserQueryFilter;
 }
 
-const UsersTable: React.FC<UsersTableProps> = ({ users = [], filter }) => {
+const UsersTable: React.FC<UsersTableProps> = ({ filter }) => {
+  const usersQuery = useUsers(filter);
+  const users = usersQuery.data ?? [];
   const { data: roles = [] } = useRoles();
 
   if (users.length === 0)
