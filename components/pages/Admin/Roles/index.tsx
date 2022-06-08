@@ -1,20 +1,20 @@
 import { BsPlusLg } from 'react-icons/bs';
 import { useDisclosure } from '@chakra-ui/react';
-import { Role } from 'data/role';
 import { rolePrivilege, PermissionCategory } from 'utils/permissions';
 import Button from 'components/core/Interactive/Button';
 import Secured from 'components/core/Authentication/Secured';
 import useCreateRole from '../hooks/useCreateRole';
+import { useRoles } from '../hooks/useRoles';
 import RolesTable from './RolesTable';
 import RoleForm from './RoleForm';
 
-export interface RolesProps {
-  roles?: Role[];
-}
-
-const Roles: React.FC<RolesProps> = ({ roles = [] }) => {
+const Roles = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const createRole = useCreateRole(onClose);
+
+  const rolesQuery = useRoles();
+  const roles = rolesQuery.data ?? [];
 
   return (
     <>

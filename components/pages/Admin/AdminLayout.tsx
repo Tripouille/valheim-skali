@@ -1,34 +1,24 @@
-import { User } from 'data/user';
-import { Role } from 'data/role';
-import { WikiProposal } from 'data/wiki';
-import { AdminNavRoute } from 'utils/routes';
-import { Children } from 'utils/types';
 import Background from 'components/core/Containers/Background';
 import Flex from 'components/core/Containers/Flex';
 import { Stack } from 'components/core/Containers/Stack';
+import { AdminNavRoute } from 'utils/routes';
+import { Children } from 'utils/types';
 import AdminNavItem from './AdminNavItem';
-import { AdminObject } from './utils';
+import { useUsers } from './hooks/useUsers';
+import { useWikiProposals } from './hooks/useWikiProposals';
+import { UserQueryFilter } from './utils';
 
 export interface AdminLayoutProps {
-  members?: User[];
-  nonMembers?: User[];
-  roles?: Role[];
-  wikiProposals?: WikiProposal[];
   children: Children;
 }
 
-const AdminLayout: React.FC<AdminLayoutProps> = ({
-  members,
-  nonMembers,
-  roles,
-  wikiProposals,
-  children,
-}) => {
-  const routeToData: Record<AdminNavRoute, AdminObject | undefined> = {
-    [AdminNavRoute.MEMBERS]: members,
-    [AdminNavRoute.NON_MEMBERS]: nonMembers,
-    [AdminNavRoute.ROLES]: roles,
-    [AdminNavRoute.WIKI]: wikiProposals,
+const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
+  const { data: nonMembers } = useUsers(UserQueryFilter.NON_MEMBER);
+  const { data: unhandledWikiProposals } = useWikiProposals({ unhandled: true });
+
+  const routeToHint: Partial<Record<AdminNavRoute, number | undefined>> = {
+    [AdminNavRoute.NON_MEMBERS]: nonMembers?.length,
+    [AdminNavRoute.WIKI]: unhandledWikiProposals?.length,
   };
 
   return (
@@ -52,11 +42,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
           spacing={{ base: 5, lg: 2 }}
         >
           {Object.values(AdminNavRoute).map(navRoute => (
-            <AdminNavItem
-              key={navRoute}
-              route={navRoute}
-              hint={routeToData[navRoute]?.length.toString() ?? '?'}
-            />
+            <AdminNavItem key={navRoute} route={navRoute} hint={routeToHint[navRoute]} />
           ))}
         </Stack>
       </Background>

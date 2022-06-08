@@ -10,7 +10,7 @@ export interface RolesTableProps {
 }
 
 const RolesTable: React.FC<RolesTableProps> = ({ roles }) => {
-  if (roles.length === 0) return <>Aucun rôle n&apos;a été créé.</>;
+  if (roles.length === 0) return null;
 
   return (
     <Table {...adminTableStyleProps}>
