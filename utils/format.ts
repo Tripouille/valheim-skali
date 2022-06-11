@@ -39,6 +39,8 @@ export const toInputDatetimeFormat = (date: string): string =>
 export const slugify = (text: string) =>
   text
     .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // remove accents
     .replace(/\s+/g, '-')
     .replace(/[^\w\-]+/g, '')
     .replace(/\-\-+/g, '-')

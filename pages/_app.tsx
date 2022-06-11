@@ -1,7 +1,6 @@
 import { AppContext, AppProps } from 'next/app';
 import Head from 'next/head';
 import { getSession } from 'next-auth/react';
-import React from 'react';
 import { QueryClientProvider, Hydrate } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { ChakraProvider } from '@chakra-ui/react';
@@ -10,6 +9,7 @@ import Fonts from 'components/Layout/Fonts';
 import theme from 'theme';
 import { queryClient, QueryKeys } from 'utils/queryClient';
 import { HydrationProps } from 'utils/types';
+import useTrackView from 'utils/hooks/useTrackView';
 
 /** Page props are those of getStaticProps (if defined in page),
  * layout props are returned by MyApp.getInitialProps */
@@ -24,6 +24,8 @@ const MyApp = ({
       : undefined;
   const pageState =
     pageProps && pageProps.dehydratedState ? JSON.parse(pageProps.dehydratedState) : undefined;
+
+  useTrackView();
 
   return (
     <ChakraProvider theme={theme}>
