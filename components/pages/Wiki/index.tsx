@@ -17,7 +17,7 @@ const WikiHome = () => {
     <Background data-cy="wiki">
       <VStack spacing="7">
         <PageTitle title="Wiki" />
-        <Text>
+        <Text textAlign="center">
           Voici le wiki créé par la communauté du Valhabba. Il regroupe des informations sur le
           Valhabba et sur Valheim en général, des tutos, des cartes, des personnalités...
         </Text>

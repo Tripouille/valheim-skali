@@ -1,5 +1,6 @@
 import { ObjectId } from 'bson';
 import { isFilled } from 'utils/validation';
+import { User } from './user';
 
 /** Types */
 
@@ -11,6 +12,7 @@ export interface WikiPageContent {
 export interface WikiPage extends WikiPageContent {
   _id: string;
   slug: string;
+  approvalDate: string;
 }
 
 export interface WikiSuggestion extends WikiPageContent {
@@ -68,3 +70,14 @@ export const sortWikiProposals = (wikiProposals: WikiProposal[]) =>
       ? 1
       : -1;
   });
+
+/** Completing data with author */
+
+export const getWikiProposalWithAuthorName = (wikiProposal: WikiProposal, users?: User[]) => {
+  let authorName;
+  if (users) {
+    const author = users.find(user => user._id === wikiProposal.authorId);
+    if (author) authorName = author.nameInGame ?? author.name;
+  }
+  return { ...wikiProposal, authorName };
+};
