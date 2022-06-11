@@ -1,6 +1,5 @@
 import Secured from 'components/core/Authentication/Secured';
 import { Table, Th, Thead, Tr, Tbody } from 'components/core/DataDisplay/Table';
-import { User } from 'data/user';
 import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
 import {
   avatarSize,

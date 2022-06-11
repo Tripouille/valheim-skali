@@ -64,7 +64,7 @@ const assignPermission = <C extends PermissionCategory>(
 
 export const getUserPermissions = async (user: UserInDb) => {
   const userPermissions: Permissions = await getVisitorPermissions();
-  const userRoles: RoleInDb[] = await db.find(rolesCollectionName, {
+  const userRoles: RoleInDb[] = await db.find<RoleInDb>(rolesCollectionName, {
     _id: { $in: user.roleIds ?? [] },
   });
   userRoles.forEach(role => {
