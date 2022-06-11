@@ -1,18 +1,31 @@
+import NextLink from 'next/link';
+import { Fragment } from 'react';
 import Box from 'components/core/Containers/Box';
+import Link from 'components/core/Interactive/Link';
 import Heading from 'components/core/Typography/Heading';
-import Text from 'components/core/Typography/Text';
+import { WikiPage } from 'data/wiki';
+import { NavRoute, serverName } from 'utils/routes';
 
 export interface WikiLinksGroupProps {
   title: string;
+  pages: WikiPage[];
 }
 
-const WikiLinksGroup: React.FC<WikiLinksGroupProps> = ({ title }) => {
+const WikiLinksGroup: React.FC<WikiLinksGroupProps> = ({ title, pages }) => {
+  if (!pages.length) return null;
   return (
     <Box border="2px silver solid" borderRadius="md" p="3">
-      <Heading size="sm" textAlign="center" mb="5">
+      <Heading size="sm" textAlign="center" mb="3">
         {title}
       </Heading>
-      <Text>Aucune page ne correspond à cette section pour le moment.</Text>
+      {pages.map(wikiPage => (
+        <Fragment key={wikiPage._id}>
+          <NextLink href={`/${serverName}${NavRoute.WIKI}/${wikiPage.slug}`} passHref>
+            <Link fontSize="lg">{wikiPage.title}</Link>
+          </NextLink>
+          <br />
+        </Fragment>
+      ))}
     </Box>
   );
 };
