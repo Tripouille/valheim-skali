@@ -54,7 +54,7 @@ export const getWikiPageValidationError = (pageData: Partial<WikiPageContent>): 
 
 export const WIKI_PAGE_VALUES_MAX_LENGTH: Record<keyof WikiPageContent, number> = {
   title: 150,
-  content: 5000,
+  content: 15000,
 };
 
 /** Sorting */
