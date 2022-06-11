@@ -30,20 +30,6 @@ const createWikiPage = async (req: Req, res: Res) => {
 
   res.status(201).json({ ...wikiProposal, _id: wikiProposalId });
 
-  // TODO : old code for inserting and updating slug of new wiki page, to move to validation
-  // const newWikiPageId = await db.insert<WikiPageInDb>(wikiPagesCollectionName, newWikiPage);
-
-  // res.status(201).json({ ...newWikiPage, _id: newWikiPageId });
-
-  // const pageWithSameSlug = await db.findOne<WikiPageInDb>(wikiPagesCollectionName, {
-  //   slug: newWikiPage.slug,
-  //   _id: { $ne: new ObjectId(newWikiPageId) },
-  // });
-  // if (pageWithSameSlug)
-  //   updateOneInCollection(wikiPagesCollectionName, newWikiPageId, {
-  //     slug: newWikiPage.slug + '-' + newWikiPageId,
-  //   });
-
   // TODO
   // revalidateWiki(res);
 };

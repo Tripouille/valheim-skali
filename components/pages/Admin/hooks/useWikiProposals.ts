@@ -1,6 +1,11 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import axios from 'axios';
-import { sortWikiProposals, WikiProposal, WikiProposalWithAuthor } from 'data/wiki';
+import {
+  getWikiProposalWithAuthorName,
+  sortWikiProposals,
+  WikiProposal,
+  WikiProposalWithAuthor,
+} from 'data/wiki';
 import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
 import useSession from 'utils/hooks/useSession';
@@ -26,14 +31,9 @@ export const useWikiProposals = (options?: {
       const selectedWikiProposals = options?.unhandled
         ? data.filter(wikiProposal => wikiProposal.status === 'proposed')
         : data;
-      return sortWikiProposals(selectedWikiProposals).map(wikiProposal => {
-        let authorName;
-        if (users) {
-          const author = users.find(user => user._id === wikiProposal.authorId);
-          if (author) authorName = author.nameInGame ?? author.name;
-        }
-        return { ...wikiProposal, authorName };
-      });
+      return sortWikiProposals(selectedWikiProposals).map(wikiProposal =>
+        getWikiProposalWithAuthorName(wikiProposal, users),
+      );
     },
   });
 
