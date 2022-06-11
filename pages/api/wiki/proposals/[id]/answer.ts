@@ -3,7 +3,7 @@ import { ServerException } from 'api-utils/common';
 import validateWikiProposal from 'api-utils/wiki/validateWikiProposal';
 import rejectWikiProposal from 'api-utils/wiki/rejectWikiProposal';
 
-const wikiProposalsHandler: NextApiHandler = async (req, res) => {
+const answerWikiProposalHandler: NextApiHandler = async (req, res) => {
   try {
     if (req.method === 'PUT') {
       if (req.body.answer === 'validated') await validateWikiProposal(req, res);
@@ -19,4 +19,4 @@ const wikiProposalsHandler: NextApiHandler = async (req, res) => {
   }
 };
 
-export default wikiProposalsHandler;
+export default answerWikiProposalHandler;
