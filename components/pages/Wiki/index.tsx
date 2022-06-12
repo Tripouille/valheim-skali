@@ -12,6 +12,7 @@ import { WikiPage } from 'data/wiki';
 import { NavRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import WikiLinksGroup from './WikiLinksGroup';
+import Link from 'components/core/Interactive/Link';
 
 interface WikiHomeProps {
   featuredWikiPages: {
@@ -53,7 +54,7 @@ const WikiHome: React.FC<WikiHomeProps> = ({ featuredWikiPages }) => (
         </NextLink>
       </Secured>
       <NextLink href={`/${serverName}${NavRoute.WIKI}/all`}>
-        Temp: lien pour voir toutes les pages
+        <Link>Lien temporaire pour voir toutes les pages</Link>
       </NextLink>
     </VStack>
   </Background>
