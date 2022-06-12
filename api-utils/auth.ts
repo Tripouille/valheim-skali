@@ -32,7 +32,7 @@ export const getVisitorPermissions = async (): Promise<Permissions> => {
   return visitorRole.permissions;
 };
 
-const getPermissionsFromRequest = async (req: IncomingMessage) => {
+export const getPermissionsFromRequest = async (req: IncomingMessage) => {
   const session = await getSession({ req });
   if (session) return session.permissions;
   const visitorPermissions = await getVisitorPermissions();

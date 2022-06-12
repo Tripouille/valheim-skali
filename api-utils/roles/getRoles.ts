@@ -1,22 +1,23 @@
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
+import { getPermissionsFromRequest, requirePermissions } from 'api-utils/auth';
+import db from 'api-utils/db';
 import { RoleInDb, rolesCollectionName, SpecialRoleName } from 'data/role';
-import { PermissionCategory, rolePrivilege } from 'utils/permissions';
-import { ServerException } from '../common';
-import { requirePermissions } from '../auth';
-import db from '../db';
+import { PermissionCategory, permissionsMeetRequirement, rolePrivilege } from 'utils/permissions';
 
 const getRoles = async (req: Req, res: Res) => {
   await requirePermissions({ [PermissionCategory.ROLE]: rolePrivilege.READ }, req);
 
   const roles = await db.find<RoleInDb>(rolesCollectionName);
 
-  try {
-    await requirePermissions({ [PermissionCategory.ROLE]: rolePrivilege.SUPER_ADMIN }, req);
+  const userPermissions = await getPermissionsFromRequest(req);
+  if (
+    permissionsMeetRequirement(userPermissions, {
+      [PermissionCategory.ROLE]: rolePrivilege.SUPER_ADMIN,
+    })
+  ) {
     res.status(200).json(roles);
-  } catch (e) {
-    if (e instanceof ServerException) {
-      res.status(200).json(roles.filter(role => role.name !== SpecialRoleName.SUPER_ADMIN));
-    } else throw e;
+  } else {
+    res.status(200).json(roles.filter(role => role.name !== SpecialRoleName.SUPER_ADMIN));
   }
 };
 
