@@ -23,7 +23,6 @@ const useAnswerWikiProposal = (wikiProposal: WikiProposal) => {
   const { mutate: answerWikiProposal } = useMutation(updateWikiProposalOnServer(wikiProposal), {
     onError: error => displayErrorToast({ title: getMessageFromError(error) }),
     onSuccess: (newWikiPage, answer) => {
-      console.log({ newWikiPage });
       displaySuccessToast({
         title: `La page wiki "${wikiProposal.suggestions.at(-1)?.title}" a bien été ${
           answer === 'validated' ? 'validée' : 'rejetée'

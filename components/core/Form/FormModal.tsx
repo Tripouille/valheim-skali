@@ -8,7 +8,6 @@ import {
   ModalFooter,
 } from 'components/core/Overlay/Modal';
 import Center from 'components/core/Containers/Center';
-import Box from 'components/core/Containers/Box';
 import Button from 'components/core/Interactive/Button';
 import ButtonGroup from 'components/core/Interactive/ButtonGroup';
 import DeletePopover from './DeletePopover';
@@ -74,13 +73,11 @@ const FormModal = <T extends object>(props: FormModalProps<T>) => {
             <Center w="full">
               <ButtonGroup>
                 {canDelete && (
-                  <Box>
-                    <DeletePopover
-                      onDelete={props.onDelete}
-                      deleteLabel={props.deleteLabel}
-                      deletePopoverBody={props.deletePopoverBody}
-                    />
-                  </Box>
+                  <DeletePopover
+                    onDelete={props.onDelete}
+                    deleteLabel={props.deleteLabel}
+                    deletePopoverBody={props.deletePopoverBody}
+                  />
                 )}
                 {canSubmit && (
                   <Button

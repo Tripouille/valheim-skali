@@ -21,6 +21,7 @@ import useAnswerWikiProposal from 'hooks/wiki/useAnswerWikiProposal';
 import useSession from 'hooks/useSession';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import { AdminNavRoute, MenuRoute, NavRoute, serverName } from 'utils/routes';
+import { ActionPopover } from 'components/core/Overlay/Popover';
 
 export interface WikiProposalComponentProps {
   wikiProposal: WikiProposalWithAuthor;
@@ -61,22 +62,22 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
               </NextLink>
             )}
             <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.WRITE }}>
-              <Button
-                data-cy="validate"
+              <ActionPopover
+                data-cy="reject"
+                action={() => answerWikiProposal('rejected')}
+                label="Rejeter"
+                confirmBody="Êtes-vous sûr de vouloir rejeter cette proposition ?"
                 colorScheme="red"
                 leftIcon={<BiBlock />}
-                onClick={() => answerWikiProposal('rejected')}
-              >
-                Rejeter
-              </Button>
-              <Button
+              />
+              <ActionPopover
                 data-cy="validate"
+                action={() => answerWikiProposal('validated')}
+                label="Valider"
+                confirmBody="Êtes-vous sûr de vouloir valider cette page wiki ?"
                 colorScheme="green"
                 leftIcon={<BiCheck />}
-                onClick={() => answerWikiProposal('validated')}
-              >
-                Valider
-              </Button>
+              />
             </Secured>
           </ButtonGroup>
         )}

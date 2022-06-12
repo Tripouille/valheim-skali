@@ -20,7 +20,7 @@ const UserWikiProposals = () => {
           <PageTitle title="Mes propositions wiki" size="xl" />
         </Grid>
         <WikiProposalsTable onlyUser />
-        <NextLink href="proposals/new" passHref>
+        <NextLink href={`/${serverName}${NavRoute.WIKI}/proposals/new`} passHref>
           <Button
             data-cy="participate"
             as="a"
