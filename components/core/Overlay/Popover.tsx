@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import {
   Popover as ChakraPopover,
   PopoverProps as ChakraPopoverProps,
@@ -16,7 +16,11 @@ import {
   PopoverCloseButton as ChakraPopoverCloseButton,
   PopoverCloseButtonProps as ChakraPopoverCloseButtonProps,
   PopoverAnchor as ChakraPopoverAnchor,
+  PlacementWithLogical,
 } from '@chakra-ui/react';
+import Button from '../Interactive/Button';
+import { Callback, CypressProps } from 'utils/types';
+import Box from '../Containers/Box';
 
 export type PopoverProps = ChakraPopoverProps;
 
@@ -69,3 +73,47 @@ export const PopoverCloseButton: React.FC<
 export const PopoverAnchor: React.FC = chakraPopoverAnchorProps => (
   <ChakraPopoverAnchor {...chakraPopoverAnchorProps}></ChakraPopoverAnchor>
 );
+
+export interface ActionPopoverProps extends CypressProps {
+  action: Callback;
+  label: string;
+  confirmLabel?: string;
+  confirmBody: string;
+  colorScheme: string;
+  leftIcon?: ReactElement;
+  placement?: PlacementWithLogical;
+}
+
+export const ActionPopover: React.FC<ActionPopoverProps> = ({
+  'data-cy': dataCy,
+  action,
+  label,
+  confirmLabel = 'Confirmer',
+  confirmBody,
+  colorScheme,
+  leftIcon,
+  placement = 'bottom',
+}) => {
+  return (
+    <Box>
+      <Popover placement={placement} preventOverflow>
+        <PopoverTrigger>
+          <Button data-cy={dataCy} colorScheme={colorScheme} leftIcon={leftIcon}>
+            {label}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent>
+          <PopoverArrow />
+          <PopoverCloseButton />
+          <PopoverHeader>{label}</PopoverHeader>
+          <PopoverBody>{confirmBody}</PopoverBody>
+          <PopoverFooter textAlign="end">
+            <Button data-cy={`confirm-${dataCy}`} colorScheme={colorScheme} onClick={action}>
+              {confirmLabel}
+            </Button>
+          </PopoverFooter>
+        </PopoverContent>
+      </Popover>
+    </Box>
+  );
+};
