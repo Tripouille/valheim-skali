@@ -12,9 +12,9 @@ import PageTitle from 'components/core/Typography/PageTitle';
 import FormElement from 'components/core/Form/FormElement';
 import Input from 'components/core/Form/Input';
 import Textarea from 'components/core/Form/Textarea';
-import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import Button from 'components/core/Interactive/Button';
-import useProposeWikiPage from './hooks/useProposeWikiPage';
+import useProposeWikiPage from 'hooks/wiki/useProposeWikiPage';
+import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 
 const WikiForm = () => {
   const createWikiPage = useProposeWikiPage();

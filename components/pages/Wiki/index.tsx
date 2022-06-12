@@ -9,7 +9,7 @@ import PageTitle from 'components/core/Typography/PageTitle';
 import Text from 'components/core/Typography/Text';
 import Button from 'components/core/Interactive/Button';
 import { WikiPage } from 'data/wiki';
-import { NavRoute, serverName } from 'utils/routes';
+import { NavRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import WikiLinksGroup from './WikiLinksGroup';
 
@@ -25,7 +25,7 @@ interface WikiHomeProps {
 const WikiHome: React.FC<WikiHomeProps> = ({ featuredWikiPages }) => (
   <Background data-cy="wiki">
     <VStack spacing="7">
-      <PageTitle title="Wiki" />
+      <PageTitle title={ROUTES_TO_LABEL[NavRoute.WIKI]} />
       <Text textAlign="center">
         Voici le wiki créé par la communauté du Valhabba. Il regroupe des informations sur le
         Valhabba et sur Valheim en général, des tutos, des cartes, des personnalités...

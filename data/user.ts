@@ -1,4 +1,5 @@
 import { ObjectId } from 'bson';
+import { UseSessionReturn } from 'hooks/useSession';
 import { Role, RoleInDb } from './role';
 
 export interface User {
@@ -25,3 +26,13 @@ export type UpdateUserData = {
 };
 
 export type UpdateUserRolesData = { roleId: string };
+
+/** User roles utils */
+
+export const canUserAssignRole = (
+  role: Role,
+  hasRequiredPermissions: UseSessionReturn['hasRequiredPermissions'],
+) => hasRequiredPermissions(role.requiredPermissionsToAssign);
+
+export const getUserRoles = (user: User, roles: Role[]): (Role | undefined)[] =>
+  user.roleIds ? user.roleIds.map(roleId => roles.find(role => role._id === roleId)) : [];

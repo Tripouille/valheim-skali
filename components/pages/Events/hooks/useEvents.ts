@@ -2,9 +2,9 @@ import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 import { Event } from 'data/event';
+import useSession from 'hooks/useSession';
 import { APIRoute } from 'utils/routes';
 import { QueryKeys, QueryTypes } from 'utils/queryClient';
-import useSession from 'utils/hooks/useSession';
 import { eventPrivilege, PermissionCategory } from 'utils/permissions';
 import { eventComp } from '../utils';
 

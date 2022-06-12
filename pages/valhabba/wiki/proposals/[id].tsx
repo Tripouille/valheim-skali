@@ -3,9 +3,9 @@ import React from 'react';
 import { useQueryClient } from 'react-query';
 import Background from 'components/core/Containers/Background';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
-import WikiProposalComponent from 'components/pages/Wiki/WikiProposal';
-import { useWikiProposal } from 'components/pages/Wiki/hooks/useWikiProposal';
+import WikiProposalComponent from 'components/pages/Wiki/WikiProposals/WikiProposal';
 import { WikiProposal } from 'data/wiki';
+import { useWikiProposal } from 'hooks/wiki/useWikiProposal';
 import { getRouteParameterAsString } from 'utils/routes';
 import { QueryKeys, QueryTypes } from 'utils/queryClient';
 

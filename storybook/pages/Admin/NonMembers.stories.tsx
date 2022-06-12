@@ -1,13 +1,11 @@
 import { storybookSetup } from 'storybook/config/setup';
 import { StoryCategory } from 'storybook/config/constants';
-import { AdminNavRoute, APIRoute, ROUTES_TO_LABEL } from 'utils/routes';
-import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
-import UsersTable from 'components/pages/Admin/Users/UsersTable';
-import { UserQueryFilter } from 'components/pages/Admin/utils';
-import AdminLayout from 'components/pages/Admin/AdminLayout';
+import UsersTable from 'components/pages/Users/UsersTable';
+import AdminLayout from 'components/Layout/Admin/AdminLayout';
 import PageTitle from 'components/core/Typography/PageTitle';
-import nonMembers from './nonMembers.json';
-import roles from './roles.json';
+import { UserQueryFilter } from 'hooks/users/useUsers';
+import { AdminNavRoute, ROUTES_TO_LABEL } from 'utils/routes';
+import { PermissionCategory, userPrivilege } from 'utils/permissions';
 
 const { defaultExport, StoryFactory } = storybookSetup(
   UsersTable,
@@ -15,7 +13,7 @@ const { defaultExport, StoryFactory } = storybookSetup(
   {
     decorators: [
       Story => (
-        <AdminLayout nonMembers={nonMembers}>
+        <AdminLayout>
           <PageTitle title={ROUTES_TO_LABEL[AdminNavRoute.NON_MEMBERS]} size="xl" mb="4" />
           <Story />
         </AdminLayout>
@@ -35,18 +33,19 @@ export const NonMembersEmpty = StoryFactory(
   },
 );
 
-export const NonMembersReadOnly = StoryFactory(
-  { filter: UserQueryFilter.NON_MEMBER, users: nonMembers },
-  { permissions: { [PermissionCategory.USER]: userPrivilege.READ } },
-);
+// TODO
+// export const NonMembersReadOnly = StoryFactory(
+//   { filter: UserQueryFilter.NON_MEMBER, users: nonMembers },
+//   { permissions: { [PermissionCategory.USER]: userPrivilege.READ } },
+// );
 
-export const NonMembersCanEdit = StoryFactory(
-  { filter: UserQueryFilter.NON_MEMBER, users: nonMembers },
-  {
-    permissions: {
-      [PermissionCategory.USER]: userPrivilege.READ_WRITE,
-      [PermissionCategory.ROLE]: rolePrivilege.READ,
-    },
-    requestResults: [{ url: APIRoute.ROLES, result: roles }],
-  },
-);
+// export const NonMembersCanEdit = StoryFactory(
+//   { filter: UserQueryFilter.NON_MEMBER, users: nonMembers },
+//   {
+//     permissions: {
+//       [PermissionCategory.USER]: userPrivilege.READ_WRITE,
+//       [PermissionCategory.ROLE]: rolePrivilege.READ,
+//     },
+//     requestResults: [{ url: APIRoute.ROLES, result: roles }],
+//   },
+// );
