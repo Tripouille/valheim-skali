@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import NextLink from 'next/link';
-import { BiBlock, BiCheck } from 'react-icons/bi';
+import { BiBlock, BiCheck, BiEdit } from 'react-icons/bi';
 import {
   AccordionButton,
   AccordionIcon,
@@ -18,6 +18,7 @@ import Text from 'components/core/Typography/Text';
 import ButtonGroup from 'components/core/Interactive/ButtonGroup';
 import Button from 'components/core/Interactive/Button';
 import useAnswerWikiProposal from 'hooks/wiki/useAnswerWikiProposal';
+import useSession from 'hooks/useSession';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import { AdminNavRoute, MenuRoute, NavRoute, serverName } from 'utils/routes';
 
@@ -28,8 +29,8 @@ export interface WikiProposalComponentProps {
 const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiProposal }) => {
   const answerWikiProposal = useAnswerWikiProposal(wikiProposal);
 
-  // const { data } = useSession();
-  // const userIsAuthor = data?.user?._id === wikiProposal.authorId;
+  const session = useSession();
+  const userIsAuthor = session.data?.user?._id === wikiProposal.authorId;
 
   return (
     <>
@@ -49,11 +50,16 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
         </nav>
         {wikiProposal.status === 'proposed' && (
           <ButtonGroup>
-            {/* TODO {userIsAuthor && (
-            <Button data-cy="modify" leftIcon={<BiEdit />}>
-              Modifier
-            </Button>
-          )} */}
+            {userIsAuthor && (
+              <NextLink
+                href={`/${serverName}${NavRoute.WIKI}/proposals/edit/${wikiProposal._id}`}
+                passHref
+              >
+                <Button as="a" data-cy="modify" leftIcon={<BiEdit />}>
+                  Modifier
+                </Button>
+              </NextLink>
+            )}
             <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.WRITE }}>
               <Button
                 data-cy="validate"
