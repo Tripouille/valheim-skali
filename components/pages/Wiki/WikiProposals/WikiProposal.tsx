@@ -19,7 +19,7 @@ import ButtonGroup from 'components/core/Interactive/ButtonGroup';
 import Button from 'components/core/Interactive/Button';
 import useAnswerWikiProposal from 'hooks/wiki/useAnswerWikiProposal';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
-import { AdminNavRoute, MenuRoute, serverName } from 'utils/routes';
+import { AdminNavRoute, MenuRoute, NavRoute, serverName } from 'utils/routes';
 
 export interface WikiProposalComponentProps {
   wikiProposal: WikiProposalWithAuthor;
@@ -36,20 +36,17 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
       <Head>
         <title>Skali - {wikiProposal.suggestions.at(-1)?.title ?? ''}</title>
       </Head>
-      <Flex as="nav" mb="3" justify="space-between">
-        <Secured
-          permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.WRITE }}
-          fallback={
-            //TODO
-            <NextLink href={`/${serverName}`} passHref>
-              <Link>&larr; Voir toutes mes propositions</Link>
+      <Flex mb="3" justify="space-between">
+        <nav>
+          <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.WRITE }}>
+            <NextLink href={`/${serverName}${MenuRoute.ADMIN}${AdminNavRoute.WIKI}`} passHref>
+              <Link display="block">&larr; Voir toutes les propositions</Link>
             </NextLink>
-          }
-        >
-          <NextLink href={`/${serverName}${MenuRoute.ADMIN}${AdminNavRoute.WIKI}`} passHref>
-            <Link>&larr; Voir toutes les propositions</Link>
+          </Secured>
+          <NextLink href={`/${serverName}${NavRoute.WIKI}/proposals`} passHref>
+            <Link display="block">&larr; Voir toutes mes propositions</Link>
           </NextLink>
-        </Secured>
+        </nav>
         {wikiProposal.status === 'proposed' && (
           <ButtonGroup>
             {/* TODO {userIsAuthor && (

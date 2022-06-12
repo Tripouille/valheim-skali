@@ -1,18 +1,18 @@
 import NextLink from 'next/link';
 import React from 'react';
-import { BsPlusLg } from 'react-icons/bs';
+import { GiFeather } from 'react-icons/gi';
 import Secured from 'components/core/Authentication/Secured';
 import Background from 'components/core/Containers/Background';
 import { VStack } from 'components/core/Containers/Stack';
 import SimpleGrid from 'components/core/Containers/SimpleGrid';
+import Link from 'components/core/Interactive/Link';
+import IconButton from 'components/core/Interactive/IconButton';
 import PageTitle from 'components/core/Typography/PageTitle';
 import Text from 'components/core/Typography/Text';
-import Button from 'components/core/Interactive/Button';
 import { WikiPage } from 'data/wiki';
 import { NavRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import WikiLinksGroup from './WikiLinksGroup';
-import Link from 'components/core/Interactive/Link';
 
 interface WikiHomeProps {
   featuredWikiPages: {
@@ -47,14 +47,19 @@ const WikiHome: React.FC<WikiHomeProps> = ({ featuredWikiPages }) => (
         <WikiLinksGroup title="Les plus populaires" pages={featuredWikiPages.popularPages} />
       </SimpleGrid>
       <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.PROPOSE }}>
-        <NextLink href={`/${serverName}${NavRoute.WIKI}/new`} passHref>
-          <Button data-cy="create-page" as="a" leftIcon={<BsPlusLg />} colorScheme="green">
-            Proposer une nouvelle page wiki
-          </Button>
+        <NextLink href={`/${serverName}${NavRoute.WIKI}/proposals`} passHref>
+          <IconButton
+            data-cy="participate"
+            as="a"
+            icon={<GiFeather />}
+            aria-label="Participer au wiki"
+            title="Participer au wiki"
+            alignSelf="end"
+          />
         </NextLink>
       </Secured>
       <NextLink href={`/${serverName}${NavRoute.WIKI}/all`}>
-        <Link>Lien temporaire pour voir toutes les pages</Link>
+        <Link alignSelf="end">Lien temporaire pour voir toutes les pages</Link>
       </NextLink>
     </VStack>
   </Background>
