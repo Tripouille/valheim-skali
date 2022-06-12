@@ -1,15 +1,19 @@
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';
-import { WikiProposal } from 'data/wiki';
+import { WikiPage, WikiProposal } from 'data/wiki';
 import { QueryKeys } from 'utils/queryClient';
-import { AdminNavRoute, APIRoute, MenuRoute, serverName } from 'utils/routes';
+import { AdminNavRoute, APIRoute, MenuRoute, NavRoute, serverName } from 'utils/routes';
 import { displayErrorToast, displaySuccessToast } from 'utils/toast';
 import { getMessageFromError } from 'utils/error';
 
 const updateWikiProposalOnServer =
   (wikiProposal: WikiProposal) => async (answer: 'validated' | 'rejected') => {
-    await axios.put(`${APIRoute.WIKI}/proposals/${wikiProposal._id}/answer`, { answer });
+    const { data: result } = await axios.put<WikiPage | undefined>(
+      `${APIRoute.WIKI}/proposals/${wikiProposal._id}/answer`,
+      { answer },
+    );
+    return result;
   };
 
 const useAnswerWikiProposal = (wikiProposal: WikiProposal) => {
@@ -18,13 +22,16 @@ const useAnswerWikiProposal = (wikiProposal: WikiProposal) => {
 
   const { mutate: answerWikiProposal } = useMutation(updateWikiProposalOnServer(wikiProposal), {
     onError: error => displayErrorToast({ title: getMessageFromError(error) }),
-    onSuccess: (_, answer) => {
+    onSuccess: (newWikiPage, answer) => {
+      console.log({ newWikiPage });
       displaySuccessToast({
         title: `La page wiki "${wikiProposal.suggestions.at(-1)?.title}" a bien été ${
           answer === 'validated' ? 'validée' : 'rejetée'
         }.`,
       });
-      router.push(`/${serverName}${MenuRoute.ADMIN}${AdminNavRoute.WIKI}`);
+      if (answer === 'validated')
+        router.push(`/${serverName}${NavRoute.WIKI}/${newWikiPage?.slug}`);
+      else router.push(`/${serverName}${MenuRoute.ADMIN}${AdminNavRoute.WIKI}`);
     },
     onSettled: () => queryClient.invalidateQueries(QueryKeys.WIKI_PROPOSALS),
   });

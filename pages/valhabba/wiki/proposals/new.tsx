@@ -1,6 +1,11 @@
 import React from 'react';
-import WikiForm from 'components/pages/Wiki/WikiProposals/WikiForm';
+import WikiProposalForm from 'components/pages/Wiki/WikiProposals/WikiProposalForm';
+import useProposeWikiPage from 'hooks/wiki/useProposeWikiPage';
 
-const NewWikiProposalPage = () => <WikiForm />;
+const NewWikiProposalPage = () => {
+  const createWikiPage = useProposeWikiPage();
+
+  return <WikiProposalForm onSubmit={createWikiPage} />;
+};
 
 export default NewWikiProposalPage;
