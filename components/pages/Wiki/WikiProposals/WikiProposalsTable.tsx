@@ -4,11 +4,22 @@ import { tableStyleProps, getCellWidth, rowIconWidth } from 'theme/admin';
 import { useWikiProposals } from 'hooks/wiki/useWikiProposals';
 import WikiProposalRow from './WikiProposalRow';
 
-const WikiProposalsTable = () => {
-  const wikiProposalsQuery = useWikiProposals();
+export interface WikiProposalsTableProps {
+  onlyUser?: boolean;
+}
+
+const WikiProposalsTable: React.FC<WikiProposalsTableProps> = ({ onlyUser }) => {
+  const wikiProposalsQuery = useWikiProposals({ onlyUser });
   const wikiProposals = wikiProposalsQuery.data ?? [];
 
-  if (wikiProposals.length === 0) return <>Aucune page wiki n&apos;a été proposée.</>;
+  if (wikiProposals.length === 0)
+    return (
+      <>
+        {onlyUser
+          ? "Vous n'avez encore proposé aucune page wiki."
+          : "Aucune page wiki n'a été proposée."}
+      </>
+    );
 
   return (
     <QueryHandler query={wikiProposalsQuery}>
@@ -16,7 +27,7 @@ const WikiProposalsTable = () => {
         <Thead>
           <Tr>
             <Th>Titre</Th>
-            <Th width={{ base: '24', md: '40', '2xl': 'xs' }}>Auteur</Th>
+            {!onlyUser && <Th width={{ base: '24', md: '40', '2xl': 'xs' }}>Auteur</Th>}
             <Th width={getCellWidth(rowIconWidth)}></Th>
           </Tr>
         </Thead>
@@ -26,6 +37,7 @@ const WikiProposalsTable = () => {
               data-cy={`wiki-proposal-${index}`}
               key={wikiProposal._id}
               wikiProposal={wikiProposal}
+              onlyUser={onlyUser}
             />
           ))}
         </Tbody>

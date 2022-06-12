@@ -1,4 +1,6 @@
+import NextLink from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { Grid } from '@chakra-ui/react';
 import {
   WikiPageContent,
   getWikiPageValidationError,
@@ -13,8 +15,10 @@ import FormElement from 'components/core/Form/FormElement';
 import Input from 'components/core/Form/Input';
 import Textarea from 'components/core/Form/Textarea';
 import Button from 'components/core/Interactive/Button';
+import Link from 'components/core/Interactive/Link';
 import useProposeWikiPage from 'hooks/wiki/useProposeWikiPage';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
+import { NavRoute, serverName } from 'utils/routes';
 
 const WikiForm = () => {
   const createWikiPage = useProposeWikiPage();
@@ -31,7 +35,12 @@ const WikiForm = () => {
   return (
     <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.PROPOSE }}>
       <Background data-cy="wiki-creation-form">
-        <PageTitle title="Proposer une nouvelle page wiki" />
+        <Grid templateColumns="1fr auto 1fr" gap="5" width="full">
+          <NextLink href={`/${serverName}${NavRoute.WIKI}/proposals`} passHref>
+            <Link>&larr; Retour à mes propositions</Link>
+          </NextLink>
+          <PageTitle title="Proposer une nouvelle page wiki" />
+        </Grid>
         <Stack spacing="5" align="start" mt="10">
           <FormElement label="Titre" isRequired>
             <Input
