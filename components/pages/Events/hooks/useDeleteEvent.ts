@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { Event } from 'data/event';
+import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import { APIRoute } from 'utils/routes';
 import { QueryKeys, QueryTypes } from 'utils/queryClient';
-import useOptimisticMutation from 'utils/hooks/useOptimisticMutation';
 
 const deleteEventOnServer = (deletedEvent: Event) => async () => {
   await axios.delete(`${APIRoute.EVENTS}/${deletedEvent._id}`);

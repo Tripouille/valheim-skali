@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { Event, CreateEventData } from 'data/event';
+import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
-import useOptimisticMutation from 'utils/hooks/useOptimisticMutation';
 import { getEventDataForServer } from '../utils';
 
 const updateEventOnServer = (updatedEvent: Event) => async (newEvent: CreateEventData) => {

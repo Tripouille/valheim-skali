@@ -1,7 +1,4 @@
 import { RefObject, useCallback, useEffect, useState } from 'react';
-import { Children } from 'utils/types';
-import { scrollIntoViewIfNeeded } from 'utils/window';
-import useCircularCounter from 'utils/hooks/useCircularCounter';
 import {
   Popover,
   PopoverBody,
@@ -11,6 +8,9 @@ import {
 import { ListItem, UnorderedList } from 'components/core/DataDisplay/List';
 import Tag from 'components/core/DataDisplay/Tag';
 import { InputProps } from 'components/core/Form/Input';
+import useCircularCounter from 'hooks/useCircularCounter';
+import { Children } from 'utils/types';
+import { scrollIntoViewIfNeeded } from 'utils/window';
 
 interface ComboboxChildrenProps {
   getInputProps: Partial<InputProps> & { ref: RefObject<HTMLInputElement> };

@@ -1,14 +1,11 @@
 import { storybookSetup } from 'storybook/config/setup';
 import { StoryCategory } from 'storybook/config/constants';
-import { Role } from 'data/role';
-import { AdminNavRoute, APIRoute, ROUTES_TO_LABEL } from 'utils/routes';
-import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
-import UsersTable from 'components/pages/Admin/Users/UsersTable';
-import { UserQueryFilter } from 'components/pages/Admin/utils';
-import AdminLayout from 'components/pages/Admin/AdminLayout';
+import UsersTable from 'components/pages/Users/UsersTable';
+import AdminLayout from 'components/Layout/Admin/AdminLayout';
 import PageTitle from 'components/core/Typography/PageTitle';
-import members from './members.json';
-import roles from './roles.json';
+import { UserQueryFilter } from 'hooks/users/useUsers';
+import { AdminNavRoute, ROUTES_TO_LABEL } from 'utils/routes';
+import { PermissionCategory, userPrivilege } from 'utils/permissions';
 
 const { defaultExport, StoryFactory } = storybookSetup(
   UsersTable,
@@ -16,7 +13,7 @@ const { defaultExport, StoryFactory } = storybookSetup(
   {
     decorators: [
       Story => (
-        <AdminLayout members={members} roles={roles as Role[]}>
+        <AdminLayout>
           <PageTitle title={ROUTES_TO_LABEL[AdminNavRoute.MEMBERS]} size="xl" mb="4" />
           <Story />
         </AdminLayout>
@@ -34,29 +31,30 @@ export const MembersEmpty = StoryFactory(
   { permissions: { [PermissionCategory.USER]: userPrivilege.READ } },
 );
 
-export const MembersReadOnly = StoryFactory(
-  { filter: UserQueryFilter.MEMBER, users: members },
-  { permissions: { [PermissionCategory.USER]: userPrivilege.READ } },
-);
+// TODO
+// export const MembersReadOnly = StoryFactory(
+//   { filter: UserQueryFilter.MEMBER, users: members },
+//   { permissions: { [PermissionCategory.USER]: userPrivilege.READ } },
+// );
 
-export const MembersReadOnlyWithRoles = StoryFactory(
-  { filter: UserQueryFilter.MEMBER, users: members },
-  {
-    permissions: {
-      [PermissionCategory.USER]: userPrivilege.READ,
-      [PermissionCategory.ROLE]: rolePrivilege.READ,
-    },
-    requestResults: [{ url: APIRoute.ROLES, result: roles }],
-  },
-);
+// export const MembersReadOnlyWithRoles = StoryFactory(
+//   { filter: UserQueryFilter.MEMBER, users: members },
+//   {
+//     permissions: {
+//       [PermissionCategory.USER]: userPrivilege.READ,
+//       [PermissionCategory.ROLE]: rolePrivilege.READ,
+//     },
+//     requestResults: [{ url: APIRoute.ROLES, result: roles }],
+//   },
+// );
 
-export const MembersCanEdit = StoryFactory(
-  { filter: UserQueryFilter.MEMBER, users: members },
-  {
-    permissions: {
-      [PermissionCategory.USER]: userPrivilege.READ_WRITE,
-      [PermissionCategory.ROLE]: rolePrivilege.READ,
-    },
-    requestResults: [{ url: APIRoute.ROLES, result: roles }],
-  },
-);
+// export const MembersCanEdit = StoryFactory(
+//   { filter: UserQueryFilter.MEMBER, users: members },
+//   {
+//     permissions: {
+//       [PermissionCategory.USER]: userPrivilege.READ_WRITE,
+//       [PermissionCategory.ROLE]: rolePrivilege.READ,
+//     },
+//     requestResults: [{ url: APIRoute.ROLES, result: roles }],
+//   },
+// );

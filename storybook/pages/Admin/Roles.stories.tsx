@@ -1,6 +1,6 @@
 import { storybookSetup } from 'storybook/config/setup';
 import { StoryCategory } from 'storybook/config/constants';
-import Admin from 'components/pages/Admin';
+import Admin from 'components/Layout/Admin';
 import { APIRoute } from 'utils/routes';
 import { rolePrivilege, PermissionCategory } from 'utils/permissions';
 import roles from './roles.json';

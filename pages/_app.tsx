@@ -6,10 +6,10 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { ChakraProvider } from '@chakra-ui/react';
 import Layout from 'components/Layout';
 import Fonts from 'components/Layout/Fonts';
+import useTrackView from 'hooks/useTrackView';
 import theme from 'theme';
 import { queryClient, QueryKeys } from 'utils/queryClient';
 import { HydrationProps } from 'utils/types';
-import useTrackView from 'utils/hooks/useTrackView';
 
 /** Page props are those of getStaticProps (if defined in page),
  * layout props are returned by MyApp.getInitialProps */
