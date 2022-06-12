@@ -23,16 +23,27 @@ const About = () => (
               href="https://www.linkedin.com/in/astrid-allemandou"
               ariaLabel="Linkedin Astrid Allemandou"
               ms="2"
+              color="white"
             >
               <Icon as={FaLinkedin} />
             </ExternalLink>
-            <ExternalLink href="https://github.com/Chinimala" ariaLabel="Github Chinimala" ms="2">
+            <ExternalLink
+              href="https://github.com/Chinimala"
+              ariaLabel="Github Chinimala"
+              ms="2"
+              color="white"
+            >
               <Icon as={FaGithub} />
             </ExternalLink>
           </ListItem>
           <ListItem>
             Jean-Michel (alias Tripouille)
-            <ExternalLink href="https://github.com/Tripouille" ariaLabel="Github Tripouille" ms="2">
+            <ExternalLink
+              href="https://github.com/Tripouille"
+              ariaLabel="Github Tripouille"
+              ms="2"
+              color="white"
+            >
               <Icon as={FaGithub} />
             </ExternalLink>
           </ListItem>
@@ -45,6 +56,7 @@ const About = () => (
               href="https://github.com/GlaceCoding"
               ariaLabel="Github GlaceCoding"
               ms="2"
+              color="white"
             >
               <Icon as={FaGithub} />
             </ExternalLink>
