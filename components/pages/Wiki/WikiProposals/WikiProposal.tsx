@@ -88,9 +88,16 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
       <Accordion defaultIndex={[0]} allowMultiple w="full">
         {wikiProposal.suggestions.map((suggestion, index) => (
           <AccordionItem as="article" key={index}>
-            <AccordionButton display="grid" gridTemplateColumns="1fr 5fr 1fr">
+            <AccordionButton
+              display="grid"
+              gridTemplateColumns="1fr 5fr 1fr"
+              gridTemplateAreas={{
+                base: `". time icon" "title title title"`,
+                lg: `"time title icon"`,
+              }}
+            >
               <chakra.time
-                gridArea={{ base: '1 / 2', lg: '1 / 1' }}
+                gridArea="time"
                 isTruncated
                 textAlign={{ base: undefined, lg: 'start' }}
                 alignSelf="start"
@@ -103,10 +110,10 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
                   minute: 'numeric',
                 })}
               </chakra.time>
-              <Heading gridArea={{ base: '2 / span 3', lg: '1 / 2' }} minWidth={0}>
+              <Heading gridArea="title" minWidth={0}>
                 {suggestion.title}
               </Heading>
-              <AccordionIcon gridArea="1 / 3" justifySelf="end" alignSelf="start" />
+              <AccordionIcon gridArea="icon" justifySelf="end" alignSelf="start" />
             </AccordionButton>
             <AccordionPanel>
               <Text>{suggestion.content}</Text>
