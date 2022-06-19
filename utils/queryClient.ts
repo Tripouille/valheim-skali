@@ -5,7 +5,7 @@ import { toast } from '@chakra-ui/react';
 import { User } from 'data/user';
 import { Role } from 'data/role';
 import { Event } from 'data/event';
-import { WikiProposalWithAuthor } from 'data/wiki';
+import { WikiPage, WikiProposalWithAuthor } from 'data/wiki';
 import { getMessageFromError } from './error';
 import { displayErrorToast } from './toast';
 import { Permissions } from './permissions';
@@ -35,6 +35,7 @@ export enum QueryKeys {
   EVENTS = 'events',
   ROLES = 'roles',
   USERS = 'users',
+  WIKI = 'wiki',
   WIKI_PROPOSALS = 'wiki_proposals',
   SESSION = 'session',
   VISITOR = 'visitor',
@@ -44,6 +45,7 @@ export type QueryTypes = {
   [QueryKeys.EVENTS]: Event[];
   [QueryKeys.ROLES]: Role[];
   [QueryKeys.USERS]: User[];
+  [QueryKeys.WIKI]: WikiPage;
   [QueryKeys.WIKI_PROPOSALS]: WikiProposalWithAuthor[];
   [QueryKeys.SESSION]: Session | null;
   [QueryKeys.VISITOR]: Permissions;

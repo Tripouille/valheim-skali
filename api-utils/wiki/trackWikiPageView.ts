@@ -4,7 +4,7 @@ import db from 'api-utils/db';
 import { WikiPageInDb, wikiPagesCollectionName } from 'data/wiki';
 
 const trackWikiPageView = async (req: Req, res: Res) => {
-  const { slug } = req.query as { slug: string };
+  const { id: slug } = req.query as { id: string };
 
   const result = await db.updateOne<WikiPageInDb>(
     wikiPagesCollectionName,

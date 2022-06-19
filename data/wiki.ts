@@ -19,23 +19,45 @@ export interface WikiSuggestion extends WikiPageContent {
   date: string;
 }
 
-export interface WikiProposal {
+interface WikiProposalBase {
   _id: string;
   authorId: string;
-  proposalType: 'creation' | 'edition';
   status: 'proposed' | 'validated' | 'rejected';
   suggestions: WikiSuggestion[];
 }
 
+export interface WikiCreationProposal extends WikiProposalBase {
+  proposalType: 'creation';
+}
+
+export interface WikiEditionProposal extends WikiProposalBase {
+  proposalType: 'edition';
+  wikiPageId: string;
+}
+
+export type WikiProposal = WikiCreationProposal | WikiEditionProposal;
+
 export type WikiPageInDb = Omit<WikiPage, '_id'> & { _id: ObjectId };
-export type WikiProposalInDb = Omit<WikiProposal, '_id' | 'authorId'> & {
+
+export type WikiCreationProposalInDb = Omit<WikiCreationProposal, '_id' | 'authorId'> & {
   _id: ObjectId;
   authorId: ObjectId;
 };
 
-export interface WikiProposalWithAuthor extends WikiProposal {
+export type WikiEditionProposalInDb = Omit<
+  WikiEditionProposal,
+  '_id' | 'authorId' | 'wikiPageId'
+> & {
+  _id: ObjectId;
+  authorId: ObjectId;
+  wikiPageId: ObjectId;
+};
+
+export type WikiProposalInDb = WikiCreationProposalInDb | WikiEditionProposalInDb;
+
+export type WikiProposalWithAuthor = WikiProposal & {
   authorName?: string;
-}
+};
 
 /** Database */
 

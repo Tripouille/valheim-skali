@@ -10,9 +10,55 @@ import {
   WikiProposalInDb,
   wikiProposalsCollectionName,
   WikiSuggestion,
+  WikiPageContent,
 } from 'data/wiki';
 import { slugify } from 'utils/format';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
+
+const createWikiPage = async (pageContent: WikiPageContent, wikiProposalId: string) => {
+  const newWikiPage: Omit<WikiPageInDb, '_id'> = {
+    title: pageContent.title,
+    content: pageContent.content,
+    slug: slugify(pageContent.title),
+    approvalDate: DateTime.now().toISO(),
+  };
+
+  const pageWithSameSlug = await db.findOne<WikiPageInDb>(wikiPagesCollectionName, {
+    slug: newWikiPage.slug,
+  });
+  if (pageWithSameSlug) newWikiPage.slug = newWikiPage.slug + '-' + wikiProposalId;
+
+  const newWikiPageId = await db.insert<WikiPageInDb>(wikiPagesCollectionName, newWikiPage);
+
+  return { ...newWikiPage, _id: newWikiPageId };
+};
+
+const editWikiPage = async (
+  pageContent: WikiPageContent,
+  wikiProposalId: string,
+  wikiPageId: string,
+) => {
+  const newWikiPage: Omit<WikiPageInDb, '_id' | 'approvalDate'> = {
+    title: pageContent.title,
+    content: pageContent.content,
+    slug: slugify(pageContent.title),
+  };
+
+  const pageWithSameSlug = await db.findOne<WikiPageInDb>(wikiPagesCollectionName, {
+    slug: newWikiPage.slug,
+    _id: { $ne: new ObjectId(wikiPageId) },
+  });
+  if (pageWithSameSlug) newWikiPage.slug = newWikiPage.slug + '-' + wikiProposalId;
+
+  const result = await updateOneInCollection<WikiPageInDb>(
+    wikiPagesCollectionName,
+    wikiPageId,
+    newWikiPage,
+  );
+  if (!result.ok) throw new ServerException(500);
+
+  return result.value;
+};
 
 const validateWikiProposal = async (req: Req, res: Res) => {
   await requirePermissions({ [PermissionCategory.WIKI]: wikiPrivilege.WRITE }, req);
@@ -25,6 +71,14 @@ const validateWikiProposal = async (req: Req, res: Res) => {
   if (!wikiProposal) throw new ServerException(404);
   if (wikiProposal.status !== 'proposed') throw new ServerException(409);
 
+  const lastSuggestion = wikiProposal.suggestions.at(-1) as WikiSuggestion;
+
+  let newWikiPage;
+  if (wikiProposal.proposalType === 'creation')
+    newWikiPage = await createWikiPage(lastSuggestion, id);
+  else if (wikiProposal.proposalType === 'edition')
+    newWikiPage = await editWikiPage(lastSuggestion, id, wikiProposal.wikiPageId.toString());
+
   const updateStatusResult = await updateOneInCollection<WikiProposalInDb>(
     wikiProposalsCollectionName,
     id,
@@ -32,22 +86,7 @@ const validateWikiProposal = async (req: Req, res: Res) => {
   );
   if (!updateStatusResult.ok) throw new ServerException(500);
 
-  const lastSuggestion = wikiProposal.suggestions.at(-1) as WikiSuggestion;
-  const newWikiPage: Omit<WikiPageInDb, '_id'> = {
-    title: lastSuggestion.title,
-    content: lastSuggestion.content,
-    slug: slugify(lastSuggestion.title),
-    approvalDate: DateTime.now().toISO(),
-  };
-
-  const pageWithSameSlug = await db.findOne<WikiPageInDb>(wikiPagesCollectionName, {
-    slug: newWikiPage.slug,
-  });
-  if (pageWithSameSlug) newWikiPage.slug = newWikiPage.slug + '-' + id;
-
-  const newWikiPageId = await db.insert<WikiPageInDb>(wikiPagesCollectionName, newWikiPage);
-
-  res.status(200).json({ ...newWikiPage, _id: newWikiPageId });
+  res.status(200).json(newWikiPage);
 };
 
 export default validateWikiProposal;

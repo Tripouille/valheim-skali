@@ -6,14 +6,15 @@ import { getMessageFromError } from 'utils/error';
 import { APIRoute, NavRoute, serverName } from 'utils/routes';
 import { displayErrorToast, displaySuccessToast } from 'utils/toast';
 
-const createWikiPageOnServer = async (pageData: WikiPageContent) => {
-  await axios.post(`${APIRoute.WIKI}/proposals`, pageData);
+const proposeWikiPageOnServer = (wikiPageId?: string) => async (pageData: WikiPageContent) => {
+  if (wikiPageId) await axios.post(`${APIRoute.WIKI}/proposals/${wikiPageId}`, pageData);
+  else await axios.post(`${APIRoute.WIKI}/proposals`, pageData);
 };
 
-const useCreateWikiPage = () => {
+const useProposeWikiPage = (wikiPageId?: string) => {
   const router = useRouter();
 
-  const { mutate: createWikiPage } = useMutation(createWikiPageOnServer, {
+  const { mutate: proposeWikiPage } = useMutation(proposeWikiPageOnServer(wikiPageId), {
     onError: error => displayErrorToast({ title: getMessageFromError(error) }),
     onSuccess: () => {
       displaySuccessToast({
@@ -24,7 +25,7 @@ const useCreateWikiPage = () => {
     },
   });
 
-  return createWikiPage;
+  return proposeWikiPage;
 };
 
-export default useCreateWikiPage;
+export default useProposeWikiPage;
