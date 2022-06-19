@@ -22,6 +22,7 @@ import useSession from 'hooks/useSession';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import { AdminNavRoute, MenuRoute, NavRoute, serverName } from 'utils/routes';
 import { ActionPopover } from 'components/core/Overlay/Popover';
+import useWikiPage from 'hooks/wiki/useWikiPage';
 
 export interface WikiProposalComponentProps {
   wikiProposal: WikiProposalWithAuthor;
@@ -29,6 +30,11 @@ export interface WikiProposalComponentProps {
 
 const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiProposal }) => {
   const answerWikiProposal = useAnswerWikiProposal(wikiProposal);
+
+  const wikiPageQuery = useWikiPage(
+    wikiProposal.proposalType === 'edition' ? wikiProposal.wikiPageId : undefined,
+  );
+  const wikiPageSlug = wikiPageQuery.data?.slug;
 
   const session = useSession();
   const userIsAuthor = session.data?.user?._id === wikiProposal.authorId;
@@ -40,6 +46,11 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
       </Head>
       <Flex mb="3" justify="space-between">
         <nav>
+          {wikiPageSlug && (
+            <NextLink href={`/${serverName}${NavRoute.WIKI}/${wikiPageSlug}`} passHref>
+              <Link display="block">&larr; Voir la page wiki originale</Link>
+            </NextLink>
+          )}
           <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.WRITE }}>
             <NextLink href={`/${serverName}${MenuRoute.ADMIN}${AdminNavRoute.WIKI}`} passHref>
               <Link display="block">&larr; Voir toutes les propositions</Link>

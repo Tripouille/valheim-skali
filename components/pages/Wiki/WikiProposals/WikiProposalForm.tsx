@@ -1,13 +1,6 @@
 import NextLink from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@chakra-ui/react';
-import {
-  WikiPageContent,
-  getWikiPageValidationError,
-  WIKI_PAGE_VALUES_MAX_LENGTH,
-  WikiProposal,
-  WikiSuggestion,
-} from 'data/wiki';
 import Background from 'components/core/Containers/Background';
 import { Stack } from 'components/core/Containers/Stack';
 import Center from 'components/core/Containers/Center';
@@ -17,6 +10,14 @@ import Input from 'components/core/Form/Input';
 import Textarea from 'components/core/Form/Textarea';
 import Button from 'components/core/Interactive/Button';
 import Link from 'components/core/Interactive/Link';
+import {
+  WikiPageContent,
+  getWikiPageValidationError,
+  WIKI_PAGE_VALUES_MAX_LENGTH,
+  WikiProposal,
+  WikiSuggestion,
+  WikiPage,
+} from 'data/wiki';
 import { NavRoute, serverName } from 'utils/routes';
 
 const getFormDataFromWikiProposal = (wikiProposal: WikiProposal): WikiPageContent => {
@@ -24,14 +25,23 @@ const getFormDataFromWikiProposal = (wikiProposal: WikiProposal): WikiPageConten
   return { title: lastSuggestion.title, content: lastSuggestion.content };
 };
 
+const getFormDataFromWikiPage = (wikiPage: WikiPage): WikiPageContent => {
+  return { title: wikiPage.title, content: wikiPage.content };
+};
+
 export interface WikiFormProps {
+  wikiPage?: WikiPage;
   wikiProposal?: WikiProposal;
   onSubmit: (formData: WikiPageContent) => void;
 }
 
-const WikiForm: React.FC<WikiFormProps> = ({ wikiProposal, onSubmit }) => {
+const WikiForm: React.FC<WikiFormProps> = ({ wikiPage, wikiProposal, onSubmit }) => {
   const [formData, setFormData] = useState<Partial<WikiPageContent>>(
-    wikiProposal ? getFormDataFromWikiProposal(wikiProposal) : {},
+    wikiProposal
+      ? getFormDataFromWikiProposal(wikiProposal)
+      : wikiPage
+      ? getFormDataFromWikiPage(wikiPage)
+      : {},
   );
   const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -44,15 +54,25 @@ const WikiForm: React.FC<WikiFormProps> = ({ wikiProposal, onSubmit }) => {
   return (
     <Background data-cy="wiki-creation-form">
       <Grid templateColumns="1fr auto 1fr" gap="5" width="full">
-        {wikiProposal ? (
-          <NextLink href={`/${serverName}${NavRoute.WIKI}/proposals/${wikiProposal?._id}`} passHref>
-            <Link>&larr; Retour à la proposition</Link>
-          </NextLink>
-        ) : (
-          <NextLink href={`/${serverName}${NavRoute.WIKI}/proposals`} passHref>
-            <Link>&larr; Retour à mes propositions</Link>
-          </NextLink>
-        )}
+        <nav>
+          {wikiPage && (
+            <NextLink href={`/${serverName}${NavRoute.WIKI}/${wikiPage.slug}`} passHref>
+              <Link display="block">&larr; Retour à la page wiki</Link>
+            </NextLink>
+          )}
+          {wikiProposal ? (
+            <NextLink
+              href={`/${serverName}${NavRoute.WIKI}/proposals/${wikiProposal?._id}`}
+              passHref
+            >
+              <Link display="block">&larr; Retour à la proposition</Link>
+            </NextLink>
+          ) : (
+            <NextLink href={`/${serverName}${NavRoute.WIKI}/proposals`} passHref>
+              <Link>&larr; Retour à mes propositions</Link>
+            </NextLink>
+          )}
+        </nav>
 
         <PageTitle
           title={wikiProposal ? 'Modifier une proposition wiki' : 'Proposer une nouvelle page wiki'}

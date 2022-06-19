@@ -24,7 +24,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     if (!params || typeof params.slug !== 'string') throw new ServerException(404);
 
-    const wikiPage = await getWikiPage(params.slug);
+    const wikiPage = await getWikiPage({ slug: params.slug });
 
     return { props: { wikiPageSerialized: JSON.stringify(wikiPage) } };
   } catch (e) {
