@@ -88,9 +88,7 @@ export const sortWikiProposals = (wikiProposals: WikiProposal[]) =>
     } else if (proposal1.status !== 'proposed' && proposal2.status === 'proposed') {
       return 1;
     }
-    return (proposal1.suggestions.at(-1)?.date ?? '') < (proposal2.suggestions.at(-1)?.date ?? '')
-      ? 1
-      : -1;
+    return (proposal1.suggestions[0].date ?? '') < (proposal2.suggestions[0].date ?? '') ? 1 : -1;
   });
 
 /** Completing data with author */

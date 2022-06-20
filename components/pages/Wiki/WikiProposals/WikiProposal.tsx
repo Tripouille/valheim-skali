@@ -14,7 +14,6 @@ import { Accordion } from 'components/core/Disclosure/Accordion';
 import Flex from 'components/core/Containers/Flex';
 import Link from 'components/core/Interactive/Link';
 import Heading from 'components/core/Typography/Heading';
-import Text from 'components/core/Typography/Text';
 import ButtonGroup from 'components/core/Interactive/ButtonGroup';
 import Button from 'components/core/Interactive/Button';
 import useAnswerWikiProposal from 'hooks/wiki/useAnswerWikiProposal';
@@ -42,7 +41,7 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
   return (
     <>
       <Head>
-        <title>Skali - {wikiProposal.suggestions.at(-1)?.title ?? ''}</title>
+        <title>Skali - {wikiProposal.suggestions[0].title}</title>
       </Head>
       <Flex mb="3" justify="space-between">
         <nav>
