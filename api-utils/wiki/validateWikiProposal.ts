@@ -9,7 +9,6 @@ import {
   wikiPagesCollectionName,
   WikiProposalInDb,
   wikiProposalsCollectionName,
-  WikiSuggestion,
   WikiPageContent,
 } from 'data/wiki';
 import { slugify } from 'utils/format';
@@ -71,7 +70,7 @@ const validateWikiProposal = async (req: Req, res: Res) => {
   if (!wikiProposal) throw new ServerException(404);
   if (wikiProposal.status !== 'proposed') throw new ServerException(409);
 
-  const lastSuggestion = wikiProposal.suggestions.at(-1) as WikiSuggestion;
+  const lastSuggestion = wikiProposal.suggestions[0];
 
   let newWikiPage;
   if (wikiProposal.proposalType === 'creation')

@@ -15,13 +15,12 @@ import {
   getWikiPageValidationError,
   WIKI_PAGE_VALUES_MAX_LENGTH,
   WikiProposal,
-  WikiSuggestion,
   WikiPage,
 } from 'data/wiki';
 import { NavRoute, serverName } from 'utils/routes';
 
 const getFormDataFromWikiProposal = (wikiProposal: WikiProposal): WikiPageContent => {
-  const lastSuggestion = wikiProposal.suggestions.at(-1) as WikiSuggestion;
+  const lastSuggestion = wikiProposal.suggestions[0];
   return { title: lastSuggestion.title, content: lastSuggestion.content };
 };
 
