@@ -30,7 +30,6 @@ import InlineKbd from 'components/core/DataDisplay/InlineKbd';
 import Code from 'components/core/DataDisplay/Code';
 import Icon from 'components/core/Images/Icon';
 import ZoomableImage from 'components/core/Images/ZoomableImage';
-import Figure from 'components/core/Images/Figure';
 
 const Mods = () => {
   return (
@@ -216,16 +215,14 @@ Elles viennent de différents mods gracieusement mis à disposition par d'autres
               </span>,
             ]}
           />
-          <Figure legend="Voici à quoi ressemble une partie de ces bêtes !">
-            <ZoomableImage
-              data-cy="monsters"
-              src="https://cdn.discordapp.com/attachments/883463860642799678/887248665406750760/SPOILER_unknown.png"
-              alt="Images des monstres des mods"
-              height={200}
-              width={200}
-              objectFit="cover"
-            />
-          </Figure>
+          <ZoomableImage
+            data-cy="monsters"
+            src="https://cdn.discordapp.com/attachments/883463860642799678/887248665406750760/SPOILER_unknown.png"
+            alt="Images des monstres des mods"
+            height={200}
+            width={200}
+            legend="Voici à quoi ressemble une partie de ces bêtes !"
+          />
           <Text>
             Chacun de ces monstres offre des ressources classiques et parfois de nouvelles
             ressources qui permettent à leur tour de créer de nouveaux objets et équipements. Voici
@@ -247,16 +244,14 @@ Elles viennent de différents mods gracieusement mis à disposition par d'autres
               Soie extremophile, Soie ultime, Koeur de Kraken.
             </Spoiler>
           </Text>
-          <Figure legend="Et voici l'image de la plupart d'entre eux :">
-            <ZoomableImage
-              data-cy="loots"
-              src="https://cdn.discordapp.com/attachments/883463860642799678/887254362940899338/SPOILER_SPOILER_unknown.png"
-              alt="Images des loots des monstres"
-              height={200}
-              width={200}
-              objectFit="cover"
-            />
-          </Figure>
+          <ZoomableImage
+            data-cy="loots"
+            src="https://cdn.discordapp.com/attachments/883463860642799678/887254362940899338/SPOILER_SPOILER_unknown.png"
+            alt="Loots des monstres"
+            height={200}
+            width={200}
+            legend="Loots des monstres"
+          />
           <Text>
             (Malgré nos efforts, tous ces objets n&apos;ont pas des icônes uniques dans votre
             inventaire, attention à ne pas les confondre. De plus, certains sont vendus au marchand
@@ -300,7 +295,6 @@ Bref n'importe quelle implication significative de votre part pour faire vivre n
                   alt="Images des monstres des mods"
                   height={200}
                   width={200}
-                  objectFit="cover"
                 />
                 <Text>Voici une courte description de ces zones :</Text>
                 <IconList
