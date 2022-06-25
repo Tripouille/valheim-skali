@@ -18,6 +18,10 @@ import {
   WikiPage,
 } from 'data/wiki';
 import { NavRoute, serverName } from 'utils/routes';
+import WikiContent from '../WikiContent';
+import Heading from 'components/core/Typography/Heading';
+import Box from 'components/core/Containers/Box';
+import Text from 'components/core/Typography/Text';
 
 const getFormDataFromWikiProposal = (wikiProposal: WikiProposal): WikiPageContent => {
   const lastSuggestion = wikiProposal.suggestions[0];
@@ -107,6 +111,13 @@ const WikiForm: React.FC<WikiFormProps> = ({ wikiPage, wikiProposal, onSubmit })
           </Button>
         </Center>
       </Stack>
+      {formData.title?.length && formData.content?.length && (
+        <Box mt={12}>
+          <Text textAlign="center">Aperçu :</Text>
+          <Heading textAlign="center">{formData.title}</Heading>
+          <WikiContent content={formData.content} />
+        </Box>
+      )}
     </Background>
   );
 };

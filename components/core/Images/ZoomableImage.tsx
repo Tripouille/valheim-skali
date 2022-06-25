@@ -5,6 +5,7 @@ import { CypressProps } from 'utils/types';
 import ImageModal from 'components/core/Overlay/ImageModal';
 import Button from 'components/core/Interactive/Button';
 import Image from 'components/core/Images/Image';
+import Box from '../Containers/Box';
 
 export interface ZoomableImageProps extends CypressProps {
   src: NextImageProps['src'];
@@ -13,6 +14,7 @@ export interface ZoomableImageProps extends CypressProps {
   height: number;
   objectFit?: NextImageProps['objectFit'];
   objectPosition?: NextImageProps['objectPosition'];
+  legend?: string;
   className?: string;
 }
 
@@ -22,24 +24,36 @@ const ZoomableImage: React.FC<ZoomableImageProps> = ({
   alt,
   width,
   height,
-  objectFit,
+  objectFit = 'contain',
   objectPosition,
+  legend,
   className,
 }) => {
   const [isZoomed, setZoomed] = useBoolean();
 
   return (
     <>
-      <Button data-cy={dataCy} variant="unstyled" minW={width} minH={height} onClick={setZoomed.on}>
-        <Image
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-          objectFit={objectFit}
-          objectPosition={objectPosition}
-          className={className}
-        />
+      <Button
+        data-cy={dataCy}
+        variant="unstyled"
+        onClick={setZoomed.on}
+        height="unset"
+        minWidth="unset"
+        fontWeight="normal"
+      >
+        <chakra.figure width={width}>
+          <Box position="relative" width={width} height={height}>
+            <Image
+              src={src}
+              alt={alt}
+              layout="fill"
+              objectFit={objectFit}
+              objectPosition={objectPosition}
+              className={className}
+            />
+          </Box>
+          <chakra.figcaption whiteSpace="pre-wrap">{legend}</chakra.figcaption>
+        </chakra.figure>
       </Button>
       {isZoomed && <ImageModal data-cy={dataCy} src={src} alt={alt} onClick={setZoomed.off} />}
     </>

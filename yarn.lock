@@ -16474,6 +16474,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-string-replace@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "react-string-replace@npm:1.1.0"
+  checksum: 5df67fbdb49cacdc9f4488d4bc3dedef1f85d6156b3626d9b4b6c317ec8cc534494def078ab0b2df7aea8fa3cbcecd8d3f76a161f04bf8b29869daccf33785ec
+  languageName: node
+  linkType: hard
+
 "react-style-singleton@npm:^2.1.0":
   version: 2.1.1
   resolution: "react-style-singleton@npm:2.1.1"
@@ -19450,6 +19457,7 @@ __metadata:
     react-dom: 17.0.2
     react-icons: ^4.3.1
     react-query: ^3.34.16
+    react-string-replace: ^1.1.0
     semantic-release: ^18.0.1
     sharp: ^0.30.4
     storybook-addon-next-router: ^3.1.1

@@ -22,6 +22,7 @@ import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import { AdminNavRoute, MenuRoute, NavRoute, serverName } from 'utils/routes';
 import { ActionPopover } from 'components/core/Overlay/Popover';
 import useWikiPage from 'hooks/wiki/useWikiPage';
+import WikiContent from '../WikiContent';
 
 export interface WikiProposalComponentProps {
   wikiProposal: WikiProposalWithAuthor;
@@ -126,7 +127,7 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
               <AccordionIcon gridArea="icon" justifySelf="end" alignSelf="start" />
             </AccordionButton>
             <AccordionPanel>
-              <Text>{suggestion.content}</Text>
+              {index === 0 && <WikiContent content={suggestion.content} />}
             </AccordionPanel>
           </AccordionItem>
         ))}

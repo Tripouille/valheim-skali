@@ -62,7 +62,6 @@ const Trade = () => {
             alt="Image de l'hôtel des ventes"
             height={220}
             width={400}
-            objectFit="cover"
           />
         </VStack>
         <VStack align="start">
