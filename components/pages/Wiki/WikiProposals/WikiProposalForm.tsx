@@ -77,7 +77,13 @@ const WikiForm: React.FC<WikiFormProps> = ({ wikiPage, wikiProposal, onSubmit })
         </nav>
 
         <PageTitle
-          title={wikiProposal ? 'Modifier une proposition wiki' : 'Proposer une nouvelle page wiki'}
+          title={
+            wikiProposal
+              ? 'Modifier une proposition wiki'
+              : wikiPage
+              ? 'Proposer une modification de page wiki'
+              : 'Proposer une nouvelle page wiki'
+          }
         />
       </Grid>
       <Stack spacing="5" align="start" mt="10">
