@@ -2,7 +2,7 @@ import NextLink from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@chakra-ui/react';
 import Background from 'components/core/Containers/Background';
-import { Stack } from 'components/core/Containers/Stack';
+import { Stack, VStack } from 'components/core/Containers/Stack';
 import Center from 'components/core/Containers/Center';
 import PageTitle from 'components/core/Typography/PageTitle';
 import FormElement from 'components/core/Form/FormElement';
@@ -112,11 +112,15 @@ const WikiForm: React.FC<WikiFormProps> = ({ wikiPage, wikiProposal, onSubmit })
         </Center>
       </Stack>
       {formData.title?.length && formData.content?.length && (
-        <Box mt={12}>
-          <Text textAlign="center">Aperçu :</Text>
-          <Heading textAlign="center">{formData.title}</Heading>
-          <WikiContent content={formData.content} />
-        </Box>
+        <VStack spacing={7} mt={12} align="start">
+          <Text alignSelf="center">Aperçu :</Text>
+          <Heading alignSelf="center" fontFamily="Norse" size="2xl" fontWeight="normal">
+            {formData.title}
+          </Heading>
+          <Box>
+            <WikiContent content={formData.content} />
+          </Box>
+        </VStack>
       )}
     </Background>
   );

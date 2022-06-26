@@ -60,9 +60,18 @@ export const getMarkupImageProperties = (
 };
 
 export const getMarkupTitleProperties = (match: string) => {
-  const { groups } = match.match(/\[\[(?<title>.+?)\]\](?<anchor>#[\S]+)?/) as unknown as {
-    groups: { title: string; anchor?: string };
-  };
+  const matchResult = match.match(/==(?<title>.+?)==(?<anchor>#[\S]+)?/);
 
-  return groups;
+  return matchResult?.groups ?? {};
+};
+
+export const getMarkupGridContent = (match: string) => {
+  const {
+    groups: { dimensions, gridContent },
+  } = match.match(/<Grille (?<dimensions>.*)>(?<gridContent>[\s\S]*?)<\/Grille>/) as unknown as {
+    groups: { dimensions?: string; gridContent: string };
+  };
+  const columns = gridContent.split(/[\s]*<Colonne>[\s]*/).filter(column => column);
+
+  return { dimensions, columns };
 };
