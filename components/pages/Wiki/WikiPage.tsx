@@ -18,7 +18,7 @@ export interface WikiPageComponentProps {
 const WikiPageComponent: React.FC<WikiPageComponentProps> = ({ wikiPage }) => {
   return (
     <Background>
-      <VStack spacing="7">
+      <VStack spacing="7" align="start">
         <Grid w="full" templateColumns="1fr 5fr 1fr" templateAreas='". title buttons"'>
           <PageTitle title={wikiPage.title} gridArea="title" />
           <ButtonGroup gridArea="buttons" justifySelf="end">
