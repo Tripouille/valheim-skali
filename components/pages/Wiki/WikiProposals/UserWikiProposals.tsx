@@ -19,7 +19,6 @@ const UserWikiProposals = () => {
           </NextLink>
           <PageTitle title="Mes propositions wiki" size="xl" />
         </Grid>
-        <WikiProposalsTable onlyUser />
         <NextLink href={`/${serverName}${NavRoute.WIKI}/proposals/new`} passHref>
           <Button
             data-cy="participate"
@@ -31,6 +30,7 @@ const UserWikiProposals = () => {
             Proposer une nouvelle page wiki
           </Button>
         </NextLink>
+        <WikiProposalsTable onlyUser />
       </VStack>
     </Background>
   );
