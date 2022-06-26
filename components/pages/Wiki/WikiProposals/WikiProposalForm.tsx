@@ -20,7 +20,6 @@ import {
 import { NavRoute, serverName } from 'utils/routes';
 import WikiContent from '../WikiContent';
 import Heading from 'components/core/Typography/Heading';
-import Box from 'components/core/Containers/Box';
 import Text from 'components/core/Typography/Text';
 
 const getFormDataFromWikiProposal = (wikiProposal: WikiProposal): WikiPageContent => {
@@ -117,9 +116,7 @@ const WikiForm: React.FC<WikiFormProps> = ({ wikiPage, wikiProposal, onSubmit })
           <Heading alignSelf="center" fontFamily="Norse" size="2xl" fontWeight="normal">
             {formData.title}
           </Heading>
-          <Box>
-            <WikiContent content={formData.content} />
-          </Box>
+          <WikiContent content={formData.content} />
         </VStack>
       )}
     </Background>
