@@ -1,4 +1,5 @@
 import { Table, Th, Thead, Tr, Tbody } from 'components/core/DataDisplay/Table';
+import Box from 'components/core/Containers/Box';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
 import { tableStyleProps, getCellWidth, rowIconWidth } from 'theme/admin';
 import { useWikiProposals } from 'hooks/wiki/useWikiProposals';
@@ -15,11 +16,11 @@ const WikiProposalsTable: React.FC<WikiProposalsTableProps> = ({ onlyUser }) => 
   return (
     <QueryHandler query={wikiProposalsQuery}>
       {wikiProposals.length === 0 ? (
-        <>
+        <Box>
           {onlyUser
             ? "Vous n'avez encore proposé aucune page wiki."
             : "Aucune page wiki n'a été proposée."}
-        </>
+        </Box>
       ) : (
         <Table {...tableStyleProps}>
           <Thead>
