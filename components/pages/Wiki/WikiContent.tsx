@@ -155,7 +155,7 @@ const WikiContent: React.FC<WikiContentProps> = ({ content }) => {
   const replacedContent = useMemo(() => convertMarkup(content, { value: 0 }), [content]);
 
   return (
-    <Box maxW="full" overflowX="hidden">
+    <Box w="full" overflowX="hidden">
       {replacedContent}
     </Box>
   );
