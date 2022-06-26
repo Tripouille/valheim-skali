@@ -79,13 +79,13 @@ const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
     const { dimensions, columns } = getMarkupGridContent(match);
 
     return (
-      <Grid key={++key.value} gridTemplateColumns={dimensions} overflowX="hidden">
+      <Grid key={++key.value} gridTemplateColumns={dimensions}>
         {columns.map((column, index) => (
           <Box key={index}>{convertMarkup(column, key)}</Box>
         ))}
       </Grid>
     );
-  }) as StrictReactNode[];
+  });
 
   component = reactStringReplace(component, simpleMarkupsRegex, match => {
     for (let i = 0; i < simpleMarkups.length; ++i) {
@@ -97,11 +97,9 @@ const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
         return markup.getComponent(matchResult.groups?.content as string, convertMarkup, key);
     }
     console.error("Couldn't find simple markup");
-  }) as StrictReactNode[];
+  });
 
-  component = reactStringReplace(component, /(\r\n|\r|\n)/g, () => (
-    <br key={++key.value} />
-  )) as StrictReactNode[];
+  component = reactStringReplace(component, /(\r\n|\r|\n)/g, () => <br key={++key.value} />);
 
   component = reactStringReplace(component, /{{(.+?)}}/g, match => {
     const IconComponent = getMarkupIconComponent(match);
@@ -112,7 +110,7 @@ const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
         [Icône non trouvée : {match}]
       </chakra.span>
     );
-  }) as StrictReactNode[];
+  });
 
   component = reactStringReplace(component, /(==(?:.+?)==(?:#[\S]+)?)/g, match => {
     const { title, anchor } = getMarkupTitleProperties(match);
@@ -121,7 +119,7 @@ const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
         {title}
       </Heading>
     );
-  }) as StrictReactNode[];
+  });
 
   component = reactStringReplace(
     component,
@@ -144,7 +142,7 @@ const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
         </Box>
       );
     },
-  ) as StrictReactNode[];
+  );
 
   return component;
 };
@@ -156,7 +154,11 @@ interface WikiContentProps {
 const WikiContent: React.FC<WikiContentProps> = ({ content }) => {
   const replacedContent = useMemo(() => convertMarkup(content, { value: 0 }), [content]);
 
-  return <>{replacedContent}</>;
+  return (
+    <Box maxW="full" overflowX="hidden">
+      {replacedContent}
+    </Box>
+  );
 };
 
 export default WikiContent;
