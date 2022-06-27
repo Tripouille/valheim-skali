@@ -41,7 +41,7 @@ export const getMarkupImageProperties = (
   const {
     groups: { url, width, height, properties, legend },
   } = match.match(
-    /<<(?<url>.+?)>>(?:(?<width>[0-9]+)x(?<height>[0-9]+))?(?<properties>(?:t|r|h|b|g|d)+)?(?:\[(?<legend>.+)\])?/,
+    /<<(?<url>.+?)>>(?:(?<width>[0-9]+)x(?<height>[0-9]+))?(?<properties>(?:t|r|h|b|g|d)+)?(?:\((?<legend>.+)\))?/,
   ) as unknown as { groups: ImageMarkup };
 
   const positionLetter = Object.keys(positionLetterToObjectPosition).find(property =>
@@ -60,7 +60,7 @@ export const getMarkupImageProperties = (
 };
 
 export const getMarkupTitleProperties = (match: string) => {
-  const matchResult = match.match(/==(?<title>.+?)==(?<anchor>#[\S]+)?/);
+  const matchResult = match.match(/==[\s]*(?<title>.+?)[\s]*==(?<anchor>#[\S]+)?/);
 
   return matchResult?.groups ?? {};
 };
@@ -71,7 +71,9 @@ export const getMarkupGridContent = (match: string) => {
   } = match.match(/<Grille (?<dimensions>.*)>(?<gridContent>[\s\S]*?)<\/Grille>/) as unknown as {
     groups: { dimensions?: string; gridContent: string };
   };
-  const columns = gridContent.split(/[\s]*<Colonne>[\s]*/).filter(column => column);
+  const columns = gridContent
+    .split(/(?:\r\n|\r|\n)?<Colonne>(?:\r\n|\r|\n)?/)
+    .filter(column => column);
 
   return { dimensions, columns };
 };
