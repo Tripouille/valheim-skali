@@ -4,6 +4,7 @@ import { chakra, Grid } from '@chakra-ui/react';
 import Box from 'components/core/Containers/Box';
 import Icon from 'components/core/Images/Icon';
 import ZoomableImage from 'components/core/Images/ZoomableImage';
+import Link from 'components/core/Interactive/Link';
 import Spoiler from 'components/core/Typography/Spoiler';
 import Heading from 'components/core/Typography/Heading';
 import {
@@ -20,7 +21,8 @@ type ConvertMarkupFunction = (
 ) => string | StrictReactNode[];
 
 interface SimpleMarkupProperties {
-  wrappingSymbol: string;
+  startSymbol: string;
+  endSymbol: string;
   getComponent: (
     content: string,
     convertMarkup: ConvertMarkupFunction,
@@ -30,7 +32,8 @@ interface SimpleMarkupProperties {
 
 const simpleMarkups: SimpleMarkupProperties[] = [
   {
-    wrappingSymbol: '\\*\\*\\*',
+    startSymbol: '\\*\\*\\*',
+    endSymbol: '\\*\\*\\*',
     getComponent: (content, convertMarkup, key) => (
       <strong key={++key.value}>
         <em>{convertMarkup(content, key)}</em>
@@ -38,19 +41,22 @@ const simpleMarkups: SimpleMarkupProperties[] = [
     ),
   },
   {
-    wrappingSymbol: '\\*\\*',
+    startSymbol: '\\*\\*',
+    endSymbol: '\\*\\*',
     getComponent: (content, convertMarkup, key) => (
       <strong key={++key.value}>{convertMarkup(content, key)}</strong>
     ),
   },
   {
-    wrappingSymbol: '\\*',
+    startSymbol: '\\*',
+    endSymbol: '\\*',
     getComponent: (content, convertMarkup, key) => (
       <em key={++key.value}>{convertMarkup(content, key)}</em>
     ),
   },
   {
-    wrappingSymbol: '~~',
+    startSymbol: '~~',
+    endSymbol: '~~',
     getComponent: (content, convertMarkup, key) => (
       <chakra.span key={++key.value} textDecoration="line-through">
         {convertMarkup(content, key)}
@@ -58,22 +64,48 @@ const simpleMarkups: SimpleMarkupProperties[] = [
     ),
   },
   {
-    wrappingSymbol: '\\|\\|',
+    startSymbol: '\\|\\|',
+    endSymbol: '\\|\\|',
     getComponent: (content, convertMarkup, key) => (
       <Spoiler key={++key.value}>{convertMarkup(content, key)}</Spoiler>
+    ),
+  },
+  {
+    startSymbol: '{{',
+    endSymbol: '}}',
+    getComponent: (content, _, key) => {
+      const IconComponent = getMarkupIconComponent(content);
+      return IconComponent ? (
+        <Icon key={++key.value} as={IconComponent} verticalAlign="text-bottom" />
+      ) : (
+        <chakra.span key={++key.value} fontSize="xs">
+          [Icône non trouvée : {content}]
+        </chakra.span>
+      );
+    },
+  },
+  {
+    startSymbol: '\\[',
+    endSymbol: '\\]',
+    getComponent: (content, convertMarkup, key) => (
+      <Link key={++key.value} href={content} isExternal>
+        {content}
+      </Link>
     ),
   },
 ];
 
 const simpleMarkupsRegex = new RegExp(
-  `(${simpleMarkups
-    .map(markup => `(?:${markup.wrappingSymbol}.+?${markup.wrappingSymbol})`)
-    .join('|')})`,
+  `(${simpleMarkups.map(markup => `(?:${markup.startSymbol}.+?${markup.endSymbol})`).join('|')})`,
   'g',
 );
 
 const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
   let component: string | StrictReactNode[] = markupContent;
+
+  component = reactStringReplace(component, /(```[\s\S]*?```)/g, match => {
+    return <chakra.pre backgroundColor="blue.900">{match.slice(3, -3)}</chakra.pre>;
+  });
 
   component = reactStringReplace(component, /(<Grille (?:.*)>[\s\S]*?<\/Grille>)/g, match => {
     const { dimensions, columns } = getMarkupGridContent(match);
@@ -87,11 +119,29 @@ const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
     );
   });
 
+  component = reactStringReplace(component, /(`(?:.+?)`)/g, match => {
+    return (
+      <chakra.pre display="inline" backgroundColor="blue.900">
+        {match.slice(1, -1)}
+      </chakra.pre>
+    );
+  });
+
+  component = reactStringReplace(component, /(==(?:.+?)==(?:#[\S]+)?)(?:\r\n|\r|\n)?/g, match => {
+    const { title, anchor } = getMarkupTitleProperties(match);
+    console.log({ match, title });
+    return (
+      <Heading key={++key.value} id={anchor?.slice(1)} marginTop="5" marginBottom="2">
+        {convertMarkup(title, key)}
+      </Heading>
+    );
+  });
+
   component = reactStringReplace(component, simpleMarkupsRegex, match => {
     for (let i = 0; i < simpleMarkups.length; ++i) {
       const markup = simpleMarkups[i];
       const matchResult = match.match(
-        new RegExp(`^${markup.wrappingSymbol}(?<content>.+?)${markup.wrappingSymbol}$`),
+        new RegExp(`^${markup.startSymbol}(?<content>.+?)${markup.endSymbol}$`),
       );
       if (matchResult)
         return markup.getComponent(matchResult.groups?.content as string, convertMarkup, key);
@@ -99,31 +149,9 @@ const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
     console.error("Couldn't find simple markup");
   });
 
-  component = reactStringReplace(component, /(\r\n|\r|\n)/g, () => <br key={++key.value} />);
-
-  component = reactStringReplace(component, /{{(.+?)}}/g, match => {
-    const IconComponent = getMarkupIconComponent(match);
-    return IconComponent ? (
-      <Icon key={++key.value} as={IconComponent} />
-    ) : (
-      <chakra.span key={++key.value} fontSize="xs">
-        [Icône non trouvée : {match}]
-      </chakra.span>
-    );
-  });
-
-  component = reactStringReplace(component, /(==(?:.+?)==(?:#[\S]+)?)/g, match => {
-    const { title, anchor } = getMarkupTitleProperties(match);
-    return (
-      <Heading key={++key.value} id={anchor?.slice(1)}>
-        {title}
-      </Heading>
-    );
-  });
-
   component = reactStringReplace(
     component,
-    /(<<.+?>>(?:[0-9]+x[0-9]+)?(?:t|r|h|b|g|d)*(?:\[.*\])?)/g,
+    /(<<.+?>>(?:[0-9]+x[0-9]+)?(?:t|r|h|b|g|d)*(?:\(.*\))?)/g,
     match => {
       const { url, width, height, display, objectFit, objectPosition, legend } =
         getMarkupImageProperties(match);
@@ -143,6 +171,8 @@ const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
       );
     },
   );
+
+  component = reactStringReplace(component, /(\r\n|\r|\n)/g, () => <br key={++key.value} />);
 
   return component;
 };
