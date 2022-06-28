@@ -1,8 +1,8 @@
 import NextLink from 'next/link';
 import React from 'react';
 import { GiFeather } from 'react-icons/gi';
-import { Grid } from '@chakra-ui/react'; //TODO
 import Background from 'components/core/Containers/Background';
+import { Grid } from 'components/core/Containers/Grid';
 import { VStack } from 'components/core/Containers/Stack';
 import PageTitle from 'components/core/Typography/PageTitle';
 import { WikiPage } from 'data/wiki';
