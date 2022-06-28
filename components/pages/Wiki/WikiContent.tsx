@@ -1,7 +1,8 @@
 import { ReactElement, useMemo } from 'react';
 import reactStringReplace from 'react-string-replace';
-import { chakra, Grid } from '@chakra-ui/react';
+import { chakra } from '@chakra-ui/react';
 import Box from 'components/core/Containers/Box';
+import { Grid } from 'components/core/Containers/Grid';
 import Icon from 'components/core/Images/Icon';
 import ZoomableImage from 'components/core/Images/ZoomableImage';
 import Link from 'components/core/Interactive/Link';

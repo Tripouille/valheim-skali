@@ -1,7 +1,7 @@
 import NextLink from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@chakra-ui/react';
 import Background from 'components/core/Containers/Background';
+import { Grid } from 'components/core/Containers/Grid';
 import { Stack, VStack } from 'components/core/Containers/Stack';
 import Center from 'components/core/Containers/Center';
 import PageTitle from 'components/core/Typography/PageTitle';

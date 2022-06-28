@@ -10,7 +10,6 @@ import Events from 'components/pages/Events';
 
 const EventsPage = () => <Events />;
 
-// TODO: refactor this logic once applied to another page
 // When using getStaticProps, the _app getInitialProps is not re-run and
 // is used at its build version (visitor permissions only)
 // Note that this will result in different outputs in development and production

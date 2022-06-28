@@ -1,7 +1,7 @@
 import NextLink from 'next/link';
 import { BsPlusLg } from 'react-icons/bs';
-import { Grid } from '@chakra-ui/react';
 import Background from 'components/core/Containers/Background';
+import { Grid } from 'components/core/Containers/Grid';
 import PageTitle from 'components/core/Typography/PageTitle';
 import WikiProposalsTable from 'components/pages/Wiki/WikiProposals/WikiProposalsTable';
 import Button from 'components/core/Interactive/Button';
