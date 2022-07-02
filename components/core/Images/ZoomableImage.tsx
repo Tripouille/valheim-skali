@@ -8,7 +8,7 @@ import Image from 'components/core/Images/Image';
 import Box from '../Containers/Box';
 
 export interface ZoomableImageProps extends CypressProps {
-  src: NextImageProps['src'];
+  src: string;
   alt: NextImageProps['alt'];
   width: number;
   height: number;

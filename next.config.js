@@ -1,12 +1,8 @@
-const path = require('path');
-
 /** @type {import('next').NextConfig} */
 module.exports = {
 	reactStrictMode: true,
 	images: {
-		domains: ['cdn.discordapp.com', 'media.discordapp.net', 'puu.sh', 'i.imgur.com', 'res.cloudinary.com'],
-		loader: 'cloudinary',
-		path: 'https://res.cloudinary.com/demo/image/fetch/'
+		domains: ['cdn.discordapp.com', 'media.discordapp.net', 'puu.sh', 'i.imgur.com'],
 	},
 	i18n: {
 		locales: ['fr'],
@@ -32,6 +28,7 @@ module.exports = {
 			'api-utils',
 			'components',
 			'data',
+			'hooks',
 			'pages',
 			'storybook',
 			'test',
