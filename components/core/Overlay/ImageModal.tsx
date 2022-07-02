@@ -7,7 +7,7 @@ import Center from 'components/core/Containers/Center';
 import Image from 'components/core/Images/Image';
 
 export interface ImageModalProps extends CypressProps {
-  src: NextImageProps['src'];
+  src: string;
   alt: NextImageProps['alt'];
   onClick: Callback;
 }

@@ -130,7 +130,6 @@ const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
 
   component = reactStringReplace(component, /(==(?:.+?)==(?:#[\S]+)?)(?:\r\n|\r|\n)?/g, match => {
     const { title, anchor } = getMarkupTitleProperties(match);
-    console.log({ match, title });
     return (
       <Heading key={++key.value} id={anchor?.slice(1)} marginTop="5" marginBottom="2">
         {convertMarkup(title, key)}
