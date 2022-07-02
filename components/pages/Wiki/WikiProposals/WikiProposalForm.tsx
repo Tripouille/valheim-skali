@@ -1,15 +1,20 @@
 import NextLink from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { BiCollapse, BiExpand } from 'react-icons/bi';
+import { useBoolean } from '@chakra-ui/react';
 import Background from 'components/core/Containers/Background';
-import { Grid } from 'components/core/Containers/Grid';
-import { Stack, VStack } from 'components/core/Containers/Stack';
 import Center from 'components/core/Containers/Center';
-import PageTitle from 'components/core/Typography/PageTitle';
+import { Grid } from 'components/core/Containers/Grid';
+import { Stack } from 'components/core/Containers/Stack';
 import FormElement from 'components/core/Form/FormElement';
 import Input from 'components/core/Form/Input';
 import Textarea from 'components/core/Form/Textarea';
 import Button from 'components/core/Interactive/Button';
+import IconButton from 'components/core/Interactive/IconButton';
 import Link from 'components/core/Interactive/Link';
+import Heading from 'components/core/Typography/Heading';
+import PageTitle from 'components/core/Typography/PageTitle';
+import Text from 'components/core/Typography/Text';
 import {
   WikiPageContent,
   getWikiPageValidationError,
@@ -19,8 +24,7 @@ import {
 } from 'data/wiki';
 import { NavRoute, serverName } from 'utils/routes';
 import WikiContent from '../WikiContent';
-import Heading from 'components/core/Typography/Heading';
-import Text from 'components/core/Typography/Text';
+import Box from 'components/core/Containers/Box';
 
 const getFormDataFromWikiProposal = (wikiProposal: WikiProposal): WikiPageContent => {
   const lastSuggestion = wikiProposal.suggestions[0];
@@ -46,6 +50,7 @@ const WikiForm: React.FC<WikiFormProps> = ({ wikiPage, wikiProposal, onSubmit })
       : {},
   );
   const [validationError, setValidationError] = useState<string | null>(null);
+  const [previewHasRestrictedHeight, setPreviewRestrictedHeight] = useBoolean(false);
 
   useEffect(() => setValidationError(getWikiPageValidationError(formData)), [formData]);
 
@@ -117,13 +122,41 @@ const WikiForm: React.FC<WikiFormProps> = ({ wikiPage, wikiProposal, onSubmit })
         </Center>
       </Stack>
       {formData.title?.length && formData.content?.length && (
-        <VStack spacing={7} mt={12} align="start">
-          <Text alignSelf="center">Aperçu :</Text>
-          <Heading alignSelf="center" fontFamily="Norse" size="2xl" fontWeight="normal">
-            {formData.title}
-          </Heading>
-          <WikiContent content={formData.content} />
-        </VStack>
+        <Box mt="10">
+          <Grid templateColumns="1fr auto 1fr" gap="5" width="full">
+            <Text alignSelf="center" gridColumnStart="2">
+              Aperçu :
+            </Text>
+            <IconButton
+              data-cy="switch-preview-height"
+              aria-label={
+                previewHasRestrictedHeight
+                  ? "Agrandir l'aperçu"
+                  : "Restreindre la hauteur de l'aperçu"
+              }
+              title={
+                previewHasRestrictedHeight
+                  ? "Agrandir l'aperçu"
+                  : "Restreindre la hauteur de l'aperçu"
+              }
+              icon={previewHasRestrictedHeight ? <BiExpand /> : <BiCollapse />}
+              variant="ghost"
+              justifySelf="end"
+              onClick={setPreviewRestrictedHeight.toggle}
+            />
+          </Grid>
+          <Box
+            mt="2"
+            height={previewHasRestrictedHeight ? '500px' : undefined}
+            overflow="auto"
+            px="1"
+          >
+            <Heading textAlign="center" fontFamily="Norse" size="2xl" fontWeight="normal">
+              {formData.title}
+            </Heading>
+            <WikiContent content={formData.content} />
+          </Box>
+        </Box>
       )}
     </Background>
   );
