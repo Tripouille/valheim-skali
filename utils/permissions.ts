@@ -122,6 +122,8 @@ export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions> = {
   [AdminNavRoute.MEMBERS]: { [PermissionCategory.USER]: userPrivilege.READ },
   [AdminNavRoute.NON_MEMBERS]: { [PermissionCategory.USER]: userPrivilege.READ },
   [AdminNavRoute.ROLES]: { [PermissionCategory.ROLE]: rolePrivilege.READ },
+  [AdminNavRoute.WIKI_PROPOSALS]: { [PermissionCategory.WIKI]: wikiPrivilege.WRITE },
+  [AdminNavRoute.WIKI]: { [PermissionCategory.WIKI]: wikiPrivilege.WRITE },
   [MenuRoute.ADMIN]: { [PermissionCategory.USER]: userPrivilege.READ },
   [MenuRoute.ABOUT]: {},
   [AuthRoute.SIGNIN]: {},

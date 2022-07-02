@@ -17,7 +17,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
   const routeToHint: Partial<Record<AdminNavRoute, number | undefined>> = {
     [AdminNavRoute.NON_MEMBERS]: nonMembers?.length,
-    [AdminNavRoute.WIKI]: unhandledWikiProposals?.length,
+    [AdminNavRoute.WIKI_PROPOSALS]: unhandledWikiProposals?.length,
   };
 
   return (
