@@ -22,7 +22,7 @@ const WikiPageRow: React.FC<WikiPageRowProps> = ({ 'data-cy': dataCy, wikiPage }
     <Tr cursor="pointer" onClick={navigateToWikiPage} data-cy={dataCy}>
       <Td>{wikiPage.title}</Td>
       <Td></Td>
-      <Td></Td>
+      <Td>{wikiPage.views}</Td>
       <Td>
         <IconButton
           data-cy="see"

@@ -14,6 +14,7 @@ export interface WikiPage extends WikiPageContent {
   slug: string;
   approvalDate: string;
   tags: WikiPageTag[];
+  views: number;
 }
 
 export interface WikiSuggestion extends WikiPageContent {
