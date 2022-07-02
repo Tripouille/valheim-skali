@@ -13,6 +13,7 @@ export interface WikiPage extends WikiPageContent {
   _id: string;
   slug: string;
   approvalDate: string;
+  tags: WikiPageTag[];
 }
 
 export interface WikiSuggestion extends WikiPageContent {
@@ -57,6 +58,15 @@ export type WikiProposalInDb = WikiCreationProposalInDb | WikiEditionProposalInD
 
 export type WikiProposalWithAuthor = WikiProposal & {
   authorName?: string;
+};
+
+/** Wiki page tags */
+
+export type WikiPageTag = 'essential' | 'starting';
+
+export const WIKI_PAGE_TAG_TO_LABEL = {
+  essential: "L'essentiel",
+  starting: 'Pour commencer au Valhabba',
 };
 
 /** Database */

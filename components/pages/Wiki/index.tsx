@@ -9,7 +9,7 @@ import Link from 'components/core/Interactive/Link';
 import IconButton from 'components/core/Interactive/IconButton';
 import PageTitle from 'components/core/Typography/PageTitle';
 import Text from 'components/core/Typography/Text';
-import { WikiPage } from 'data/wiki';
+import { WikiPage, WIKI_PAGE_TAG_TO_LABEL } from 'data/wiki';
 import { NavRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import WikiLinksGroup from './WikiLinksGroup';
@@ -40,10 +40,13 @@ const WikiHome: React.FC<WikiHomeProps> = ({ featuredWikiPages }) => (
       >
         <WikiLinksGroup title="Dernières pages" pages={featuredWikiPages.lastPages} />
         <WikiLinksGroup
-          title="Pour commencer au Valhabba"
+          title={WIKI_PAGE_TAG_TO_LABEL.starting}
           pages={featuredWikiPages.startingPages}
         />
-        <WikiLinksGroup title="L'essentiel" pages={featuredWikiPages.essentialPages} />
+        <WikiLinksGroup
+          title={WIKI_PAGE_TAG_TO_LABEL.essential}
+          pages={featuredWikiPages.essentialPages}
+        />
         <WikiLinksGroup title="Les plus populaires" pages={featuredWikiPages.popularPages} />
       </SimpleGrid>
       <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.PROPOSE }}>

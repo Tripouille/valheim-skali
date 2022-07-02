@@ -12,12 +12,12 @@ const getFeaturedWikiPages = async () => {
       .limit(5)
       .toArray(),
     startingPages: await collection
-      .find({ tags: 'starting' })
+      .find<WikiPageInDb>({ tags: 'starting' })
       .project({ title: 1, slug: 1 })
       .limit(5)
       .toArray(),
     essentialPages: await collection
-      .find({ tags: 'essential' })
+      .find<WikiPageInDb>({ tags: 'essential' })
       .project({ title: 1, slug: 1 })
       .limit(5)
       .toArray(),
