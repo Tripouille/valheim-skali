@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import Secured from 'components/core/Authentication/Secured';
 import PageTitle from 'components/core/Typography/PageTitle';
 import WikiProposalsTable from 'components/pages/Wiki/WikiProposals/WikiProposalsTable';
+import WikiPagesTable from 'components/pages/Wiki/WikiPagesTable';
 import UsersTable from 'components/pages/Users/UsersTable';
 import Roles from 'components/pages/Roles';
 import { UserQueryFilter } from 'hooks/users/useUsers';
@@ -25,7 +26,8 @@ const Admin = () => {
     [AdminNavRoute.MEMBERS]: <UsersTable filter={UserQueryFilter.MEMBER} />,
     [AdminNavRoute.NON_MEMBERS]: <UsersTable filter={UserQueryFilter.NON_MEMBER} />,
     [AdminNavRoute.ROLES]: <Roles />,
-    [AdminNavRoute.WIKI]: <WikiProposalsTable />,
+    [AdminNavRoute.WIKI_PROPOSALS]: <WikiProposalsTable />,
+    [AdminNavRoute.WIKI]: <WikiPagesTable />,
   };
 
   return (
