@@ -105,7 +105,11 @@ const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
   let component: string | StrictReactNode[] = markupContent;
 
   component = reactStringReplace(component, /(```[\s\S]*?```)/g, match => {
-    return <chakra.pre backgroundColor="blue.900">{match.slice(3, -3)}</chakra.pre>;
+    return (
+      <chakra.pre key={++key.value} backgroundColor="blue.900">
+        {match.slice(3, -3)}
+      </chakra.pre>
+    );
   });
 
   component = reactStringReplace(component, /(<Grille (?:.*)>[\s\S]*?<\/Grille>)/g, match => {
@@ -122,7 +126,7 @@ const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
 
   component = reactStringReplace(component, /(`(?:.+?)`)/g, match => {
     return (
-      <chakra.pre display="inline" backgroundColor="blue.900">
+      <chakra.pre key={++key.value} display="inline" backgroundColor="blue.900">
         {match.slice(1, -1)}
       </chakra.pre>
     );
