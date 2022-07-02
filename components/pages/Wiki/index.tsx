@@ -5,7 +5,6 @@ import Secured from 'components/core/Authentication/Secured';
 import Background from 'components/core/Containers/Background';
 import { VStack } from 'components/core/Containers/Stack';
 import SimpleGrid from 'components/core/Containers/SimpleGrid';
-import Link from 'components/core/Interactive/Link';
 import IconButton from 'components/core/Interactive/IconButton';
 import PageTitle from 'components/core/Typography/PageTitle';
 import Text from 'components/core/Typography/Text';
@@ -61,9 +60,6 @@ const WikiHome: React.FC<WikiHomeProps> = ({ featuredWikiPages }) => (
           />
         </NextLink>
       </Secured>
-      <NextLink href={`/${serverName}${NavRoute.WIKI}/all`}>
-        <Link alignSelf="end">Lien temporaire pour voir toutes les pages</Link>
-      </NextLink>
     </VStack>
   </Background>
 );
