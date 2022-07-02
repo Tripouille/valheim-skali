@@ -20,6 +20,7 @@ const createWikiPage = async (pageContent: WikiPageContent, wikiProposalId: stri
     content: pageContent.content,
     slug: slugify(pageContent.title),
     approvalDate: DateTime.now().toISO(),
+    tags: [],
   };
 
   const pageWithSameSlug = await db.findOne<WikiPageInDb>(wikiPagesCollectionName, {
@@ -37,7 +38,7 @@ const editWikiPage = async (
   wikiProposalId: string,
   wikiPageId: string,
 ) => {
-  const newWikiPage: Omit<WikiPageInDb, '_id' | 'approvalDate'> = {
+  const newWikiPage: Omit<WikiPageInDb, '_id' | 'approvalDate' | 'tags'> = {
     title: pageContent.title,
     content: pageContent.content,
     slug: slugify(pageContent.title),
