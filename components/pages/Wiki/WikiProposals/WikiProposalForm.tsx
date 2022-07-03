@@ -106,6 +106,7 @@ const WikiForm: React.FC<WikiFormProps> = ({ wikiPage, wikiProposal, onSubmit })
             value={formData.content ?? ''}
             onChange={content => setFormData(prev => ({ ...prev, content }))}
             maxLength={WIKI_PAGE_VALUES_MAX_LENGTH.content}
+            height="360px"
           />
         </FormElement>
         <Center w="full">
@@ -151,7 +152,7 @@ const WikiForm: React.FC<WikiFormProps> = ({ wikiPage, wikiProposal, onSubmit })
             overflow="auto"
             px="1"
           >
-            <Heading textAlign="center" fontFamily="Norse" size="2xl" fontWeight="normal">
+            <Heading textAlign="center" fontFamily="Norse" size="2xl" fontWeight="normal" mb="7">
               {formData.title}
             </Heading>
             <WikiContent content={formData.content} />

@@ -5,10 +5,12 @@ import Box from 'components/core/Containers/Box';
 import { Grid } from 'components/core/Containers/Grid';
 import Icon from 'components/core/Images/Icon';
 import ZoomableImage from 'components/core/Images/ZoomableImage';
+import DiscordButton from 'components/core/Interactive/DiscordButton';
 import Link from 'components/core/Interactive/Link';
 import Spoiler from 'components/core/Typography/Spoiler';
 import Heading from 'components/core/Typography/Heading';
 import {
+  getMarkupDiscordLinkProperties,
   getMarkupGridContent,
   getMarkupIconComponent,
   getMarkupImageProperties,
@@ -88,7 +90,7 @@ const simpleMarkups: SimpleMarkupProperties[] = [
   {
     startSymbol: '\\[',
     endSymbol: '\\]',
-    getComponent: (content, convertMarkup, key) => (
+    getComponent: (content, _, key) => (
       <Link key={++key.value} href={content} isExternal>
         {content}
       </Link>
@@ -135,10 +137,25 @@ const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
   component = reactStringReplace(component, /(==(?:.+?)==(?:#[\S]+)?)(?:\r\n|\r|\n)?/g, match => {
     const { title, anchor } = getMarkupTitleProperties(match);
     return (
-      <Heading key={++key.value} id={anchor?.slice(1)} marginTop="5" marginBottom="2">
+      <Heading
+        key={++key.value}
+        id={anchor?.slice(1)}
+        size="md"
+        marginTop="2"
+        marginBottom="2"
+        display="flex"
+        alignItems="center"
+        gap="0.5em"
+        css={{ svg: { width: '1.75em', height: '1.75em' } }}
+      >
         {convertMarkup(title, key)}
       </Heading>
     );
+  });
+
+  component = reactStringReplace(component, /(\[\[\[(?:.+?)\]\]\](?:\(.*\))?)/g, match => {
+    const { url, label } = getMarkupDiscordLinkProperties(match);
+    return <DiscordButton key={++key.value} data-cy={label} href={url} label={label} />;
   });
 
   component = reactStringReplace(component, simpleMarkupsRegex, match => {

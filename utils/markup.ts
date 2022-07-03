@@ -77,3 +77,9 @@ export const getMarkupGridContent = (match: string) => {
 
   return { dimensions, columns };
 };
+
+export const getMarkupDiscordLinkProperties = (match: string) => {
+  const matchResult = match.match(/\[\[\[(?<url>.+?)\]\]\](?:\((?<label>.*)\))?/);
+
+  return matchResult?.groups ?? {};
+};
