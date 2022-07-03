@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react';
 import { TagColors } from 'utils/constants';
 import { autoBgColor, autoTextColor } from 'utils/color';
-import { CypressProps, Callback } from 'utils/types';
+import { CypressProps } from 'utils/types';
 
 export type TagProps = ChakraTagProps &
   (
@@ -17,7 +17,7 @@ export type TagProps = ChakraTagProps &
       } & Partial<CypressProps>)
     | ({
         label: string;
-        onClose: Callback;
+        onClose: React.MouseEventHandler<HTMLButtonElement>;
       } & CypressProps)
   );
 

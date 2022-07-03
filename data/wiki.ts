@@ -63,12 +63,15 @@ export type WikiProposalWithAuthor = WikiProposal & {
 
 /** Wiki page tags */
 
-export type WikiPageTag = 'essential' | 'starting';
+export const wikiPageTags = ['essential', 'starting'] as const;
+export type WikiPageTag = typeof wikiPageTags[number];
 
-export const WIKI_PAGE_TAG_TO_LABEL = {
+export const WIKI_PAGE_TAG_TO_LABEL: Record<WikiPageTag, string> = {
   essential: "L'essentiel",
   starting: 'Pour commencer au Valhabba',
 };
+
+export type UpdateWikiPageTagsData = { tag: WikiPageTag };
 
 /** Database */
 

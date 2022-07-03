@@ -45,7 +45,7 @@ export type QueryTypes = {
   [QueryKeys.EVENTS]: Event[];
   [QueryKeys.ROLES]: Role[];
   [QueryKeys.USERS]: User[];
-  [QueryKeys.WIKI]: WikiPage;
+  [QueryKeys.WIKI]: WikiPage[];
   [QueryKeys.WIKI_PROPOSALS]: WikiProposalWithAuthor[];
   [QueryKeys.SESSION]: Session | null;
   [QueryKeys.VISITOR]: Permissions;
