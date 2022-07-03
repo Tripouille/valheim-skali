@@ -18,8 +18,8 @@ const WikiPagesTable = () => {
           <Thead>
             <Tr>
               <Th>Titre</Th>
-              <Th width="2xs">Tags</Th>
-              <Th width={28}>Vues</Th>
+              <Th width="xs">Tags</Th>
+              <Th width={24}>Vues</Th>
               <Th width={getCellWidth(rowIconWidth)}></Th>
             </Tr>
           </Thead>
