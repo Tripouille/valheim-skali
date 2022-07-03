@@ -30,7 +30,7 @@ const useAnswerWikiProposal = (wikiProposal: WikiProposal) => {
       });
       if (answer === 'validated')
         router.push(`/${serverName}${NavRoute.WIKI}/${newWikiPage?.slug}`);
-      else router.push(`/${serverName}${MenuRoute.ADMIN}${AdminNavRoute.WIKI}`);
+      else router.push(`/${serverName}${MenuRoute.ADMIN}${AdminNavRoute.WIKI_PROPOSALS}`);
     },
     onSettled: () => queryClient.invalidateQueries(QueryKeys.WIKI_PROPOSALS),
   });

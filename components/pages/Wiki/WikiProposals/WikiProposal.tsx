@@ -16,6 +16,7 @@ import Link from 'components/core/Interactive/Link';
 import Heading from 'components/core/Typography/Heading';
 import ButtonGroup from 'components/core/Interactive/ButtonGroup';
 import Button from 'components/core/Interactive/Button';
+import Text from 'components/core/Typography/Text';
 import useAnswerWikiProposal from 'hooks/wiki/useAnswerWikiProposal';
 import useSession from 'hooks/useSession';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
@@ -52,7 +53,10 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
             </NextLink>
           )}
           <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.WRITE }}>
-            <NextLink href={`/${serverName}${MenuRoute.ADMIN}${AdminNavRoute.WIKI}`} passHref>
+            <NextLink
+              href={`/${serverName}${MenuRoute.ADMIN}${AdminNavRoute.WIKI_PROPOSALS}`}
+              passHref
+            >
               <Link display="block">&larr; Voir toutes les propositions</Link>
             </NextLink>
           </Secured>
@@ -60,7 +64,7 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
             <Link display="block">&larr; Voir toutes mes propositions</Link>
           </NextLink>
         </nav>
-        {wikiProposal.status === 'proposed' && (
+        {wikiProposal.status === 'proposed' ? (
           <ButtonGroup>
             {userIsAuthor && (
               <NextLink
@@ -91,6 +95,14 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
               />
             </Secured>
           </ButtonGroup>
+        ) : wikiProposal.status === 'validated' ? (
+          <Text fontStyle="italic" color="green.200">
+            Validée
+          </Text>
+        ) : (
+          <Text fontStyle="italic" color="red.600">
+            Rejetée
+          </Text>
         )}
       </Flex>
       {wikiProposal.authorName && (
