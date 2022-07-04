@@ -25,6 +25,7 @@ const DynamicallyLoadedIcon = ({ content }: { content: string }) => {
         style: {
           display: 'inline-block',
           verticalAlign: 'text-bottom',
+          fontSize: '1.4em',
         },
       }}
     >
