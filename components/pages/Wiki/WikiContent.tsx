@@ -138,7 +138,7 @@ const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
         display="flex"
         alignItems="center"
         gap="0.5em"
-        css={{ svg: { width: '1.75em', height: '1.75em' } }}
+        css={{ svg: { width: '1.25em', height: '1.25em' } }}
       >
         {convertMarkup(title, key)}
       </Heading>
