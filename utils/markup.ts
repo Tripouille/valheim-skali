@@ -1,21 +1,4 @@
 import * as CSS from 'csstype';
-import * as FaIcons from 'react-icons/fa';
-import * as GiIcons from 'react-icons/gi';
-import * as HiIcons from 'react-icons/hi';
-import * as SiIcons from 'react-icons/si';
-
-const ICON_SHORTCUT_TO_ICON_GROUP = {
-  Fa: FaIcons,
-  Gi: GiIcons,
-  Hi: HiIcons,
-  Si: SiIcons,
-};
-
-export const getMarkupIconComponent = (match: string) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  return ICON_SHORTCUT_TO_ICON_GROUP[match.slice(0, 2)]?.[match];
-};
 
 interface ImageMarkup {
   url: string;
@@ -82,4 +65,57 @@ export const getMarkupDiscordLinkProperties = (match: string) => {
   const matchResult = match.match(/\[\[\[(?<url>.+?)\]\]\](?:\((?<label>.*)\))?/);
 
   return matchResult?.groups ?? {};
+};
+
+export const getMarkupIconComponent = async (match: string) => {
+  if (match.length < 2) return;
+  let icons: unknown = [];
+  if (match.startsWith('Gi')) {
+    icons = await import('react-icons/gi');
+  } else if (match.startsWith('Wi')) {
+    icons = await import('react-icons/wi');
+  } else if (match.startsWith('Ai')) {
+    icons = await import('react-icons/ai');
+  } else if (match.startsWith('Bs')) {
+    icons = await import('react-icons/bs');
+  } else if (match.startsWith('Bi')) {
+    icons = await import('react-icons/bi');
+  } else if (match.startsWith('Di')) {
+    icons = await import('react-icons/di');
+  } else if (match.startsWith('Fi')) {
+    icons = await import('react-icons/fi');
+  } else if (match.startsWith('Fa')) {
+    icons = await import('react-icons/fa');
+  } else if (match.startsWith('Fc')) {
+    icons = await import('react-icons/fc');
+  } else if (match.startsWith('Gi')) {
+    icons = await import('react-icons/gi');
+  } else if (match.startsWith('Go')) {
+    icons = await import('react-icons/go');
+  } else if (match.startsWith('Gr')) {
+    icons = await import('react-icons/gr');
+  } else if (match.startsWith('Im')) {
+    icons = await import('react-icons/im');
+  } else if (match.startsWith('IoIos')) {
+    icons = await import('react-icons/io');
+  } else if (match.startsWith('Io')) {
+    icons = await import('react-icons/io5');
+  } else if (match.startsWith('Md')) {
+    icons = await import('react-icons/md');
+  } else if (match.startsWith('Ri')) {
+    icons = await import('react-icons/ri');
+  } else if (match.startsWith('Si')) {
+    icons = await import('react-icons/si');
+  } else if (match.startsWith('Ti')) {
+    icons = await import('react-icons/ti');
+  } else if (match.startsWith('Vsc')) {
+    icons = await import('react-icons/vsc');
+  } else if (match.startsWith('Wi')) {
+    icons = await import('react-icons/wi');
+  } else if (match.startsWith('Cg')) {
+    icons = await import('react-icons/cg');
+  }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  return icons[match];
 };
