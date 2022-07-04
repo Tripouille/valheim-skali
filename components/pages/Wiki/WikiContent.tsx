@@ -3,7 +3,6 @@ import reactStringReplace from 'react-string-replace';
 import { chakra } from '@chakra-ui/react';
 import Box from 'components/core/Containers/Box';
 import { Grid } from 'components/core/Containers/Grid';
-import Icon from 'components/core/Images/Icon';
 import ZoomableImage from 'components/core/Images/ZoomableImage';
 import DiscordButton from 'components/core/Interactive/DiscordButton';
 import Link from 'components/core/Interactive/Link';
@@ -12,11 +11,11 @@ import Heading from 'components/core/Typography/Heading';
 import {
   getMarkupDiscordLinkProperties,
   getMarkupGridContent,
-  getMarkupIconComponent,
   getMarkupImageProperties,
   getMarkupTitleProperties,
 } from 'utils/markup';
 import { StrictReactNode } from 'utils/types';
+import DynamicallyLoadedIcon from './DynamicallyLoadedIcon';
 
 type ConvertMarkupFunction = (
   markupString: string | StrictReactNode[],
@@ -76,16 +75,9 @@ const simpleMarkups: SimpleMarkupProperties[] = [
   {
     startSymbol: '{{',
     endSymbol: '}}',
-    getComponent: (content, _, key) => {
-      const IconComponent = getMarkupIconComponent(content);
-      return IconComponent ? (
-        <Icon key={++key.value} as={IconComponent} verticalAlign="text-bottom" />
-      ) : (
-        <chakra.span key={++key.value} fontSize="xs">
-          [Icône non trouvée : {content}]
-        </chakra.span>
-      );
-    },
+    getComponent: (content, _, key) => (
+      <DynamicallyLoadedIcon key={++key.value} content={content} />
+    ),
   },
   {
     startSymbol: '\\[',
