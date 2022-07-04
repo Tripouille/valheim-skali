@@ -106,6 +106,8 @@ export const getMarkupIconComponent = async (match: string) => {
     icons = await import('react-icons/ri');
   } else if (match.startsWith('Si')) {
     icons = await import('react-icons/si');
+  } else if (match.startsWith('Tb')) {
+    icons = await import('react-icons/tb');
   } else if (match.startsWith('Ti')) {
     icons = await import('react-icons/ti');
   } else if (match.startsWith('Vsc')) {
