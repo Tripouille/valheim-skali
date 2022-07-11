@@ -11,7 +11,8 @@ export interface QueryHandlerProps<T> {
 }
 
 /** Displays a loading/error component on loading/error query,
- * or children in case of query success
+ * or children in case of query success.
+ * If query is loading but fallbackData is present, display children
  */
 const QueryHandler = <T extends object>({
   query,
@@ -30,7 +31,7 @@ const QueryHandler = <T extends object>({
       return <ErrorAlert error={query.error} />;
     default:
       if (fallbackData) return <>{children}</>;
-      return <Loading />;
+      return <>{loadingComponent}</>;
   }
 };
 

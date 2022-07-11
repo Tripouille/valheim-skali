@@ -35,6 +35,7 @@ export enum QueryKeys {
   EVENTS = 'events',
   ROLES = 'roles',
   USERS = 'users',
+  FIND_WIKI_PAGE = 'find_wiki_page',
   WIKI = 'wiki',
   WIKI_PROPOSALS = 'wiki_proposals',
   SESSION = 'session',

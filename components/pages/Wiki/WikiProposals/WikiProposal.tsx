@@ -8,7 +8,6 @@ import {
   AccordionPanel,
   chakra,
 } from '@chakra-ui/react';
-import { WikiProposalWithAuthor } from 'data/wiki';
 import Secured from 'components/core/Authentication/Secured';
 import { Accordion } from 'components/core/Disclosure/Accordion';
 import Flex from 'components/core/Containers/Flex';
@@ -22,6 +21,7 @@ import useSession from 'hooks/useSession';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import { AdminNavRoute, MenuRoute, NavRoute, serverName } from 'utils/routes';
 import { ActionPopover } from 'components/core/Overlay/Popover';
+import { WikiProposalWithAuthor } from 'data/wiki';
 import useWikiPage from 'hooks/wiki/useWikiPage';
 import WikiContent from '../WikiContent';
 

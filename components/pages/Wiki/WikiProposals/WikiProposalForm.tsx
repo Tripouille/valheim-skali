@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { BiCollapse, BiExpand } from 'react-icons/bi';
 import { useBoolean } from '@chakra-ui/react';
 import Background from 'components/core/Containers/Background';
+import Box from 'components/core/Containers/Box';
 import Center from 'components/core/Containers/Center';
 import { Grid } from 'components/core/Containers/Grid';
 import { Stack } from 'components/core/Containers/Stack';
@@ -24,7 +25,6 @@ import {
 } from 'data/wiki';
 import { NavRoute, serverName } from 'utils/routes';
 import WikiContent from '../WikiContent';
-import Box from 'components/core/Containers/Box';
 
 const getFormDataFromWikiProposal = (wikiProposal: WikiProposal): WikiPageContent => {
   const lastSuggestion = wikiProposal.suggestions[0];
@@ -122,7 +122,7 @@ const WikiForm: React.FC<WikiFormProps> = ({ wikiPage, wikiProposal, onSubmit })
           </Button>
         </Center>
       </Stack>
-      {formData.title?.length && formData.content?.length && (
+      {!!formData.title?.length && !!formData.content?.length && (
         <Box mt="10">
           <Grid templateColumns="1fr auto 1fr" gap="5" width="full">
             <Text alignSelf="center" gridColumnStart="2">
