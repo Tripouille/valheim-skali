@@ -11,7 +11,6 @@ enum AddOrRemoveAction {
 
 const addOrRemoveWikiPageTagOnServer =
   (wikiPage: WikiPage, action: AddOrRemoveAction) => async (tag: WikiPageTag) => {
-    console.log('addOrRemoveWikiPageTagOnServer');
     await axios.patch(`${APIRoute.WIKI}/${wikiPage._id}/tags/${action}`, { tag });
   };
 

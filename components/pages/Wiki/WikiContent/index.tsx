@@ -1,21 +1,23 @@
-import { ReactElement, useMemo } from 'react';
+import { ReactElement, useState, useEffect, useRef, useCallback } from 'react';
 import reactStringReplace from 'react-string-replace';
 import { chakra } from '@chakra-ui/react';
 import Box from 'components/core/Containers/Box';
 import { Grid } from 'components/core/Containers/Grid';
+import DynamicallyLoadedIcon from 'components/core/Images/DynamicallyLoadedIcon';
 import ZoomableImage from 'components/core/Images/ZoomableImage';
 import DiscordButton from 'components/core/Interactive/DiscordButton';
 import Link from 'components/core/Interactive/Link';
 import Spoiler from 'components/core/Typography/Spoiler';
 import Heading from 'components/core/Typography/Heading';
 import {
+  getInternalLinkProperties,
   getMarkupDiscordLinkProperties,
   getMarkupGridContent,
   getMarkupImageProperties,
   getMarkupTitleProperties,
 } from 'utils/markup';
 import { StrictReactNode } from 'utils/types';
-import DynamicallyLoadedIcon from './DynamicallyLoadedIcon';
+import WikiInternalLink from './WikiInternalLink';
 
 type ConvertMarkupFunction = (
   markupString: string | StrictReactNode[],
@@ -76,7 +78,7 @@ const simpleMarkups: SimpleMarkupProperties[] = [
     startSymbol: '{{',
     endSymbol: '}}',
     getComponent: (content, _, key) => (
-      <DynamicallyLoadedIcon key={++key.value} content={content} />
+      <DynamicallyLoadedIcon key={++key.value} iconName={content} />
     ),
   },
   {
@@ -150,6 +152,19 @@ const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
     return <DiscordButton key={++key.value} data-cy={label} href={url} label={label} />;
   });
 
+  component = reactStringReplace(component, /(\[\[(?:.+?)(?:\|(?:.*?))?\]\](?:[\S]*)?)/g, match => {
+    const { pageName, label, labelSuffix } = getInternalLinkProperties(match);
+    const linkLabel = (label ?? pageName) + (labelSuffix ?? '');
+    return (
+      <WikiInternalLink
+        key={++key.value}
+        data-cy={linkLabel}
+        pageName={pageName}
+        label={linkLabel}
+      />
+    );
+  });
+
   component = reactStringReplace(component, simpleMarkupsRegex, match => {
     for (let i = 0; i < simpleMarkups.length; ++i) {
       const markup = simpleMarkups[i];
@@ -194,8 +209,32 @@ interface WikiContentProps {
   content: string;
 }
 
+const delay = 500;
 const WikiContent: React.FC<WikiContentProps> = ({ content }) => {
-  const replacedContent = useMemo(() => convertMarkup(content, { value: 0 }), [content]);
+  const [replacedContent, setReplacedContent] = useState<string | StrictReactNode[]>(content);
+  const lastExecutionTime = useRef<number>(new Date().getTime());
+  const timerId = useRef<number>();
+
+  const executeAndResetTimer = useCallback((contentString: string) => {
+    timerId.current = undefined;
+    lastExecutionTime.current = new Date().getTime();
+    setReplacedContent(convertMarkup(contentString, { value: 0 }));
+  }, []);
+
+  useEffect(() => {
+    const now = new Date().getTime();
+    const timeSinceLastExecution = now - lastExecutionTime.current;
+    clearTimeout(timerId.current);
+    if (timeSinceLastExecution >= delay) {
+      executeAndResetTimer(content);
+    } else {
+      // already executed less than delay ago : we'll execute after the remaining time has elapsed
+      timerId.current = window.setTimeout(
+        () => executeAndResetTimer(content),
+        delay - timeSinceLastExecution,
+      );
+    }
+  }, [content, executeAndResetTimer]);
 
   return (
     <Box w="full" overflowX="hidden">
