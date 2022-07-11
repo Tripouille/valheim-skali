@@ -211,7 +211,9 @@ interface WikiContentProps {
 
 const delay = 500;
 const WikiContent: React.FC<WikiContentProps> = ({ content }) => {
-  const [replacedContent, setReplacedContent] = useState<string | StrictReactNode[]>(content);
+  const [replacedContent, setReplacedContent] = useState<string | StrictReactNode[]>(
+    convertMarkup(content, { value: 0 }),
+  );
   const lastExecutionTime = useRef<number>(new Date().getTime());
   const timerId = useRef<number>();
 
