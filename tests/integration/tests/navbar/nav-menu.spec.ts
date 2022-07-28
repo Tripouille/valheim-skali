@@ -7,7 +7,7 @@ describe('menu', () => {
 
   it('should be able to visit rules page', () => {
     cy.dataCy('nav-bar').dataCy('Règlement-nav-item').click();
-    cy.get('main', { timeout: 1000 }).should('contain.text', 'Règlement');
+    cy.get('main', { timeout: 1500 }).should('contain.text', 'Règlement');
   });
 
   context('without event permission', () => {
