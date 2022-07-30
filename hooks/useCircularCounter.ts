@@ -4,7 +4,7 @@ import { positiveModulo } from 'utils/number';
 const useCircularCounter = (
   max: number,
   initialState?: number,
-): [number | undefined, () => void, () => void, () => void] => {
+): [number | undefined, () => void, () => void, () => void, () => void] => {
   const [index, setIndex] = useState<number | undefined>(initialState);
 
   const increment = useCallback(() => {
@@ -19,7 +19,11 @@ const useCircularCounter = (
     setIndex(undefined);
   }, []);
 
-  return [index, increment, decrement, empty];
+  const setFirst = useCallback(() => {
+    setIndex(0);
+  }, []);
+
+  return [index, increment, decrement, empty, setFirst];
 };
 
 export default useCircularCounter;

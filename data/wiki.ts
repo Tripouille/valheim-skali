@@ -93,6 +93,8 @@ export const WIKI_PAGE_VALUES_MAX_LENGTH: Record<keyof WikiPageContent, number> 
   content: 15000,
 };
 
+export const WIKI_SEARCH_MAX_RESULTS_NB = 8;
+
 /** Sorting */
 
 export const sortWikiProposals = (wikiProposals: WikiProposal[]) =>

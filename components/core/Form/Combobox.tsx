@@ -4,41 +4,43 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverAnchor,
+  PopoverContentProps,
 } from 'components/core/Overlay/Popover';
-import { ListItem, UnorderedList } from 'components/core/DataDisplay/List';
-import Tag from 'components/core/DataDisplay/Tag';
+import { ListItemProps, UnorderedList } from 'components/core/DataDisplay/List';
 import { InputProps } from 'components/core/Form/Input';
 import useCircularCounter from 'hooks/useCircularCounter';
 import { Children } from 'utils/types';
 import { scrollIntoViewIfNeeded } from 'utils/window';
 
-interface ComboboxChildrenProps {
-  getInputProps: Partial<InputProps> & { ref: RefObject<HTMLInputElement> };
-}
-
-export interface ComboboxProps {
-  children: (props: ComboboxChildrenProps) => Children;
+type ComboboxInputProps = Partial<InputProps> & { ref: RefObject<HTMLInputElement> };
+type ComboboxListItemProps = Partial<ListItemProps>;
+export interface ComboboxProps<T> {
   id?: string;
   inputRef: RefObject<HTMLInputElement>;
-  entry: string;
-  setEntry: (value: string) => void;
-  suggestions: string[];
+  suggestions: T[];
   maxSuggestionsNb?: number;
-  onItemSelection: (value: string) => void;
+  selectFirstItemOnPopoverOpening?: boolean;
+  onItemValidation: (value: T) => void;
+  onEnterWithNoItemSelected?: () => void;
   scrollContainerId?: string;
+  popoverStyle?: Omit<PopoverContentProps, 'width'> & { width: (inputWidth: number) => number };
+  children: (props: ComboboxInputProps) => Children;
+  listItemComponent: (props: ComboboxListItemProps, item: T, isSelected: boolean) => Children;
 }
 
-const Combobox: React.FC<ComboboxProps> = ({
-  children,
+const Combobox = <T,>({
   id = 'combobox',
   inputRef,
-  entry,
-  setEntry,
   suggestions,
   maxSuggestionsNb = 3,
-  onItemSelection,
+  selectFirstItemOnPopoverOpening = false,
+  onItemValidation,
+  onEnterWithNoItemSelected,
   scrollContainerId,
-}) => {
+  popoverStyle,
+  children,
+  listItemComponent,
+}: ComboboxProps<T>) => {
   /** Control popover opening */
   const [isPopoverOpen, setPopoverOpen] = useState<boolean>(false);
 
@@ -46,21 +48,37 @@ const Combobox: React.FC<ComboboxProps> = ({
   const listLength = Math.min(maxSuggestionsNb, suggestions.length);
 
   /** Keyboard selection of suggestion item */
-  const [selectedItemIndex, selectNextItem, selectPrevItem, unselectItem] =
+  const [selectedItemIndex, selectNextItem, selectPrevItem, unselectItem, selectFirstItem] =
     useCircularCounter(listLength);
 
-  useEffect(() => {
+  /** Control opening/closing of popover and item selection arising from it */
+  const closePopover = useCallback(() => {
+    setPopoverOpen(false);
     unselectItem();
-    if (listLength > 0) setPopoverOpen(true);
-    else setPopoverOpen(false);
-  }, [listLength, unselectItem]);
+  }, [unselectItem]);
 
-  const select = useCallback(
-    (value: string) => {
-      onItemSelection(value);
+  const togglePopoverDependingOnList = useCallback(() => {
+    if (listLength) {
+      setPopoverOpen(true);
+      if (selectedItemIndex) selectFirstItem();
+    } else closePopover();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listLength]);
+
+  useEffect(togglePopoverDependingOnList, [listLength, togglePopoverDependingOnList, unselectItem]);
+
+  useEffect(() => {
+    if (isPopoverOpen && selectFirstItemOnPopoverOpening) selectFirstItem();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPopoverOpen]);
+
+  /** When pressing enter or clicking on an item */
+  const validate = useCallback(
+    (value: T) => {
+      onItemValidation(value);
       unselectItem();
     },
-    [onItemSelection, unselectItem],
+    [onItemValidation, unselectItem],
   );
 
   /** Keyboard events */
@@ -68,35 +86,45 @@ const Combobox: React.FC<ComboboxProps> = ({
     (e: KeyboardEvent) => {
       switch (e.key) {
         case 'Enter':
-          select(selectedItemIndex !== undefined ? suggestions[selectedItemIndex] : entry);
+          if (selectedItemIndex !== undefined) validate(suggestions[selectedItemIndex]);
+          else if (onEnterWithNoItemSelected) onEnterWithNoItemSelected();
           break;
         case 'ArrowDown':
-          setPopoverOpen(true);
-          if (listLength) selectNextItem();
+          if (listLength) {
+            setPopoverOpen(true);
+            if (isPopoverOpen) selectNextItem();
+            else if (!selectFirstItemOnPopoverOpening) selectFirstItem();
+          }
           break;
         case 'ArrowUp':
-          setPopoverOpen(true);
-          if (listLength) selectPrevItem();
+          if (listLength) {
+            setPopoverOpen(true);
+            selectPrevItem();
+            e.preventDefault(); // prevent from going back to input start
+          }
           break;
         case 'Escape':
-          unselectItem();
-          setPopoverOpen(false);
+          closePopover();
           break;
         case 'Tab':
           break; // don't make popup reappear on tab
         default:
-          setPopoverOpen(true);
+          togglePopoverDependingOnList();
       }
     },
     [
-      select,
       selectedItemIndex,
+      validate,
       suggestions,
-      entry,
+      onEnterWithNoItemSelected,
       listLength,
+      closePopover,
+      togglePopoverDependingOnList,
+      isPopoverOpen,
       selectNextItem,
+      selectFirstItemOnPopoverOpening,
+      selectFirstItem,
       selectPrevItem,
-      unselectItem,
     ],
   );
 
@@ -113,14 +141,6 @@ const Combobox: React.FC<ComboboxProps> = ({
       };
     }
   }, [inputRef, onInputKeyDown]);
-
-  const onInputBlur = () => {
-    setPopoverOpen(false);
-  };
-
-  const onInputFocus = () => {
-    setPopoverOpen(true);
-  };
 
   const listboxId = `${id}-listbox`;
   const getItemId = (index: number) => `suggestion-${index}`;
@@ -156,38 +176,45 @@ const Combobox: React.FC<ComboboxProps> = ({
           }
         >
           {children({
-            getInputProps: {
-              ref: inputRef,
-              autoComplete: 'off',
-              'aria-autocomplete': 'list',
-              value: entry,
-              onChange: setEntry,
-              onFocus: onInputFocus,
-              onBlur: onInputBlur,
-            },
+            ref: inputRef,
+            autoComplete: 'off',
+            'aria-autocomplete': 'list',
+            onFocus: togglePopoverDependingOnList,
+            onClick: togglePopoverDependingOnList,
+            onBlur: closePopover,
+            spellCheck: false,
           })}
         </div>
       </PopoverAnchor>
       {isPopoverOpen && (
-        <PopoverContent w={inputWidth} tabIndex={-1}>
+        <PopoverContent
+          tabIndex={-1}
+          bgColor="blue.800"
+          borderTopRadius={0}
+          {...popoverStyle}
+          width={inputWidth && popoverStyle?.width ? popoverStyle.width(inputWidth) : inputWidth}
+        >
           <PopoverBody p="0">
             <UnorderedList styleType="none" m="0" id={listboxId} role="listbox">
-              {suggestions.slice(0, maxSuggestionsNb).map((tag, index) => (
-                <ListItem
-                  key={tag}
-                  id={getItemId(index)}
-                  role="option"
-                  aria-selected={selectedItemIndex === index ? 'true' : undefined}
-                  bgColor={selectedItemIndex === index ? 'whiteAlpha.200' : ''}
-                  _hover={{ backgroundColor: 'whiteAlpha.200' }}
-                  onMouseDown={e => {
-                    e.preventDefault();
-                    select(tag);
-                  }}
-                >
-                  <Tag label={tag} m="1" />
-                </ListItem>
-              ))}
+              {suggestions.slice(0, maxSuggestionsNb).map((item, index) =>
+                listItemComponent(
+                  {
+                    key: index,
+                    id: getItemId(index),
+                    role: 'option',
+                    'aria-selected': selectedItemIndex === index ? 'true' : undefined,
+                    cursor: 'pointer',
+                    bgColor: selectedItemIndex === index ? 'whiteAlpha.200' : '',
+                    _hover: { backgroundColor: 'whiteAlpha.200' },
+                    onMouseDown: e => {
+                      e.preventDefault();
+                      validate(item);
+                    },
+                  },
+                  item,
+                  selectedItemIndex === index,
+                ),
+              )}
             </UnorderedList>
           </PopoverBody>
         </PopoverContent>

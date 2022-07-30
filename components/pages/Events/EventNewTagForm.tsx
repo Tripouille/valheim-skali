@@ -2,6 +2,8 @@ import React, { KeyboardEventHandler, RefObject, useEffect, useRef, useState } f
 import { BsPlusLg } from 'react-icons/bs';
 import { EVENT_TAG_MAX_LENGTH } from 'data/event';
 import { CONTINUOUS_LABEL } from 'utils/constants';
+import { ListItem } from 'components/core/DataDisplay/List';
+import Tag from 'components/core/DataDisplay/Tag';
 import { FormControl } from 'components/core/Form/FormControl';
 import Combobox from 'components/core/Form/Combobox';
 import Input from 'components/core/Form/Input';
@@ -83,20 +85,26 @@ const EventNewTagForm: React.FC<EventNewTagFormProps> = ({
       <Combobox
         id="event-tags-combobox"
         inputRef={newTagInputRef}
-        entry={tagEntry}
-        setEntry={setTagEntry}
         suggestions={filteredTags}
-        onItemSelection={onNewTagSelection}
+        onItemValidation={onNewTagSelection}
+        onEnterWithNoItemSelected={() => onNewTagSelection(tagEntry)}
         scrollContainerId="event-form-modal-body"
+        listItemComponent={(listItemProps, tag) => (
+          <ListItem key={tag} {...listItemProps}>
+            <Tag label={tag} m="1" />
+          </ListItem>
+        )}
       >
-        {({ getInputProps }) => (
+        {inputProps => (
           <Input
             data-cy="new-tag"
             w="36"
             showInvalidOverFocus
             maxLength={EVENT_TAG_MAX_LENGTH}
             onKeyDown={onNewTagInputKeyDown}
-            {...getInputProps}
+            value={tagEntry}
+            onChange={setTagEntry}
+            {...inputProps}
           />
         )}
       </Combobox>

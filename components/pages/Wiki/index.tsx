@@ -3,6 +3,7 @@ import React from 'react';
 import { GiFeather } from 'react-icons/gi';
 import Secured from 'components/core/Authentication/Secured';
 import Background from 'components/core/Containers/Background';
+import { Grid } from 'components/core/Containers/Grid';
 import { VStack } from 'components/core/Containers/Stack';
 import SimpleGrid from 'components/core/Containers/SimpleGrid';
 import IconButton from 'components/core/Interactive/IconButton';
@@ -11,6 +12,7 @@ import Text from 'components/core/Typography/Text';
 import { WikiPage, WIKI_PAGE_TAG_TO_LABEL } from 'data/wiki';
 import { NavRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
+import WikiSearchBar from './WikiSearchBar';
 import WikiLinksGroup from './WikiLinksGroup';
 
 interface WikiHomeProps {
@@ -25,7 +27,18 @@ interface WikiHomeProps {
 const WikiHome: React.FC<WikiHomeProps> = ({ featuredWikiPages }) => (
   <Background data-cy="wiki">
     <VStack spacing="7">
-      <PageTitle title={ROUTES_TO_LABEL[NavRoute.WIKI]} />
+      <Grid
+        w="full"
+        templateColumns={{ base: '1fr', md: '2fr 1fr 2fr' }}
+        rowGap={5}
+        alignItems="center"
+      >
+        <PageTitle
+          title={ROUTES_TO_LABEL[NavRoute.WIKI]}
+          gridColumn={{ base: undefined, md: '2' }}
+        />
+        <WikiSearchBar />
+      </Grid>
       <Text textAlign="center">
         Voici le wiki créé par la communauté du Valhabba. Il regroupe des informations sur le
         Valhabba et sur Valheim en général, des tutos, des cartes, des personnalités...
