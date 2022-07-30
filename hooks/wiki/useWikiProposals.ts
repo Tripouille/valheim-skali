@@ -8,6 +8,7 @@ import {
 } from 'data/wiki';
 import { useUsers } from 'hooks/users/useUsers';
 import useSession from 'hooks/useSession';
+import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
 
@@ -24,6 +25,9 @@ export const useWikiProposals = (options?: {
   const { data: users } = useUsers(false);
 
   const wikiProposalsQuery = useQuery(QueryKeys.WIKI_PROPOSALS, getWikiProposals, {
+    enabled: session.hasRequiredPermissions({
+      [PermissionCategory.WIKI]: wikiPrivilege.WRITE,
+    }),
     select: data => {
       const selectedWikiProposals = data.filter(wikiProposal => {
         if (options?.unhandled && wikiProposal.status !== 'proposed') return false;
