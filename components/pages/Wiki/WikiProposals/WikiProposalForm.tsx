@@ -148,7 +148,7 @@ const WikiForm: React.FC<WikiFormProps> = ({ wikiPage, wikiProposal, onSubmit })
           </Grid>
           <Box
             mt="2"
-            height={previewHasRestrictedHeight ? '500px' : undefined}
+            maxHeight={previewHasRestrictedHeight ? '455px' : undefined}
             overflow="auto"
             px="1"
           >
