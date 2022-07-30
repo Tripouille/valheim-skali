@@ -25,8 +25,8 @@ export enum AdminNavRoute {
   MEMBERS = '/members',
   NON_MEMBERS = '/non-members',
   ROLES = '/roles',
-  WIKI_PROPOSALS = '/wiki_proposals',
-  WIKI = '/wiki_pages',
+  WIKI_PROPOSALS = '/wiki-proposals',
+  WIKI = '/wiki-pages',
 }
 export enum MenuRoute {
   ABOUT = '/about',
