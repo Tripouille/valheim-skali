@@ -38,7 +38,7 @@ export type UseSessionReturn = (
       data?: null;
       status: SessionStatus.UNAUTHENTICATED | SessionStatus.LOADING;
     }
-) & { hasRequiredPermissions: (requiredPermissions: Permissions) => boolean };
+) & { hasRequiredPermissions: (requiredPermissions: Permissions | Permissions[]) => boolean };
 
 const useSession = ({
   required = false,
@@ -69,7 +69,7 @@ const useSession = ({
   );
 
   const hasRequiredPermissions = useCallback(
-    (requiredPermissions: Permissions) => {
+    (requiredPermissions: Permissions | Permissions[]) => {
       return sessionData
         ? permissionsMeetRequirement(sessionData.permissions, requiredPermissions)
         : permissionsMeetRequirement(visitorPermissions ?? {}, requiredPermissions);

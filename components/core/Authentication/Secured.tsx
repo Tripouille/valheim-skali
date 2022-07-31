@@ -3,7 +3,7 @@ import { Children } from 'utils/types';
 import { Permissions } from 'utils/permissions';
 
 export interface SecuredProps {
-  permissions: Permissions;
+  permissions: Permissions | Permissions[];
   fallback?: Children;
   children: Children;
 }

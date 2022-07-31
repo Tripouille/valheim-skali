@@ -6,7 +6,13 @@ import WikiPagesTable from 'components/pages/Wiki/WikiPagesTable';
 import UsersTable from 'components/pages/Users/UsersTable';
 import Roles from 'components/pages/Roles';
 import { UserQueryFilter } from 'hooks/users/useUsers';
-import { ROUTES_TO_PERMISSIONS } from 'utils/permissions';
+import useSession from 'hooks/useSession';
+import {
+  ROUTES_TO_PERMISSIONS,
+  PermissionCategory,
+  userPrivilege,
+  wikiPrivilege,
+} from 'utils/permissions';
 import {
   AdminNavRoute,
   getRouteParameterAsString,
@@ -20,7 +26,21 @@ const Admin = () => {
   const router = useRouter();
   const urlEndPoint = '/' + (getRouteParameterAsString(router.query.route) ?? '');
 
-  const route = isAdminNavRoute(urlEndPoint) ? urlEndPoint : AdminNavRoute.MEMBERS;
+  const session = useSession();
+  const hasUserReadPermission = session.hasRequiredPermissions({
+    [PermissionCategory.USER]: userPrivilege.READ,
+  });
+  const hasWikiWritePermission = session.hasRequiredPermissions({
+    [PermissionCategory.WIKI]: wikiPrivilege.WRITE,
+  });
+
+  const route = isAdminNavRoute(urlEndPoint)
+    ? urlEndPoint
+    : hasUserReadPermission
+    ? AdminNavRoute.MEMBERS
+    : hasWikiWritePermission
+    ? AdminNavRoute.WIKI_PROPOSALS
+    : AdminNavRoute.ROLES;
 
   const routeToComponent: Record<AdminNavRoute, Children> = {
     [AdminNavRoute.MEMBERS]: <UsersTable filter={UserQueryFilter.MEMBER} />,

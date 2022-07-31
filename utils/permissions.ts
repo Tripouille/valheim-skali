@@ -96,22 +96,35 @@ export const isAdminPrivilege = (privilege: PermissionPrivilege) =>
   privilege === CommonPermissionPrivilege.ADMIN ||
   privilege === CommonPermissionPrivilege.SUPER_ADMIN;
 
-export const permissionsMeetRequirement = (
+const permissionMeetRequirement = (
   userPermissions: Permissions,
-  requiredPermissions: Permissions,
+  requiredPermission: Permissions,
 ) => {
-  for (const c in requiredPermissions) {
+  for (const c in requiredPermission) {
     const category = c as PermissionCategory;
     if (
       (userPermissions[category] ?? CommonPermissionPrivilege.NONE) <
-      (requiredPermissions[category] ?? CommonPermissionPrivilege.NONE)
+      (requiredPermission[category] ?? CommonPermissionPrivilege.NONE)
     )
       return false;
   }
   return true;
 };
 
-export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions> = {
+export const permissionsMeetRequirement = (
+  userPermissions: Permissions,
+  requiredPermissions: Permissions | Permissions[], // if array, means one of them is enough
+) => {
+  const requiredPermissionsArray = Array.isArray(requiredPermissions)
+    ? requiredPermissions
+    : [requiredPermissions];
+  for (const requiredPermission of requiredPermissionsArray) {
+    if (permissionMeetRequirement(userPermissions, requiredPermission)) return true;
+  }
+  return false;
+};
+
+export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions | Permissions[]> = {
   [NavRoute.HOME]: {},
   [NavRoute.RULES]: {},
   [NavRoute.EVENTS]: { [PermissionCategory.EVENT]: eventPrivilege.READ },
@@ -124,7 +137,11 @@ export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions> = {
   [AdminNavRoute.ROLES]: { [PermissionCategory.ROLE]: rolePrivilege.READ },
   [AdminNavRoute.WIKI_PROPOSALS]: { [PermissionCategory.WIKI]: wikiPrivilege.WRITE },
   [AdminNavRoute.WIKI]: { [PermissionCategory.WIKI]: wikiPrivilege.WRITE },
-  [MenuRoute.ADMIN]: { [PermissionCategory.USER]: userPrivilege.READ },
+  [MenuRoute.ADMIN]: [
+    { [PermissionCategory.USER]: userPrivilege.READ },
+    { [PermissionCategory.ROLE]: rolePrivilege.READ },
+    { [PermissionCategory.WIKI]: wikiPrivilege.WRITE },
+  ],
   [MenuRoute.ABOUT]: {},
   [AuthRoute.SIGNIN]: {},
 };
