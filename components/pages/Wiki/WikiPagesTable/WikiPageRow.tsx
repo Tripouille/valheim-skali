@@ -49,7 +49,7 @@ const WikiPageRow: React.FC<WikiPageRowProps> = ({ 'data-cy': dataCy, wikiPage }
     <Tr cursor="pointer" onClick={navigateToWikiPage} data-cy={dataCy}>
       <Td>{wikiPage.title}</Td>
       <Td>
-        <Wrap data-cy="roles-form">
+        <Wrap data-cy="tags-form">
           {wikiPage.tags?.map(tag => (
             <Tag
               data-cy={tag}
@@ -87,7 +87,7 @@ const WikiPageRow: React.FC<WikiPageRowProps> = ({ 'data-cy': dataCy, wikiPage }
           )}
         </Wrap>
       </Td>
-      <Td>{wikiPage.views}</Td>
+      <Td data-cy="views">{wikiPage.views}</Td>
       <Td>
         <IconButton
           data-cy="see"

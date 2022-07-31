@@ -50,9 +50,9 @@ const WikiProposalRow: React.FC<WikiProposalRowProps> = ({
             />
           </Secured>
         ) : wikiProposal.status === 'validated' ? (
-          <Icon as={BiCheck} boxSize={rowIconWidth} color="green.300" />
+          <Icon data-cy="validated-icon" as={BiCheck} boxSize={rowIconWidth} color="green.300" />
         ) : (
-          <Icon as={BiBlock} boxSize={rowIconWidth} color="red.700" />
+          <Icon data-cy="rejected-icon" as={BiBlock} boxSize={rowIconWidth} color="red.700" />
         )}
       </Td>
     </Tr>

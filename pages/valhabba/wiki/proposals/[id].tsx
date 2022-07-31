@@ -26,7 +26,7 @@ const WikiProposalPage = () => {
   const fallbackWikiProposal = getFallbackWikiProposal();
 
   return (
-    <Background data-cy="events">
+    <Background data-cy="wiki-proposal-page">
       <QueryHandler query={wikiProposalQuery} fallbackData={fallbackWikiProposal}>
         <WikiProposalComponent
           wikiProposal={(wikiProposalQuery.data ?? fallbackWikiProposal) as WikiProposal}

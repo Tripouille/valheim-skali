@@ -14,3 +14,9 @@ export const reqPermissionsFormSelect = () =>
 /** Users */
 
 export const usersLines = () => cy.get(`[data-cy^=user-]`);
+
+/** Wiki */
+
+export const wikiProposalsLines = () => cy.get(`[data-cy^=wiki-proposal-]`);
+
+export const wikiPagesLines = () => cy.get(`[data-cy^=wiki-page-]`);
