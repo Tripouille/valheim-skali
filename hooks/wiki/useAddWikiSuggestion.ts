@@ -9,7 +9,7 @@ import { getMessageFromError } from 'utils/error';
 
 const addWikiSuggestionOnServer =
   (wikiProposalId?: string) => async (pageData: WikiPageContent) => {
-    await axios.put(`${APIRoute.WIKI}/proposals/${wikiProposalId}`, pageData);
+    await axios.put(`${APIRoute.WIKI_PROPOSALS}/${wikiProposalId}`, pageData);
   };
 
 const useAddWikiSuggestion = (wikiProposalId?: string) => {

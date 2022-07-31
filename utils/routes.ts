@@ -8,6 +8,7 @@ export enum APIRoute {
   ROLES = '/api/roles',
   EVENTS = '/api/events',
   WIKI = '/api/wiki',
+  WIKI_PROPOSALS = '/api/wiki/proposals',
   SESSION = '/api/auth/session',
   VISITOR = '/api/auth/visitor',
 }

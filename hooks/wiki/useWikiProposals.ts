@@ -13,7 +13,7 @@ import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
 
 export const getWikiProposals = async (): Promise<WikiProposal[]> => {
-  const { data } = await axios.get<WikiProposal[]>(`${APIRoute.WIKI}/proposals`);
+  const { data } = await axios.get<WikiProposal[]>(APIRoute.WIKI_PROPOSALS);
   return data;
 };
 

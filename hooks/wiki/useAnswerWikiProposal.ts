@@ -10,7 +10,7 @@ import { getMessageFromError } from 'utils/error';
 const updateWikiProposalOnServer =
   (wikiProposal: WikiProposal) => async (answer: 'validated' | 'rejected') => {
     const { data: result } = await axios.put<WikiPage | undefined>(
-      `${APIRoute.WIKI}/proposals/${wikiProposal._id}/answer`,
+      `${APIRoute.WIKI_PROPOSALS}/${wikiProposal._id}/answer`,
       { answer },
     );
     return result;
