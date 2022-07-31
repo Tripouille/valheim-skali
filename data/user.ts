@@ -5,7 +5,6 @@ import { Role, RoleInDb } from './role';
 export interface User {
   _id: string;
   name: string;
-  email: string;
   image: string;
   nameInGame?: string;
   roleIds?: Role['_id'][];
@@ -13,6 +12,7 @@ export interface User {
 
 export type UserInDb = Omit<User, '_id' | 'roleIds'> & {
   _id: ObjectId;
+  email: string;
   roleIds?: RoleInDb['_id'][];
 };
 
