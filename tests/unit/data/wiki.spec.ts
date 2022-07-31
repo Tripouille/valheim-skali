@@ -1,12 +1,13 @@
-import { sortWikiProposals, WikiProposal, WikiSuggestion } from 'data/wiki';
+import { sortWikiProposals, WikiCreationProposal, WikiSuggestion } from 'data/wiki';
 
 type PartialWikiProposal = Partial<
-  Omit<WikiProposal, 'suggestions'> & { suggestions: Pick<WikiSuggestion, 'date'>[] }
+  Omit<WikiCreationProposal, 'suggestions'> & { suggestions: Pick<WikiSuggestion, 'date'>[] }
 >;
 
 describe('Function sortWikiProposals', () => {
-  const completeWikiProposal = (partialProposal: PartialWikiProposal): WikiProposal => ({
+  const completeWikiProposal = (partialProposal: PartialWikiProposal): WikiCreationProposal => ({
     _id: '',
+    authorId: '',
     status: 'proposed',
     proposalType: 'creation',
     ...partialProposal,
