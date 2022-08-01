@@ -97,7 +97,7 @@ const simpleMarkupsRegex = new RegExp(
   'g',
 );
 
-const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
+export const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
   let component: string | StrictReactNode[] = markupContent;
 
   component = reactStringReplace(component, /(```[\s\S]*?```)/g, match => {
@@ -239,7 +239,7 @@ const WikiContent: React.FC<WikiContentProps> = ({ content }) => {
   }, [content, executeAndResetTimer]);
 
   return (
-    <Box w="full" overflowX="hidden">
+    <Box data-cy="content" w="full" overflowX="hidden">
       {replacedContent}
     </Box>
   );

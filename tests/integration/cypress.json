@@ -17,7 +17,7 @@
   "supportFile": "./support/index.ts",
   "fixturesFolder": "./fixtures/",
   "screenshotOnRunFailure": false,
-  "video": false,
+  "video": true,
   "videoUploadOnPasses": false,
 
   "viewportWidth": 1920,
