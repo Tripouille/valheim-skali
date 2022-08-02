@@ -10,8 +10,8 @@ const wikiProposalsHandler: NextApiHandler = async (req, res) => {
     if (req.method === 'POST') {
       await proposeWikiPageCreation(req, res);
     } else if (req.method === 'GET') {
-      await requirePermissions({ [PermissionCategory.WIKI]: wikiPrivilege.WRITE }, req);
-      const wikiProposals = await getWikiProposals();
+      await requirePermissions({ [PermissionCategory.WIKI]: wikiPrivilege.PROPOSE }, req);
+      const wikiProposals = await getWikiProposals(req);
       res.status(200).json(wikiProposals);
     } else {
       throw new ServerException(501);
