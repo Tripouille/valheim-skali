@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { WikiPageContent } from 'data/wiki';
 import { getMessageFromError } from 'utils/error';
+import { QueryKeys } from 'utils/queryClient';
 import { APIRoute, NavRoute, serverName } from 'utils/routes';
 import { displayErrorToast, displaySuccessToast } from 'utils/toast';
 
@@ -12,6 +13,7 @@ const proposeWikiPageOnServer = (wikiPageId?: string) => async (pageData: WikiPa
 };
 
 const useProposeWikiPage = (wikiPageId?: string) => {
+  const queryClient = useQueryClient();
   const router = useRouter();
 
   const { mutate: proposeWikiPage } = useMutation(proposeWikiPageOnServer(wikiPageId), {
@@ -21,6 +23,7 @@ const useProposeWikiPage = (wikiPageId?: string) => {
         title:
           "Votre page a bien été proposée. Elle sera visible dès qu'un modérateur l'aura validée.",
       });
+      queryClient.invalidateQueries(QueryKeys.WIKI_PROPOSALS);
       router.push(`/${serverName}${NavRoute.WIKI}/proposals`);
     },
   });
