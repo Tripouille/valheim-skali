@@ -11,7 +11,7 @@ declare global {
        */
       dataCy(value: string, selector?: string): Chainable<JQuery<HTMLElement>>;
 
-      main(): Chainable<JQuery<HTMLElement>>;
+      main(options?: Partial<Cypress.Timeoutable>): Chainable<JQuery<HTMLElement>>;
 
       /* Login by setting a custom cookie for next-auth */
       login(): void;

@@ -5,9 +5,12 @@ import * as Action from './action';
 import * as Select from './select';
 
 describe('wiki pages', () => {
-  beforeEach(() => {
+  before(() => {
     cy.setUserRoles([SpecialRoleName.MEMBER]);
     cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.WIKI, wikiPrivilege.WRITE);
+  });
+
+  beforeEach(() => {
     cy.login();
   });
 

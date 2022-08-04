@@ -9,7 +9,7 @@ Cypress.Commands.add('dataCy', { prevSubject: 'optional' }, (subject, value, sel
   return cy.get(`${selector}[data-cy="${value}"]`);
 });
 
-Cypress.Commands.add('main', () => cy.get('main'));
+Cypress.Commands.add('main', options => cy.get('main', options));
 
 const sessionCookieName = 'next-auth.session-token';
 

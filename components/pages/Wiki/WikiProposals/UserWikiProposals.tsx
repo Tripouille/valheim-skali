@@ -21,7 +21,7 @@ const UserWikiProposals = () => {
         </Grid>
         <NextLink href={`/${serverName}${NavRoute.WIKI}/proposals/new`} passHref>
           <Button
-            data-cy="participate"
+            data-cy="propose"
             as="a"
             leftIcon={<BsPlusLg />}
             colorScheme="green"
