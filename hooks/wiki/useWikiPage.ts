@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useQuery, UseQueryResult } from 'react-query';
+import { QueryObserverSuccessResult, useQuery, UseQueryResult } from 'react-query';
 import { WikiPage } from 'data/wiki';
 import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
@@ -9,12 +9,15 @@ const getWikiPage = (id?: string) => async (): Promise<WikiPage> => {
   return data;
 };
 
-const useWikiPage = (id?: string): UseQueryResult<WikiPage> => {
-  const wikiPageQuery = useQuery([QueryKeys.WIKI, id], getWikiPage(id), {
+const useWikiPage = <T extends WikiPage | undefined>(id?: string, options?: { initialData: T }) => {
+  const wikiPageQuery = useQuery([QueryKeys.WIKI_PAGES, id], getWikiPage(id), {
     enabled: typeof id === 'string',
+    initialData: options?.initialData,
   });
 
-  return wikiPageQuery;
+  return wikiPageQuery as T extends undefined
+    ? UseQueryResult<WikiPage>
+    : QueryObserverSuccessResult<WikiPage>;
 };
 
 export default useWikiPage;

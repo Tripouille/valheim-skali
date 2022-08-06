@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useQueryClient } from 'react-query';
 import { WikiPage, WikiPageTag } from 'data/wiki';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import { APIRoute } from 'utils/routes';
@@ -24,18 +25,21 @@ const getUpdatedWikiPages = (
   );
 
 const useUpdateWikiPageTags = (wikiPage: WikiPage) => {
-  const addWikiPageTag = useOptimisticMutation<QueryKeys.WIKI, WikiPageTag>(
-    QueryKeys.WIKI,
+  const queryClient = useQueryClient();
+
+  const addWikiPageTag = useOptimisticMutation<QueryKeys.WIKI_PAGES, WikiPageTag>(
+    QueryKeys.WIKI_PAGES,
     addOrRemoveWikiPageTagOnServer(wikiPage, AddOrRemoveAction.ADD),
     (previousWikiPages, updatedTag) => {
       const oldWikiPageTags = wikiPage.tags;
       return getUpdatedWikiPages(previousWikiPages, wikiPage, [...oldWikiPageTags, updatedTag]);
     },
     'La page wiki a bien été mise à jour avec un nouveau tag.',
+    { onSuccess: () => queryClient.refetchQueries(QueryKeys.FEATURED_WIKI_PAGES) },
   );
 
-  const removeWikiPageTag = useOptimisticMutation<QueryKeys.WIKI, WikiPageTag>(
-    QueryKeys.WIKI,
+  const removeWikiPageTag = useOptimisticMutation<QueryKeys.WIKI_PAGES, WikiPageTag>(
+    QueryKeys.WIKI_PAGES,
     addOrRemoveWikiPageTagOnServer(wikiPage, AddOrRemoveAction.REMOVE),
     (previousWikiPages, updatedTag) => {
       const oldWikiPageTags = wikiPage.tags;
@@ -46,6 +50,7 @@ const useUpdateWikiPageTags = (wikiPage: WikiPage) => {
       );
     },
     'La page wiki a bien été mise à jour sans le tag.',
+    { onSuccess: () => queryClient.refetchQueries(QueryKeys.FEATURED_WIKI_PAGES) },
   );
 
   return { addWikiPageTag, removeWikiPageTag };

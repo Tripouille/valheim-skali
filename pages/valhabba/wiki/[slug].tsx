@@ -1,17 +1,23 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import React from 'react';
+import React, { useRef } from 'react';
 import getWikiPage from 'api-utils/wiki/getWikiPage';
 import { ServerException } from 'api-utils/common';
 import getWikiPages from 'api-utils/wiki/getWikiPages';
 import WikiPageComponent from 'components/pages/Wiki/WikiPage';
+import useWikiPage from 'hooks/wiki/useWikiPage';
+import { WikiPage } from 'data/wiki';
 
 interface WikiPageProps {
   wikiPageSerialized: string;
 }
 
-const WikiPagePage: React.FC<WikiPageProps> = ({ wikiPageSerialized }) => (
-  <WikiPageComponent wikiPage={JSON.parse(wikiPageSerialized)} />
-);
+const WikiPagePage: React.FC<WikiPageProps> = ({ wikiPageSerialized }) => {
+  const initialWikiPage = useRef<WikiPage>(JSON.parse(wikiPageSerialized)).current;
+
+  const wikiPageQuery = useWikiPage(initialWikiPage._id, { initialData: initialWikiPage });
+
+  return <WikiPageComponent wikiPage={wikiPageQuery.data} />;
+};
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const wikiPages = await getWikiPages();

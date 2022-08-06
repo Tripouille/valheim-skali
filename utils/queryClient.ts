@@ -36,7 +36,8 @@ export enum QueryKeys {
   ROLES = 'roles',
   USERS = 'users',
   FIND_WIKI_PAGE = 'find_wiki_page',
-  WIKI = 'wiki',
+  FEATURED_WIKI_PAGES = 'featured_wiki_pages',
+  WIKI_PAGES = 'wiki_pages',
   WIKI_PROPOSALS = 'wiki_proposals',
   SESSION = 'session',
   VISITOR = 'visitor',
@@ -46,7 +47,7 @@ export type QueryTypes = {
   [QueryKeys.EVENTS]: Event[];
   [QueryKeys.ROLES]: Role[];
   [QueryKeys.USERS]: User[];
-  [QueryKeys.WIKI]: WikiPage[];
+  [QueryKeys.WIKI_PAGES]: WikiPage[];
   [QueryKeys.WIKI_PROPOSALS]: WikiProposalWithAuthor[];
   [QueryKeys.SESSION]: Session | null;
   [QueryKeys.VISITOR]: Permissions;

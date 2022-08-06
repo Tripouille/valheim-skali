@@ -61,6 +61,13 @@ export type WikiProposalWithAuthor = WikiProposal & {
   authorName?: string;
 };
 
+export interface FeaturedWikiPages {
+  lastPages: WikiPage[];
+  startingPages: WikiPage[];
+  essentialPages: WikiPage[];
+  popularPages: WikiPage[];
+}
+
 /** Wiki page tags */
 
 export const wikiPageTags = ['essential', 'starting'] as const;

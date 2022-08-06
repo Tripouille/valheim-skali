@@ -9,19 +9,14 @@ import SimpleGrid from 'components/core/Containers/SimpleGrid';
 import IconButton from 'components/core/Interactive/IconButton';
 import PageTitle from 'components/core/Typography/PageTitle';
 import Text from 'components/core/Typography/Text';
-import { WikiPage, WIKI_PAGE_TAG_TO_LABEL } from 'data/wiki';
+import { FeaturedWikiPages, WIKI_PAGE_TAG_TO_LABEL } from 'data/wiki';
 import { NavRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import WikiSearchBar from './WikiSearchBar';
 import WikiLinksGroup from './WikiLinksGroup';
 
 interface WikiHomeProps {
-  featuredWikiPages: {
-    lastPages: WikiPage[];
-    startingPages: WikiPage[];
-    essentialPages: WikiPage[];
-    popularPages: WikiPage[];
-  };
+  featuredWikiPages: FeaturedWikiPages;
 }
 
 const WikiHome: React.FC<WikiHomeProps> = ({ featuredWikiPages }) => (
