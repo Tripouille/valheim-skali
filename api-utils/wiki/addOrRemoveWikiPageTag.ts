@@ -11,6 +11,7 @@ import {
   wikiPageTags,
 } from 'data/wiki';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
+import { revalidateWikiPage } from './utils';
 
 export enum Action {
   ADD,
@@ -54,6 +55,8 @@ const addOrRemoveWikiPageTag = async (action: Action, req: Req, res: Res) => {
   if (!result.ok) throw new ServerException(500);
 
   res.status(200).end();
+
+  revalidateWikiPage('featured', res);
 };
 
 export default addOrRemoveWikiPageTag;

@@ -10,11 +10,16 @@ import {
   WikiProposalInDb,
   wikiProposalsCollectionName,
   WikiPageContent,
+  WikiPage,
 } from 'data/wiki';
 import { slugify } from 'utils/format';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
+import { revalidateWikiPage } from './utils';
 
-const createWikiPage = async (pageContent: WikiPageContent, wikiProposalId: string) => {
+const createWikiPage = async (
+  pageContent: WikiPageContent,
+  wikiProposalId: string,
+): Promise<WikiPage> => {
   const newWikiPage: Omit<WikiPageInDb, '_id'> = {
     title: pageContent.title,
     content: pageContent.content,
@@ -56,7 +61,7 @@ const editWikiPage = async (
     wikiPageId,
     newWikiPage,
   );
-  if (!result.ok) throw new ServerException(500);
+  if (!result.ok || !result.value) throw new ServerException(500);
 
   return result.value;
 };
@@ -77,8 +82,7 @@ const validateWikiProposal = async (req: Req, res: Res) => {
   let newWikiPage;
   if (wikiProposal.proposalType === 'creation')
     newWikiPage = await createWikiPage(lastSuggestion, id);
-  else if (wikiProposal.proposalType === 'edition')
-    newWikiPage = await editWikiPage(lastSuggestion, id, wikiProposal.wikiPageId.toString());
+  else newWikiPage = await editWikiPage(lastSuggestion, id, wikiProposal.wikiPageId.toString());
 
   const updateStatusResult = await updateOneInCollection<WikiProposalInDb>(
     wikiProposalsCollectionName,
@@ -88,6 +92,8 @@ const validateWikiProposal = async (req: Req, res: Res) => {
   if (!updateStatusResult.ok) throw new ServerException(500);
 
   res.status(200).json(newWikiPage);
+
+  revalidateWikiPage(newWikiPage?.slug, res);
 };
 
 export default validateWikiProposal;

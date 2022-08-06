@@ -28,9 +28,13 @@ const useAnswerWikiProposal = (wikiProposal: WikiProposal) => {
           answer === 'validated' ? 'validée' : 'rejetée'
         }.`,
       });
-      if (answer === 'validated')
+      if (answer === 'validated') {
+        queryClient.setQueryData([QueryKeys.WIKI_PAGES, newWikiPage?._id], newWikiPage);
         router.push(`/${serverName}${NavRoute.WIKI}/${newWikiPage?.slug}`);
-      else router.push(`/${serverName}${MenuRoute.ADMIN}${AdminNavRoute.WIKI_PROPOSALS}`);
+      } else {
+        queryClient.refetchQueries(QueryKeys.WIKI_PROPOSALS);
+        router.push(`/${serverName}${MenuRoute.ADMIN}${AdminNavRoute.WIKI_PROPOSALS}`);
+      }
     },
     onSettled: () => queryClient.invalidateQueries(QueryKeys.WIKI_PROPOSALS),
   });

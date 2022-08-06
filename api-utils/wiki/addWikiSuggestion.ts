@@ -40,9 +40,6 @@ const addWikiSuggestion = async (req: Req, res: Res) => {
   if (!updateWikiProposalResult.ok) throw new ServerException(500);
 
   res.status(200).end();
-
-  // TODO
-  // revalidateWiki(res);
 };
 
 export default addWikiSuggestion;
