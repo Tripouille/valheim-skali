@@ -1,6 +1,6 @@
 import { SpecialRoleName } from 'data/role';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
-import { APIRoute } from 'utils/routes';
+import { APIRoute, serverName } from 'utils/routes';
 import * as Action from './action';
 import * as Select from './select';
 
@@ -29,28 +29,29 @@ describe('wiki pages', () => {
 
       it('should display proposals with correct infos', () => {
         cy.dataCy('admin').should('not.contain.text', "Aucune page wiki n'a été proposée.");
-        Select.wikiProposalsLines().should('have.length', 3);
+        Select.wikiProposalsLines().should('have.length', 4);
         cy.dataCy('wiki-proposal-0')
           .should('contain.text', 'Proposal 1 edited')
           .and('contain.text', 'TestUser name in game');
         cy.dataCy('wiki-proposal-0').dataCy('edit', 'button').should('exist');
-        cy.dataCy('wiki-proposal-1').dataCy('rejected-icon').should('exist');
-        cy.dataCy('wiki-proposal-2').dataCy('validated-icon').should('exist');
+        cy.dataCy('wiki-proposal-1').dataCy('edit', 'button').should('exist');
+        cy.dataCy('wiki-proposal-2').dataCy('rejected-icon').should('exist');
+        cy.dataCy('wiki-proposal-3').dataCy('validated-icon').should('exist');
       });
 
       it('should navigate to wiki proposal page on click', () => {
-        Select.wikiProposalsLines().should('have.length', 3);
+        Select.wikiProposalsLines().should('have.length', 4);
         cy.dataCy('wiki-proposal-0').click();
         cy.dataCy('wiki-proposal-page').should('exist');
         cy.go('back');
-        Select.wikiProposalsLines().should('have.length', 3);
+        Select.wikiProposalsLines().should('have.length', 4);
         cy.dataCy('wiki-proposal-1').click();
         cy.dataCy('wiki-proposal-page').should('exist');
       });
     });
   });
 
-  describe.only('wiki pages table', () => {
+  describe('wiki pages table', () => {
     it('should display a message when there is no wiki page', () => {
       cy.task('seedCollection', { collectionName: 'wikiPages', data: [] });
       Action.visitWikiPagesPage();
@@ -60,6 +61,7 @@ describe('wiki pages', () => {
     context('with wiki pages', () => {
       beforeEach(() => {
         cy.seedCollection('wikiPages', 'wikiPages');
+        cy.revalidate([`/${serverName}/wiki`]);
         Action.visitWikiPagesPage();
       });
 
@@ -90,8 +92,11 @@ describe('wiki pages', () => {
         cy.dataCy('wiki-page-0').dataCy('essential').should('not.exist');
         cy.dataCy('wiki-page-0').dataCy('add-tag', 'button').click();
         cy.dataCy('add-tag-essential', 'button').click();
-        cy.wait('@updateWikiPage').its('response.statusCode').should('eq', 200);
+        cy.wait('@updateWikiPage');
         cy.dataCy('wiki-page-0').dataCy('essential').should('exist');
+        cy.dataCy('Wiki-nav-item').click();
+        cy.main().should('contain.text', "L'essentielWiki page 1Wiki page 2Wiki page 3");
+        cy.go('back');
 
         cy.dataCy('wiki-page-2').dataCy('essential').should('exist');
         cy.dataCy('wiki-page-2')
@@ -99,9 +104,11 @@ describe('wiki pages', () => {
           .dataCy('essential')
           .dataCy('close', 'button')
           .click();
-        cy.wait('@updateWikiPage').its('response.statusCode').should('eq', 200);
+        cy.wait('@updateWikiPage');
         cy.dataCy('wiki-page-2').dataCy('essential').should('not.exist');
         cy.dataCy('wiki-page-2').dataCy('add-tag', 'button').should('exist');
+        cy.dataCy('Wiki-nav-item').click();
+        cy.main().should('not.contain.text', "L'essentielWiki page 1Wiki page 2Wiki page 3");
       });
 
       it('should navigate to wiki page on click and track views', () => {
@@ -109,7 +116,9 @@ describe('wiki pages', () => {
         cy.dataCy('wiki-page-0').find('td').first().click();
         cy.get('main', { timeout: 6000 }).should('contain.text', 'Wiki page 1 content');
 
+        cy.intercept(APIRoute.WIKI).as('getWikiPages');
         cy.go('back');
+        cy.wait('@getWikiPages');
         cy.dataCy('wiki-page-0').dataCy('views').should('contain.text', 1);
       });
     });

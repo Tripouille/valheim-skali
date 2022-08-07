@@ -1,6 +1,6 @@
 import { SpecialRoleName } from 'data/role';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
-import { APIRoute } from 'utils/routes';
+import { APIRoute, NavRoute, serverName } from 'utils/routes';
 import * as Action from './action';
 import * as Select from './select';
 
@@ -12,9 +12,10 @@ const wikiProposalSample = {
   suggestions: [{ title: 'Proposal 1', content: 'Content of proposal 1', date: '2000-01-01' }],
 };
 
-describe('propose wiki pages', () => {
+describe('participate to wiki and edit wiki pages', () => {
   before(() => {
     cy.seedCollection('wikiPages', 'wikiPages');
+    cy.revalidate([`/${serverName}/wiki/wiki-page-1`]);
     cy.setUserRoles([SpecialRoleName.MEMBER]);
   });
 
@@ -100,6 +101,7 @@ describe('propose wiki pages', () => {
       cy.dataCy('wiki-proposal-0').click();
       cy.main({ timeout: 2000 })
         .should('contain.text', '← Voir toutes mes propositions')
+        .and('contain.text', 'Voir la page wiki originale')
         .and('contain.text', 'Modifier')
         .and('contain.text', 'Wiki page 1 edited')
         .and('contain.text', 'Wiki page 1 content edited')
@@ -135,7 +137,7 @@ describe('propose wiki pages', () => {
       Select.wikiProposalsLines().should('have.length', 1);
     });
 
-    it('should be able to edit a wiki page creation proposal', () => {
+    it('should be able to edit a wiki page creation proposal, and the last version is used when validated', () => {
       cy.task('seedCollection', {
         collectionName: 'wikiProposals',
         data: [wikiProposalSample],
@@ -170,12 +172,26 @@ describe('propose wiki pages', () => {
         .and('contain.text', 'Content of proposal 1 edited')
         .and('contain.text', 'Proposal 1')
         .and('contain.text', 'Proposé par TestUser');
+
+      // Validate
+      cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.WIKI, wikiPrivilege.WRITE);
+      cy.reload();
+      cy.dataCy('validate').click();
+      cy.dataCy('confirm-validate').click();
+      cy.url({ timeout: 5000 }).should('include', '/wiki/proposal-1-edited');
+      cy.main().should('have.text', 'Proposal 1 editedContent of proposal 1 edited');
     });
 
-    it('should be able to edit a wiki page edition proposal', () => {
+    it('should be able to edit a wiki page edition proposal, and the last version is used when validated', () => {
       cy.task('seedCollection', {
         collectionName: 'wikiProposals',
-        data: [wikiProposalSample],
+        data: [
+          {
+            ...wikiProposalSample,
+            proposalType: 'edition',
+            wikiPageId: '6228cb385f506b78affc0ac1',
+          },
+        ],
       });
       cy.intercept('PUT', `${APIRoute.WIKI_PROPOSALS}/*`).as('editWikiProposal');
       cy.intercept('GET', APIRoute.WIKI_PROPOSALS).as('getWikiProposals');
@@ -186,6 +202,7 @@ describe('propose wiki pages', () => {
       cy.dataCy('participate').click();
       cy.wait('@getWikiProposals');
       cy.dataCy('wiki-proposal-0').click();
+      cy.main().should('contain.text', 'Voir la page wiki originale');
       cy.dataCy('modify').click();
       cy.url({ timeout: 5000 }).should('include', '/wiki/proposals/edit/6228cb385f506b78affc0ad1');
       cy.main()
@@ -207,6 +224,116 @@ describe('propose wiki pages', () => {
         .and('contain.text', 'Content of proposal 1 edited')
         .and('contain.text', 'Proposal 1')
         .and('contain.text', 'Proposé par TestUser');
+
+      // Validate
+      cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.WIKI, wikiPrivilege.WRITE);
+      cy.reload();
+      cy.dataCy('validate').click();
+      cy.dataCy('confirm-validate').click();
+      cy.url({ timeout: 5000 }).should('include', '/wiki/proposal-1-edited');
+      cy.main().should('have.text', 'Proposal 1 editedContent of proposal 1 edited');
+    });
+
+    it('should be able to edit a wiki page edition proposal content, and the updated wiki page is shown when validated', () => {
+      cy.task('seedCollection', {
+        collectionName: 'wikiProposals',
+        data: [
+          {
+            ...wikiProposalSample,
+            title: 'Wiki page 1',
+            proposalType: 'edition',
+            wikiPageId: '6228cb385f506b78affc0ac1',
+            suggestions: [
+              { title: 'Wiki page 1', content: 'Wiki page 1 content edited', date: '2000-01-01' },
+            ],
+          },
+        ],
+      });
+      cy.intercept('PUT', `${APIRoute.WIKI_PROPOSALS}/*`).as('editWikiProposal');
+      cy.intercept('GET', APIRoute.WIKI_PROPOSALS).as('getWikiProposals');
+      cy.intercept('GET', `${APIRoute.WIKI_PROPOSALS}/*`).as('getWikiProposal');
+
+      // Propose edition
+      Action.visitWikiPage();
+      cy.dataCy('participate').click();
+      cy.wait('@getWikiProposals');
+      cy.dataCy('wiki-proposal-0').click();
+      cy.main().should('contain.text', 'Voir la page wiki originale');
+      cy.dataCy('modify').click();
+      cy.url({ timeout: 5000 }).should('include', '/wiki/proposals/edit/6228cb385f506b78affc0ad1');
+      cy.main()
+        .should('contain.text', 'Modifier une proposition wiki')
+        .and('contain.text', 'Retour à la proposition');
+      cy.dataCy('content', 'textarea')
+        .should('have.value', 'Wiki page 1 content edited')
+        .type(' twice');
+      cy.dataCy('submit', 'button').click();
+
+      // See proposal
+      cy.wait('@editWikiProposal');
+      cy.wait('@getWikiProposal');
+      cy.main()
+        .should('contain.text', '← Voir toutes mes propositions')
+        .and('contain.text', 'Wiki page 1 content edited twice')
+        .and('contain.text', 'Wiki page 1');
+
+      // Validate
+      cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.WIKI, wikiPrivilege.WRITE);
+      cy.reload();
+      cy.dataCy('validate').click();
+      cy.dataCy('confirm-validate').click();
+      cy.url({ timeout: 5000 }).should('include', '/wiki/wiki-page-1');
+      cy.main().should('have.text', 'Wiki page 1Wiki page 1 content edited twice');
+
+      // Reload to test SSR
+      cy.reload();
+      cy.main().should('have.text', 'Wiki page 1Wiki page 1 content edited twice');
+    });
+  });
+
+  context('with wiki write permission', () => {
+    before(() => {
+      cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.WIKI, wikiPrivilege.WRITE);
+    });
+
+    beforeEach(() => {
+      cy.seedCollection('wikiPages', 'wikiPages');
+      cy.seedCollection('wikiProposals', 'wikiProposals');
+      cy.revalidate([
+        `/${serverName}${NavRoute.WIKI}/wiki-page-1`,
+        `/${serverName}${NavRoute.WIKI}/proposal-1-edited`,
+      ]);
+    });
+
+    it('should update the wiki page when edited', () => {
+      Action.visitWikiProposal('6228cb385f506b78affc0ab4'); // "Wiki page 1" edition proposal
+      cy.dataCy('validate').click();
+      cy.dataCy('confirm-validate').click();
+      cy.url({ timeout: 5000 }).should('include', '/wiki/wiki-page-1');
+      cy.main().should('have.text', 'Wiki page 1Wiki page 1 content edited');
+    });
+
+    it('should be able to reject a creation proposal', () => {
+      Action.visitWikiProposal('6228cb385f506b78affc0ab1'); // "Proposal 1 edited" creation proposal
+      cy.dataCy('reject').click();
+      cy.dataCy('confirm-reject').click();
+      cy.url({ timeout: 5000 }).should('include', '/admin/wiki-proposals');
+      cy.dataCy('rejected-icon').should('have.length', 2);
+
+      cy.visit(`/${serverName}/wiki/proposal-1-edited`, { failOnStatusCode: false });
+      cy.main().should('contain.text', '404');
+    });
+
+    it('should be able to reject an edition proposal', () => {
+      Action.visitWikiProposal('6228cb385f506b78affc0ab4'); // "Wiki page 1" edition proposal
+      cy.dataCy('reject').click();
+      cy.dataCy('confirm-reject').click();
+      cy.url({ timeout: 5000 }).should('include', '/admin/wiki-proposals');
+      cy.dataCy('rejected-icon').should('have.length', 2);
+
+      cy.visit(`/${serverName}/wiki/wiki-page-1`);
+      cy.main().should('contain.text', 'Wiki page 1 content');
+      cy.main().should('not.contain.text', 'Wiki page 1 content edited');
     });
   });
 });
