@@ -27,6 +27,10 @@ const getUpdatedWikiPages = (
 const useUpdateWikiPageTags = (wikiPage: WikiPage) => {
   const queryClient = useQueryClient();
 
+  const onSuccess = () => {
+    queryClient.invalidateQueries(QueryKeys.FEATURED_WIKI_PAGES);
+  };
+
   const addWikiPageTag = useOptimisticMutation<QueryKeys.WIKI_PAGES, WikiPageTag>(
     QueryKeys.WIKI_PAGES,
     addOrRemoveWikiPageTagOnServer(wikiPage, AddOrRemoveAction.ADD),
@@ -35,7 +39,7 @@ const useUpdateWikiPageTags = (wikiPage: WikiPage) => {
       return getUpdatedWikiPages(previousWikiPages, wikiPage, [...oldWikiPageTags, updatedTag]);
     },
     'La page wiki a bien été mise à jour avec un nouveau tag.',
-    { onSuccess: () => queryClient.refetchQueries(QueryKeys.FEATURED_WIKI_PAGES) },
+    { onSuccess },
   );
 
   const removeWikiPageTag = useOptimisticMutation<QueryKeys.WIKI_PAGES, WikiPageTag>(
@@ -50,7 +54,7 @@ const useUpdateWikiPageTags = (wikiPage: WikiPage) => {
       );
     },
     'La page wiki a bien été mise à jour sans le tag.',
-    { onSuccess: () => queryClient.refetchQueries(QueryKeys.FEATURED_WIKI_PAGES) },
+    { onSuccess },
   );
 
   return { addWikiPageTag, removeWikiPageTag };

@@ -9,11 +9,11 @@ const getFeaturedWikiPagesFromServer = async (): Promise<FeaturedWikiPages> => {
   return data;
 };
 
-const useFeaturedWikiPages = ({ initialData }: { initialData: FeaturedWikiPages }) => {
+const useFeaturedWikiPages = ({ placeholderData }: { placeholderData: FeaturedWikiPages }) => {
   const featuredWikiPagesQuery = useQuery(
     QueryKeys.FEATURED_WIKI_PAGES,
     getFeaturedWikiPagesFromServer,
-    { initialData: initialData },
+    { placeholderData },
   );
 
   // since initialData is provided, data can't be undefined

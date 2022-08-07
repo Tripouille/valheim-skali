@@ -5,12 +5,12 @@ import getFeaturedWikiPages from 'api-utils/wiki/getFeaturedWikiPages';
 import useFeaturedWikiPages from 'hooks/wiki/useFeaturedWikiPages';
 
 interface WikiHomePageProps {
-  initialFeaturedWikiPagesSerialized: string;
+  SSRFeaturedWikiPages: string;
 }
 
-const WikiHomePage: React.FC<WikiHomePageProps> = ({ initialFeaturedWikiPagesSerialized }) => {
+const WikiHomePage: React.FC<WikiHomePageProps> = ({ SSRFeaturedWikiPages }) => {
   const { data: featuredWikiPages } = useFeaturedWikiPages({
-    initialData: JSON.parse(initialFeaturedWikiPagesSerialized),
+    placeholderData: JSON.parse(SSRFeaturedWikiPages),
   });
 
   return <WikiHome featuredWikiPages={featuredWikiPages} />;
@@ -19,7 +19,7 @@ const WikiHomePage: React.FC<WikiHomePageProps> = ({ initialFeaturedWikiPagesSer
 export const getStaticProps: GetStaticProps = async () => {
   const featuredWikiPages = await getFeaturedWikiPages();
 
-  return { props: { initialFeaturedWikiPagesSerialized: JSON.stringify(featuredWikiPages) } };
+  return { props: { SSRFeaturedWikiPages: JSON.stringify(featuredWikiPages) } };
 };
 
 export default WikiHomePage;

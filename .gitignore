@@ -40,3 +40,6 @@ packages/tests/cypress.env.json
 # storybook
 storybook-static
 build-storybook.log
+
+# cypress
+tests/integration/cypress/videos
