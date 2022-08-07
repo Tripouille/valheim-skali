@@ -10,7 +10,7 @@ const getWikiPages = async (): Promise<WikiPage[]> => {
 };
 
 const useWikiPages = (): UseQueryResult<WikiPage[]> => {
-  const wikiPagesQuery = useQuery(QueryKeys.WIKI_PAGES, getWikiPages);
+  const wikiPagesQuery = useQuery(QueryKeys.WIKI_PAGES, getWikiPages, { staleTime: 0 });
 
   return wikiPagesQuery;
 };
