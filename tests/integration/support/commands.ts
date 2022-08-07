@@ -17,6 +17,10 @@ Cypress.Commands.add('login', () => {
   cy.setCookie(sessionCookieName, Cypress.env('TEST_SESSION_TOKEN'));
 });
 
+Cypress.Commands.add('revalidate', (urls: string[]) => {
+  cy.request('POST', '/api/revalidate', { urls });
+});
+
 Cypress.Commands.add('seedCollection', <T>(collectionName: string, fixtureFileName: string) => {
   cy.fixture<Array<T>>(fixtureFileName).then(data =>
     cy.task('seedCollection', { collectionName, data }),

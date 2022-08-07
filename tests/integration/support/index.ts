@@ -16,6 +16,9 @@ declare global {
       /* Login by setting a custom cookie for next-auth */
       login(): void;
 
+      /* Revalidate server-side rendered pages (usually following database population) */
+      revalidate(urls: string[]): void;
+
       // Populate collections in database
       seedCollection(collectionName: string, fixtureFileName: string): void;
       setPermission<C extends PermissionCategory>(
