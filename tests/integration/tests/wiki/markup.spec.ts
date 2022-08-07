@@ -70,6 +70,16 @@ describe('markup', () => {
     cy.dataCy('content', 'textarea').clear().type('[[Wiki page 2]]');
     cy.dataCy('content', 'div').should('include.html', '<a').and('include.text', 'Wiki page 2');
     cy.dataCy('content', 'div').find('a').should('have.css', 'color', 'rgb(194, 230, 255)');
+    cy.dataCy('content', 'textarea').clear().type('[[Wiki page 2|A different name]] and the suite');
+    cy.dataCy('content', 'div')
+      .should('include.html', 'wiki-page-2')
+      .and('include.text', 'A different name and the suite')
+      .and('include.html', '</a> and the suite');
+    cy.dataCy('content', 'textarea').clear().type('[[Wiki page 2|Banana]]s and the suite');
+    cy.dataCy('content', 'div')
+      .should('include.html', 'wiki-page-2')
+      .and('include.text', 'Bananas and the suite')
+      .and('include.html', '</a> and the suite');
 
     // Icon
     cy.dataCy('content', 'textarea').clear().type('{{}{{}UnknownIconName}}');
