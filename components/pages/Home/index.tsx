@@ -194,19 +194,6 @@ const Home = () => (
           height={200}
         />
       </Box>
-
-      <Box w="full">
-        <Heading as="h1" size="l" mb="3">
-          Le Skali
-        </Heading>
-        <Paragraphs
-          paragraphs={[
-            `Le Skali est un site permettant aux dieux et aux vikings de partager des informations et de
-      s'organiser. Il est et sera toujours en développement. Par conséquent, les images
-      ci-dessus seront bientôt disséminées dans différentes sections !`,
-          ]}
-        />
-      </Box>
     </VStack>
   </Background>
 );
