@@ -1,4 +1,4 @@
-import { AdminNavRoute, AuthRoute, MenuRoute, NavRoute, Route } from './routes';
+import { AdminNavRoute, AuthRoute, MenuRoute, NavRoute, OldNavRoute, Route } from './routes';
 
 export enum PermissionCategory {
   EVENT = 'EVENT',
@@ -128,9 +128,9 @@ export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions | Permissions[]> =
   [NavRoute.HOME]: {},
   [NavRoute.RULES]: {},
   [NavRoute.EVENTS]: { [PermissionCategory.EVENT]: eventPrivilege.READ },
-  [NavRoute.TRADE]: {},
-  [NavRoute.MODS]: {},
-  [NavRoute.WORLD]: {},
+  [OldNavRoute.TRADE]: {},
+  [OldNavRoute.MODS]: {},
+  [OldNavRoute.WORLD]: {},
   [NavRoute.WIKI]: {},
   [AdminNavRoute.MEMBERS]: { [PermissionCategory.USER]: userPrivilege.READ },
   [AdminNavRoute.NON_MEMBERS]: { [PermissionCategory.USER]: userPrivilege.READ },

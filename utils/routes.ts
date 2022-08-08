@@ -17,10 +17,12 @@ export enum NavRoute {
   HOME = '/',
   RULES = '/rules',
   EVENTS = '/events',
+  WIKI = '/wiki',
+}
+export enum OldNavRoute {
   TRADE = '/trade',
   MODS = '/mods',
   WORLD = '/world',
-  WIKI = '/wiki',
 }
 export enum AdminNavRoute {
   MEMBERS = '/members',
@@ -36,16 +38,16 @@ export enum MenuRoute {
 export enum AuthRoute {
   SIGNIN = '/auth/signin',
 }
-export type Route = NavRoute | AdminNavRoute | MenuRoute | AuthRoute;
+export type Route = NavRoute | AdminNavRoute | MenuRoute | AuthRoute | OldNavRoute;
 
 /** Maps navigation routes to displayed labels (e.g.., in navbar) */
 export const ROUTES_TO_LABEL: Record<Route, string> = {
   [NavRoute.HOME]: 'Skali',
   [NavRoute.RULES]: 'Règlement',
   [NavRoute.EVENTS]: 'Événements',
-  [NavRoute.TRADE]: 'Commerce',
-  [NavRoute.MODS]: 'Mods',
-  [NavRoute.WORLD]: 'Monde',
+  [OldNavRoute.TRADE]: 'Commerce',
+  [OldNavRoute.MODS]: 'Mods',
+  [OldNavRoute.WORLD]: 'Monde',
   [NavRoute.WIKI]: 'Wiki',
   [AdminNavRoute.MEMBERS]: 'Vikings',
   [AdminNavRoute.NON_MEMBERS]: 'Âmes perdues',
