@@ -4,7 +4,7 @@ import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
 import { CypressProps } from 'utils/types';
 import { eventPrivilege, PermissionCategory } from 'utils/permissions';
-import { Event } from 'data/event';
+import { Event, isEventClosed } from 'data/event';
 import Secured from 'components/core/Authentication/Secured';
 import {
   Modal,
@@ -15,9 +15,9 @@ import {
 } from 'components/core/Overlay/Modal';
 import Box from 'components/core/Containers/Box';
 import IconButton from 'components/core/Interactive/IconButton';
-import useUpdateEvent from './hooks/useUpdateEvent';
-import useDeleteEvent from './hooks/useDeleteEvent';
-import { editIconSize, EventContext, isEventClosed } from './utils';
+import useUpdateEvent from 'hooks/events/useUpdateEvent';
+import useDeleteEvent from 'hooks/events/useDeleteEvent';
+import { editIconSize, EventContext } from './utils';
 import EventItem from './EventItem';
 import EventForm from './EventForm';
 

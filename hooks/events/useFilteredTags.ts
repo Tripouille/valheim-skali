@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { useEvents } from './useEvents';
+import useEvents from './useEvents';
 
 const useFilteredTags = (chosenTags: string[], filter: string) => {
   const { data: events = [] } = useEvents();

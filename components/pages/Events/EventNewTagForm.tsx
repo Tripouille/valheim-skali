@@ -8,7 +8,7 @@ import { FormControl } from 'components/core/Form/FormControl';
 import Combobox from 'components/core/Form/Combobox';
 import Input from 'components/core/Form/Input';
 import IconButton from 'components/core/Interactive/IconButton';
-import useFilteredTags from './hooks/useFilteredTags';
+import useFilteredTags from 'hooks/events/useFilteredTags';
 
 export interface EventNewTagFormProps {
   tags: string[];

@@ -29,9 +29,6 @@ const proposeWikiPageCreation = async (req: Req, res: Res) => {
   );
 
   res.status(201).json({ ...wikiProposal, _id: wikiProposalId });
-
-  // TODO
-  // revalidateWiki(res);
 };
 
 export default proposeWikiPageCreation;

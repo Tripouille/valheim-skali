@@ -1,19 +1,18 @@
 import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import { Event } from 'data/event';
+import { Event, eventComp } from 'data/event';
 import useSession from 'hooks/useSession';
 import { APIRoute } from 'utils/routes';
 import { QueryKeys, QueryTypes } from 'utils/queryClient';
 import { eventPrivilege, PermissionCategory } from 'utils/permissions';
-import { eventComp } from '../utils';
 
-export const getEvents = async (): Promise<Event[]> => {
+export const getEventsFromServer = async (): Promise<Event[]> => {
   const { data } = await axios.get<Event[]>(APIRoute.EVENTS);
   return data;
 };
 
-export const useEvents = () => {
+const useEvents = () => {
   const session = useSession();
 
   const sortEvents = useCallback((events: QueryTypes[QueryKeys.EVENTS]) => {
@@ -21,7 +20,7 @@ export const useEvents = () => {
     return events.sort(eventComp(now));
   }, []);
 
-  const eventsQuery = useQuery(QueryKeys.EVENTS, getEvents, {
+  const eventsQuery = useQuery(QueryKeys.EVENTS, getEventsFromServer, {
     enabled: session.hasRequiredPermissions({
       [PermissionCategory.EVENT]: eventPrivilege.READ,
     }),
@@ -30,3 +29,5 @@ export const useEvents = () => {
 
   return eventsQuery;
 };
+
+export default useEvents;

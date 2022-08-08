@@ -1,10 +1,9 @@
 import { UseMutationOptions } from 'react-query';
 import axios from 'axios';
-import { CreateEventData } from 'data/event';
+import { CreateEventData, getEventDataForServer } from 'data/event';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
-import { getEventDataForServer } from '../utils';
 
 const createEventOnServer = async (eventData: CreateEventData) => {
   await axios.post(`${APIRoute.EVENTS}`, getEventDataForServer(eventData));

@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { Event, CreateEventData } from 'data/event';
+import { Event, CreateEventData, getEventDataForServer } from 'data/event';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
-import { getEventDataForServer } from '../utils';
 
 const updateEventOnServer = (updatedEvent: Event) => async (newEvent: CreateEventData) => {
   await axios.put(`${APIRoute.EVENTS}/${updatedEvent._id}`, getEventDataForServer(newEvent));

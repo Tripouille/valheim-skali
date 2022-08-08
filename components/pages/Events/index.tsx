@@ -10,8 +10,8 @@ import { VStack } from 'components/core/Containers/Stack';
 import Secured from 'components/core/Authentication/Secured';
 import Button from 'components/core/Interactive/Button';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
-import { useEvents } from './hooks/useEvents';
-import useCreateEvent from './hooks/useCreateEvent';
+import useEvents from 'hooks/events/useEvents';
+import useCreateEvent from 'hooks/events/useCreateEvent';
 import EventForm from './EventForm';
 import EventCard from './EventCard';
 
