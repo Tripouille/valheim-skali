@@ -66,11 +66,11 @@ describe('users pages', () => {
     describe('members page', () => {
       beforeEach(() => {
         Action.visitUsersPage(AdminNavRoute.MEMBERS);
+        Select.usersLines().should('have.length', 4);
       });
 
       it('should display members and edition tools', () => {
         cy.dataCy('admin').should('contain.text', 'Vikings');
-        Select.usersLines().should('have.length', 4);
         cy.dataCy('edit', 'button').should('have.length', 4);
       });
 

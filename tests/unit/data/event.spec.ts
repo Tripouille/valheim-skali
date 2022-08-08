@@ -1,5 +1,4 @@
-import { eventComp } from 'components/pages/Events/utils';
-import { Event } from 'data/event';
+import { Event, eventComp } from 'data/event';
 
 interface GenEventArgs {
   startDate?: string;

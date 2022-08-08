@@ -1,19 +1,22 @@
 import { NavRoute, serverName } from 'utils/routes';
 
 describe('markup', () => {
-  it('converts text to components', () => {
+  before(() => {
     cy.visit(`/${serverName}${NavRoute.WIKI}/proposals/new`);
-    cy.dataCy('title', 'input').type('Wiki page title');
+  });
 
-    // Simple
+  it('Simple', () => {
+    cy.dataCy('title', 'input').type('Wiki page title');
     cy.dataCy('content', 'textarea').type('Wiki page content');
     cy.dataCy('content', 'div').should('have.html', 'Wiki page content');
+  });
 
-    // Newline
+  it('Newline', () => {
     cy.dataCy('content', 'textarea').type('\nwith a new line');
     cy.dataCy('content', 'div').should('have.html', 'Wiki page content<br>with a new line');
+  });
 
-    // Bold, italic
+  it('Bold, italic', () => {
     cy.dataCy('content', 'textarea')
       .clear()
       .type('text is *italic* **bold** ***italic and bold***');
@@ -21,13 +24,15 @@ describe('markup', () => {
       'have.html',
       'text is <em>italic</em> <strong>bold</strong> <strong><em>italic and bold</em></strong>',
     );
+  });
 
-    // Striked
+  it('Striked', () => {
     cy.dataCy('content', 'textarea').clear().type('text is ~~striked~~');
     cy.dataCy('content', 'div').should('include.html', 'text is <span');
     cy.dataCy('content', 'div').find('span').should('have.css', 'text-decoration');
+  });
 
-    // Spoiler
+  it('Spoiler', () => {
     cy.dataCy('content', 'textarea').clear().type('text is ||hidden||');
     cy.dataCy('content', 'div').should('include.html', 'text is <span');
     cy.dataCy('content', 'div')
@@ -35,20 +40,24 @@ describe('markup', () => {
       .should('have.css', 'color', 'rgba(0, 0, 0, 0)')
       .click()
       .should('not.have.css', 'color', 'rgba(0, 0, 0, 0)');
+  });
 
-    // Title
+  it('Title', () => {
     cy.dataCy('content', 'textarea').clear().type('==Title==');
     cy.dataCy('content', 'div').should('include.html', '<h2').and('include.text', 'Title');
-    cy.dataCy('content', 'textarea').clear().type('==Title==\n\nText'); // ignore one newline
+    // ignore one newline
+    cy.dataCy('content', 'textarea').clear().type('==Title==\n\nText');
     cy.dataCy('content', 'div').should('include.html', '</h2><br>Text');
+  });
 
-    // External link
+  it('External link', () => {
     cy.dataCy('content', 'textarea').clear().type('[url]');
     cy.dataCy('content', 'div')
       .should('include.html', '<a target="_blank" rel="noopener"')
       .and('include.html', 'href="url">url</a>');
+  });
 
-    // Discord link
+  it('Discord link', () => {
     cy.dataCy('content', 'textarea').clear().type('[[[discord-url]]]');
     cy.dataCy('content', 'div')
       .should('include.html', 'href="discord-url"')
@@ -59,8 +68,9 @@ describe('markup', () => {
       .should('include.html', 'href="discord-url"')
       .and('include.html', '<svg')
       .and('include.html', 'Nom du lien discord');
+  });
 
-    // Wiki internal link
+  it('Wiki internal link', () => {
     cy.seedCollection('wikiPages', 'wikiPages');
     cy.dataCy('content', 'textarea').clear().type('[[Unknown wiki page name]]');
     cy.dataCy('content', 'div')
@@ -80,16 +90,18 @@ describe('markup', () => {
       .should('include.html', 'wiki-page-2')
       .and('include.text', 'Bananas and the suite')
       .and('include.html', '</a> and the suite');
+  });
 
-    // Icon
+  it('Icon', () => {
     cy.dataCy('content', 'textarea').clear().type('{{}{{}UnknownIconName}}');
     cy.dataCy('content', 'div').should('include.html', '<span title="Icône non trouvée"');
     cy.dataCy('content', 'textarea').clear().type('{{}{{}Gi3DHammer}}');
     cy.dataCy('content', 'div')
       .should('not.include.html', '<span title="Icône non trouvée"')
       .and('include.html', '<svg');
+  });
 
-    // Image
+  it('Image', () => {
     cy.dataCy('content', 'textarea').clear().type('<<url>>');
     cy.dataCy('content', 'div').should('include.html', '<button');
     cy.dataCy('content', 'div').find('div').should('have.css', 'display', 'block');
@@ -122,20 +134,21 @@ describe('markup', () => {
       .and('have.css', 'object-fit', 'cover')
       .and('have.css', 'object-position', '100% 50%');
     cy.dataCy('content', 'div').should('have.text', 'legend');
+  });
 
-    // Grid
+  it('Grid', () => {
     cy.dataCy('content', 'textarea')
       .clear()
       .type('<Grille 70% 30%>\n<Colonne>Column 1<Colonne>Column 2</Grille>');
     cy.dataCy('content', 'div')
       .children()
       .should('have.css', 'display', 'grid')
-      .and('have.css', 'grid-template-columns', '946.4px 405.6px') //70% 30%
       .and('have.text', 'Column 1Column 2')
       .find('div')
       .should('have.length', 2);
+  });
 
-    // Pre (ignore markup)
+  it('Pre (ignore markup)', () => {
     cy.dataCy('content', 'textarea')
       .clear()
       .type('`1 *2* **3** ***4*** ~~5~~ ||6|| [7] [[8]] [[[9]]] <<10>> {{}{{}11}}`');
@@ -145,8 +158,9 @@ describe('markup', () => {
         'contain.html',
         '1 *2* **3** ***4*** ~~5~~ ||6|| [7] [[8]] [[[9]]] &lt;&lt;10&gt;&gt; {{11}}',
       );
+  });
 
-    // No xss vulnerability
+  it('No xss vulnerability', () => {
     cy.dataCy('content', 'textarea').type('Text in <strong>bold</strong>');
     cy.dataCy('content', 'div').should('contain.html', 'Text in &lt;strong&gt;bold&lt;/strong&gt;');
   });
