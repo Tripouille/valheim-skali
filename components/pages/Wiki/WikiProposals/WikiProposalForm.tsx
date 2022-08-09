@@ -35,13 +35,17 @@ const getFormDataFromWikiPage = (wikiPage: WikiPage): WikiPageContent => {
   return { title: wikiPage.title, content: wikiPage.content };
 };
 
-export interface WikiFormProps {
+export interface WikiProposalFormProps {
   wikiPage?: WikiPage;
   wikiProposal?: WikiProposal;
   onSubmit: (formData: WikiPageContent) => void;
 }
 
-const WikiForm: React.FC<WikiFormProps> = ({ wikiPage, wikiProposal, onSubmit }) => {
+const WikiProposalForm: React.FC<WikiProposalFormProps> = ({
+  wikiPage,
+  wikiProposal,
+  onSubmit,
+}) => {
   const [formData, setFormData] = useState<Partial<WikiPageContent>>(
     wikiProposal
       ? getFormDataFromWikiProposal(wikiProposal)
@@ -163,4 +167,4 @@ const WikiForm: React.FC<WikiFormProps> = ({ wikiPage, wikiProposal, onSubmit })
   );
 };
 
-export default WikiForm;
+export default WikiProposalForm;

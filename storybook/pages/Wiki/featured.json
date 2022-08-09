@@ -1,0 +1,100 @@
+{
+  "lastPages": [
+    {
+      "_id": "6228cb385f506b78affc0ac1",
+      "slug": "recent-page",
+      "title": "Recent page",
+      "content": "Recent page content",
+      "approvalDate": "2000-01-21",
+      "tags": [],
+      "views": 0
+    },
+    {
+      "_id": "6228cb385f506b78affc0ac2",
+      "slug": "another-page-1",
+      "title": "Another page 1",
+      "content": "Another page 1 content",
+      "approvalDate": "2000-01-05",
+      "tags": [],
+      "views": 0
+    },
+    {
+      "_id": "6228cb385f506b78affc0ac3",
+      "slug": "another-page-2",
+      "title": "Another page 2",
+      "content": "Another page 2 content",
+      "approvalDate": "2000-01-04",
+      "tags": [],
+      "views": 0
+    },
+    {
+      "_id": "6228cb385f506b78affc0ac4",
+      "slug": "another-page-2",
+      "title": "Another page 2",
+      "content": "Another page 2 content",
+      "approvalDate": "2000-01-03",
+      "tags": [],
+      "views": 0
+    },
+    {
+      "_id": "6228cb385f506b78affc0ac5",
+      "slug": "another-page-3",
+      "title": "Another page 3",
+      "content": "Another page 3 content",
+      "approvalDate": "2000-01-02",
+      "tags": [],
+      "views": 0
+    }
+  ],
+  "essentialPages": [
+    {
+      "_id": "6228cb385f506b78affc0ac6",
+      "slug": "essential-and-starting-page",
+      "title": "Essential and starting page",
+      "content": "Essential and starting page content",
+      "approvalDate": "2000-01-01",
+      "tags": [],
+      "views": 0
+    },
+    {
+      "_id": "6228cb385f506b78affc0ac7",
+      "slug": "essential-page-for-late-game-with-a-very-long-name",
+      "title": "Essential page for late game with a very long name",
+      "content": "Essential page for late game with a very long name content",
+      "approvalDate": "2000-01-01",
+      "tags": [],
+      "views": 0
+    }
+  ],
+  "popularPages": [
+    {
+      "_id": "6228cb385f506b78affc0ac8",
+      "slug": "popular-page",
+      "title": "Popular page",
+      "content": "Popular page content",
+      "approvalDate": "2000-01-02",
+      "tags": [],
+      "views": 0
+    }
+  ],
+  "startingPages": [
+    {
+      "_id": "6228cb385f506b78affc0ac6",
+      "slug": "essential-and-starting-page",
+      "title": "Essential and starting page",
+      "content": "Essential and starting page content",
+      "approvalDate": "2000-01-01",
+      "tags": [],
+      "views": 0
+    },
+    {
+      "_id": "6228cb385f506b78affc0ac9",
+      "slug": "page-for-beginners",
+      "title": "Page for beginners",
+      "content": "Page for beginners content",
+      "approvalDate": "2000-01-03",
+      "tags": [],
+      "views": 0
+    }
+  ]
+}

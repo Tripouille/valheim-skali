@@ -28,7 +28,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ filter }) => {
     <Table {...tableStyleProps}>
       <Thead>
         <Tr>
-          <Th width={getCellWidth(`${avatarSize}px`)}></Th>
+          <Th width={getCellWidth(avatarSize)}></Th>
           <Th textAlign="center">Pseudo en jeu</Th>
           <Th textAlign="center" display={{ base: 'none', md: 'table-cell' }}>
             Pseudo discord

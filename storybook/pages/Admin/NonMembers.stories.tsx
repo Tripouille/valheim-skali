@@ -4,8 +4,10 @@ import UsersTable from 'components/pages/Users/UsersTable';
 import AdminLayout from 'components/Layout/Admin/AdminLayout';
 import PageTitle from 'components/core/Typography/PageTitle';
 import { UserQueryFilter } from 'hooks/users/useUsers';
-import { AdminNavRoute, ROUTES_TO_LABEL } from 'utils/routes';
-import { PermissionCategory, userPrivilege } from 'utils/permissions';
+import { AdminNavRoute, APIRoute, ROUTES_TO_LABEL } from 'utils/routes';
+import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
+import nonMembers from './nonMembers.json';
+import roles from './roles.json';
 
 const { defaultExport, StoryFactory } = storybookSetup(
   UsersTable,
@@ -30,22 +32,31 @@ export const NonMembersEmpty = StoryFactory(
   { filter: UserQueryFilter.NON_MEMBER },
   {
     permissions: { [PermissionCategory.USER]: userPrivilege.READ },
+    requestResults: [{ url: APIRoute.USERS, result: [] }],
+    router: { query: { route: 'non-members' } },
   },
 );
 
-// TODO
-// export const NonMembersReadOnly = StoryFactory(
-//   { filter: UserQueryFilter.NON_MEMBER, users: nonMembers },
-//   { permissions: { [PermissionCategory.USER]: userPrivilege.READ } },
-// );
+export const NonMembersReadOnly = StoryFactory(
+  { filter: UserQueryFilter.NON_MEMBER },
+  {
+    permissions: { [PermissionCategory.USER]: userPrivilege.READ },
+    requestResults: [{ url: APIRoute.USERS, result: nonMembers }],
+    router: { query: { route: 'non-members' } },
+  },
+);
 
-// export const NonMembersCanEdit = StoryFactory(
-//   { filter: UserQueryFilter.NON_MEMBER, users: nonMembers },
-//   {
-//     permissions: {
-//       [PermissionCategory.USER]: userPrivilege.READ_WRITE,
-//       [PermissionCategory.ROLE]: rolePrivilege.READ,
-//     },
-//     requestResults: [{ url: APIRoute.ROLES, result: roles }],
-//   },
-// );
+export const NonMembersCanEdit = StoryFactory(
+  { filter: UserQueryFilter.NON_MEMBER },
+  {
+    permissions: {
+      [PermissionCategory.USER]: userPrivilege.READ_WRITE,
+      [PermissionCategory.ROLE]: rolePrivilege.READ,
+    },
+    requestResults: [
+      { url: APIRoute.USERS, result: nonMembers },
+      { url: APIRoute.ROLES, result: roles },
+    ],
+    router: { query: { route: 'non-members' } },
+  },
+);

@@ -1,0 +1,44 @@
+[
+  {
+    "_id": "6228cb385f506b78affc0ab1",
+    "proposalType": "creation",
+    "authorId": "6230b7f8d9758180e91b6b20",
+    "status": "proposed",
+    "suggestions": [
+      {
+        "title": "Proposal 1 edited",
+        "content": "Content of proposal 1 edited",
+        "date": "2000-01-02"
+      },
+      { "title": "Proposal 1", "content": "Content of proposal 1", "date": "2000-02-01" }
+    ]
+  },
+  {
+    "_id": "6228cb385f506b78affc0ab2",
+    "proposalType": "creation",
+    "authorId": "6230b7f8d9758180e91b6b20",
+    "status": "validated",
+    "suggestions": [
+      { "title": "Proposal 2", "content": "Content of proposal 2", "date": "2000-03-01" }
+    ]
+  },
+  {
+    "_id": "6228cb385f506b78affc0ab3",
+    "proposalType": "creation",
+    "authorId": "6230b7f8d9758180e91b6b20",
+    "status": "rejected",
+    "suggestions": [
+      { "title": "Proposal 3", "content": "Content of proposal 3", "date": "2000-04-01" }
+    ]
+  },
+  {
+    "_id": "6228cb385f506b78affc0ab4",
+    "proposalType": "edition",
+    "wikiPageId": "6228cb385f506b78affc0ac1",
+    "authorId": "6230b7f8d9758180e91b6b20",
+    "status": "proposed",
+    "suggestions": [
+      { "title": "Wiki page 1", "content": "Wiki page 1 content edited", "date": "2000-01-01" }
+    ]
+  }
+]

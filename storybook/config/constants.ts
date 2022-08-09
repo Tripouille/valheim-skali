@@ -11,5 +11,6 @@ export enum StoryCategory {
   CORE_TYPOGRAPHY = 'core/Typography',
   PAGE = 'page',
   PAGE_ADMIN = 'page/Admin',
+  PAGE_WIKI = 'page/Wiki',
   LAYOUT = 'layout',
 }
