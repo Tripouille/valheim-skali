@@ -14,12 +14,12 @@ const wikiProposalSample = {
 
 describe('participate to wiki and edit wiki pages', () => {
   before(() => {
-    cy.seedCollection('wikiPages', 'wikiPages');
-    cy.revalidate([`/${serverName}/wiki/wiki-page-1`]);
     cy.setUserRoles([SpecialRoleName.MEMBER]);
   });
 
   beforeEach(() => {
+    cy.seedCollection('wikiPages', 'wikiPages');
+    cy.revalidate([`/${serverName}/wiki/wiki-page-1`]);
     cy.task('seedCollection', { collectionName: 'wikiProposals', data: [] });
     cy.login();
   });
@@ -47,10 +47,12 @@ describe('participate to wiki and edit wiki pages', () => {
 
     it('should be able to propose a new wiki page, that is then visible when validated', () => {
       cy.intercept('POST', APIRoute.WIKI_PROPOSALS).as('proposeWikiPageCreation');
+      cy.intercept('GET', APIRoute.WIKI_PROPOSALS).as('getWikiProposals');
 
       // Propose
       Action.visitWikiPage();
       cy.dataCy('participate').click();
+      cy.wait('@getWikiProposals');
       cy.dataCy('propose').click();
       cy.url({ timeout: 5000 }).should('include', '/wiki/proposals/new');
       cy.main().should('contain.text', 'Proposer une nouvelle page wiki');
@@ -60,6 +62,7 @@ describe('participate to wiki and edit wiki pages', () => {
 
       // See proposal
       cy.wait('@proposeWikiPageCreation');
+      cy.wait('@getWikiProposals');
       Select.wikiProposalsLines().should('have.length', 1).and('have.text', 'Title');
       cy.dataCy('wiki-proposal-0').click();
       cy.main({ timeout: 2000 })
@@ -72,7 +75,11 @@ describe('participate to wiki and edit wiki pages', () => {
 
       // Validate
       cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.WIKI, wikiPrivilege.WRITE);
+      cy.intercept('GET', APIRoute.SESSION).as('getSession');
+      cy.intercept('GET', `${APIRoute.WIKI_PROPOSALS}/*`).as('getWikiProposal');
       cy.reload();
+      cy.wait('@getSession');
+      cy.wait('@getWikiProposal');
       cy.dataCy('validate').click();
       cy.dataCy('confirm-validate').click();
       cy.url({ timeout: 5000 }).should('include', '/wiki/title');
@@ -110,7 +117,11 @@ describe('participate to wiki and edit wiki pages', () => {
 
       // Validate
       cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.WIKI, wikiPrivilege.WRITE);
+      cy.intercept('GET', APIRoute.SESSION).as('getSession');
+      cy.intercept('GET', `${APIRoute.WIKI_PROPOSALS}/*`).as('getWikiProposal');
       cy.reload();
+      cy.wait('@getSession');
+      cy.wait('@getWikiProposal');
       cy.dataCy('validate').click();
       cy.dataCy('confirm-validate').click();
       cy.url({ timeout: 5000 }).should('include', '/wiki/wiki-page-1-edited');
@@ -175,7 +186,10 @@ describe('participate to wiki and edit wiki pages', () => {
 
       // Validate
       cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.WIKI, wikiPrivilege.WRITE);
+      cy.intercept('GET', APIRoute.SESSION).as('getSession');
       cy.reload();
+      cy.wait('@getSession');
+      cy.wait('@getWikiProposal');
       cy.dataCy('validate').click();
       cy.dataCy('confirm-validate').click();
       cy.url({ timeout: 5000 }).should('include', '/wiki/proposal-1-edited');
@@ -193,6 +207,7 @@ describe('participate to wiki and edit wiki pages', () => {
           },
         ],
       });
+      cy.revalidate([`/${serverName}/wiki/wiki-page-1`]);
       cy.intercept('PUT', `${APIRoute.WIKI_PROPOSALS}/*`).as('editWikiProposal');
       cy.intercept('GET', APIRoute.WIKI_PROPOSALS).as('getWikiProposals');
       cy.intercept('GET', `${APIRoute.WIKI_PROPOSALS}/*`).as('getWikiProposal');
@@ -217,7 +232,7 @@ describe('participate to wiki and edit wiki pages', () => {
       // See proposal
       cy.wait('@editWikiProposal');
       cy.wait('@getWikiProposal');
-      cy.main()
+      cy.main({ timeout: 2000 })
         .should('contain.text', '← Voir toutes mes propositions')
         .and('contain.text', 'Modifier')
         .and('contain.text', 'Proposal 1 edited')
@@ -227,7 +242,10 @@ describe('participate to wiki and edit wiki pages', () => {
 
       // Validate
       cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.WIKI, wikiPrivilege.WRITE);
+      cy.intercept('GET', APIRoute.SESSION).as('getSession');
+      cy.intercept('GET', `${APIRoute.WIKI_PROPOSALS}/*`).as('getWikiProposal');
       cy.reload();
+      cy.wait('@getWikiProposal');
       cy.dataCy('validate').click();
       cy.dataCy('confirm-validate').click();
       cy.url({ timeout: 5000 }).should('include', '/wiki/proposal-1-edited');
@@ -279,7 +297,10 @@ describe('participate to wiki and edit wiki pages', () => {
 
       // Validate
       cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.WIKI, wikiPrivilege.WRITE);
+      cy.intercept('GET', APIRoute.SESSION).as('getSession');
       cy.reload();
+      cy.wait('@getSession');
+      cy.wait('@getWikiProposal');
       cy.dataCy('validate').click();
       cy.dataCy('confirm-validate').click();
       cy.url({ timeout: 5000 }).should('include', '/wiki/wiki-page-1');
@@ -314,10 +335,13 @@ describe('participate to wiki and edit wiki pages', () => {
     });
 
     it('should be able to reject a creation proposal', () => {
+      cy.intercept('GET', APIRoute.WIKI_PROPOSALS).as('getWikiProposals');
+
       Action.visitWikiProposal('6228cb385f506b78affc0ab1'); // "Proposal 1 edited" creation proposal
       cy.dataCy('reject').click();
       cy.dataCy('confirm-reject').click();
       cy.url({ timeout: 5000 }).should('include', '/admin/wiki-proposals');
+      cy.wait('@getWikiProposals');
       cy.dataCy('rejected-icon').should('have.length', 2);
 
       cy.visit(`/${serverName}/wiki/proposal-1-edited`, { failOnStatusCode: false });
@@ -325,10 +349,13 @@ describe('participate to wiki and edit wiki pages', () => {
     });
 
     it('should be able to reject an edition proposal', () => {
+      cy.intercept('GET', APIRoute.WIKI_PROPOSALS).as('getWikiProposals');
+
       Action.visitWikiProposal('6228cb385f506b78affc0ab4'); // "Wiki page 1" edition proposal
       cy.dataCy('reject').click();
       cy.dataCy('confirm-reject').click();
       cy.url({ timeout: 5000 }).should('include', '/admin/wiki-proposals');
+      cy.wait('@getWikiProposals');
       cy.dataCy('rejected-icon').should('have.length', 2);
 
       cy.visit(`/${serverName}/wiki/wiki-page-1`);

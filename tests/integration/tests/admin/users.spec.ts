@@ -142,6 +142,7 @@ describe('users pages', () => {
       it('should be able to promote to member', () => {
         cy.intercept('PATCH', `${APIRoute.USERS}/**`).as('updateUser');
 
+        Select.usersLines().should('have.length', 1);
         cy.dataCy('promote', 'button').click();
 
         cy.wait('@updateUser').its('response.statusCode').should('eq', 200);

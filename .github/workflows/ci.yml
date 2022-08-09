@@ -151,7 +151,7 @@ jobs:
           wait-on-timeout: 60
           browser: chrome
           record: true
-          parallel: true
+          parallel: false
           group: 'UI - Chrome'
           project: ./tests/integration
         env:
