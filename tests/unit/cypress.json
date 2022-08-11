@@ -4,5 +4,6 @@
   "pluginsFile": false,
   "supportFile": false,
   "fixturesFolder": false,
-  "integrationFolder": "."
+  "integrationFolder": ".",
+  "screenshotOnRunFailure": false
 }

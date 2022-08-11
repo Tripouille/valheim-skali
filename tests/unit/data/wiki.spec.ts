@@ -47,16 +47,16 @@ describe('Function sortWikiProposals', () => {
 
   it('should prioritize proposals with most recent suggestions when the status is similar', () => {
     expectSort([
-      { status: 'proposed', suggestions: [{ date: '2000-01-01' }] },
       { status: 'proposed', suggestions: [{ date: '2000-01-02' }] },
+      { status: 'proposed', suggestions: [{ date: '2000-01-01' }] },
     ]);
     expectSort([
-      { status: 'validated', suggestions: [{ date: '2000-01-01' }] },
       { status: 'rejected', suggestions: [{ date: '2000-01-02' }] },
+      { status: 'validated', suggestions: [{ date: '2000-01-01' }] },
     ]);
     expectSort([
-      { status: 'validated', suggestions: [{ date: '2000-01-01' }] },
       { status: 'validated', suggestions: [{ date: '2000-01-02' }] },
+      { status: 'validated', suggestions: [{ date: '2000-01-01' }] },
     ]);
   });
 });
