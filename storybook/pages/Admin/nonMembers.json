@@ -3,14 +3,14 @@
     "_id": "0",
     "name": "Name",
     "email": "",
-    "image": "https://cdn.discordapp.com/avatars/176785490412961792/c9bb66f369e6755ef2d9ebbd9402553a.png"
+    "image": "https://cdn.discordapp.com/avatars/176785490412961792/c9bb66f369e6755ef2d9ebbd9402553a.png",
+    "nameInGame": "a name in game"
   },
   {
     "_id": "1",
     "name": "A very long name with lots of words but also with space A very long name with lots of words but also with space A very long name with lots of words but also with space",
     "email": "",
     "image": "unknown",
-    "nameInGame": "test",
     "roleIds": ["1", "3"]
   },
   {

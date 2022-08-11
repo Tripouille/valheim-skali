@@ -1,10 +1,11 @@
 import { BsPlusLg } from 'react-icons/bs';
 import { useDisclosure } from '@chakra-ui/react';
-import { rolePrivilege, PermissionCategory } from 'utils/permissions';
+import QueryHandler from 'components/core/Disclosure/QueryHandler';
 import Button from 'components/core/Interactive/Button';
 import Secured from 'components/core/Authentication/Secured';
 import useCreateRole from 'hooks/roles/useCreateRole';
 import useRoles from 'hooks/roles/useRoles';
+import { rolePrivilege, PermissionCategory } from 'utils/permissions';
 import RolesTable from './RolesTable';
 import RoleForm from './RoleForm';
 
@@ -17,7 +18,7 @@ const Roles = () => {
   const roles = rolesQuery.data ?? [];
 
   return (
-    <>
+    <QueryHandler query={rolesQuery}>
       <RolesTable roles={roles} />
       <Secured permissions={{ [PermissionCategory.ROLE]: rolePrivilege.ADMIN }}>
         <Button
@@ -31,7 +32,7 @@ const Roles = () => {
         </Button>
         <RoleForm data-cy="create-role" isOpen={isOpen} onSubmit={createRole} onClose={onClose} />
       </Secured>
-    </>
+    </QueryHandler>
   );
 };
 

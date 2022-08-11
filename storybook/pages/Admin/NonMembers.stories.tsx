@@ -31,8 +31,14 @@ export default defaultExport;
 export const NonMembersEmpty = StoryFactory(
   { filter: UserQueryFilter.NON_MEMBER },
   {
-    permissions: { [PermissionCategory.USER]: userPrivilege.READ },
-    requestResults: [{ url: APIRoute.USERS, result: [] }],
+    permissions: {
+      [PermissionCategory.USER]: userPrivilege.READ,
+      [PermissionCategory.ROLE]: rolePrivilege.READ,
+    },
+    requestResults: [
+      { url: APIRoute.USERS, result: [] },
+      { url: APIRoute.ROLES, result: [] },
+    ],
     router: { query: { route: 'non-members' } },
   },
 );
@@ -40,8 +46,14 @@ export const NonMembersEmpty = StoryFactory(
 export const NonMembersReadOnly = StoryFactory(
   { filter: UserQueryFilter.NON_MEMBER },
   {
-    permissions: { [PermissionCategory.USER]: userPrivilege.READ },
-    requestResults: [{ url: APIRoute.USERS, result: nonMembers }],
+    permissions: {
+      [PermissionCategory.USER]: userPrivilege.READ,
+      [PermissionCategory.ROLE]: rolePrivilege.READ,
+    },
+    requestResults: [
+      { url: APIRoute.USERS, result: nonMembers },
+      { url: APIRoute.ROLES, result: roles },
+    ],
     router: { query: { route: 'non-members' } },
   },
 );

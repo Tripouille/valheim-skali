@@ -62,6 +62,7 @@ describe('wiki pages', () => {
       beforeEach(() => {
         cy.seedCollection('wikiPages', 'wikiPages');
         cy.revalidate([`/${serverName}/wiki`]);
+        cy.revalidate([`/${serverName}/wiki/wiki-page-1`]);
         Action.visitWikiPagesPage();
       });
 

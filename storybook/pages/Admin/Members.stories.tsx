@@ -31,22 +31,19 @@ export default defaultExport;
 export const MembersEmpty = StoryFactory(
   { filter: UserQueryFilter.MEMBER },
   {
-    permissions: { [PermissionCategory.USER]: userPrivilege.READ },
-    requestResults: [{ url: APIRoute.USERS, result: [] }],
+    permissions: {
+      [PermissionCategory.USER]: userPrivilege.READ,
+      [PermissionCategory.ROLE]: rolePrivilege.READ,
+    },
+    requestResults: [
+      { url: APIRoute.USERS, result: [] },
+      { url: APIRoute.ROLES, result: [] },
+    ],
     router: { query: { route: 'members' } },
   },
 );
 
 export const MembersReadOnly = StoryFactory(
-  { filter: UserQueryFilter.MEMBER },
-  {
-    permissions: { [PermissionCategory.USER]: userPrivilege.READ },
-    requestResults: [{ url: APIRoute.USERS, result: members }],
-    router: { query: { route: 'members' } },
-  },
-);
-
-export const MembersReadOnlyWithRoles = StoryFactory(
   { filter: UserQueryFilter.MEMBER },
   {
     permissions: {
@@ -56,6 +53,7 @@ export const MembersReadOnlyWithRoles = StoryFactory(
     requestResults: [
       { url: APIRoute.USERS, result: members },
       { url: APIRoute.ROLES, result: roles },
+      { url: '/unknown', result: {} }, // unknown image
     ],
     router: { query: { route: 'members' } },
   },
@@ -71,6 +69,7 @@ export const MembersCanEdit = StoryFactory(
     requestResults: [
       { url: APIRoute.USERS, result: members },
       { url: APIRoute.ROLES, result: roles },
+      { url: '/unknown', result: {} }, // unknown image
     ],
     router: { query: { route: 'members' } },
   },

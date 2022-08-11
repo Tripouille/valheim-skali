@@ -15,15 +15,6 @@ const { defaultExport, StoryFactory } = storybookSetup(
 
 export default defaultExport;
 
-export const RolesEmpty = StoryFactory(
-  {},
-  {
-    permissions: { [PermissionCategory.ROLE]: rolePrivilege.READ },
-    requestResults: [{ url: APIRoute.ROLES, result: [] }],
-    router: { query: { route: 'roles' } },
-  },
-);
-
 export const RolesReadOnly = StoryFactory(
   {},
   {
