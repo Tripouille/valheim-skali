@@ -125,11 +125,35 @@ const dateDiff = (date1: Date, date2: Date): number => {
   return Math.abs(date1.getTime() - date2.getTime());
 };
 
-const getEventProperties = (event: Event, refDate: Date) => ({
+interface EventProperties {
+  isClosed: boolean;
+  startDate: Date;
+  endDate: Date;
+  continuous: boolean;
+}
+
+const getEventProperties = (event: Event, refDate: Date): EventProperties => ({
   isClosed: isEventClosed(event, refDate),
   startDate: new Date(event.startDate),
   endDate: getClosedEventEndDate(event),
+  continuous: event.continuous,
 });
+
+const closedEventComp = (
+  event1Properties: EventProperties,
+  event2Properties: EventProperties,
+  refDate: Date,
+) => {
+  // Both events are closed : prioritize closer end date
+  if (event1Properties.endDate.getTime() !== event2Properties.endDate.getTime()) {
+    return dateDiff(event1Properties.endDate, refDate) < dateDiff(event2Properties.endDate, refDate)
+      ? -1
+      : 1;
+  } else {
+    // Both end dates are equal : prioritize ponctual event
+    return event1Properties.continuous ? 1 : -1;
+  }
+};
 
 export const eventComp =
   (refDate: Date) =>
@@ -140,16 +164,7 @@ export const eventComp =
       // One event is closed and the other not : prioritize unfinished event
       return event1Properties.isClosed ? 1 : -1;
     } else if (event1Properties.isClosed) {
-      // Both events are closed : prioritize closer end date
-      if (event1Properties.endDate.getTime() !== event2Properties.endDate.getTime()) {
-        return dateDiff(event1Properties.endDate, refDate) <
-          dateDiff(event2Properties.endDate, refDate)
-          ? -1
-          : 1;
-      } else {
-        // Both end dates are equal : prioritize ponctual event
-        return event1.continuous ? 1 : -1;
-      }
+      return closedEventComp(event1Properties, event2Properties, refDate);
     } else {
       // Both events are open (or not yet opened) : prioritize closer start date (past or future)
       if (event1.startDate !== event2.startDate) {

@@ -104,7 +104,7 @@ export const WIKI_SEARCH_MAX_RESULTS_NB = 8;
 
 /** Sorting */
 
-export const sortWikiProposals = (wikiProposals: WikiProposal[]) =>
+export const sortWikiProposals = (wikiProposals: WikiProposal[]) => {
   wikiProposals.sort((proposal1, proposal2) => {
     if (proposal1.status === 'proposed' && proposal2.status !== 'proposed') {
       return -1;
@@ -113,6 +113,7 @@ export const sortWikiProposals = (wikiProposals: WikiProposal[]) =>
     }
     return (proposal1.suggestions[0].date ?? '') < (proposal2.suggestions[0].date ?? '') ? 1 : -1;
   });
+};
 
 /** Completing data with author */
 

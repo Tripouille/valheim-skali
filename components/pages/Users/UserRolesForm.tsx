@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
-import { getUserRoles, User } from 'data/user';
 import { compareRolesFromName, Role } from 'data/role';
-import { canUserAssignRole } from 'data/user';
+import { canUserAssignRole, getUserRoles, User } from 'data/user';
 import { Wrap } from 'components/core/Containers/Wrap';
 import Box from 'components/core/Containers/Box';
 import { Menu, MenuButton, MenuItem, MenuList } from 'components/core/Overlay/Menu';

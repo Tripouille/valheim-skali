@@ -24,7 +24,7 @@ export const getMarkupImageProperties = (
   const {
     groups: { url, width, height, properties, legend },
   } = match.match(
-    /<<(?<url>.+?)>>(?:(?<width>[0-9]+)x(?<height>[0-9]+))?(?<properties>(?:t|r|h|b|g|d)+)?(?:\((?<legend>.+)\))?/,
+    /<<(?<url>.+?)>>(?:(?<width>\d+)x(?<height>\d+))?(?<properties>(?:[trhbgd])+)?(?:\((?<legend>.+)\))?/,
   ) as unknown as { groups: ImageMarkup };
 
   const positionLetter = Object.keys(positionLetterToObjectPosition).find(property =>
@@ -43,7 +43,7 @@ export const getMarkupImageProperties = (
 };
 
 export const getMarkupTitleProperties = (match: string) => {
-  const matchResult = match.match(/==[\s]*(?<title>.+?)[\s]*==(?<anchor>#[\S]+)?/);
+  const matchResult = match.match(/==\s*(?<title>.+?)\s*==(?<anchor>#\S+)?/);
 
   return matchResult?.groups ?? {};
 };
@@ -69,7 +69,7 @@ export const getMarkupDiscordLinkProperties = (match: string) => {
 
 export const getInternalLinkProperties = (match: string) => {
   const matchResult = match.match(
-    /(\[\[(?<pageName>.+?)(?:\|(?<label>.*?))?\]\](?<labelSuffix>[\S]*)?)/,
+    /(\[\[(?<pageName>.+?)(?:\|(?<label>.*?))?\]\](?<labelSuffix>\S+)?)/,
   );
 
   return matchResult?.groups ?? {};

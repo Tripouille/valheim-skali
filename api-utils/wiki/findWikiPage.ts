@@ -16,11 +16,9 @@ const findWikiPage = async (searchString: string): Promise<WikiPageInDb[]> => {
     { projection: { slug: 1, title: 1 } },
   );
 
-  const sortedWikiPages = wikiPages.sort(
-    (page1, page2) => getResultScore(page1, regex) - getResultScore(page2, regex),
-  );
+  wikiPages.sort((page1, page2) => getResultScore(page1, regex) - getResultScore(page2, regex));
 
-  return sortedWikiPages;
+  return wikiPages;
 };
 
 export default findWikiPage;

@@ -40,6 +40,17 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
   const session = useSession();
   const userIsAuthor = session.data?.user?._id === wikiProposal.authorId;
 
+  const statusText =
+    wikiProposal.status === 'validated' ? (
+      <Text fontStyle="italic" color="green.200">
+        Validée
+      </Text>
+    ) : (
+      <Text fontStyle="italic" color="red.600">
+        Rejetée
+      </Text>
+    );
+
   return (
     <>
       <Head>
@@ -95,14 +106,8 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
               />
             </Secured>
           </ButtonGroup>
-        ) : wikiProposal.status === 'validated' ? (
-          <Text fontStyle="italic" color="green.200">
-            Validée
-          </Text>
         ) : (
-          <Text fontStyle="italic" color="red.600">
-            Rejetée
-          </Text>
+          statusText
         )}
       </Flex>
       {wikiProposal.authorName && (

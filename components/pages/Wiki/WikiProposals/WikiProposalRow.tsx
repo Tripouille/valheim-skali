@@ -27,6 +27,15 @@ const WikiProposalRow: React.FC<WikiProposalRowProps> = ({
     router.push(`/${serverName}${NavRoute.WIKI}/proposals/${wikiProposal._id}`);
   };
 
+  const getSettledIcon = (status: 'validated' | 'rejected') => {
+    if (status === 'validated')
+      return (
+        <Icon data-cy="validated-icon" as={BiCheck} boxSize={rowIconWidth} color="green.300" />
+      );
+    else
+      return <Icon data-cy="rejected-icon" as={BiBlock} boxSize={rowIconWidth} color="red.700" />;
+  };
+
   return (
     <Tr
       cursor="pointer"
@@ -49,10 +58,8 @@ const WikiProposalRow: React.FC<WikiProposalRowProps> = ({
               onClick={navigateToWikiProposalPage}
             />
           </Secured>
-        ) : wikiProposal.status === 'validated' ? (
-          <Icon data-cy="validated-icon" as={BiCheck} boxSize={rowIconWidth} color="green.300" />
         ) : (
-          <Icon data-cy="rejected-icon" as={BiBlock} boxSize={rowIconWidth} color="red.700" />
+          getSettledIcon(wikiProposal.status)
         )}
       </Td>
     </Tr>

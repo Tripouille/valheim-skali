@@ -34,13 +34,13 @@ const Admin = () => {
     [PermissionCategory.WIKI]: wikiPrivilege.WRITE,
   });
 
-  const route = isAdminNavRoute(urlEndPoint)
-    ? urlEndPoint
-    : hasUserReadPermission
-    ? AdminNavRoute.MEMBERS
-    : hasWikiWritePermission
-    ? AdminNavRoute.WIKI_PROPOSALS
-    : AdminNavRoute.ROLES;
+  let route: AdminNavRoute;
+  if (isAdminNavRoute(urlEndPoint)) route = urlEndPoint;
+  else {
+    if (hasUserReadPermission) route = AdminNavRoute.MEMBERS;
+    else if (hasWikiWritePermission) route = AdminNavRoute.WIKI_PROPOSALS;
+    else route = AdminNavRoute.ROLES;
+  }
 
   const routeToComponent: Record<AdminNavRoute, Children> = {
     [AdminNavRoute.MEMBERS]: <UsersTable filter={UserQueryFilter.MEMBER} />,

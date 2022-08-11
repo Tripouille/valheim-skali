@@ -24,8 +24,6 @@ const getIconComponent = async (iconName: string) => {
     icons = await import('react-icons/fa');
   } else if (iconName.startsWith('Fc')) {
     icons = await import('react-icons/fc');
-  } else if (iconName.startsWith('Gi')) {
-    icons = await import('react-icons/gi');
   } else if (iconName.startsWith('Go')) {
     icons = await import('react-icons/go');
   } else if (iconName.startsWith('Gr')) {
@@ -50,8 +48,6 @@ const getIconComponent = async (iconName: string) => {
     icons = await import('react-icons/ti');
   } else if (iconName.startsWith('Vsc')) {
     icons = await import('react-icons/vsc');
-  } else if (iconName.startsWith('Wi')) {
-    icons = await import('react-icons/wi');
   } else if (iconName.startsWith('Cg')) {
     icons = await import('react-icons/cg');
   }

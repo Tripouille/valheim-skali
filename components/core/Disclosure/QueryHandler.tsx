@@ -21,15 +21,13 @@ const QueryHandler = <T extends object>({
   loadingComponent = <Loading />,
 }: QueryHandlerProps<T>) => {
   switch (query.status) {
-    case 'loading':
-      if (fallbackData) return <>{children}</>;
-      return <>{loadingComponent}</>;
     case 'success':
       return <>{children}</>;
     case 'error':
       if (query.isFetching) return <>{loadingComponent}</>;
       return <ErrorAlert error={query.error} />;
     default:
+      // includes case 'loading'
       if (fallbackData) return <>{children}</>;
       return <>{loadingComponent}</>;
   }

@@ -34,7 +34,8 @@ export const useWikiProposals = (options?: {
         if (options?.onlyUser && wikiProposal.authorId !== session.data?.user._id) return false;
         return true;
       });
-      return sortWikiProposals(selectedWikiProposals).map(wikiProposal =>
+      sortWikiProposals(selectedWikiProposals);
+      return selectedWikiProposals.map(wikiProposal =>
         getWikiProposalWithAuthorName(wikiProposal, users),
       );
     },

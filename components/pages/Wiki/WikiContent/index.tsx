@@ -93,7 +93,9 @@ const simpleMarkups: SimpleMarkupProperties[] = [
 ];
 
 const simpleMarkupsRegex = new RegExp(
-  `(${simpleMarkups.map(markup => `(?:${markup.startSymbol}.+?${markup.endSymbol})`).join('|')})`,
+  '(' +
+    simpleMarkups.map(markup => `(?:${markup.startSymbol}.+?${markup.endSymbol})`).join('|') +
+    ')',
   'g',
 );
 
@@ -128,7 +130,7 @@ export const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
     );
   });
 
-  component = reactStringReplace(component, /(==(?:.+?)==(?:#[\S]+)?)(?:\r\n|\r|\n)?/g, match => {
+  component = reactStringReplace(component, /(==(?:.+?)==(?:#\S+)?)(?:\r\n|\r|\n)?/g, match => {
     const { title, anchor } = getMarkupTitleProperties(match);
     return (
       <Heading
@@ -152,7 +154,7 @@ export const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
     return <DiscordButton key={++key.value} data-cy={label} href={url} label={label} />;
   });
 
-  component = reactStringReplace(component, /(\[\[(?:.+?)(?:\|(?:.*?))?\]\](?:[\S]*)?)/g, match => {
+  component = reactStringReplace(component, /(\[\[(?:.+?)(?:\|(?:.*?))?\]\](?:\S+)?)/g, match => {
     const { pageName, label, labelSuffix } = getInternalLinkProperties(match);
     const linkLabel = (label ?? pageName) + (labelSuffix ?? '');
     return (
@@ -166,8 +168,7 @@ export const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
   });
 
   component = reactStringReplace(component, simpleMarkupsRegex, match => {
-    for (let i = 0; i < simpleMarkups.length; ++i) {
-      const markup = simpleMarkups[i];
+    for (const markup of simpleMarkups) {
       const matchResult = match.match(
         new RegExp(`^${markup.startSymbol}(?<content>.+?)${markup.endSymbol}$`),
       );
@@ -179,7 +180,7 @@ export const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
 
   component = reactStringReplace(
     component,
-    /(<<.+?>>(?:[0-9]+x[0-9]+)?(?:t|r|h|b|g|d)*(?:\(.*\))?)/g,
+    /(<<.+?>>(?:\d+x\d+)?(?:[trhbgd])*(?:\(.*\))?)/g,
     match => {
       const { url, width, height, display, objectFit, objectPosition, legend } =
         getMarkupImageProperties(match);

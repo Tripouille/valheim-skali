@@ -22,6 +22,11 @@ const UsersTable: React.FC<UsersTableProps> = ({ filter }) => {
     (usersQuery as UseQueryResult<User[]>).status = 'loading';
   const users = usersQuery.data ?? [];
 
+  const emptyTableMessage =
+    filter === UserQueryFilter.MEMBER
+      ? "Aucun viking n'a été accepté au Valhabba."
+      : "Aucune âme ne s'est perdue aux frontières du Valhabba.";
+
   return (
     <QueryHandler query={usersQuery}>
       {users.length ? (
@@ -63,10 +68,8 @@ const UsersTable: React.FC<UsersTableProps> = ({ filter }) => {
             ))}
           </Tbody>
         </Table>
-      ) : filter === UserQueryFilter.MEMBER ? (
-        "Aucun viking n'a été accepté au Valhabba."
       ) : (
-        "Aucune âme ne s'est perdue aux frontières du Valhabba."
+        emptyTableMessage
       )}
     </QueryHandler>
   );

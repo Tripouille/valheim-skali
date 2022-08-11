@@ -24,8 +24,12 @@ describe('Function sortWikiProposals', () => {
     const proposals = partialProposals.map(partialProposal =>
       completeWikiProposal(partialProposal),
     );
-    expect(sortWikiProposals(proposals)).to.eql(proposals);
-    expect(sortWikiProposals(proposals.slice().reverse())).to.eql(proposals);
+    const proposalsInOrder = proposals.slice();
+    sortWikiProposals(proposalsInOrder);
+    const proposalsReversed = proposals.slice();
+    sortWikiProposals(proposalsReversed);
+    expect(proposalsInOrder).to.eql(proposals);
+    expect(proposalsReversed).to.eql(proposals);
   };
 
   it('should prioritize proposals still in proposition, no matter the last date', () => {
