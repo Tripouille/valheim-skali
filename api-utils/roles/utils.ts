@@ -9,6 +9,7 @@ import {
   userPrivilege,
   getSortedCategoryPrivileges,
   PermissionPrivilege,
+  isPermissionCategory,
 } from 'utils/permissions';
 import { isFilled } from 'utils/validation';
 import { isRequiredObjectType, ServerException, isObject } from 'api-utils/common';
@@ -21,10 +22,8 @@ const isPermissions = (value: unknown): value is Permissions => {
     isObject(value) &&
     Object.entries(value).every(([category, privilege]) => {
       return (
-        Object.values(PermissionCategory).includes(category as PermissionCategory) &&
-        getSortedCategoryPrivileges(category as PermissionCategory).includes(
-          privilege as PermissionPrivilege,
-        )
+        isPermissionCategory(category) &&
+        getSortedCategoryPrivileges(category).includes(privilege as PermissionPrivilege)
       );
     })
   );

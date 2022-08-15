@@ -15,6 +15,7 @@ import {
   PermissionCategory,
   CommonPermissionPrivilege,
   Permissions,
+  isPermissionCategory,
 } from 'utils/permissions';
 
 export const getVisitorPermissions = async (): Promise<Permissions> => {
@@ -74,7 +75,7 @@ export const getUserPermissions = async (user: UserInDb) => {
       });
     } else {
       Object.entries(role.permissions).forEach(([category, privilege]) => {
-        assignPermission(userPermissions, category as PermissionCategory, privilege);
+        if (isPermissionCategory(category)) assignPermission(userPermissions, category, privilege);
       });
     }
   });

@@ -8,6 +8,9 @@ export enum PermissionCategory {
   RULES = 'RULES',
 }
 
+export const isPermissionCategory = (category: string): category is PermissionCategory =>
+  Object.values(PermissionCategory).includes(category as PermissionCategory);
+
 export enum CommonPermissionPrivilege {
   NONE = '0_NONE',
   ADMIN = '3_ADMIN', // special privilege for admin actions

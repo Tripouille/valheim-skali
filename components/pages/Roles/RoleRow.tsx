@@ -14,6 +14,7 @@ import {
   PermissionCategory,
   PERMISSION_CATEGORY_TO_LABEL,
   PERMISSION_PRIVILEGE_TO_LABEL,
+  isPermissionCategory,
 } from 'utils/permissions';
 import { rowIconSize } from 'theme/admin';
 import RoleForm from './RoleForm';
@@ -43,16 +44,16 @@ const RoleRow: React.FC<RoleRowProps> = ({ 'data-cy': dataCy, role }) => {
         ) : (
           <Table>
             <Tbody>
-              {Object.entries(role.permissions).map(([category, privilege]) => (
-                <Tr key={category}>
-                  <Th w="28" ps="0">
-                    {PERMISSION_CATEGORY_TO_LABEL[category as PermissionCategory]}
-                  </Th>
-                  <Td>
-                    {PERMISSION_PRIVILEGE_TO_LABEL[category as PermissionCategory][privilege]}
-                  </Td>
-                </Tr>
-              ))}
+              {Object.entries(role.permissions).map(([category, privilege]) =>
+                isPermissionCategory(category) ? (
+                  <Tr key={category}>
+                    <Th w="28" ps="0">
+                      {PERMISSION_CATEGORY_TO_LABEL[category]}
+                    </Th>
+                    <Td>{PERMISSION_PRIVILEGE_TO_LABEL[category][privilege]}</Td>
+                  </Tr>
+                ) : null,
+              )}
             </Tbody>
           </Table>
         )}
