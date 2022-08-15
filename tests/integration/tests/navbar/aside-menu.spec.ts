@@ -1,10 +1,12 @@
-import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
+import { SpecialRoleName } from 'data/role';
+import { PermissionCategory, rolePrivilege, userPrivilege, wikiPrivilege } from 'utils/permissions';
 
-describe('menu', () => {
+describe('aside menu', () => {
   context('when signed out', () => {
     before(() => {
-      cy.setPermission(SpecialRoleName.VISITOR, PermissionCategory.USER, PermissionPrivilege.NONE);
-      cy.setPermission(SpecialRoleName.VISITOR, PermissionCategory.ROLE, PermissionPrivilege.NONE);
+      cy.setPermission(SpecialRoleName.VISITOR, PermissionCategory.USER, userPrivilege.NONE);
+      cy.setPermission(SpecialRoleName.VISITOR, PermissionCategory.ROLE, rolePrivilege.NONE);
+      cy.setPermission(SpecialRoleName.VISITOR, PermissionCategory.WIKI, wikiPrivilege.NONE);
     });
 
     beforeEach(() => {
@@ -27,7 +29,7 @@ describe('menu', () => {
     });
   });
 
-  context('when signed in as simple user', () => {
+  context('when signed in with no role', () => {
     before(() => {
       cy.setUserRoles([]);
     });
@@ -51,8 +53,8 @@ describe('menu', () => {
 
 context('when signed in as user with user read permission', () => {
   before(() => {
-    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, PermissionPrivilege.NONE);
-    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.USER, PermissionPrivilege.READ);
+    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, rolePrivilege.NONE);
+    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.USER, userPrivilege.READ);
     cy.setUserRoles([SpecialRoleName.MEMBER]);
   });
 
@@ -64,6 +66,44 @@ context('when signed in as user with user read permission', () => {
   it('should be able to sign out', () => {
     cy.dataCy('nav-bar').dataCy('menu', 'button').click();
     cy.dataCy('nav-bar').dataCy('sign-in-out').should('be.visible');
+  });
+
+  it('should see the admin link', () => {
+    cy.dataCy('nav-bar').dataCy('menu', 'button').click();
+    cy.dataCy('nav-bar').dataCy('admin').should('be.visible');
+  });
+});
+
+context('when signed in as user with wiki propose permission only', () => {
+  before(() => {
+    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, rolePrivilege.NONE);
+    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.USER, userPrivilege.NONE);
+    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.WIKI, wikiPrivilege.PROPOSE);
+    cy.setUserRoles([SpecialRoleName.MEMBER]);
+  });
+
+  beforeEach(() => {
+    cy.login();
+    cy.visit('/');
+  });
+
+  it('should not see the admin link', () => {
+    cy.dataCy('nav-bar').dataCy('menu', 'button').click();
+    cy.dataCy('nav-bar').dataCy('admin').should('not.exist');
+  });
+});
+
+context('when signed in as user with wiki write permission only', () => {
+  before(() => {
+    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, rolePrivilege.NONE);
+    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.USER, userPrivilege.NONE);
+    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.WIKI, wikiPrivilege.WRITE);
+    cy.setUserRoles([SpecialRoleName.MEMBER]);
+  });
+
+  beforeEach(() => {
+    cy.login();
+    cy.visit('/');
   });
 
   it('should see the admin link', () => {

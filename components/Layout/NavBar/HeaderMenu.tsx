@@ -1,5 +1,5 @@
 import { chakra } from '@chakra-ui/react';
-import { ROUTES_TO_PERMISSIONS } from 'utils/auth';
+import { ROUTES_TO_PERMISSIONS } from 'utils/permissions';
 import { NavRoute } from 'utils/routes';
 import ButtonGroup from 'components/core/Interactive/ButtonGroup';
 import NavItem from 'components/core/Interactive/NavItem';

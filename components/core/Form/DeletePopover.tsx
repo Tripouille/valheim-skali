@@ -1,16 +1,6 @@
 import { PlacementWithLogical, useBreakpointValue } from '@chakra-ui/react';
 import { Callback } from 'utils/types';
-import {
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverFooter,
-  PopoverHeader,
-  PopoverTrigger,
-} from 'components/core/Overlay/Popover';
-import Button from 'components/core/Interactive/Button';
+import { ActionPopover } from 'components/core/Overlay/Popover';
 
 export interface DeletePopoverProps {
   onDelete: Callback;
@@ -29,24 +19,15 @@ const DeletePopover: React.FC<DeletePopoverProps> = ({
   });
 
   return (
-    <Popover placement={deletePopoverPlacement} preventOverflow>
-      <PopoverTrigger>
-        <Button data-cy="delete" colorScheme="red">
-          {deleteLabel}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent>
-        <PopoverArrow />
-        <PopoverCloseButton />
-        <PopoverHeader>{deleteLabel}</PopoverHeader>
-        <PopoverBody>{deletePopoverBody}</PopoverBody>
-        <PopoverFooter textAlign="end">
-          <Button data-cy="confirm-delete" colorScheme="red" onClick={onDelete}>
-            Confirmer la suppression
-          </Button>
-        </PopoverFooter>
-      </PopoverContent>
-    </Popover>
+    <ActionPopover
+      data-cy="delete"
+      action={onDelete}
+      label={deleteLabel}
+      confirmLabel="Confirmer la suppression"
+      confirmBody={deletePopoverBody}
+      colorScheme="red"
+      placement={deletePopoverPlacement}
+    />
   );
 };
 

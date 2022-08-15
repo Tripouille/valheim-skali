@@ -1,5 +1,5 @@
 import React from 'react';
-import Admin from 'components/pages/Admin';
+import Admin from 'components/Layout/Admin';
 
 const AdminPage = () => <Admin />;
 

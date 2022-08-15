@@ -1,4 +1,5 @@
-import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
+import { SpecialRoleName } from 'data/role';
+import { rolePrivilege, PermissionCategory } from 'utils/permissions';
 import { APIRoute } from 'utils/routes';
 import * as Action from './action';
 import * as Select from './select';
@@ -11,12 +12,12 @@ describe('roles page', () => {
   });
 
   after(() => {
-    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, PermissionPrivilege.NONE);
+    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, rolePrivilege.NONE);
   });
 
   context('with only read permission on roles', () => {
     beforeEach(() => {
-      cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, PermissionPrivilege.READ);
+      cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, rolePrivilege.READ);
       Action.visitRolesPage();
     });
 
@@ -33,7 +34,7 @@ describe('roles page', () => {
 
   context('with admin permission on roles', () => {
     beforeEach(() => {
-      cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, PermissionPrivilege.ADMIN);
+      cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, rolePrivilege.ADMIN);
       Action.visitRolesPage();
     });
 
@@ -53,9 +54,6 @@ describe('roles page', () => {
       cy.dataCy('create-role-modal').dataCy('name', 'input').type('New role');
       Select.reqPermissionsFormSelect().should('be.enabled');
       cy.dataCy('req-permissions-help').should('not.exist');
-      Select.permissionsFormOption('ROLE', '2_READ_WRITE')
-        .should('be.disabled')
-        .and('contain.text', 'Réservé aux Admins');
       Select.permissionsFormOption('USER', '1_READ')
         .should('be.disabled')
         .and('contain.text', 'Doit pouvoir lire les rôles');
@@ -156,7 +154,7 @@ describe('roles page', () => {
         .closest('tr')
         .contains('Rôles')
         .closest('tr')
-        .contains('Lecture');
+        .contains('Voir');
     });
 
     it('should be able to partially edit viking role', () => {

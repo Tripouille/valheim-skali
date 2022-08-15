@@ -35,3 +35,15 @@ export const toISOWithTimezone = (date: string): string => DateTime.fromISO(date
 
 export const toInputDatetimeFormat = (date: string): string =>
   DateTime.fromISO(date).toISO({ includeOffset: false });
+
+export const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // remove accents
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-')
+    .substring(0, 50)
+    .replace(/^-+/, '')
+    .replace(/-+$/, '');

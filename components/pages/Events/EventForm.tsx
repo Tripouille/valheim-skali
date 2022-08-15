@@ -15,13 +15,20 @@ import FormElement from 'components/core/Form/FormElement';
 import Input from 'components/core/Form/Input';
 import Switch from 'components/core/Form/Switch';
 import Textarea from 'components/core/Form/Textarea';
+import { toInputDatetimeFormat } from 'utils/format';
 import EventTagsForm from './EventTagsForm';
-import { getEventFormData } from './utils';
 
 const getDefaultEventFormData = (): Partial<CreateEventData> => ({
   continuous: false,
   tags: [],
   startDate: DateTime.now().startOf('day').toISO({ includeOffset: false }),
+});
+
+const getEventFormData = (event: Event) => ({
+  ...event,
+  _id: undefined,
+  startDate: toInputDatetimeFormat(event.startDate),
+  endDate: event.endDate ? toInputDatetimeFormat(event.endDate) : undefined,
 });
 
 export type EventFormProps = CypressProps & {

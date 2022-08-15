@@ -1,5 +1,6 @@
 import { ObjectId } from 'bson';
 import { CONTINUOUS_LABEL } from 'utils/constants';
+import { dateHasNoTime, toISOWithTimezone } from 'utils/format';
 import { dateIsValid, isFilled } from 'utils/validation';
 
 /** Main types */
@@ -62,6 +63,12 @@ export const getEventValidationError = (eventData: Partial<CreateEventData>): st
   return null;
 };
 
+export const getEventDataForServer = (eventData: CreateEventData) => ({
+  ...eventData,
+  startDate: toISOWithTimezone(eventData.startDate),
+  endDate: eventData.endDate ? toISOWithTimezone(eventData.endDate) : undefined,
+});
+
 /** Data max length */
 
 type EventTextKey = keyof Pick<
@@ -86,3 +93,88 @@ export const EVENT_VALUES_MAX_LENGTH: Record<EventTextKey, number> = {
 };
 
 export const EVENT_TAG_MAX_LENGTH = 20;
+
+/** Analyze */
+
+const getEventEndDateFromStartDate = (startDate: string): Date => {
+  const endDate = new Date(startDate);
+  const noTime = dateHasNoTime(endDate.toISOString());
+  if (noTime) endDate.setDate(endDate.getDate() + 1);
+  else endDate.setHours(endDate.getHours() + 6);
+  return endDate;
+};
+
+const getClosedEventEndDate = (event: Event): Date => {
+  return event.endDate ? new Date(event.endDate) : getEventEndDateFromStartDate(event.startDate);
+};
+
+export const isEventClosed = (event: Event, refDate: Date): boolean => {
+  if (event.endDate) {
+    return new Date(event.endDate) < refDate;
+  } else if (event.continuous) {
+    return false;
+  } else {
+    const eventEndDate = getEventEndDateFromStartDate(event.startDate);
+    return eventEndDate < refDate;
+  }
+};
+
+/** Sort */
+
+const dateDiff = (date1: Date, date2: Date): number => {
+  return Math.abs(date1.getTime() - date2.getTime());
+};
+
+interface EventProperties {
+  isClosed: boolean;
+  startDate: Date;
+  endDate: Date;
+  continuous: boolean;
+}
+
+const getEventProperties = (event: Event, refDate: Date): EventProperties => ({
+  isClosed: isEventClosed(event, refDate),
+  startDate: new Date(event.startDate),
+  endDate: getClosedEventEndDate(event),
+  continuous: event.continuous,
+});
+
+const closedEventComp = (
+  event1Properties: EventProperties,
+  event2Properties: EventProperties,
+  refDate: Date,
+) => {
+  // Both events are closed : prioritize closer end date
+  if (event1Properties.endDate.getTime() !== event2Properties.endDate.getTime()) {
+    return dateDiff(event1Properties.endDate, refDate) < dateDiff(event2Properties.endDate, refDate)
+      ? -1
+      : 1;
+  } else {
+    // Both end dates are equal : prioritize ponctual event
+    return event1Properties.continuous ? 1 : -1;
+  }
+};
+
+export const eventComp =
+  (refDate: Date) =>
+  (event1: Event, event2: Event): 1 | -1 => {
+    const event1Properties = getEventProperties(event1, refDate);
+    const event2Properties = getEventProperties(event2, refDate);
+    if (event1Properties.isClosed !== event2Properties.isClosed) {
+      // One event is closed and the other not : prioritize unfinished event
+      return event1Properties.isClosed ? 1 : -1;
+    } else if (event1Properties.isClosed) {
+      return closedEventComp(event1Properties, event2Properties, refDate);
+    } else {
+      // Both events are open (or not yet opened) : prioritize closer start date (past or future)
+      if (event1.startDate !== event2.startDate) {
+        return dateDiff(event1Properties.startDate, refDate) <
+          dateDiff(event2Properties.startDate, refDate)
+          ? -1
+          : 1;
+      } else {
+        // Both start dates are equal : prioritize ponctual event
+        return event1.continuous ? 1 : -1;
+      }
+    }
+  };

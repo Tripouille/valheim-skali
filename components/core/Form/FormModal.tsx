@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Callback, Children, CypressProps } from 'utils/types';
 import {
   Modal,
@@ -8,7 +8,6 @@ import {
   ModalFooter,
 } from 'components/core/Overlay/Modal';
 import Center from 'components/core/Containers/Center';
-import Box from 'components/core/Containers/Box';
 import Button from 'components/core/Interactive/Button';
 import ButtonGroup from 'components/core/Interactive/ButtonGroup';
 import DeletePopover from './DeletePopover';
@@ -64,10 +63,8 @@ const FormModal = <T extends object>(props: FormModalProps<T>) => {
 
   const canDelete = props.isEdition && (props.canDelete ?? true);
 
-  const testRef = useRef(null);
-
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose} initialFocusRef={testRef}>
+    <Modal isOpen={props.isOpen} onClose={props.onClose}>
       <ModalOverlay />
       <ModalContent data-cy={dataCy}>
         {children}
@@ -76,13 +73,11 @@ const FormModal = <T extends object>(props: FormModalProps<T>) => {
             <Center w="full">
               <ButtonGroup>
                 {canDelete && (
-                  <Box>
-                    <DeletePopover
-                      onDelete={props.onDelete}
-                      deleteLabel={props.deleteLabel}
-                      deletePopoverBody={props.deletePopoverBody}
-                    />
-                  </Box>
+                  <DeletePopover
+                    onDelete={props.onDelete}
+                    deleteLabel={props.deleteLabel}
+                    deletePopoverBody={props.deletePopoverBody}
+                  />
                 )}
                 {canSubmit && (
                   <Button

@@ -1,8 +1,11 @@
 import React from 'react';
-import { Link as ChakraLink, LinkProps as ChakraLinkProps } from '@chakra-ui/react';
+import { forwardRef, Link as ChakraLink, LinkProps as ChakraLinkProps } from '@chakra-ui/react';
 
 export type LinkProps = ChakraLinkProps;
 
-const Link: React.FC<LinkProps> = chakraLinkProps => <ChakraLink {...chakraLinkProps}></ChakraLink>;
+const Link = forwardRef<LinkProps, 'a'>((chakraLinkProps, ref) => (
+  <ChakraLink color="#c2e6ff" {...chakraLinkProps} ref={ref}></ChakraLink>
+));
 
+Link.displayName = 'Link';
 export default Link;

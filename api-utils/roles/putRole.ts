@@ -1,17 +1,23 @@
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { ObjectId } from 'bson';
-import { RoleInDb, rolesCollectionName, CreateRoleData } from 'data/role';
-import {
-  isAdminRole,
-  isSpecialRole,
-  PermissionCategory,
-  PermissionPrivilege,
-  SpecialRoleName,
-} from 'utils/auth';
 import { requirePermissions } from 'api-utils/auth';
 import { ServerException, updateOneInCollection } from 'api-utils/common';
 import db from 'api-utils/db';
-import { checkRoleData, isCreateRoleData, transformRoleForDb } from './utils';
+import {
+  RoleInDb,
+  rolesCollectionName,
+  CreateRoleData,
+  isAdminRole,
+  isSpecialRole,
+  SpecialRoleName,
+} from 'data/role';
+import { rolePrivilege, PermissionCategory } from 'utils/permissions';
+import {
+  checkRoleData,
+  isCreateRoleData,
+  revalidatePermissionsDependentPages,
+  transformRoleForDb,
+} from './utils';
 
 const checkPermissionsIfRoleIsSpecial = async (role: RoleInDb, roleNewData: CreateRoleData) => {
   if (isSpecialRole(role)) {
@@ -28,7 +34,7 @@ const checkPermissionsIfRoleIsSpecial = async (role: RoleInDb, roleNewData: Crea
 };
 
 const putRole = async (req: Req, res: Res) => {
-  await requirePermissions({ [PermissionCategory.ROLE]: PermissionPrivilege.READ_WRITE }, req);
+  await requirePermissions({ [PermissionCategory.ROLE]: rolePrivilege.ADMIN }, req);
 
   const { id } = req.query as { id: string };
 
@@ -54,6 +60,8 @@ const putRole = async (req: Req, res: Res) => {
   if (!result.ok) throw new ServerException(500);
 
   res.status(200).json(result.value);
+
+  revalidatePermissionsDependentPages(res);
 };
 
 export default putRole;

@@ -1,7 +1,7 @@
 import { chakra, useDisclosure } from '@chakra-ui/react';
 import { RiMenuLine } from 'react-icons/ri';
 import { NavRoute } from 'utils/routes';
-import { ROUTES_TO_PERMISSIONS } from 'utils/auth';
+import { ROUTES_TO_PERMISSIONS } from 'utils/permissions';
 import IconButton from 'components/core/Interactive/IconButton';
 import Button from 'components/core/Interactive/Button';
 import NavItem from 'components/core/Interactive/NavItem';

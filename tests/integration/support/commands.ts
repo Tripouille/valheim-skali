@@ -1,4 +1,5 @@
-import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
+import { SpecialRoleName } from 'data/role';
+import { PermissionCategory, Permissions } from 'utils/permissions';
 
 Cypress.Commands.add('dataCy', { prevSubject: 'optional' }, (subject, value, selector = '') => {
   if (subject)
@@ -8,12 +9,16 @@ Cypress.Commands.add('dataCy', { prevSubject: 'optional' }, (subject, value, sel
   return cy.get(`${selector}[data-cy="${value}"]`);
 });
 
-Cypress.Commands.add('main', () => cy.get('main'));
+Cypress.Commands.add('main', options => cy.get('main', options));
 
 const sessionCookieName = 'next-auth.session-token';
 
 Cypress.Commands.add('login', () => {
   cy.setCookie(sessionCookieName, Cypress.env('TEST_SESSION_TOKEN'));
+});
+
+Cypress.Commands.add('revalidate', (urls: string[]) => {
+  cy.request('POST', '/api/revalidate', { urls });
 });
 
 Cypress.Commands.add('seedCollection', <T>(collectionName: string, fixtureFileName: string) => {
@@ -24,10 +29,10 @@ Cypress.Commands.add('seedCollection', <T>(collectionName: string, fixtureFileNa
 
 Cypress.Commands.add(
   'setPermission',
-  (
+  <C extends PermissionCategory>(
     roleName: string,
-    permissionCategory: PermissionCategory,
-    permissionPrivilege: PermissionPrivilege,
+    permissionCategory: C,
+    permissionPrivilege: Permissions[C],
   ) => {
     cy.task('setPermission', { roleName, permissionCategory, permissionPrivilege });
   },

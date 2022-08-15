@@ -1,4 +1,5 @@
-import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
+import { SpecialRoleName } from 'data/role';
+import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
 import { AdminNavRoute, APIRoute } from 'utils/routes';
 import * as Action from './action';
 import * as Select from './select';
@@ -8,13 +9,13 @@ describe('users pages', () => {
     cy.seedCollection('roles', 'roles');
     cy.seedCollection('users', 'users');
     cy.setUserRoles([SpecialRoleName.MEMBER]);
-    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, PermissionPrivilege.READ);
+    cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, rolePrivilege.READ);
     cy.login();
   });
 
   context('with only read permission', () => {
     beforeEach(() => {
-      cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.USER, PermissionPrivilege.READ);
+      cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.USER, userPrivilege.READ);
     });
 
     describe('members page', () => {
@@ -59,21 +60,17 @@ describe('users pages', () => {
 
   context('with read and write permission', () => {
     beforeEach(() => {
-      cy.setPermission(
-        SpecialRoleName.MEMBER,
-        PermissionCategory.USER,
-        PermissionPrivilege.READ_WRITE,
-      );
+      cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.USER, userPrivilege.READ_WRITE);
     });
 
     describe('members page', () => {
       beforeEach(() => {
         Action.visitUsersPage(AdminNavRoute.MEMBERS);
+        Select.usersLines().should('have.length', 4);
       });
 
       it('should display members and edition tools', () => {
         cy.dataCy('admin').should('contain.text', 'Vikings');
-        Select.usersLines().should('have.length', 4);
         cy.dataCy('edit', 'button').should('have.length', 4);
       });
 
@@ -145,6 +142,7 @@ describe('users pages', () => {
       it('should be able to promote to member', () => {
         cy.intercept('PATCH', `${APIRoute.USERS}/**`).as('updateUser');
 
+        Select.usersLines().should('have.length', 1);
         cy.dataCy('promote', 'button').click();
 
         cy.wait('@updateUser').its('response.statusCode').should('eq', 200);

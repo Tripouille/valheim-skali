@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { PermissionCategory, PermissionPrivilege, SpecialRoleName } from 'utils/auth';
+import { SpecialRoleName } from 'data/role';
+import { PermissionCategory, Permissions } from 'utils/permissions';
 
 declare global {
   namespace Cypress {
@@ -10,17 +11,20 @@ declare global {
        */
       dataCy(value: string, selector?: string): Chainable<JQuery<HTMLElement>>;
 
-      main(): Chainable<JQuery<HTMLElement>>;
+      main(options?: Partial<Cypress.Timeoutable>): Chainable<JQuery<HTMLElement>>;
 
       /* Login by setting a custom cookie for next-auth */
       login(): void;
 
+      /* Revalidate server-side rendered pages (usually following database population) */
+      revalidate(urls: string[]): void;
+
       // Populate collections in database
       seedCollection(collectionName: string, fixtureFileName: string): void;
-      setPermission(
+      setPermission<C extends PermissionCategory>(
         roleName: string,
-        permissionCategory: PermissionCategory,
-        permissionPrivilege: PermissionPrivilege,
+        permissionCategory: C,
+        permissionPrivilege: Permissions[C],
       ): void;
       setUserRoles(roleNames: SpecialRoleName[]): void;
     }

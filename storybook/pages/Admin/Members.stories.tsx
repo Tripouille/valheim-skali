@@ -1,12 +1,11 @@
 import { storybookSetup } from 'storybook/config/setup';
 import { StoryCategory } from 'storybook/config/constants';
-import { Role } from 'data/role';
-import { AdminNavRoute, APIRoute, ROUTES_TO_LABEL } from 'utils/routes';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
-import UsersTable from 'components/pages/Admin/Users/UsersTable';
-import { UserQueryFilter } from 'components/pages/Admin/utils';
-import AdminLayout from 'components/pages/Admin/AdminLayout';
+import UsersTable from 'components/pages/Users/UsersTable';
+import AdminLayout from 'components/Layout/Admin/AdminLayout';
 import PageTitle from 'components/core/Typography/PageTitle';
+import { UserQueryFilter } from 'hooks/users/useUsers';
+import { AdminNavRoute, APIRoute, ROUTES_TO_LABEL } from 'utils/routes';
+import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
 import members from './members.json';
 import roles from './roles.json';
 
@@ -16,7 +15,7 @@ const { defaultExport, StoryFactory } = storybookSetup(
   {
     decorators: [
       Story => (
-        <AdminLayout members={members} roles={roles as Role[]}>
+        <AdminLayout>
           <PageTitle title={ROUTES_TO_LABEL[AdminNavRoute.MEMBERS]} size="xl" mb="4" />
           <Story />
         </AdminLayout>
@@ -31,32 +30,47 @@ export default defaultExport;
 
 export const MembersEmpty = StoryFactory(
   { filter: UserQueryFilter.MEMBER },
-  { permissions: { [PermissionCategory.USER]: PermissionPrivilege.READ } },
+  {
+    permissions: {
+      [PermissionCategory.USER]: userPrivilege.READ,
+      [PermissionCategory.ROLE]: rolePrivilege.READ,
+    },
+    requestResults: [
+      { url: APIRoute.USERS, result: [] },
+      { url: APIRoute.ROLES, result: [] },
+    ],
+    router: { query: { route: 'members' } },
+  },
 );
 
 export const MembersReadOnly = StoryFactory(
-  { filter: UserQueryFilter.MEMBER, users: members },
-  { permissions: { [PermissionCategory.USER]: PermissionPrivilege.READ } },
-);
-
-export const MembersReadOnlyWithRoles = StoryFactory(
-  { filter: UserQueryFilter.MEMBER, users: members },
+  { filter: UserQueryFilter.MEMBER },
   {
     permissions: {
-      [PermissionCategory.USER]: PermissionPrivilege.READ,
-      [PermissionCategory.ROLE]: PermissionPrivilege.READ,
+      [PermissionCategory.USER]: userPrivilege.READ,
+      [PermissionCategory.ROLE]: rolePrivilege.READ,
     },
-    requestResults: [{ url: APIRoute.ROLES, result: roles }],
+    requestResults: [
+      { url: APIRoute.USERS, result: members },
+      { url: APIRoute.ROLES, result: roles },
+      { url: '/unknown', result: {} }, // unknown image
+    ],
+    router: { query: { route: 'members' } },
   },
 );
 
 export const MembersCanEdit = StoryFactory(
-  { filter: UserQueryFilter.MEMBER, users: members },
+  { filter: UserQueryFilter.MEMBER },
   {
     permissions: {
-      [PermissionCategory.USER]: PermissionPrivilege.READ_WRITE,
-      [PermissionCategory.ROLE]: PermissionPrivilege.READ,
+      [PermissionCategory.USER]: userPrivilege.READ_WRITE,
+      [PermissionCategory.ROLE]: rolePrivilege.READ,
     },
-    requestResults: [{ url: APIRoute.ROLES, result: roles }],
+    requestResults: [
+      { url: APIRoute.USERS, result: members },
+      { url: APIRoute.ROLES, result: roles },
+      { url: '/unknown', result: {} }, // unknown image
+    ],
+    router: { query: { route: 'members' } },
   },
 );

@@ -1,17 +1,22 @@
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
-import { UserInDb, usersCollectionName } from 'data/user';
-import { PermissionCategory, PermissionPrivilege } from 'utils/auth';
-import { requirePermissions } from 'api-utils/auth';
+import { getPermissionsFromRequest } from 'api-utils/auth';
 import db from 'api-utils/db';
+import { UserInDb, usersCollectionName } from 'data/user';
+import { PermissionCategory, permissionsMeetRequirement, rolePrivilege } from 'utils/permissions';
 
 const getUsers = async (req: Req, res: Res) => {
-  await requirePermissions({ [PermissionCategory.USER]: PermissionPrivilege.READ }, req);
-
   const users = await db.find<UserInDb>(usersCollectionName);
 
-  const usersWithoutEmail = users.map(({ email, ...rest }) => rest);
+  const userPermissions = await getPermissionsFromRequest(req);
+  const hasRoleReadPermission = permissionsMeetRequirement(userPermissions, {
+    [PermissionCategory.ROLE]: rolePrivilege.READ,
+  });
 
-  res.status(200).json(usersWithoutEmail);
+  const usersResult = users.map(({ email, roleIds, ...rest }) =>
+    hasRoleReadPermission ? { roleIds, ...rest } : rest,
+  );
+
+  res.status(200).json(usersResult);
 };
 
 export default getUsers;
