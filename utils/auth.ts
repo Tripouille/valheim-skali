@@ -7,4 +7,5 @@ export enum SessionStatus {
 export enum AuthError {
   CALLBACK = 'Callback',
   SESSION_REQUIRED = 'SessionRequired',
+  NOT_ENOUGH_PERMISSIONS = 'NotEnoughPermissions',
 }
