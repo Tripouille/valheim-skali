@@ -5,6 +5,7 @@ export enum PermissionCategory {
   ROLE = 'ROLE',
   USER = 'USER',
   WIKI = 'WIKI',
+  RULES = 'RULES',
 }
 
 export enum CommonPermissionPrivilege {
@@ -36,11 +37,17 @@ enum WikiSpecialPrivilege {
 }
 export const wikiPrivilege = { ...WikiSpecialPrivilege, ...CommonPermissionPrivilege };
 
+enum RulesSpecialPrivilege {
+  READ = '1_READ',
+}
+export const rulesPrivilege = { ...RulesSpecialPrivilege, ...CommonPermissionPrivilege };
+
 export type Permissions = {
   [PermissionCategory.EVENT]?: EventSpecialPrivilege | CommonPermissionPrivilege;
   [PermissionCategory.ROLE]?: RoleSpecialPrivilege | CommonPermissionPrivilege;
   [PermissionCategory.USER]?: UserSpecialPrivilege | CommonPermissionPrivilege;
   [PermissionCategory.WIKI]?: WikiSpecialPrivilege | CommonPermissionPrivilege;
+  [PermissionCategory.RULES]?: RulesSpecialPrivilege | CommonPermissionPrivilege;
 };
 
 const permissionCategoryToPrivilege = {
@@ -48,6 +55,7 @@ const permissionCategoryToPrivilege = {
   [PermissionCategory.ROLE]: rolePrivilege,
   [PermissionCategory.USER]: userPrivilege,
   [PermissionCategory.WIKI]: wikiPrivilege,
+  [PermissionCategory.RULES]: rulesPrivilege,
 };
 
 export const getSortedCategoryPrivileges = <C extends PermissionCategory>(category: C) =>
@@ -62,6 +70,7 @@ export const PERMISSION_CATEGORY_TO_LABEL: Record<PermissionCategory, string> = 
   [PermissionCategory.ROLE]: 'Rôles',
   [PermissionCategory.EVENT]: 'Évenements',
   [PermissionCategory.WIKI]: 'Wiki',
+  [PermissionCategory.RULES]: 'Règlement',
 };
 
 const COMMON_PRIVILEGE_TO_LABEL = {
@@ -89,6 +98,10 @@ export const PERMISSION_PRIVILEGE_TO_LABEL: Record<PermissionCategory, Record<st
     ...COMMON_PRIVILEGE_TO_LABEL,
     [wikiPrivilege.PROPOSE]: 'Proposer des pages wiki',
     [wikiPrivilege.WRITE]: 'Valider des propositions de pages wiki',
+  },
+  [PermissionCategory.RULES]: {
+    ...COMMON_PRIVILEGE_TO_LABEL,
+    [rulesPrivilege.READ]: 'Voir le règlement',
   },
 };
 
@@ -126,7 +139,7 @@ export const permissionsMeetRequirement = (
 
 export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions | Permissions[]> = {
   [NavRoute.HOME]: {},
-  [NavRoute.RULES]: {},
+  [NavRoute.RULES]: { [PermissionCategory.RULES]: rulesPrivilege.READ },
   [NavRoute.EVENTS]: { [PermissionCategory.EVENT]: eventPrivilege.READ },
   [OldNavRoute.TRADE]: {},
   [OldNavRoute.MODS]: {},
