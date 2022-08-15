@@ -1,3 +1,4 @@
+import { UseQueryResult } from 'react-query';
 import Background from 'components/core/Containers/Background';
 import Flex from 'components/core/Containers/Flex';
 import { Stack } from 'components/core/Containers/Stack';
@@ -7,17 +8,20 @@ import { AdminNavRoute } from 'utils/routes';
 import { Children } from 'utils/types';
 import AdminNavItem from './AdminNavItem';
 
+const getDataLengthFromQuery = <T,>(query: UseQueryResult<Array<T>>) =>
+  query.status === 'success' ? query.data.length : undefined;
+
 export interface AdminLayoutProps {
   children: Children;
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
-  const { data: nonMembers } = useUsers(UserQueryFilter.NON_MEMBER);
-  const { data: unhandledWikiProposals } = useWikiProposals({ unhandled: true });
+  const nonMembersQuery = useUsers(UserQueryFilter.NON_MEMBER);
+  const unhandledWikiProposalsQuery = useWikiProposals({ unhandled: true });
 
   const routeToHint: Partial<Record<AdminNavRoute, number | undefined>> = {
-    [AdminNavRoute.NON_MEMBERS]: nonMembers?.length,
-    [AdminNavRoute.WIKI_PROPOSALS]: unhandledWikiProposals?.length,
+    [AdminNavRoute.NON_MEMBERS]: getDataLengthFromQuery(nonMembersQuery),
+    [AdminNavRoute.WIKI_PROPOSALS]: getDataLengthFromQuery(unhandledWikiProposalsQuery),
   };
 
   return (

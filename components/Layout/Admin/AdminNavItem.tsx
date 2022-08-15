@@ -12,39 +12,37 @@ export interface AdminNavItemProps {
   hint?: number;
 }
 
-const AdminNavItem: React.FC<AdminNavItemProps> = ({ route, hint }) => {
-  return (
-    <Secured permissions={ROUTES_TO_PERMISSIONS[route]}>
-      <Flex align="center">
-        <NextLink href={`/${serverName}${MenuRoute.ADMIN}${route}`} passHref>
-          <Button data-cy={ROUTES_TO_LABEL[route]} as="a" size="lg" w="full" px="3">
-            <Grid w="full" templateColumns="1fr auto 1fr" gap="3">
-              <GridItem colStart={2} fontSize="3xl">
-                {ROUTES_TO_LABEL[route]}
-              </GridItem>
-              {!!hint && (
-                <Box
-                  fontFamily="body"
-                  ms="auto"
-                  alignSelf="center"
-                  px="2"
-                  lineHeight="1.5em"
-                  fontSize="lg"
-                  color="silver"
-                  borderWidth="1px"
-                  borderColor="whiteAlpha.500"
-                  borderRadius="full"
-                  bgColor="whiteAlpha.200"
-                >
-                  {hint}
-                </Box>
-              )}
-            </Grid>
-          </Button>
-        </NextLink>
-      </Flex>
-    </Secured>
-  );
-};
+const AdminNavItem: React.FC<AdminNavItemProps> = ({ route, hint }) => (
+  <Secured permissions={ROUTES_TO_PERMISSIONS[route]}>
+    <Flex align="center">
+      <NextLink href={`/${serverName}${MenuRoute.ADMIN}${route}`} passHref>
+        <Button data-cy={ROUTES_TO_LABEL[route]} as="a" size="lg" w="full" px="3">
+          <Grid w="full" templateColumns="1fr auto 1fr" gap="3">
+            <GridItem colStart={2} fontSize="3xl">
+              {ROUTES_TO_LABEL[route]}
+            </GridItem>
+            {!!hint && (
+              <Box
+                fontFamily="body"
+                ms="auto"
+                alignSelf="center"
+                px="2"
+                lineHeight="1.5em"
+                fontSize="lg"
+                color="silver"
+                borderWidth="1px"
+                borderColor="whiteAlpha.500"
+                borderRadius="full"
+                bgColor="whiteAlpha.200"
+              >
+                {hint}
+              </Box>
+            )}
+          </Grid>
+        </Button>
+      </NextLink>
+    </Flex>
+  </Secured>
+);
 
 export default AdminNavItem;

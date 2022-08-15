@@ -1,10 +1,8 @@
 import Secured from 'components/core/Authentication/Secured';
 import { Table, Th, Thead, Tr, Tbody } from 'components/core/DataDisplay/Table';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
-import { User } from 'data/user';
 import useRoles from 'hooks/roles/useRoles';
 import { UserQueryFilter, useUsers } from 'hooks/users/useUsers';
-import { UseQueryResult } from 'react-query';
 import { avatarSize, getCellWidth, rowIconWidth, tableStyleProps } from 'theme/admin';
 import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
 import UserRow from './UserRow';
@@ -18,8 +16,6 @@ const UsersTable: React.FC<UsersTableProps> = ({ filter }) => {
   const roles = rolesQuery.data ?? [];
 
   const usersQuery = useUsers(filter);
-  if (usersQuery.status === 'success' && !rolesQuery.data)
-    (usersQuery as UseQueryResult<User[]>).status = 'loading';
   const users = usersQuery.data ?? [];
 
   const emptyTableMessage =

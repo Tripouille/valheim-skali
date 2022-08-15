@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery, UseQueryResult } from 'react-query';
 import axios from 'axios';
 import { getUserRoles, User } from 'data/user';
 import { SpecialRoleName } from 'data/role';
@@ -35,6 +35,9 @@ export const useUsers = (filter: UserQueryFilter | false) => {
   const usersQuery = useQuery(QueryKeys.USERS, getUsers, {
     select: filterUsers,
   });
+
+  if (filter !== false && usersQuery.status === 'success' && !roles)
+    (usersQuery as UseQueryResult<User[]>).status = 'loading';
 
   return usersQuery;
 };
