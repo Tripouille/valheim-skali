@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 4242",
+    "dev:ci": "NODE_ENV=test next dev -p 4243",
     "build": "next build",
     "start": "next start --port 4242",
     "start:ci": "next start --port 4243",
@@ -12,9 +13,9 @@
     "storybook": "start-storybook -p 6006 -c storybook/config",
     "build:storybook": "build-storybook -c storybook/config",
     "chromatic": "chromatic --exit-zero-on-changes",
-    "dev:test": "NODE_ENV=test next dev -p 4243",
-    "cypress:open": "yarn dev:test & cypress open -P ./tests/integration",
-    "cypress:run": "yarn dev:test & cypress run -P ./tests/integration",
+    "cypress:open": "yarn dev:ci & cypress open -P ./tests/integration",
+    "cypress:run": "yarn dev:ci & cypress run -P ./tests/integration",
+    "cypress:run:ci": "cypress run -P ./tests/integration",
     "cypress:unit:open": "cypress open -P ./tests/unit",
     "cypress:unit:run": "cypress run -P ./tests/unit"
   },
