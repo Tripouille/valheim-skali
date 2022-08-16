@@ -3448,9 +3448,9 @@ __metadata:
   linkType: hard
 
 "@panva/hkdf@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@panva/hkdf@npm:1.0.1"
-  checksum: 883c423c006fdef48021ed3982938e814acac60b2b4820253064ef5d7d057c58684aa294af1aff767541a71cc23d878db60464e7243dc5150188d81c06c82196
+  version: 1.0.2
+  resolution: "@panva/hkdf@npm:1.0.2"
+  checksum: 75183b4d5ea816ef516dcea70985c610683579a9e2ac540c2d59b9a3ed27eedaff830a43a1c43c1683556a457c92ac66e09109ee995ab173090e4042c4c4bb03
   languageName: node
   linkType: hard
 
@@ -7976,14 +7976,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:0.4.1, cookie@npm:^0.4.1":
+"cookie@npm:0.4.1":
   version: 0.4.1
   resolution: "cookie@npm:0.4.1"
   checksum: bd7c47f5d94ab70ccdfe8210cde7d725880d2fcda06d8e375afbdd82de0c8d3b73541996e9ce57d35f67f672c4ee6d60208adec06b3c5fc94cebb85196084cf8
   languageName: node
   linkType: hard
 
-"cookie@npm:^0.4.2":
+"cookie@npm:^0.4.1, cookie@npm:^0.4.2":
   version: 0.4.2
   resolution: "cookie@npm:0.4.2"
   checksum: a00833c998bedf8e787b4c342defe5fa419abd96b32f4464f718b91022586b8f1bafbddd499288e75c037642493c83083da426c6a9080d309e3bd90fd11baa9b
@@ -12425,17 +12425,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jose@npm:^4.1.4":
-  version: 4.3.7
-  resolution: "jose@npm:4.3.7"
-  checksum: 3f62324bd1920d8c487641ab56fa568a48b4bdb149bf95e070cbbbc97b68b617d8562e64dbd02cc900f8f02f332a964819b42ccf03d23417ac30f4beaf0e3d9e
-  languageName: node
-  linkType: hard
-
-"jose@npm:^4.3.7":
-  version: 4.6.0
-  resolution: "jose@npm:4.6.0"
-  checksum: 7f48cb030c9e8586e825ad5cc71e792f7b71b420afd3c45913e0719fd4abe6a756179c732604d42fbbb53c64b63f78818669599eeef11c988c0c34dd1178fe43
+"jose@npm:^4.1.4, jose@npm:^4.3.7":
+  version: 4.8.3
+  resolution: "jose@npm:4.8.3"
+  checksum: a4a03d329d3611696d94a81df06e7fe160cef987da032ecc9e0a9d1e5e751b5101d1657eed16ead5f1905c9c2009d48820538412af4e5257f205a8754dd09d31
   languageName: node
   linkType: hard
 
@@ -14859,14 +14852,14 @@ __metadata:
   linkType: hard
 
 "openid-client@npm:^5.1.0":
-  version: 5.1.4
-  resolution: "openid-client@npm:5.1.4"
+  version: 5.1.8
+  resolution: "openid-client@npm:5.1.8"
   dependencies:
     jose: ^4.1.4
     lru-cache: ^6.0.0
     object-hash: ^2.0.1
     oidc-token-hash: ^5.0.1
-  checksum: 7e2d73c6416a92a57df9c78fa8c99afb4f772ca5b0eb6f53e0b93dd427d9e1989f00a90478200da2a4105cce7c88576f2ad761803ad78d06e147cbc379fd0921
+  checksum: e6fe2c7d7699280ec47ed18433367e6ea57969f6e1a5aa74be03ebf6011b801179c88fc42dd90dad4ed8df8529f3f56756670a2c0b8f9ccae5149036e9152bff
   languageName: node
   linkType: hard
 
@@ -15671,20 +15664,20 @@ __metadata:
   linkType: hard
 
 "preact-render-to-string@npm:^5.1.19":
-  version: 5.1.19
-  resolution: "preact-render-to-string@npm:5.1.19"
+  version: 5.2.1
+  resolution: "preact-render-to-string@npm:5.2.1"
   dependencies:
     pretty-format: ^3.8.0
   peerDependencies:
     preact: ">=10"
-  checksum: b8b454d7b4bd93d6dcfc5e1269cfef1756e850c524e80340be62b88582cb88eb926a3edc0088f4dc2a454f56c1e09faa10bced081f25204342fd338275aa5af1
+  checksum: 5702638656a5a471a3698e8535e08ff0fca98317a578b2527158026fda28a681c008cebcabdbacd76209dabd2728a90da9793bef778549d28f5d060854cc7f7a
   languageName: node
   linkType: hard
 
 "preact@npm:^10.6.3":
-  version: 10.7.1
-  resolution: "preact@npm:10.7.1"
-  checksum: e99d08bd38372e78ce1c84e68685cad66adf076bd95069bc8bcd32c9903a4df09c01d5b04aad849527362b67cc2c09446b647f72de4e67d0578fdea0f904f28f
+  version: 10.10.3
+  resolution: "preact@npm:10.10.3"
+  checksum: f62762c45d577a0c269bfebf558d3b1940523630c64b0d3895090425a0fb4ed4c6f960fb57b789bda85a5bfc85c7d65d70b596b6579d09b7c2a436565b59e11e
   languageName: node
   linkType: hard
 
