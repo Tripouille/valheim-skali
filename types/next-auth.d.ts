@@ -8,6 +8,7 @@ declare module 'next-auth' {
     permissions: Permissions;
     user: DefaultSession['user'] & {
       _id?: string;
+      nameInGame?: string;
     };
   }
 }
