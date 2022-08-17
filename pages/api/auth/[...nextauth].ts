@@ -3,9 +3,10 @@ import NextAuth from 'next-auth';
 import { ObjectId } from 'bson';
 import DiscordProvider from 'next-auth/providers/discord';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import { UserInDb } from 'data/user';
 import db from 'api-utils/db';
 import { getUserPermissions } from 'api-utils/auth';
+import { updateOneInCollection } from 'api-utils/common';
+import { UserInDb, usersCollectionName } from 'data/user';
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   const nextAuth = NextAuth(req, res, {
@@ -35,6 +36,11 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         }
         session.user._id = token.sub;
         return session;
+      },
+      async signIn({ user, profile }) {
+        if (user.image !== profile.image_url)
+          await updateOneInCollection(usersCollectionName, user.id, { image: profile.image_url });
+        return true;
       },
     },
     adapter: MongoDBAdapter({
