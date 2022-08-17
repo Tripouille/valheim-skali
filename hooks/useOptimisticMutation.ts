@@ -1,4 +1,9 @@
-import { MutationFunction, useMutation, UseMutationOptions, useQueryClient } from 'react-query';
+import {
+  MutationFunction,
+  useMutation,
+  UseMutationOptions,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { getMessageFromError } from 'utils/error';
 import { QueryTypes } from 'utils/queryClient';
 import { displayErrorToast, displaySuccessToast } from 'utils/toast';
@@ -26,11 +31,11 @@ const useOptimisticMutation = <T extends keyof QueryTypes, TVariables = void>(
     UseOptimisticMutationContext<QueryTypes[T]>
   >(mutationFn, {
     onMutate: (variables: TVariables) => {
-      queryClient.cancelQueries(associatedQueryKey);
-      const previousData = queryClient.getQueryData<QueryTypes[T]>(associatedQueryKey);
+      queryClient.cancelQueries([associatedQueryKey]);
+      const previousData = queryClient.getQueryData<QueryTypes[T]>([associatedQueryKey]);
       if (previousData)
         queryClient.setQueryData<QueryTypes[T]>(
-          associatedQueryKey,
+          [associatedQueryKey],
           getNewData(previousData, variables),
         );
       if (options?.onMutate) options.onMutate(variables);
@@ -38,7 +43,7 @@ const useOptimisticMutation = <T extends keyof QueryTypes, TVariables = void>(
     },
     onError: (error, variables, context) => {
       if (context?.previousData) {
-        queryClient.setQueryData<QueryTypes[T]>(associatedQueryKey, context.previousData);
+        queryClient.setQueryData<QueryTypes[T]>([associatedQueryKey], context.previousData);
       }
       displayErrorToast({
         title: getMessageFromError(error),
@@ -51,7 +56,7 @@ const useOptimisticMutation = <T extends keyof QueryTypes, TVariables = void>(
       if (options?.onSuccess) options.onSuccess(data, variables, context);
     },
     onSettled: (data, error, variables, context) => {
-      queryClient.invalidateQueries(associatedQueryKey);
+      queryClient.invalidateQueries([associatedQueryKey]);
       if (options?.onSettled) options.onSettled(data, error, variables, context);
     },
   });

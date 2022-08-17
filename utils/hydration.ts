@@ -1,4 +1,4 @@
-import { dehydrate, QueryClient } from 'react-query';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { ServerException } from 'api-utils/common';
 import { HydrationProps } from 'utils/types';
 

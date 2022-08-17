@@ -1,5 +1,5 @@
 import { Session } from 'next-auth';
-import { QueryClient } from 'react-query';
+import { QueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { toast } from '@chakra-ui/react';
 import { User } from 'data/user';

@@ -7,7 +7,7 @@ import * as Select from './select';
 const wikiProposalSample = {
   _id: '6228cb385f506b78affc0ad1',
   proposalType: 'creation',
-  authorId: '6230b7f8d9758180e91b6b20',
+  authorId: '62fd01597d36a486644f8f0d',
   status: 'proposed',
   suggestions: [{ title: 'Proposal 1', content: 'Content of proposal 1', date: '2000-01-01' }],
 };

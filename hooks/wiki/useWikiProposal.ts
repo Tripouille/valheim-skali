@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useQuery, UseQueryResult } from 'react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { getWikiProposalWithAuthorName, WikiProposal, WikiProposalWithAuthor } from 'data/wiki';
 import { useUsers } from 'hooks/users/useUsers';
 import { APIRoute } from 'utils/routes';

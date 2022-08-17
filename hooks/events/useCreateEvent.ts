@@ -1,4 +1,4 @@
-import { UseMutationOptions } from 'react-query';
+import { UseMutationOptions } from '@tanstack/react-query';
 import axios from 'axios';
 import { CreateEventData, getEventDataForServer } from 'data/event';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';

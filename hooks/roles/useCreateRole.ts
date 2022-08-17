@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { UseMutationOptions, useQueryClient } from 'react-query';
+import { UseMutationOptions, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { CreateRoleData } from 'data/role';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
@@ -26,7 +26,7 @@ const useCreateRole = (
 
   const createRole = useCallback(
     (roleData: CreateRoleData) => {
-      const roles = queryClient.getQueryData<QueryTypes[QueryKeys.ROLES]>(QueryKeys.ROLES);
+      const roles = queryClient.getQueryData<QueryTypes[QueryKeys.ROLES]>([QueryKeys.ROLES]);
       if (roles && roles.some(role => role.name === roleData.name)) {
         displayErrorToast({ title: 'Erreur', description: 'Ce nom de rôle existe déjà.' });
         return;

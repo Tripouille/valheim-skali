@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { WikiPageContent } from 'data/wiki';
 import { QueryKeys } from 'utils/queryClient';

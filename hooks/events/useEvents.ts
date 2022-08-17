@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Event, eventComp } from 'data/event';
 import useSession from 'hooks/useSession';
@@ -20,7 +20,7 @@ const useEvents = () => {
     return events.sort(eventComp(now));
   }, []);
 
-  const eventsQuery = useQuery(QueryKeys.EVENTS, getEventsFromServer, {
+  const eventsQuery = useQuery([QueryKeys.EVENTS], getEventsFromServer, {
     enabled: session.hasRequiredPermissions({
       [PermissionCategory.EVENT]: eventPrivilege.READ,
     }),

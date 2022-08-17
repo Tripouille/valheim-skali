@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { WikiPage, WikiProposal } from 'data/wiki';
 import { QueryKeys } from 'utils/queryClient';
@@ -32,11 +32,11 @@ const useAnswerWikiProposal = (wikiProposal: WikiProposal) => {
         queryClient.setQueryData([QueryKeys.WIKI_PAGES, newWikiPage?._id], newWikiPage);
         router.push(`/${serverName}${NavRoute.WIKI}/${newWikiPage?.slug}`);
       } else {
-        queryClient.refetchQueries(QueryKeys.WIKI_PROPOSALS);
+        queryClient.refetchQueries([QueryKeys.WIKI_PROPOSALS]);
         router.push(`/${serverName}${MenuRoute.ADMIN}${AdminNavRoute.WIKI_PROPOSALS}`);
       }
     },
-    onSettled: () => queryClient.invalidateQueries(QueryKeys.WIKI_PROPOSALS),
+    onSettled: () => queryClient.invalidateQueries([QueryKeys.WIKI_PROPOSALS]),
   });
 
   return answerWikiProposal;

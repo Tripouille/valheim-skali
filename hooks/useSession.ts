@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { Session } from 'next-auth';
 import { useCallback, useMemo } from 'react';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import axios from 'axios';
 import { AuthError, SessionStatus } from 'utils/auth';
 import { Permissions, permissionsMeetRequirement } from 'utils/permissions';
@@ -48,7 +48,7 @@ const useSession = ({
   const router = useRouter();
 
   const { data: sessionData, status } = useQuery<QueryTypes[QueryKeys.SESSION]>(
-    QueryKeys.SESSION,
+    [QueryKeys.SESSION],
     getSessionFromServer,
     {
       ...queryConfig,
@@ -61,7 +61,7 @@ const useSession = ({
   );
 
   const { data: visitorPermissions } = useQuery<QueryTypes[QueryKeys.VISITOR]>(
-    QueryKeys.VISITOR,
+    [QueryKeys.VISITOR],
     getVisitorPermissionsFromServer,
     {
       enabled: !sessionData,

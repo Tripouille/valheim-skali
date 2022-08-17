@@ -22,7 +22,7 @@ export const getStaticProps: GetStaticProps = async () => ({
 
     if (permissionsMeetRequirement(visitorPermissions, requiredPermissionsToReadEvents)) {
       const events = await db.find<EventInDb>(eventsCollectionName);
-      queryClient.setQueryData(QueryKeys.EVENTS, events);
+      queryClient.setQueryData([QueryKeys.EVENTS], events);
     }
   }),
 });

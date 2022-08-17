@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from 'react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import axios from 'axios';
 import { WikiPage } from 'data/wiki';
 import { APIRoute } from 'utils/routes';
@@ -10,7 +10,7 @@ const getWikiPages = async (): Promise<WikiPage[]> => {
 };
 
 const useWikiPages = (): UseQueryResult<WikiPage[]> => {
-  const wikiPagesQuery = useQuery(QueryKeys.WIKI_PAGES, getWikiPages, { staleTime: 0 });
+  const wikiPagesQuery = useQuery([QueryKeys.WIKI_PAGES], getWikiPages, { staleTime: 0 });
 
   return wikiPagesQuery;
 };
