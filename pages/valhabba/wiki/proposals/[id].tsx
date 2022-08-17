@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import Background from 'components/core/Containers/Background';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
 import WikiProposalComponent from 'components/pages/Wiki/WikiProposals/WikiProposal';
@@ -18,9 +18,9 @@ const WikiProposalPage = () => {
 
   const getFallbackWikiProposal = () => {
     if (!wikiProposalId || wikiProposalQuery.data) return null;
-    const wikiProposals = queryClient.getQueryData<QueryTypes[QueryKeys.WIKI_PROPOSALS]>(
+    const wikiProposals = queryClient.getQueryData<QueryTypes[QueryKeys.WIKI_PROPOSALS]>([
       QueryKeys.WIKI_PROPOSALS,
-    );
+    ]);
     return wikiProposals?.find(wikiProposal => wikiProposal._id === wikiProposalId);
   };
   const fallbackWikiProposal = getFallbackWikiProposal();

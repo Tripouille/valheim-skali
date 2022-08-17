@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { QueryObserverSuccessResult, useQuery, UseQueryResult } from 'react-query';
+import { QueryObserverSuccessResult, useQuery, UseQueryResult } from '@tanstack/react-query';
 import { WikiPage } from 'data/wiki';
 import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';

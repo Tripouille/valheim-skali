@@ -1,8 +1,8 @@
 import { AppContext, AppProps } from 'next/app';
 import Head from 'next/head';
 import { getSession } from 'next-auth/react';
-import { QueryClientProvider, Hydrate } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { QueryClientProvider, Hydrate } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ChakraProvider } from '@chakra-ui/react';
 import Layout from 'components/Layout';
 import Fonts from 'components/Layout/Fonts';
@@ -66,10 +66,10 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
         // (because getSession calls an api route and requires header with cookies or no header)
         const session = req.headers.cookie ? await getSession({ req }) : null;
         if (session) {
-          serverQueryClient.setQueryData(QueryKeys.SESSION, session);
+          serverQueryClient.setQueryData([QueryKeys.SESSION], session);
         } else {
           const visitorPermissions = await getVisitorPermissions();
-          serverQueryClient.setQueryData(QueryKeys.VISITOR, visitorPermissions);
+          serverQueryClient.setQueryData([QueryKeys.VISITOR], visitorPermissions);
         }
       }),
     };

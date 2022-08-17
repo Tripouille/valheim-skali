@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { User, UpdateUserData, UpdateUserRolesData } from 'data/user';
 import { Role } from 'data/role';
@@ -55,7 +55,7 @@ const useUpdateUser = (updatedUser: User) => {
       onSettled: () => {
         /** If I update my own roles, my permissions may have changed */
         if (updatedUser._id === session.data?.user._id) {
-          queryClient.invalidateQueries(QueryKeys.SESSION);
+          queryClient.invalidateQueries([QueryKeys.SESSION]);
         }
       },
     },
@@ -75,7 +75,7 @@ const useUpdateUser = (updatedUser: User) => {
       onSettled: () => {
         /** If I update my own roles, my permissions may have changed */
         if (updatedUser._id === session.data?.user._id) {
-          queryClient.invalidateQueries(QueryKeys.SESSION);
+          queryClient.invalidateQueries([QueryKeys.SESSION]);
         }
       },
     },

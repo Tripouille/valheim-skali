@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { WikiPage, WikiPageTag } from 'data/wiki';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import { APIRoute } from 'utils/routes';
@@ -28,7 +28,7 @@ const useUpdateWikiPageTags = (wikiPage: WikiPage) => {
   const queryClient = useQueryClient();
 
   const onSuccess = () => {
-    queryClient.invalidateQueries(QueryKeys.FEATURED_WIKI_PAGES);
+    queryClient.invalidateQueries([QueryKeys.FEATURED_WIKI_PAGES]);
   };
 
   const addWikiPageTag = useOptimisticMutation<QueryKeys.WIKI_PAGES, WikiPageTag>(

@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { compareRolesFromName, Role } from 'data/role';
 import useSession from 'hooks/useSession';
@@ -14,7 +14,7 @@ const getRoles = async (): Promise<Role[]> => {
 const useRoles = () => {
   const session = useSession();
 
-  const rolesQuery = useQuery(QueryKeys.ROLES, getRoles, {
+  const rolesQuery = useQuery([QueryKeys.ROLES], getRoles, {
     enabled: session.hasRequiredPermissions({
       [PermissionCategory.ROLE]: rolePrivilege.READ,
     }),

@@ -1,4 +1,4 @@
-import { QueryObserverSuccessResult, useQuery } from 'react-query';
+import { QueryObserverSuccessResult, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { FeaturedWikiPages } from 'data/wiki';
 import { APIRoute } from 'utils/routes';
@@ -11,7 +11,7 @@ const getFeaturedWikiPagesFromServer = async (): Promise<FeaturedWikiPages> => {
 
 const useFeaturedWikiPages = ({ placeholderData }: { placeholderData: FeaturedWikiPages }) => {
   const featuredWikiPagesQuery = useQuery(
-    QueryKeys.FEATURED_WIKI_PAGES,
+    [QueryKeys.FEATURED_WIKI_PAGES],
     getFeaturedWikiPagesFromServer,
     { placeholderData },
   );

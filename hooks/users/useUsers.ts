@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from 'react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import axios from 'axios';
 import { getUserRoles, User } from 'data/user';
 import { SpecialRoleName } from 'data/role';
@@ -17,7 +17,7 @@ export const getUsers = async (): Promise<User[]> => {
   return data;
 };
 
-export const useUsers = (filter: UserQueryFilter | false) => {
+export const useUsers = (filter: UserQueryFilter | false): UseQueryResult<User[]> => {
   const { data: roles } = useRoles();
 
   const filterUsers = (allUsers: QueryTypes[QueryKeys.USERS]) => {
@@ -32,12 +32,12 @@ export const useUsers = (filter: UserQueryFilter | false) => {
     });
   };
 
-  const usersQuery = useQuery(QueryKeys.USERS, getUsers, {
+  const usersQuery = useQuery([QueryKeys.USERS], getUsers, {
     select: filterUsers,
   });
 
   if (filter !== false && usersQuery.status === 'success' && !roles)
-    (usersQuery as UseQueryResult<User[]>).status = 'loading';
+    return { ...usersQuery, data: undefined, isLoading: true, isSuccess: false, status: 'loading' };
 
   return usersQuery;
 };

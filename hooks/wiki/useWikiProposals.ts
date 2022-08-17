@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from 'react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import axios from 'axios';
 import {
   getWikiProposalWithAuthorName,
@@ -24,7 +24,7 @@ export const useWikiProposals = (options?: {
   const session = useSession();
   const { data: users } = useUsers(false);
 
-  const wikiProposalsQuery = useQuery(QueryKeys.WIKI_PROPOSALS, getWikiProposalsOnServer, {
+  const wikiProposalsQuery = useQuery([QueryKeys.WIKI_PROPOSALS], getWikiProposalsOnServer, {
     enabled: session.hasRequiredPermissions({
       [PermissionCategory.WIKI]: options?.onlyUser ? wikiPrivilege.PROPOSE : wikiPrivilege.WRITE,
     }),

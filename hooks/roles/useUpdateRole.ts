@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { CreateRoleData, Role } from 'data/role';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
@@ -27,12 +27,12 @@ const useUpdateRole = (updatedRole: Role) => {
           : role,
       ) ?? [],
     'Le rôle a bien été mis à jour.',
-    { onSettled: () => queryClient.invalidateQueries(QueryKeys.SESSION) },
+    { onSettled: () => queryClient.invalidateQueries([QueryKeys.SESSION]) },
   );
 
   const updateRole = useCallback(
     (roleData: CreateRoleData) => {
-      const roles = queryClient.getQueryData<QueryTypes[QueryKeys.ROLES]>(QueryKeys.ROLES);
+      const roles = queryClient.getQueryData<QueryTypes[QueryKeys.ROLES]>([QueryKeys.ROLES]);
       if (
         roles &&
         roles.some(role => role.name === roleData.name && role._id !== updatedRole._id)
