@@ -21,7 +21,7 @@ import EventTagsForm from './EventTagsForm';
 const getDefaultEventFormData = (): Partial<CreateEventData> => ({
   continuous: false,
   tags: [],
-  startDate: DateTime.now().startOf('day').toISO({ includeOffset: false }),
+  startDate: toInputDatetimeFormat(DateTime.now().startOf('day').toISO()),
 });
 
 const getEventFormData = (event: Event) => ({
