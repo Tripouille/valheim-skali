@@ -34,7 +34,7 @@ export const formatDateInterval = (
 export const toISOWithTimezone = (date: string): string => DateTime.fromISO(date).toISO();
 
 export const toInputDatetimeFormat = (date: string): string =>
-  DateTime.fromISO(date).toISO({ includeOffset: false });
+  DateTime.fromISO(date).toISO({ includeOffset: false, suppressSeconds: true });
 
 export const slugify = (text: string) =>
   text
