@@ -6,8 +6,7 @@ import createEvent from 'api-utils/events/createEvent';
 const eventsHandler: NextApiHandler = async (req, res) => {
   try {
     if (req.method === 'GET') {
-      const events = await getEvents(req);
-      res.status(200).json(events);
+      await getEvents(req, res);
     } else if (req.method === 'POST') {
       await createEvent(req, res);
     } else {

@@ -4,8 +4,8 @@ export const createEventButton = () => cy.dataCy('events').dataCy('create-event'
 
 export const createEventModal = () => cy.dataCy('create-event-modal');
 
-export const editEventButton = (index: number) =>
-  cy.dataCy('events').dataCy(`event-${index}`).dataCy('edit', 'button');
+export const editEventButton = (index: number, page = 0) =>
+  cy.dataCy('events').dataCy(`event-${page}-${index}`).dataCy('edit', 'button');
 
 export const editEventModal = () => cy.dataCy('edit-event-modal');
 

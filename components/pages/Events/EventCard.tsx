@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { KeyboardEventHandler, MouseEventHandler, useEffect, useRef } from 'react';
+import React, { KeyboardEventHandler, MouseEventHandler, Ref, useEffect, useRef } from 'react';
 import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
 import { CypressProps } from 'utils/types';
@@ -24,9 +24,10 @@ import EventForm from './EventForm';
 export interface EventCardProps extends CypressProps {
   event: Event;
   isOpen: boolean;
+  innerRef?: Ref<HTMLDivElement>;
 }
 
-const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event, isOpen }) => {
+const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event, isOpen, innerRef }) => {
   const router = useRouter();
 
   const itemModal = useDisclosure({
@@ -62,6 +63,7 @@ const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event, isOpen 
     <>
       <Box
         data-cy={dataCy}
+        ref={innerRef}
         role="button"
         tabIndex={0}
         position="relative"

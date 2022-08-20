@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from 'react';
-import useEvents from './useEvents';
+import useInfiniteEvents from './useInfiniteEvents';
 
 const useFilteredTags = (chosenTags: string[], filter: string) => {
-  const { data: events = [] } = useEvents();
+  const { data: eventsData } = useInfiniteEvents();
 
   const compareTags = useCallback(
     (tag1: string, tag2: string) =>
@@ -11,7 +11,7 @@ const useFilteredTags = (chosenTags: string[], filter: string) => {
   );
 
   const filteredTags = useMemo(() => {
-    const allTags = [...new Set(events.flatMap(event => event.tags))];
+    const allTags = eventsData?.pages[0].usedTags ?? [];
 
     const lowerCaseFilter = filter.toLowerCase();
     const availableTagsWithEntry = allTags
@@ -19,7 +19,7 @@ const useFilteredTags = (chosenTags: string[], filter: string) => {
       .sort(compareTags);
 
     return availableTagsWithEntry;
-  }, [events, chosenTags, filter, compareTags]);
+  }, [eventsData?.pages, filter, compareTags, chosenTags]);
 
   return filteredTags;
 };

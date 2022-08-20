@@ -24,6 +24,12 @@ export type EventInDb = Omit<Event, '_id'> & {
 
 export type CreateEventData = Omit<Event, '_id'>;
 
+export interface EventsPage<T extends Event | EventInDb = Event> {
+  events: T[];
+  nextCursor?: number;
+  usedTags?: string[];
+}
+
 /** Database */
 
 export const eventsCollectionName = 'events';
@@ -104,11 +110,11 @@ const getEventEndDateFromStartDate = (startDate: string): Date => {
   return endDate;
 };
 
-const getClosedEventEndDate = (event: Event): Date => {
+const getClosedEventEndDate = (event: Event | EventInDb): Date => {
   return event.endDate ? new Date(event.endDate) : getEventEndDateFromStartDate(event.startDate);
 };
 
-export const isEventClosed = (event: Event, refDate: Date): boolean => {
+export const isEventClosed = (event: Event | EventInDb, refDate: Date): boolean => {
   if (event.endDate) {
     return new Date(event.endDate) < refDate;
   } else if (event.continuous) {
@@ -132,7 +138,7 @@ interface EventProperties {
   continuous: boolean;
 }
 
-const getEventProperties = (event: Event, refDate: Date): EventProperties => ({
+const getEventProperties = (event: Event | EventInDb, refDate: Date): EventProperties => ({
   isClosed: isEventClosed(event, refDate),
   startDate: new Date(event.startDate),
   endDate: getClosedEventEndDate(event),
@@ -157,7 +163,7 @@ const closedEventComp = (
 
 export const eventComp =
   (refDate: Date) =>
-  (event1: Event, event2: Event): 1 | -1 => {
+  (event1: Event | EventInDb, event2: Event | EventInDb): 1 | -1 => {
     const event1Properties = getEventProperties(event1, refDate);
     const event2Properties = getEventProperties(event2, refDate);
     if (event1Properties.isClosed !== event2Properties.isClosed) {

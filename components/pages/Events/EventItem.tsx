@@ -52,7 +52,7 @@ const EventItem = forwardRef<HTMLDivElement, EventItemProps>(
             {event.continuous && <Tag label={CONTINUOUS_LABEL} />}
           </Wrap>
         )}
-        <Text textAlign="center" fontStyle="italic" pb="2">
+        <Text textAlign="center" fontStyle="italic" pb="2" suppressHydrationWarning>
           {formatDateInterval(event.startDate, event.endDate, !event.continuous)}
           {event.location && ` - ${event.location}`}
         </Text>
