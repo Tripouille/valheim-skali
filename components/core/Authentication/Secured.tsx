@@ -19,13 +19,10 @@ const Secured: React.FC<SecuredProps> = ({ permissions, children, fallback, redi
 
   const hasRequiredPermissions = session.hasRequiredPermissions(permissions);
 
-  useEffect(
-    function () {
-      if (redirectOnFail && !hasRequiredPermissions && session.status !== SessionStatus.LOADING)
-        router.push(getSigninRoute(AuthError.NOT_ENOUGH_PERMISSIONS));
-    },
-    [hasRequiredPermissions, redirectOnFail, router, session.status],
-  );
+  useEffect(() => {
+    if (redirectOnFail && !hasRequiredPermissions && session.status !== SessionStatus.LOADING)
+      router.push(getSigninRoute(AuthError.NOT_ENOUGH_PERMISSIONS));
+  }, [hasRequiredPermissions, redirectOnFail, router, session.status]);
 
   if (hasRequiredPermissions) return <>{children}</>;
   if (fallback) return <>{fallback}</>;

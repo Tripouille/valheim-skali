@@ -1,14 +1,15 @@
 import { GetStaticProps } from 'next';
 import React from 'react';
-import { EventInDb, eventsCollectionName } from 'data/event';
-import db from 'api-utils/db';
+import { InfiniteData } from '@tanstack/react-query';
 import { getVisitorPermissions } from 'api-utils/auth';
-import getHydrationProps from 'utils/hydration';
-import { QueryKeys } from 'utils/queryClient';
-import { permissionsMeetRequirement, PermissionCategory, eventPrivilege } from 'utils/permissions';
+import { getEventsPage } from 'api-utils/events/getEvents';
 import Events from 'components/pages/Events';
+import { EventInDb, EventsPage } from 'data/event';
+import getHydrationProps from 'utils/hydration';
+import { permissionsMeetRequirement, PermissionCategory, eventPrivilege } from 'utils/permissions';
+import { QueryKeys } from 'utils/queryClient';
 
-const EventsPage = () => <Events />;
+const EventsPageComponent = () => <Events />;
 
 // When using getStaticProps, the _app getInitialProps is not re-run and
 // is used at its build version (visitor permissions only)
@@ -21,10 +22,13 @@ export const getStaticProps: GetStaticProps = async () => ({
     };
 
     if (permissionsMeetRequirement(visitorPermissions, requiredPermissionsToReadEvents)) {
-      const events = await db.find<EventInDb>(eventsCollectionName);
-      queryClient.setQueryData([QueryKeys.EVENTS], events);
+      const firstEventsPage = await getEventsPage(0);
+      queryClient.setQueryData<InfiniteData<EventsPage<EventInDb>>>([QueryKeys.EVENTS], {
+        pages: [firstEventsPage],
+        pageParams: [0],
+      });
     }
   }),
 });
 
-export default EventsPage;
+export default EventsPageComponent;

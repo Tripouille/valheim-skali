@@ -1,5 +1,15 @@
 [
   {
+    "_id": 2,
+    "name": "Event 3 avec un très long titre Lorem ipsum dolor sit amet consectetur",
+    "tags": [],
+    "startDate": "3000-01-01T20:30:00.000+01:00",
+    "endDate": "3000-01-02T11:30:00.000+01:00",
+    "continuous": false,
+    "RPDescription": "Une courte description RP",
+    "description": "Une description 3"
+  },
+  {
     "_id": 0,
     "name": "Event1",
     "discordLink": "https://discord.com/channels/843826987466227722/894670935842508831/907...",
@@ -16,15 +26,5 @@
     "startDate": "2000-01-01T20:30:00.000+01:00",
     "continuous": false,
     "description": "Une description 2"
-  },
-  {
-    "_id": 2,
-    "name": "Event 3 avec un très long titre Lorem ipsum dolor sit amet consectetur",
-    "tags": [],
-    "startDate": "3000-01-01T20:30:00.000+01:00",
-    "endDate": "3000-01-02T11:30:00.000+01:00",
-    "continuous": false,
-    "RPDescription": "Une courte description RP",
-    "description": "Une description 3"
   }
 ]

@@ -1,9 +1,10 @@
-import { UseMutationOptions } from '@tanstack/react-query';
+import { useMutation, UseMutationOptions, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { CreateEventData, getEventDataForServer } from 'data/event';
-import useOptimisticMutation from 'hooks/useOptimisticMutation';
+import { getMessageFromError } from 'utils/error';
 import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
+import { displayErrorToast, displaySuccessToast } from 'utils/toast';
 
 const createEventOnServer = async (eventData: CreateEventData) => {
   await axios.post(`${APIRoute.EVENTS}`, getEventDataForServer(eventData));
@@ -12,13 +13,16 @@ const createEventOnServer = async (eventData: CreateEventData) => {
 const useCreateEvent = (
   onSuccess: UseMutationOptions<void, unknown, CreateEventData>['onSuccess'],
 ) => {
-  const createEvent = useOptimisticMutation<QueryKeys.EVENTS, CreateEventData>(
-    QueryKeys.EVENTS,
-    createEventOnServer,
-    (previousEvents, eventData) => [...(previousEvents ?? []), { ...eventData, _id: 'new' }],
-    "L'événement a bien été créé.",
-    { onSuccess },
-  );
+  const queryClient = useQueryClient();
+
+  const { mutate: createEvent } = useMutation(createEventOnServer, {
+    onError: error => displayErrorToast({ title: getMessageFromError(error) }),
+    onSuccess: (data, variables, context) => {
+      displaySuccessToast({ title: "L'événement a bien été créé." });
+      if (onSuccess) onSuccess(data, variables, context);
+    },
+    onSettled: () => queryClient.invalidateQueries([QueryKeys.EVENTS]),
+  });
 
   return createEvent;
 };

@@ -1,8 +1,10 @@
 import React from 'react';
-import { Box as ChakraBox, BoxProps as ChakraBoxProps } from '@chakra-ui/react';
+import { Box as ChakraBox, BoxProps as ChakraBoxProps, forwardRef } from '@chakra-ui/react';
 
 export type BoxProps = ChakraBoxProps;
 
-const Box: React.FC<BoxProps> = chakraBoxProps => <ChakraBox {...chakraBoxProps}></ChakraBox>;
+const Box = forwardRef<BoxProps, 'div'>((chakraBoxProps, ref) => (
+  <ChakraBox ref={ref} {...chakraBoxProps}></ChakraBox>
+));
 
 export default Box;

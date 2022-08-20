@@ -1,10 +1,10 @@
 import { Session } from 'next-auth';
-import { QueryClient } from '@tanstack/react-query';
+import { InfiniteData, QueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { toast } from '@chakra-ui/react';
 import { User } from 'data/user';
 import { Role } from 'data/role';
-import { Event } from 'data/event';
+import { EventsPage } from 'data/event';
 import { WikiPage, WikiProposalWithAuthor } from 'data/wiki';
 import { getMessageFromError } from './error';
 import { displayErrorToast } from './toast';
@@ -44,7 +44,7 @@ export enum QueryKeys {
 }
 
 export type QueryTypes = {
-  [QueryKeys.EVENTS]: Event[];
+  [QueryKeys.EVENTS]: InfiniteData<EventsPage>;
   [QueryKeys.ROLES]: Role[];
   [QueryKeys.USERS]: User[];
   [QueryKeys.WIKI_PAGES]: WikiPage[];

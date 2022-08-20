@@ -36,9 +36,24 @@ describe('events with read permission', () => {
       Select.editEventButton(0).should('not.exist');
     });
 
-    it('should open event modal when visiting events with id', () => {
-      Action.visitEventsPageAndWaitFor(APIRoute.EVENTS, '6228cb385f506b78affc05f2');
-      cy.dataCy('event-1-modal').should('be.visible');
+    it('should scroll to event and open its modal when visiting events with id', () => {
+      cy.task('seedCollection', {
+        collectionName: 'events',
+        data: Array.from(Array(20).keys()).map(i => ({
+          _id: '6228cb385f506b78affc05' + (i < 10 ? `0${i}` : i),
+          name: `Event ${i}`,
+          tags: [],
+          startDate: '2000-01-01T20:30:00.000+01:00',
+          continuous: false,
+          description: 'Event description',
+        })),
+      });
+      Action.visitEventsPageAndWaitFor(APIRoute.EVENTS, '6228cb385f506b78affc0501');
+      Select.eventCards().should('have.length.at.least', 10);
+      Select.eventCards().should('have.length.at.least', 15);
+      Select.eventCards().should('have.length.at.least', 20);
+      cy.dataCy('event-3-3-modal').should('be.visible');
+      cy.seedCollection('events', 'events');
     });
   });
 

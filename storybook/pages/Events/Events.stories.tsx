@@ -13,7 +13,7 @@ export const Empty = StoryFactory(
   {},
   {
     permissions: { [PermissionCategory.EVENT]: eventPrivilege.READ },
-    requestResults: [{ url: APIRoute.EVENTS, result: [] }],
+    requestResults: [{ url: APIRoute.EVENTS, result: { events: [] } }],
   },
 );
 
@@ -21,7 +21,7 @@ export const Filled = StoryFactory(
   {},
   {
     permissions: { [PermissionCategory.EVENT]: eventPrivilege.READ },
-    requestResults: [{ url: APIRoute.EVENTS, result: events }],
+    requestResults: [{ url: APIRoute.EVENTS, result: { events } }],
   },
 );
 
@@ -29,6 +29,6 @@ export const CanEdit = StoryFactory(
   {},
   {
     permissions: { [PermissionCategory.EVENT]: eventPrivilege.READ_WRITE },
-    requestResults: [{ url: APIRoute.EVENTS, result: events }],
+    requestResults: [{ url: APIRoute.EVENTS, result: { events } }],
   },
 );
