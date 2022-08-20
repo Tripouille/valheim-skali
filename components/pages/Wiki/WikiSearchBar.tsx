@@ -33,7 +33,6 @@ const WikiSearchBar = () => {
       maxSuggestionsNb={WIKI_SEARCH_MAX_RESULTS_NB}
       selectFirstItemOnPopoverOpening
       onItemValidation={navigateToWikiPage}
-      scrollContainerId=""
       popoverStyle={{ width: inputWidth => inputWidth - 40, ml: 10 }}
       listItemComponent={(listItemProps, wikiPage, isSelected) => (
         <ListItem
