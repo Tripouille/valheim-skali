@@ -23,9 +23,12 @@ export const getStaticProps: GetStaticProps = async () => ({
 
     if (permissionsMeetRequirement(visitorPermissions, requiredPermissionsToReadEvents)) {
       const firstEventsPage = await getEventsPage(0);
+      const secondEventsPage = firstEventsPage.nextCursor
+        ? await getEventsPage(firstEventsPage.nextCursor)
+        : undefined;
       queryClient.setQueryData<InfiniteData<EventsPage<EventInDb>>>([QueryKeys.EVENTS], {
-        pages: [firstEventsPage],
-        pageParams: [0],
+        pages: secondEventsPage ? [firstEventsPage, secondEventsPage] : [firstEventsPage],
+        pageParams: [0, firstEventsPage.nextCursor],
       });
     }
   }),
