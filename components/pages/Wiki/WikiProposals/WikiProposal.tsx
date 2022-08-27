@@ -32,9 +32,7 @@ export interface WikiProposalComponentProps {
 const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiProposal }) => {
   const answerWikiProposal = useAnswerWikiProposal(wikiProposal);
 
-  const wikiPageQuery = useWikiPage(
-    wikiProposal.proposalType === 'edition' ? wikiProposal.wikiPageId : undefined,
-  );
+  const wikiPageQuery = useWikiPage(wikiProposal.wikiPageId);
   const wikiPageSlug = wikiPageQuery.data?.slug;
 
   const session = useSession();
@@ -60,7 +58,12 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
         <nav>
           {wikiPageSlug && (
             <NextLink href={`/${serverName}${NavRoute.WIKI}/${wikiPageSlug}`} passHref>
-              <Link display="block">&larr; Voir la page wiki originale</Link>
+              <Link display="block">
+                &larr;
+                {wikiProposal.status === 'validated'
+                  ? 'Voir la page wiki'
+                  : 'Voir la page wiki originale'}
+              </Link>
             </NextLink>
           )}
           <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.WRITE }}>

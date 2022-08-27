@@ -26,6 +26,7 @@ interface WikiProposalBase {
   authorId: string;
   status: 'proposed' | 'validated' | 'rejected';
   suggestions: WikiSuggestion[];
+  wikiPageId?: string;
 }
 
 export interface WikiCreationProposal extends WikiProposalBase {
@@ -44,6 +45,7 @@ export type WikiPageInDb = Omit<WikiPage, '_id'> & { _id: ObjectId };
 export type WikiCreationProposalInDb = Omit<WikiCreationProposal, '_id' | 'authorId'> & {
   _id: ObjectId;
   authorId: ObjectId;
+  wikiPageId?: ObjectId;
 };
 
 export type WikiEditionProposalInDb = Omit<
