@@ -18,9 +18,10 @@ import {
   PopoverAnchor as ChakraPopoverAnchor,
   PlacementWithLogical,
 } from '@chakra-ui/react';
+import { Callback, Children, CypressProps } from 'utils/types';
 import Button from '../Interactive/Button';
-import { Callback, CypressProps } from 'utils/types';
 import Box from '../Containers/Box';
+import Portal from './Portal';
 
 export type PopoverProps = ChakraPopoverProps;
 
@@ -74,6 +75,14 @@ export const PopoverAnchor: React.FC = chakraPopoverAnchorProps => (
   <ChakraPopoverAnchor {...chakraPopoverAnchorProps}></ChakraPopoverAnchor>
 );
 
+interface ActionPopoverButtonProps {
+  'data-cy': string;
+  leftIcon?: ReactElement;
+  colorScheme: string;
+  children: string;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}
+
 export interface ActionPopoverProps extends CypressProps {
   action: Callback;
   label: string;
@@ -82,6 +91,8 @@ export interface ActionPopoverProps extends CypressProps {
   colorScheme: string;
   leftIcon?: ReactElement;
   placement?: PlacementWithLogical;
+  inPortal?: boolean;
+  children?: (defaultButtonProps: ActionPopoverButtonProps) => Children;
 }
 
 export const ActionPopover: React.FC<ActionPopoverProps> = ({
@@ -93,26 +104,36 @@ export const ActionPopover: React.FC<ActionPopoverProps> = ({
   colorScheme,
   leftIcon,
   placement = 'bottom',
+  inPortal = false,
+  children = defaultButtonProps => <Button {...defaultButtonProps} />,
 }) => {
+  const popoverContent = (
+    <PopoverContent onClick={e => e.stopPropagation()} cursor="auto">
+      <PopoverArrow />
+      <PopoverCloseButton />
+      <PopoverHeader>{label}</PopoverHeader>
+      <PopoverBody>{confirmBody}</PopoverBody>
+      <PopoverFooter textAlign="end">
+        <Button data-cy={`confirm-${dataCy}`} colorScheme={colorScheme} onClick={action}>
+          {confirmLabel}
+        </Button>
+      </PopoverFooter>
+    </PopoverContent>
+  );
   return (
     <Box>
       <Popover placement={placement} preventOverflow>
         <PopoverTrigger>
-          <Button data-cy={dataCy} colorScheme={colorScheme} leftIcon={leftIcon}>
-            {label}
-          </Button>
+          {children({
+            'data-cy': dataCy,
+            colorScheme,
+            leftIcon,
+            children: label,
+            onClick: e => e.stopPropagation(),
+          })}
         </PopoverTrigger>
-        <PopoverContent>
-          <PopoverArrow />
-          <PopoverCloseButton />
-          <PopoverHeader>{label}</PopoverHeader>
-          <PopoverBody>{confirmBody}</PopoverBody>
-          <PopoverFooter textAlign="end">
-            <Button data-cy={`confirm-${dataCy}`} colorScheme={colorScheme} onClick={action}>
-              {confirmLabel}
-            </Button>
-          </PopoverFooter>
-        </PopoverContent>
+        {/* Render in a portal to not inherit css */}
+        {inPortal ? <Portal>{popoverContent}</Portal> : popoverContent}
       </Popover>
     </Box>
   );

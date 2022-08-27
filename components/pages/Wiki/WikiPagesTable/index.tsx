@@ -21,6 +21,7 @@ const WikiPagesTable = () => {
               <Th width="xs">Tags</Th>
               <Th width={24}>Vues</Th>
               <Th width={getCellWidth(rowIconWidth)}></Th>
+              <Th width={getCellWidth(rowIconWidth)}></Th>
             </Tr>
           </Thead>
           <Tbody>

@@ -252,7 +252,7 @@ describe('participate to wiki and edit wiki pages', () => {
       cy.main().should('have.text', 'Proposal 1 editedContent of proposal 1 edited');
     });
 
-    it('should be able to edit a wiki page edition proposal content, and the updated wiki page is shown when validated', () => {
+    it.only('should be able to edit a wiki page edition proposal content, and the updated wiki page is shown when validated', () => {
       cy.task('seedCollection', {
         collectionName: 'wikiProposals',
         data: [
@@ -290,7 +290,7 @@ describe('participate to wiki and edit wiki pages', () => {
       // See proposal
       cy.wait('@editWikiProposal');
       cy.wait('@getWikiProposal');
-      cy.main()
+      cy.main({ timeout: 1000 })
         .should('contain.text', '← Voir toutes mes propositions')
         .and('contain.text', 'Wiki page 1 content edited twice')
         .and('contain.text', 'Wiki page 1');

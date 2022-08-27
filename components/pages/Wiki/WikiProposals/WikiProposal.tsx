@@ -59,7 +59,7 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
           {wikiPageSlug && (
             <NextLink href={`/${serverName}${NavRoute.WIKI}/${wikiPageSlug}`} passHref>
               <Link display="block">
-                &larr;
+                &larr;{' '}
                 {wikiProposal.status === 'validated'
                   ? 'Voir la page wiki'
                   : 'Voir la page wiki originale'}
