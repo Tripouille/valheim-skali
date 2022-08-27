@@ -28,12 +28,13 @@ const plugins = (on: Cypress.PluginEvents) => {
       } catch (e) {} // Drop throws error if collection doesn't exit
       if (data.length) {
         await collection.insertMany(
-          data.map((item: OptionalId<T> & Record<string, ObjectId[]>) => ({
+          data.map((item: OptionalId<T> & Partial<{ roleIds: string[]; wikiPageId: string }>) => ({
             ...item,
             _id: new ObjectId(item._id),
             ...(item.roleIds
               ? { roleIds: item.roleIds && item.roleIds.map(roleId => new ObjectId(roleId)) }
               : {}),
+            ...(item.wikiPageId ? { wikiPageId: new ObjectId(item.wikiPageId) } : {}),
           })),
         );
       }

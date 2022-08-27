@@ -1,14 +1,16 @@
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
-import { IoIosEye } from 'react-icons/io';
+import { IoIosEye, IoIosTrash } from 'react-icons/io';
 import Box from 'components/core/Containers/Box';
 import { Wrap } from 'components/core/Containers/Wrap';
 import { Td, Tr } from 'components/core/DataDisplay/Table';
 import Tag from 'components/core/DataDisplay/Tag';
 import IconButton from 'components/core/Interactive/IconButton';
 import { Menu, MenuButton, MenuItem, MenuList } from 'components/core/Overlay/Menu';
+import { ActionPopover } from 'components/core/Overlay/Popover';
 import { WikiPage, WikiPageTag, wikiPageTags, WIKI_PAGE_TAG_TO_LABEL } from 'data/wiki';
+import useDeleteWikiPage from 'hooks/wiki/useDeleteWikiPage';
 import useUpdateWikiPageTags from 'hooks/wiki/useUpdateWikiPageTags';
 import { rowIconSize } from 'theme/admin';
 import { NavRoute, serverName } from 'utils/routes';
@@ -20,7 +22,9 @@ export interface WikiPageRowProps extends CypressProps {
 
 const WikiPageRow: React.FC<WikiPageRowProps> = ({ 'data-cy': dataCy, wikiPage }) => {
   const router = useRouter();
+
   const { addWikiPageTag, removeWikiPageTag } = useUpdateWikiPageTags(wikiPage);
+  const deleteWikiPage = useDeleteWikiPage(wikiPage);
 
   const navigateToWikiPage = () => {
     router.push(`/${serverName}${NavRoute.WIKI}/${wikiPage.slug}`);
@@ -98,6 +102,31 @@ const WikiPageRow: React.FC<WikiPageRowProps> = ({ 'data-cy': dataCy, wikiPage }
           size={rowIconSize}
           onClick={navigateToWikiPage}
         />
+      </Td>
+      <Td>
+        <ActionPopover
+          data-cy="delete"
+          action={deleteWikiPage}
+          label="Supprimer la page wiki"
+          confirmLabel="Confirmer la suppression"
+          confirmBody="Êtes-vous sûr de vouloir supprimer cette page wiki ? La page et toutes ses propositions associées seront supprimées."
+          colorScheme="red"
+          leftIcon={<IoIosTrash size="30" />}
+          inPortal
+        >
+          {({ children, onClick }) => (
+            <IconButton
+              data-cy="delete"
+              aria-label={children}
+              title={children}
+              icon={<IoIosTrash size="30" />}
+              variant="ghost"
+              color="orange.700"
+              size={rowIconSize}
+              onClick={onClick}
+            />
+          )}
+        </ActionPopover>
       </Td>
     </Tr>
   );

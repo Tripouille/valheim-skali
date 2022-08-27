@@ -122,6 +122,22 @@ describe('wiki pages', () => {
         cy.wait('@getWikiPages');
         cy.dataCy('wiki-page-0').dataCy('views').should('contain.text', 1);
       });
+
+      it('should be able to delete a wiki page and associated proposals should be deleted too', () => {
+        cy.seedCollection('wikiProposals', 'wikiProposals');
+        cy.intercept('DELETE', `${APIRoute.WIKI}/*`).as('deleteWikiPage');
+
+        cy.dataCy('wiki-page-0').dataCy('delete', 'button').click();
+        cy.dataCy('confirm-delete', 'button').filter(':visible').click();
+        cy.wait('@deleteWikiPage').its('response.statusCode').should('eq', 200);
+        Select.wikiPagesLines().should('have.length', 2);
+
+        cy.dataCy('Propositions Wiki', 'a').click();
+        cy.main().should('not.contain.text', 'Wiki page 1');
+
+        cy.visit(`/${serverName}/wiki/wiki-page-1`, { failOnStatusCode: false });
+        cy.main().should('contain.text', '404');
+      });
     });
   });
 });

@@ -92,7 +92,7 @@ const validateWikiProposal = async (req: Req, res: Res) => {
 
   res.status(200).json(newWikiPage);
 
-  revalidateWikiPage(newWikiPage?.slug, res);
+  revalidateWikiPage(newWikiPage.slug, res);
 };
 
 export default validateWikiProposal;

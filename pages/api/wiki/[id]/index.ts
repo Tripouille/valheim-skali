@@ -1,6 +1,7 @@
 import { NextApiHandler } from 'next';
 import { ServerException } from 'api-utils/common';
 import getWikiPage from 'api-utils/wiki/getWikiPage';
+import deleteWikiPage from 'api-utils/wiki/deleteWikiPage';
 
 const wikiPageHandler: NextApiHandler = async (req, res) => {
   try {
@@ -8,6 +9,8 @@ const wikiPageHandler: NextApiHandler = async (req, res) => {
       const { id } = req.query as { id: string };
       const wikiPage = await getWikiPage({ id });
       res.status(200).json(wikiPage);
+    } else if (req.method === 'DELETE') {
+      await deleteWikiPage(req, res);
     } else {
       throw new ServerException(501);
     }
