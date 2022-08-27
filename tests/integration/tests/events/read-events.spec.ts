@@ -1,6 +1,6 @@
 import { SpecialRoleName } from 'data/role';
 import { eventPrivilege } from 'utils/permissions';
-import { APIRoute } from 'utils/routes';
+import { APIRoute, serverName } from 'utils/routes';
 import * as Action from './action';
 import * as Select from './select';
 
@@ -50,9 +50,8 @@ describe('events with read permission', () => {
       });
       Action.visitEventsPageAndWaitFor(APIRoute.EVENTS, '6228cb385f506b78affc0501');
       Select.eventCards().should('have.length.at.least', 10);
-      Select.eventCards().should('have.length.at.least', 15);
       Select.eventCards().should('have.length.at.least', 20);
-      cy.dataCy('event-3-3-modal').should('be.visible');
+      cy.get('[data-cy$=-modal]').should('contain.text', 'Event 1 (terminé)');
       cy.seedCollection('events', 'events');
     });
   });
@@ -62,6 +61,7 @@ describe('events with read permission', () => {
       Action.setVisitorEventPermission(eventPrivilege.NONE);
       Action.setMemberEventPermission(eventPrivilege.READ);
       cy.setUserRoles([SpecialRoleName.MEMBER]);
+      cy.revalidate([`/${serverName}/events`]);
       cy.login();
       Action.visitEventsPageAndWaitFor(APIRoute.EVENTS);
     });
