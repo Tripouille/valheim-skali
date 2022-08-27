@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { useInView } from 'react-intersection-observer';
 import { useDisclosure } from '@chakra-ui/react';
-import { NavRoute, ROUTES_TO_LABEL } from 'utils/routes';
+import { getRouteParameterAsString, NavRoute, ROUTES_TO_LABEL } from 'utils/routes';
 import { eventPrivilege, PermissionCategory } from 'utils/permissions';
 import PageTitle from 'components/core/Typography/PageTitle';
 import Background from 'components/core/Containers/Background';
@@ -18,26 +18,36 @@ import EventCard from './EventCard';
 import { scrollIntoViewIfNeeded } from 'utils/window';
 
 const Events = () => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteEvents();
+  const router = useRouter();
+  const canFetchEvents = router.isReady; // fetchNextPage() doesn't watch for useInfiniteQuery()'s enabled option
+  const queryEventId = getRouteParameterAsString(router.query.id);
 
-  const { ref: lastPageRef } = useInView({
-    onChange: lastPageIsInView => {
-      if (lastPageIsInView) fetchNextPage();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteEvents({
+    enabled: canFetchEvents,
+    including: queryEventId,
+  });
+
+  // Fetch next page if last page (start or end) is visible
+  const { ref: lastPageStartRef } = useInView({
+    onChange: lastPageStartIsInView => {
+      if (canFetchEvents && lastPageStartIsInView && !isFetchingNextPage) fetchNextPage();
     },
-    initialInView: true,
+  });
+  const { ref: lastPageEndRef } = useInView({
+    onChange: lastPageEndIsInView => {
+      if (canFetchEvents && lastPageEndIsInView && !isFetchingNextPage) fetchNextPage();
+    },
   });
 
   // Scroll to event whose id is in query (url)
-  const router = useRouter();
-  const eventId = router.query.id ?? undefined;
+  const queryEventIsInData = useMemo(
+    () => data?.pages.some(page => page.events.some(event => event._id === queryEventId)),
+    [data?.pages, queryEventId],
+  );
   const queryEventRef = useRef(null);
-  const main = typeof window !== 'undefined' ? document.querySelector('main') : undefined;
   useEffect(() => {
-    if (eventId && main) {
-      if (!queryEventRef.current) main.scrollTo(0, main.scrollHeight);
-      else scrollIntoViewIfNeeded(queryEventRef.current);
-    }
-  }, [eventId, main, data?.pages.length]);
+    if (queryEventRef.current) scrollIntoViewIfNeeded(queryEventRef.current);
+  }, [queryEventId, data?.pages.length]);
 
   const createModal = useDisclosure();
   const createEvent = useCreateEvent(createModal.onClose);
@@ -66,22 +76,32 @@ const Events = () => {
               onClose={createModal.onClose}
             />
           </Secured>
-          {data?.pages.map((eventsPage, pageIndex) => (
-            <React.Fragment key={pageIndex}>
-              {hasNextPage && !isFetchingNextPage && pageIndex === data.pages.length - 1 && (
-                <div ref={lastPageRef}></div>
-              )}
-              {eventsPage.events.map((event, index) => (
-                <EventCard
-                  data-cy={`event-${pageIndex}-${index}`}
-                  key={event._id}
-                  innerRef={event._id === eventId ? queryEventRef : undefined}
-                  event={event}
-                  isOpen={eventId === event._id}
-                />
-              ))}
-            </React.Fragment>
-          ))}
+          {queryEventId && !queryEventIsInData ? (
+            <>
+              <Loading />
+              Téléchargement de l&apos;événement demandé...
+            </>
+          ) : (
+            data?.pages.map((eventsPage, pageIndex) => (
+              <React.Fragment key={pageIndex}>
+                {hasNextPage && !isFetchingNextPage && pageIndex === data.pages.length - 1 && (
+                  <div ref={lastPageStartRef}></div>
+                )}
+                {eventsPage.events.map((event, index) => (
+                  <EventCard
+                    data-cy={`event-${pageIndex}-${index}`}
+                    key={event._id}
+                    innerRef={event._id === queryEventId ? queryEventRef : undefined}
+                    event={event}
+                    isOpen={queryEventId === event._id}
+                  />
+                ))}
+                {hasNextPage && !isFetchingNextPage && pageIndex === data.pages.length - 1 && (
+                  <div ref={lastPageEndRef}></div>
+                )}
+              </React.Fragment>
+            ))
+          )}
           {isFetchingNextPage && <Loading />}
         </VStack>
       </Background>

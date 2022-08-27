@@ -1,8 +1,10 @@
 import { useCallback, useMemo } from 'react';
-import useInfiniteEvents from './useInfiniteEvents';
+import { useQueryClient } from '@tanstack/react-query';
+import { QueryKeys, QueryTypes } from 'utils/queryClient';
 
 const useFilteredTags = (chosenTags: string[], filter: string) => {
-  const { data: eventsData } = useInfiniteEvents();
+  const queryClient = useQueryClient();
+  const eventsData = queryClient.getQueryData<QueryTypes[QueryKeys.EVENTS]>([QueryKeys.EVENTS]);
 
   const compareTags = useCallback(
     (tag1: string, tag2: string) =>

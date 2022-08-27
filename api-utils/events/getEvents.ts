@@ -7,12 +7,26 @@ import { eventPrivilege, PermissionCategory } from 'utils/permissions';
 
 const EVENTS_NB_PER_REQUEST = 5;
 
-export const getEventsPage = async (cursor: number): Promise<EventsPage<EventInDb>> => {
+export const getEventsPage = async (
+  cursor: number,
+  eventIdToInclude?: string,
+): Promise<EventsPage<EventInDb>> => {
   const events = await db.find<EventInDb>(eventsCollectionName);
   const now = new Date();
   events.sort(eventComp(now));
 
-  const endCursor = Math.min(cursor + EVENTS_NB_PER_REQUEST, events.length);
+  let endCursor = cursor + EVENTS_NB_PER_REQUEST;
+
+  if (eventIdToInclude) {
+    const eventToIncludeIndex = events.findIndex(
+      event => event._id.toString() === eventIdToInclude,
+    );
+    if (eventToIncludeIndex !== -1 && eventToIncludeIndex >= endCursor)
+      endCursor = eventToIncludeIndex + 1;
+  }
+
+  if (endCursor > events.length) endCursor = events.length;
+
   return {
     events: events.slice(cursor, endCursor),
     nextCursor: endCursor === events.length ? undefined : endCursor,
@@ -23,10 +37,13 @@ export const getEventsPage = async (cursor: number): Promise<EventsPage<EventInD
 const getEvents = async (req: Req, res: Res) => {
   await requirePermissions({ [PermissionCategory.EVENT]: eventPrivilege.READ }, req);
 
-  if (Array.isArray(req.query.cursor)) throw new ServerException(400);
+  if (!req.query.cursor || Array.isArray(req.query.cursor)) throw new ServerException(400);
   const cursor = parseInt(req.query.cursor);
 
-  const eventsPage = await getEventsPage(cursor);
+  if (Array.isArray(req.query.including)) throw new ServerException(400);
+  const eventIdToInclude: string | undefined = req.query.including;
+
+  const eventsPage = await getEventsPage(cursor, eventIdToInclude);
 
   res.status(200).json(eventsPage);
 };
