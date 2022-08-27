@@ -10,7 +10,6 @@ import {
   WikiProposalInDb,
   wikiProposalsCollectionName,
   WikiPageContent,
-  WikiPage,
 } from 'data/wiki';
 import { slugify } from 'utils/format';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
@@ -19,7 +18,7 @@ import { revalidateWikiPage } from './utils';
 const createWikiPage = async (
   pageContent: WikiPageContent,
   wikiProposalId: string,
-): Promise<WikiPage> => {
+): Promise<WikiPageInDb> => {
   const newWikiPage: Omit<WikiPageInDb, '_id'> = {
     title: pageContent.title,
     content: pageContent.content,
@@ -36,7 +35,7 @@ const createWikiPage = async (
 
   const newWikiPageId = await db.insert<WikiPageInDb>(wikiPagesCollectionName, newWikiPage);
 
-  return { ...newWikiPage, _id: newWikiPageId };
+  return { ...newWikiPage, _id: new ObjectId(newWikiPageId) };
 };
 
 const editWikiPage = async (
@@ -87,7 +86,7 @@ const validateWikiProposal = async (req: Req, res: Res) => {
   const updateStatusResult = await updateOneInCollection<WikiProposalInDb>(
     wikiProposalsCollectionName,
     id,
-    { status: 'validated' },
+    { status: 'validated', wikiPageId: newWikiPage._id },
   );
   if (!updateStatusResult.ok) throw new ServerException(500);
 
