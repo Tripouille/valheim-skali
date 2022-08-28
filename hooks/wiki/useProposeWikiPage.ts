@@ -6,6 +6,7 @@ import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import useSession from 'hooks/useSession';
 import { QueryKeys } from 'utils/queryClient';
 import { APIRoute, NavRoute, serverName } from 'utils/routes';
+import { clearLocalStorageStartingWith } from 'utils/storage';
 
 const proposeWikiPageOnServer = (wikiPageId?: string) => async (pageData: WikiPageContent) => {
   if (wikiPageId) await axios.post(`${APIRoute.WIKI_PROPOSALS}/${wikiPageId}`, pageData);
@@ -32,7 +33,12 @@ const useProposeWikiPage = (wikiPageId?: string) => {
       return [...(previousWikiProposals ?? []), newProposal];
     },
     "Votre page a bien été proposée. Elle sera visible dès qu'un modérateur l'aura validée.",
-    { onSuccess: () => router.push(`/${serverName}${NavRoute.WIKI}/proposals`) },
+    {
+      onSuccess: () => {
+        router.push(`/${serverName}${NavRoute.WIKI}/proposals`);
+        clearLocalStorageStartingWith('wikiFormData');
+      },
+    },
   );
 
   return proposeWikiPage;

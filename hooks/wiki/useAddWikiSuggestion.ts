@@ -6,6 +6,7 @@ import { QueryKeys } from 'utils/queryClient';
 import { APIRoute, NavRoute, serverName } from 'utils/routes';
 import { displayErrorToast, displaySuccessToast } from 'utils/toast';
 import { getMessageFromError } from 'utils/error';
+import { clearLocalStorageStartingWith } from 'utils/storage';
 
 const addWikiSuggestionOnServer =
   (wikiProposalId?: string) => async (pageData: WikiPageContent) => {
@@ -23,6 +24,7 @@ const useAddWikiSuggestion = (wikiProposalId?: string) => {
         title: 'La proposition wiki a bien été modifiée.',
       });
       router.push(`/${serverName}${NavRoute.WIKI}/proposals/${wikiProposalId}`);
+      clearLocalStorageStartingWith('wikiFormData');
     },
     onSettled: () => queryClient.invalidateQueries([QueryKeys.WIKI_PROPOSALS, wikiProposalId]),
   });
