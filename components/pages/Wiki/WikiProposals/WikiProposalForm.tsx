@@ -19,6 +19,7 @@ import {
 } from 'data/wiki';
 import { NavRoute, serverName } from 'utils/routes';
 import WikiProposalFormPreview from './WikiProposalFormPreview';
+import { getWikiFormDataLocalStorageKey, saveWikiFormDataToLocalStorage } from './utils';
 
 const getFormDataFromWikiProposal = (wikiProposal: WikiProposal): WikiPageContent => {
   const lastSuggestion = wikiProposal.suggestions[0];
@@ -41,13 +42,26 @@ const WikiProposalForm: React.FC<WikiProposalFormProps> = ({
   onSubmit,
 }) => {
   const [formData, setFormData] = useState<Partial<WikiPageContent>>(() => {
-    if (wikiProposal) return getFormDataFromWikiProposal(wikiProposal);
+    const localStorageData =
+      typeof window !== 'undefined'
+        ? localStorage.getItem(getWikiFormDataLocalStorageKey({ wikiProposal, wikiPage }))
+        : null;
+    if (localStorageData) return JSON.parse(localStorageData);
+    else if (wikiProposal) return getFormDataFromWikiProposal(wikiProposal);
     else if (wikiPage) return getFormDataFromWikiPage(wikiPage);
     else return {};
   });
   const [validationError, setValidationError] = useState<string | null>(null);
 
-  useEffect(() => setValidationError(getWikiPageValidationError(formData)), [formData]);
+  const onFormDataChange =
+    <T extends keyof WikiPageContent>(key: T) =>
+    (value: WikiPageContent[T]) =>
+      setFormData(prev => ({ ...prev, [key]: value }));
+
+  useEffect(() => {
+    setValidationError(getWikiPageValidationError(formData));
+    saveWikiFormDataToLocalStorage({ wikiFormData: formData, wikiProposal, wikiPage });
+  }, [formData, wikiProposal, wikiPage]);
 
   const handleSubmit = () => {
     if (validationError === null) onSubmit(formData as WikiPageContent);
@@ -76,7 +90,7 @@ const WikiProposalForm: React.FC<WikiProposalFormProps> = ({
             </NextLink>
           ) : (
             <NextLink href={`/${serverName}${NavRoute.WIKI}/proposals`} passHref>
-              <Link>&larr; Retour à mes propositions</Link>
+              <Link data-cy="back-to-my-proposals">&larr; Retour à mes propositions</Link>
             </NextLink>
           )}
         </nav>
@@ -88,7 +102,7 @@ const WikiProposalForm: React.FC<WikiProposalFormProps> = ({
           <Input
             data-cy="title"
             value={formData.title ?? ''}
-            onChange={title => setFormData(prev => ({ ...prev, title }))}
+            onChange={onFormDataChange('title')}
             maxLength={WIKI_PAGE_VALUES_MAX_LENGTH.title}
           />
         </FormElement>
@@ -96,7 +110,7 @@ const WikiProposalForm: React.FC<WikiProposalFormProps> = ({
           <Textarea
             data-cy="content"
             value={formData.content ?? ''}
-            onChange={content => setFormData(prev => ({ ...prev, content }))}
+            onChange={onFormDataChange('content')}
             maxLength={WIKI_PAGE_VALUES_MAX_LENGTH.content}
             height="360px"
           />
@@ -114,9 +128,9 @@ const WikiProposalForm: React.FC<WikiProposalFormProps> = ({
           </Button>
         </Center>
       </Stack>
-      {!!formData.title?.length && !!formData.content?.length && (
-        <WikiProposalFormPreview title={formData.title} content={formData.content} />
-      )}
+      {formData.title?.length || formData.content?.length ? (
+        <WikiProposalFormPreview title={formData.title ?? ''} content={formData.content ?? ''} />
+      ) : null}
     </Background>
   );
 };

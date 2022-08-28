@@ -252,7 +252,7 @@ describe('participate to wiki and edit wiki pages', () => {
       cy.main().should('have.text', 'Proposal 1 editedContent of proposal 1 edited');
     });
 
-    it.only('should be able to edit a wiki page edition proposal content, and the updated wiki page is shown when validated', () => {
+    it('should be able to edit a wiki page edition proposal content, and the updated wiki page is shown when validated', () => {
       cy.task('seedCollection', {
         collectionName: 'wikiProposals',
         data: [
@@ -309,6 +309,46 @@ describe('participate to wiki and edit wiki pages', () => {
       // Reload to test SSR
       cy.reload();
       cy.main().should('have.text', 'Wiki page 1Wiki page 1 content edited twice');
+    });
+
+    it('should save form content, use it when returning on form, and delete it when submitting', () => {
+      cy.intercept('POST', APIRoute.WIKI_PROPOSALS).as('proposeWikiPageCreation');
+      cy.intercept('GET', APIRoute.WIKI_PROPOSALS).as('getWikiProposals');
+
+      // Start filling form
+      Action.visitWikiPage();
+      cy.dataCy('participate').click();
+      cy.wait('@getWikiProposals');
+      cy.dataCy('propose').click();
+      cy.url({ timeout: 5000 }).should('include', '/wiki/proposals/new');
+      cy.main().should('contain.text', 'Proposer une nouvelle page wiki');
+      cy.dataCy('title', 'input').type('Title');
+      cy.dataCy('content', 'textarea').type('Content');
+      cy.wait(1000); // debounce time
+
+      // Go back and forth, see form content
+      cy.dataCy('back-to-my-proposals', 'a').click();
+      cy.main().should('contain.text', 'Mes propositions wiki');
+      cy.dataCy('propose').click();
+      cy.url({ timeout: 5000 }).should('include', '/wiki/proposals/new');
+      cy.dataCy('title', 'input').should('have.value', 'Title');
+      cy.dataCy('content', 'textarea').should('have.value', 'Content');
+
+      // Even or reload
+      cy.reload();
+      cy.dataCy('title', 'input').should('have.value', 'Title');
+      cy.dataCy('content', 'textarea').should('have.value', 'Content');
+
+      // Save
+      cy.dataCy('submit', 'button').click();
+      cy.wait('@proposeWikiPageCreation');
+      cy.wait('@getWikiProposals');
+      Select.wikiProposalsLines().should('have.length', 1).and('have.text', 'Title');
+
+      // Go on form again, content has disappeared
+      cy.dataCy('propose').click();
+      cy.dataCy('title', 'input').should('have.value', '');
+      cy.dataCy('content', 'textarea').should('have.value', '');
     });
   });
 
