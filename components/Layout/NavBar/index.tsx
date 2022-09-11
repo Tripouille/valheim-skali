@@ -35,8 +35,7 @@ const NavBar = () => {
             data-cy="menu"
             as={IconButton}
             variant="ghost"
-            aria-label="Gérer mon compte"
-            title="Gérer mon compte"
+            aria-label="Ouvrir le menu"
             icon={<GiVikingHelmet />}
             fontSize="2xl"
             mx="2"
