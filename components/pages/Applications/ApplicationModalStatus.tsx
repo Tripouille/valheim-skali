@@ -13,6 +13,7 @@ import {
   APPLICATION_STATUS_TO_PERMISSIONS,
   WithDiscordInfos,
 } from 'data/application';
+import { SpecialRoleName } from 'data/role';
 import useSetApplicationStatus from 'hooks/applications/useSetApplicationStatus';
 import useSession from 'hooks/useSession';
 import ApplicationModalStatusChoiceButton from './ApplicationModalStatusChoiceButton';
@@ -61,7 +62,10 @@ const ApplicationModalStatus: React.FC<ApplicationModalStatusProps> = ({ applica
                 onClick={() => setApplicationStatus(nextStatus)}
               >
                 {application.status === ApplicationStatus.WAITING_FOR_ANSWER ? (
-                  'Promouvoir comme Viking'
+                  <>
+                    Promouvoir comme{' '}
+                    <Tag label={SpecialRoleName.MEMBER} marginLeft="1.5" height="1rem" />
+                  </>
                 ) : (
                   <>
                     Passer en
