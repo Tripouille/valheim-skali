@@ -9,6 +9,7 @@ export enum APIRoute {
   EVENTS = '/api/events',
   WIKI = '/api/wiki',
   WIKI_PROPOSALS = '/api/wiki/proposals',
+  APPLICATIONS = '/api/applications',
   SESSION = '/api/auth/session',
   VISITOR = '/api/auth/visitor',
 }
@@ -18,6 +19,7 @@ export enum NavRoute {
   RULES = '/rules',
   EVENTS = '/events',
   WIKI = '/wiki',
+  APPLICATIONS = '/applications',
 }
 export enum OldNavRoute {
   TRADE = '/trade',
@@ -38,13 +40,17 @@ export enum MenuRoute {
 export enum AuthRoute {
   SIGNIN = '/auth/signin',
 }
-export type Route = NavRoute | AdminNavRoute | MenuRoute | AuthRoute | OldNavRoute;
+export enum OtherRoute {
+  JOIN = '/join',
+}
+export type Route = NavRoute | AdminNavRoute | MenuRoute | AuthRoute | OldNavRoute | OtherRoute;
 
 /** Maps navigation routes to displayed labels (e.g.., in navbar) */
 export const ROUTES_TO_LABEL: Record<Route, string> = {
   [NavRoute.HOME]: 'Skali',
   [NavRoute.RULES]: 'Règlement',
   [NavRoute.EVENTS]: 'Événements',
+  [NavRoute.APPLICATIONS]: 'Candidatures',
   [OldNavRoute.TRADE]: 'Commerce',
   [OldNavRoute.MODS]: 'Mods',
   [OldNavRoute.WORLD]: 'Monde',
@@ -57,6 +63,7 @@ export const ROUTES_TO_LABEL: Record<Route, string> = {
   [MenuRoute.ABOUT]: 'A propos du site',
   [MenuRoute.ADMIN]: 'Administration',
   [AuthRoute.SIGNIN]: 'Connexion',
+  [OtherRoute.JOIN]: 'Rejoindre le Valhabba',
 };
 
 export const isAdminNavRoute = (route: string): route is AdminNavRoute =>
@@ -74,3 +81,5 @@ export function getRouteParameterAsString(
 export function getRouteParameterAsString(routeParameterValue?: OneOrMany<string>) {
   return Array.isArray(routeParameterValue) ? routeParameterValue[0] : routeParameterValue;
 }
+
+export const getRoute = (path: string) => `/${serverName}/${path}`;

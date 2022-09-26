@@ -52,7 +52,7 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
   return (
     <>
       <Head>
-        <title>Skali - {wikiProposal.suggestions[0].title}</title>
+        <title>Skali - {wikiProposal.suggestions[0]?.title}</title>
       </Head>
       <Flex mb="3" justify="space-between">
         <nav>

@@ -1,10 +1,6 @@
+import { Grid } from 'components/core/Containers/Grid';
 import { Children } from 'utils/types';
-import Box from 'components/core/Containers/Box';
-import Flex from 'components/core/Containers/Flex';
 import { FormControl, FormHelperText, FormLabel } from './FormControl';
-
-const labelWidth = '20%';
-const labelMinWidth = '48';
 
 export interface FormElementProps {
   label: string;
@@ -13,6 +9,7 @@ export interface FormElementProps {
   isInvalid?: boolean;
   isReadOnly?: boolean;
   isRequired?: boolean;
+  vertical?: true;
   /** The input, should be full width */
   children: Children;
 }
@@ -25,6 +22,7 @@ const FormElement: React.FC<FormElementProps> = ({
   isInvalid,
   isReadOnly,
   isRequired,
+  vertical,
   children,
 }) => (
   <FormControl
@@ -33,18 +31,24 @@ const FormElement: React.FC<FormElementProps> = ({
     isReadOnly={isReadOnly}
     isRequired={isRequired}
   >
-    <Flex align="center">
-      <FormLabel w={labelWidth} minW={labelMinWidth}>
-        {label}
-      </FormLabel>
+    <Grid
+      templateColumns={vertical ? '1fr' : ['1fr 2fr', null, '1fr 3fr', '1fr 4fr']}
+      columnGap="3"
+      rowGap={vertical ? 1 : 0}
+      alignItems="center"
+    >
+      <FormLabel fontWeight="normal">{label}</FormLabel>
       {children}
-    </Flex>
-    {hint && (
-      <Flex align="center">
-        <Box w={labelWidth} minW={labelMinWidth} aria-hidden />
-        <FormHelperText w="full">{hint}</FormHelperText>
-      </Flex>
-    )}
+      {hint && (
+        <FormHelperText
+          gridColumn={vertical ? '1' : '2 / 2'}
+          marginTop={vertical ? 0 : undefined}
+          wordBreak="break-word"
+        >
+          {hint}
+        </FormHelperText>
+      )}
+    </Grid>
   </FormControl>
 );
 

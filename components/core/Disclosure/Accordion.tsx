@@ -4,9 +4,11 @@ import {
   AccordionProps as ChakraAccordionProps,
   AccordionItem as ChakraAccordionItem,
   AccordionItemProps as ChakraAccordionItemProps,
-  AccordionButton,
+  AccordionButton as ChakraAccordionButton,
+  AccordionButtonProps as ChakraAccordionButtonProps,
+  AccordionPanel as ChakraAccordionPanel,
+  AccordionPanelProps as ChakraAccordionPanelProps,
   AccordionIcon,
-  AccordionPanel,
 } from '@chakra-ui/react';
 import Heading from 'components/core/Typography/Heading';
 import Box from 'components/core/Containers/Box';
@@ -16,6 +18,24 @@ export type AccordionProps = ChakraAccordionProps;
 
 export const Accordion: React.FC<AccordionProps> = chakraAccordionProps => (
   <ChakraAccordion {...chakraAccordionProps}></ChakraAccordion>
+);
+
+export type AccordionItemProps = ChakraAccordionItemProps;
+
+export const AccordionItem: React.FC<AccordionItemProps> = chakraAccordionItemProps => (
+  <ChakraAccordionItem {...chakraAccordionItemProps}></ChakraAccordionItem>
+);
+
+export type AccordionButtonProps = ChakraAccordionButtonProps;
+
+export const AccordionButton: React.FC<AccordionButtonProps> = chakraAccordionButtonProps => (
+  <ChakraAccordionButton {...chakraAccordionButtonProps}></ChakraAccordionButton>
+);
+
+export type AccordionPanelProps = ChakraAccordionPanelProps;
+
+export const AccordionPanel: React.FC<AccordionPanelProps> = chakraAccordionPanelProps => (
+  <ChakraAccordionPanel {...chakraAccordionPanelProps}></ChakraAccordionPanel>
 );
 
 export interface TitleAccordionItemProps extends ChakraAccordionItemProps {
@@ -28,9 +48,9 @@ export const TitleAccordionItem: React.FC<TitleAccordionItemProps> = ({
   title,
   subtitle,
   children,
-  ...chakraAccordionItemProps
+  ...accordionItemProps
 }) => (
-  <ChakraAccordionItem {...chakraAccordionItemProps}>
+  <AccordionItem {...accordionItemProps}>
     <AccordionButton>
       <Heading size="l" flex="1" textAlign="left">
         {title}
@@ -43,5 +63,5 @@ export const TitleAccordionItem: React.FC<TitleAccordionItemProps> = ({
       <AccordionIcon />
     </AccordionButton>
     <AccordionPanel pb={4}>{children}</AccordionPanel>
-  </ChakraAccordionItem>
+  </AccordionItem>
 );

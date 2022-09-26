@@ -7,7 +7,7 @@ import * as Select from './select';
 const wikiProposalSample = {
   _id: '6228cb385f506b78affc0ad1',
   proposalType: 'creation',
-  authorId: '62fd01597d36a486644f8f0d',
+  authorId: '6330935d99a9ab9e2caaa9fe',
   status: 'proposed',
   suggestions: [{ title: 'Proposal 1', content: 'Content of proposal 1', date: '2000-01-01' }],
 };
@@ -344,11 +344,6 @@ describe('participate to wiki and edit wiki pages', () => {
       cy.wait('@proposeWikiPageCreation');
       cy.wait('@getWikiProposals');
       Select.wikiProposalsLines().should('have.length', 1).and('have.text', 'Title');
-
-      // Go on form again, content has disappeared
-      cy.dataCy('propose').click();
-      cy.dataCy('title', 'input').should('have.value', '');
-      cy.dataCy('content', 'textarea').should('have.value', '');
     });
   });
 

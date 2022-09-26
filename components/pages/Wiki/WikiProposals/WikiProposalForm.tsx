@@ -22,7 +22,7 @@ import WikiProposalFormPreview from './WikiProposalFormPreview';
 import { getWikiFormDataLocalStorageKey, saveWikiFormDataToLocalStorage } from './utils';
 
 const getFormDataFromWikiProposal = (wikiProposal: WikiProposal): WikiPageContent => {
-  const lastSuggestion = wikiProposal.suggestions[0];
+  const lastSuggestion = wikiProposal.suggestions[0] as WikiPageContent;
   return { title: lastSuggestion.title, content: lastSuggestion.content };
 };
 

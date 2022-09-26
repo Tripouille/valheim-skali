@@ -86,7 +86,8 @@ const Combobox = <T,>({
     (e: KeyboardEvent) => {
       switch (e.key) {
         case 'Enter':
-          if (selectedItemIndex !== undefined) validate(suggestions[selectedItemIndex]);
+          if (selectedItemIndex !== undefined && suggestions.length)
+            validate(suggestions[selectedItemIndex] as T);
           else if (onEnterWithNoItemSelected) onEnterWithNoItemSelected();
           break;
         case 'ArrowDown':

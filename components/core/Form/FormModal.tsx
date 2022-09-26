@@ -13,16 +13,16 @@ import ButtonGroup from 'components/core/Interactive/ButtonGroup';
 import DeletePopover from './DeletePopover';
 
 /** T = CreateObjectData */
-export type FormModalProps<T> = CypressProps & {
+export type FormModalProps<F, T> = CypressProps & {
   /** Set initial focus to close button or first tabbable element in modal */
   initialFocusOnCloseButton?: boolean;
   /** Modal is open */
   isOpen: boolean;
   /** Function to close the modal */
   onClose: Callback;
-  formData?: Partial<T>;
+  formData?: F;
   /** Function returning validation error message or null */
-  getValidationError?: (object: Partial<T>) => string | null;
+  getValidationError?: (object: F) => string | null;
   canSubmit?: boolean;
   onSubmit?: (newObject: T) => void;
   /** Form */
@@ -38,7 +38,7 @@ export type FormModalProps<T> = CypressProps & {
       }
   );
 
-const FormModal = <T extends object>(props: FormModalProps<T>) => {
+const FormModal = <F extends object, T extends object>(props: FormModalProps<F, T>) => {
   const {
     'data-cy': dataCy,
     formData,
@@ -58,7 +58,7 @@ const FormModal = <T extends object>(props: FormModalProps<T>) => {
 
   const handleSubmit = () => {
     /** If validationError is null, formData is T */
-    if (validationError === null && onSubmit) onSubmit(formData as T);
+    if (validationError === null && onSubmit) onSubmit(formData as unknown as T);
   };
 
   const canDelete = props.isEdition && (props.canDelete ?? true);

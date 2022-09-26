@@ -76,7 +76,7 @@ const validateWikiProposal = async (req: Req, res: Res) => {
   if (!wikiProposal) throw new ServerException(404);
   if (wikiProposal.status !== 'proposed') throw new ServerException(409);
 
-  const lastSuggestion = wikiProposal.suggestions[0];
+  const lastSuggestion = wikiProposal.suggestions[0] as WikiPageContent;
 
   let newWikiPage;
   if (wikiProposal.proposalType === 'creation')

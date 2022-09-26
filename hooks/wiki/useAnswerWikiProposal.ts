@@ -24,7 +24,7 @@ const useAnswerWikiProposal = (wikiProposal: WikiProposal) => {
     onError: error => displayErrorToast({ title: getMessageFromError(error) }),
     onSuccess: (newWikiPage, answer) => {
       displaySuccessToast({
-        title: `La page wiki "${wikiProposal.suggestions[0].title}" a bien été ${
+        title: `La page wiki "${wikiProposal.suggestions[0]?.title}" a bien été ${
           answer === 'validated' ? 'validée' : 'rejetée'
         }.`,
       });

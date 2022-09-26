@@ -1,3 +1,7 @@
+import { Table, Tbody, Td, Th, Tr } from 'components/core/DataDisplay/Table';
+import { FormLabel } from 'components/core/Form/FormControl';
+import Select from 'components/core/Form/Select';
+import { modalTableHeaderWidth } from 'theme/admin';
 import {
   CommonPermissionPrivilege,
   getSortedCategoryPrivileges,
@@ -10,10 +14,6 @@ import {
   rolePrivilege,
   userPrivilege,
 } from 'utils/permissions';
-import { Table, Tbody, Td, Th, Tr } from 'components/core/DataDisplay/Table';
-import { FormLabel } from 'components/core/Form/FormControl';
-import Select from 'components/core/Form/Select';
-import { modalTableHeaderWidth } from 'theme/admin';
 
 export interface RolePermissionsFormProps {
   isAdminRole: boolean;
@@ -53,7 +53,8 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
     const privilegeIndex = categoryPrivileges.indexOf(
       permissions[category] ?? (CommonPermissionPrivilege.NONE as PermissionPrivilege<C>),
     );
-    if (privilegeIndex > 0) onChange(category)(categoryPrivileges[privilegeIndex - 1]);
+    if (privilegeIndex > 0)
+      onChange(category)(categoryPrivileges[privilegeIndex - 1] as NonNullable<Permissions[C]>);
   };
 
   return (

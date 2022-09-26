@@ -47,7 +47,7 @@ const RoleRow: React.FC<RoleRowProps> = ({ 'data-cy': dataCy, role }) => {
               {Object.entries(role.permissions).map(([category, privilege]) =>
                 isPermissionCategory(category) ? (
                   <Tr key={category}>
-                    <Th w="28" ps="0">
+                    <Th w="32" ps="0">
                       {PERMISSION_CATEGORY_TO_LABEL[category]}
                     </Th>
                     <Td>{PERMISSION_PRIVILEGE_TO_LABEL[category][privilege]}</Td>
