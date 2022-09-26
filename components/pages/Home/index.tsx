@@ -1,4 +1,7 @@
+import NextLink from 'next/link';
 import React from 'react';
+import { GiOpenGate } from 'react-icons/gi';
+import VisitorOnly from 'components/core/Authentication/VisitorOnly';
 import Heading from 'components/core/Typography/Heading';
 import Box from 'components/core/Containers/Box';
 import PageTitle from 'components/core/Typography/PageTitle';
@@ -6,6 +9,8 @@ import Background from 'components/core/Containers/Background';
 import Paragraphs from 'components/core/Typography/Paragraphs';
 import Carousel from 'components/core/Images/Carousel';
 import { VStack } from 'components/core/Containers/Stack';
+import Button from 'components/core/Interactive/Button';
+import { getRoute } from 'utils/routes';
 
 const Home = () => (
   <Background data-cy="home" textAlign="justify">
@@ -26,6 +31,19 @@ const Home = () => (
           ]}
         />
       </Box>
+
+      <VisitorOnly>
+        <NextLink href={getRoute('join')}>
+          <Button
+            size="lg"
+            colorScheme="twitter"
+            outline="4px lightskyblue solid"
+            leftIcon={<GiOpenGate size="28" style={{ marginRight: '5px' }} />}
+          >
+            Rejoindre le Valhabba
+          </Button>
+        </NextLink>
+      </VisitorOnly>
 
       <Box w="full">
         <Heading as="h1" size="l">

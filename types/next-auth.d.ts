@@ -6,6 +6,7 @@ import { StrictReactNode } from 'utils/types';
 declare module 'next-auth' {
   interface Session {
     permissions: Permissions;
+    isNonMember: boolean;
     user: DefaultSession['user'] & {
       _id?: string;
       nameInGame?: string;

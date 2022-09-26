@@ -18,6 +18,10 @@ export type Children = StrictReactNode;
 
 export type OneOrMany<T> = T | T[];
 
+export type Entries<T> = {
+  [K in keyof T]: [K, T[K]];
+}[keyof T][];
+
 export type Setter<T> = Dispatch<SetStateAction<T>>;
 
 export interface HydrationProps {

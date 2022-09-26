@@ -45,7 +45,10 @@ export const getMarkupImageProperties = (
 export const getMarkupTitleProperties = (match: string) => {
   const matchResult = match.match(/==\s*(?<title>.+?)\s*==(?<anchor>#\S+)?/);
 
-  return matchResult?.groups ?? {};
+  return matchResult?.groups as {
+    title: string;
+    anchor?: string;
+  };
 };
 
 export const getMarkupGridContent = (match: string) => {
@@ -64,7 +67,10 @@ export const getMarkupGridContent = (match: string) => {
 export const getMarkupDiscordLinkProperties = (match: string) => {
   const matchResult = match.match(/\[\[\[(?<url>.+?)\]\]\](?:\((?<label>.*)\))?/);
 
-  return matchResult?.groups ?? {};
+  return matchResult?.groups as {
+    url: string;
+    label?: string;
+  };
 };
 
 export const getInternalLinkProperties = (match: string) => {
@@ -72,5 +78,9 @@ export const getInternalLinkProperties = (match: string) => {
     /(\[\[(?<pageName>.+?)(?:\|(?<label>.*?))?\]\](?<labelSuffix>\S+)?)/,
   );
 
-  return matchResult?.groups ?? {};
+  return matchResult?.groups as {
+    pageName: string;
+    label?: string;
+    labelSuffix?: string;
+  };
 };

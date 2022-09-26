@@ -151,7 +151,7 @@ export const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
 
   component = reactStringReplace(component, /(\[\[\[(?:.+?)\]\]\](?:\(.*\))?)/g, match => {
     const { url, label } = getMarkupDiscordLinkProperties(match);
-    return <DiscordButton key={++key.value} data-cy={label} href={url} label={label} />;
+    return <DiscordButton key={++key.value} data-cy={label ?? url} href={url} label={label} />;
   });
 
   component = reactStringReplace(component, /(\[\[(?:.+?)(?:\|(?:.*?))?\]\](?:\S+)?)/g, match => {

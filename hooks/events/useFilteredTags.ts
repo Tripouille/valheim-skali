@@ -13,7 +13,7 @@ const useFilteredTags = (chosenTags: string[], filter: string) => {
   );
 
   const filteredTags = useMemo(() => {
-    const allTags = eventsData?.pages[0].usedTags ?? [];
+    const allTags = eventsData?.pages[0]?.usedTags ?? [];
 
     const lowerCaseFilter = filter.toLowerCase();
     const availableTagsWithEntry = allTags

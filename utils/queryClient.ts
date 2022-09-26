@@ -1,10 +1,11 @@
-import { Session } from 'next-auth';
-import { InfiniteData, QueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { Session } from 'next-auth';
 import { toast } from '@chakra-ui/react';
-import { User } from 'data/user';
-import { Role } from 'data/role';
+import { InfiniteData, QueryClient } from '@tanstack/react-query';
+import { Application, WithDiscordInfos } from 'data/application';
 import { EventsPage } from 'data/event';
+import { Role } from 'data/role';
+import { User } from 'data/user';
 import { WikiPage, WikiProposalWithAuthor } from 'data/wiki';
 import { getMessageFromError } from './error';
 import { displayErrorToast } from './toast';
@@ -32,6 +33,8 @@ export const queryClient = new QueryClient({
 });
 
 export enum QueryKeys {
+  SESSION = 'session',
+  VISITOR = 'visitor',
   EVENTS = 'events',
   ROLES = 'roles',
   USERS = 'users',
@@ -39,16 +42,16 @@ export enum QueryKeys {
   FEATURED_WIKI_PAGES = 'featured_wiki_pages',
   WIKI_PAGES = 'wiki_pages',
   WIKI_PROPOSALS = 'wiki_proposals',
-  SESSION = 'session',
-  VISITOR = 'visitor',
+  APPLICATIONS = 'applications',
 }
 
 export type QueryTypes = {
+  [QueryKeys.SESSION]: Session | null;
+  [QueryKeys.VISITOR]: Permissions;
   [QueryKeys.EVENTS]: InfiniteData<EventsPage>;
   [QueryKeys.ROLES]: Role[];
   [QueryKeys.USERS]: User[];
   [QueryKeys.WIKI_PAGES]: WikiPage[];
   [QueryKeys.WIKI_PROPOSALS]: WikiProposalWithAuthor[];
-  [QueryKeys.SESSION]: Session | null;
-  [QueryKeys.VISITOR]: Permissions;
+  [QueryKeys.APPLICATIONS]: WithDiscordInfos<Application>[];
 };

@@ -1,4 +1,12 @@
-import { AdminNavRoute, AuthRoute, MenuRoute, NavRoute, OldNavRoute, Route } from './routes';
+import {
+  AdminNavRoute,
+  AuthRoute,
+  MenuRoute,
+  NavRoute,
+  OldNavRoute,
+  OtherRoute,
+  Route,
+} from './routes';
 
 export enum PermissionCategory {
   EVENT = 'EVENT',
@@ -6,6 +14,7 @@ export enum PermissionCategory {
   USER = 'USER',
   WIKI = 'WIKI',
   RULES = 'RULES',
+  APPLICATION = 'APPLICATION',
 }
 
 export const isPermissionCategory = (category: string): category is PermissionCategory =>
@@ -45,12 +54,23 @@ enum RulesSpecialPrivilege {
 }
 export const rulesPrivilege = { ...RulesSpecialPrivilege, ...CommonPermissionPrivilege };
 
+enum ApplicationSpecialPrivilege {
+  READ = '1_READ',
+  MANAGE = '2_MANAGE',
+  PROMOTE = '2_PROMOTE', // for alphabetical sort before Common '3_ADMIN'
+}
+export const applicationPrivilege = {
+  ...ApplicationSpecialPrivilege,
+  ...CommonPermissionPrivilege,
+};
+
 export type Permissions = {
   [PermissionCategory.EVENT]?: EventSpecialPrivilege | CommonPermissionPrivilege;
   [PermissionCategory.ROLE]?: RoleSpecialPrivilege | CommonPermissionPrivilege;
   [PermissionCategory.USER]?: UserSpecialPrivilege | CommonPermissionPrivilege;
   [PermissionCategory.WIKI]?: WikiSpecialPrivilege | CommonPermissionPrivilege;
   [PermissionCategory.RULES]?: RulesSpecialPrivilege | CommonPermissionPrivilege;
+  [PermissionCategory.APPLICATION]?: ApplicationSpecialPrivilege | CommonPermissionPrivilege;
 };
 
 const permissionCategoryToPrivilege = {
@@ -59,6 +79,7 @@ const permissionCategoryToPrivilege = {
   [PermissionCategory.USER]: userPrivilege,
   [PermissionCategory.WIKI]: wikiPrivilege,
   [PermissionCategory.RULES]: rulesPrivilege,
+  [PermissionCategory.APPLICATION]: applicationPrivilege,
 };
 
 export const getSortedCategoryPrivileges = <C extends PermissionCategory>(category: C) =>
@@ -74,6 +95,7 @@ export const PERMISSION_CATEGORY_TO_LABEL: Record<PermissionCategory, string> = 
   [PermissionCategory.EVENT]: 'Évenements',
   [PermissionCategory.WIKI]: 'Wiki',
   [PermissionCategory.RULES]: 'Règlement',
+  [PermissionCategory.APPLICATION]: 'Candidatures',
 };
 
 const COMMON_PRIVILEGE_TO_LABEL = {
@@ -105,6 +127,14 @@ export const PERMISSION_PRIVILEGE_TO_LABEL: Record<PermissionCategory, Record<st
   [PermissionCategory.RULES]: {
     ...COMMON_PRIVILEGE_TO_LABEL,
     [rulesPrivilege.READ]: 'Voir le règlement',
+  },
+  [PermissionCategory.APPLICATION]: {
+    ...COMMON_PRIVILEGE_TO_LABEL,
+    [applicationPrivilege.READ]: 'Voir les candidatures',
+    [applicationPrivilege.MANAGE]:
+      'Créer/modifier des candidatures/commentaires, modifier le statut (sauf acceptation/refus)',
+    [applicationPrivilege.PROMOTE]:
+      'Créer/modifier des candidatures/commentaires, modifier le statut',
   },
 };
 
@@ -144,10 +174,11 @@ export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions | Permissions[]> =
   [NavRoute.HOME]: {},
   [NavRoute.RULES]: { [PermissionCategory.RULES]: rulesPrivilege.READ },
   [NavRoute.EVENTS]: { [PermissionCategory.EVENT]: eventPrivilege.READ },
+  [NavRoute.WIKI]: {},
+  [NavRoute.APPLICATIONS]: { [PermissionCategory.APPLICATION]: applicationPrivilege.READ },
   [OldNavRoute.TRADE]: {},
   [OldNavRoute.MODS]: {},
   [OldNavRoute.WORLD]: {},
-  [NavRoute.WIKI]: {},
   [AdminNavRoute.MEMBERS]: { [PermissionCategory.USER]: userPrivilege.READ },
   [AdminNavRoute.NON_MEMBERS]: { [PermissionCategory.USER]: userPrivilege.READ },
   [AdminNavRoute.ROLES]: { [PermissionCategory.ROLE]: rolePrivilege.READ },
@@ -160,4 +191,5 @@ export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions | Permissions[]> =
   ],
   [MenuRoute.ABOUT]: {},
   [AuthRoute.SIGNIN]: {},
+  [OtherRoute.JOIN]: {},
 };

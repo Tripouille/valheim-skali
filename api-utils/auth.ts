@@ -2,7 +2,6 @@ import { IncomingMessage } from 'http';
 import { getSession } from 'next-auth/react';
 import { ServerException } from 'api-utils/common';
 import db from 'api-utils/db';
-import { UserInDb } from 'data/user';
 import {
   ADMIN_ROLE_TO_PRIVILEGE,
   isAdminRole,
@@ -63,12 +62,9 @@ const assignPermission = <C extends PermissionCategory>(
   }
 };
 
-export const getUserPermissions = async (user: UserInDb) => {
+export const getRolesPermissions = async (roles: RoleInDb[]) => {
   const userPermissions: Permissions = await getVisitorPermissions();
-  const userRoles: RoleInDb[] = await db.find<RoleInDb>(rolesCollectionName, {
-    _id: { $in: user.roleIds ?? [] },
-  });
-  userRoles.forEach(role => {
+  roles.forEach(role => {
     if (isAdminRole(role)) {
       Object.values(PermissionCategory).forEach(category => {
         userPermissions[category] = ADMIN_ROLE_TO_PRIVILEGE[role.name];

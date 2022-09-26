@@ -63,9 +63,7 @@ const useSession = ({
   const { data: visitorPermissions } = useQuery<QueryTypes[QueryKeys.VISITOR]>(
     [QueryKeys.VISITOR],
     getVisitorPermissionsFromServer,
-    {
-      enabled: !sessionData,
-    },
+    { enabled: !sessionData },
   );
 
   const hasRequiredPermissions = useCallback(

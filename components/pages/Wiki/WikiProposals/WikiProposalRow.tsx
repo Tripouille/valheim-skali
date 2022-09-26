@@ -43,7 +43,7 @@ const WikiProposalRow: React.FC<WikiProposalRowProps> = ({
       data-cy={dataCy}
       className={wikiProposal.status === 'proposed' ? undefined : 'greyed'}
     >
-      <Td>{wikiProposal.suggestions[0].title}</Td>
+      <Td>{wikiProposal.suggestions[0]?.title}</Td>
       {!onlyUser && <Td>{wikiProposal.authorName}</Td>}
       <Td>
         {wikiProposal.status === 'proposed' ? (
