@@ -20,7 +20,7 @@ const VisitorOnly: React.FC<VisitorOnlyProps> = ({
   const session = useSession();
   const router = useRouter();
 
-  const isVisitor = session.data?.isNonMember;
+  const isVisitor = session.status === SessionStatus.UNAUTHENTICATED || session.data?.isNonMember;
 
   useEffect(() => {
     if (redirectOnFail && redirectUrl && !isVisitor && session.status !== SessionStatus.LOADING)
