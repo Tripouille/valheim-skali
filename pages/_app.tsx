@@ -3,7 +3,6 @@ import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Layout from 'components/Layout';
 import Fonts from 'components/Layout/Fonts';
-import useGoogleAnalytics from 'hooks/useGoogleAnalytics';
 import useTrackView from 'hooks/useTrackView';
 import { getSession } from 'next-auth/react';
 import { AppContext, AppProps } from 'next/app';
@@ -12,6 +11,18 @@ import Script from 'next/script';
 import theme from 'theme';
 import { queryClient, QueryKeys } from 'utils/queryClient';
 import { HydrationProps } from 'utils/types';
+
+function GoogleTagManagerScript() {
+  return (
+    <Script id="google-tag-manager" strategy="afterInteractive">
+      {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-5B8BJ5J');`}
+    </Script>
+  );
+}
 
 /** Page props are those of getStaticProps (if defined in page),
  * layout props are returned by MyApp.getInitialProps */
@@ -28,7 +39,6 @@ const MyApp = ({
     pageProps && pageProps.dehydratedState ? JSON.parse(pageProps.dehydratedState) : undefined;
 
   useTrackView();
-  useGoogleAnalytics();
 
   return (
     <ChakraProvider theme={theme}>
@@ -44,10 +54,7 @@ const MyApp = ({
               />
               <link rel="preload" href="/fonts/Norse.otf" as="font" crossOrigin="" />
             </Head>
-            <Script
-              src="https://www.googletagmanager.com/gtag/js?id=G-ZRY30LJYBX"
-              strategy="afterInteractive"
-            />
+            <GoogleTagManagerScript />
             <Fonts />
             <Layout>
               <Component {...pageProps} />
