@@ -1,12 +1,14 @@
-import { AppContext, AppProps } from 'next/app';
-import Head from 'next/head';
-import { getSession } from 'next-auth/react';
-import { QueryClientProvider, Hydrate } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ChakraProvider } from '@chakra-ui/react';
+import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Layout from 'components/Layout';
 import Fonts from 'components/Layout/Fonts';
+import useGoogleAnalytics from 'hooks/useGoogleAnalytics';
 import useTrackView from 'hooks/useTrackView';
+import { getSession } from 'next-auth/react';
+import { AppContext, AppProps } from 'next/app';
+import Head from 'next/head';
+import Script from 'next/script';
 import theme from 'theme';
 import { queryClient, QueryKeys } from 'utils/queryClient';
 import { HydrationProps } from 'utils/types';
@@ -26,6 +28,7 @@ const MyApp = ({
     pageProps && pageProps.dehydratedState ? JSON.parse(pageProps.dehydratedState) : undefined;
 
   useTrackView();
+  useGoogleAnalytics();
 
   return (
     <ChakraProvider theme={theme}>
@@ -41,6 +44,10 @@ const MyApp = ({
               />
               <link rel="preload" href="/fonts/Norse.otf" as="font" crossOrigin="" />
             </Head>
+            <Script
+              src="https://www.googletagmanager.com/gtag/js?id=G-ZRY30LJYBX"
+              strategy="afterInteractive"
+            />
             <Fonts />
             <Layout>
               <Component {...pageProps} />
