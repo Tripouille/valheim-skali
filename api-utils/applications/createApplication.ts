@@ -5,32 +5,52 @@ import { requirePermissions } from 'api-utils/auth';
 import { ServerException } from 'api-utils/common';
 import db from 'api-utils/db';
 import {
-  ApplicationBaseWithDiscordName,
   ApplicationInDb,
   applicationsCollectionName,
   ApplicationStatus,
+  isCreateApplicationDataWithUserId,
 } from 'data/application';
+import { UserInDb, usersCollectionName } from 'data/user';
 import { PermissionCategory, applicationPrivilege } from 'utils/permissions';
-import { isCreateApplicationData, shortenApplicationTextProperties } from './utils';
+import {
+  isCreateApplicationData,
+  isValidCreateApplicationData,
+  shortenApplicationTextProperties,
+} from './utils';
 
 const createApplication = async (req: Req, res: Res) => {
   await requirePermissions({ [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE }, req);
 
   const applicationCreateData: unknown = req.body;
   if (!isCreateApplicationData(applicationCreateData)) throw new ServerException(400);
+  if (!isValidCreateApplicationData(applicationCreateData)) throw new ServerException(400);
   shortenApplicationTextProperties(applicationCreateData);
 
-  const newApplication: Omit<ApplicationBaseWithDiscordName<ObjectId>, '_id'> = {
-    ...applicationCreateData,
+  const isDataWithUserId = isCreateApplicationDataWithUserId(applicationCreateData);
+
+  if (isDataWithUserId) {
+    const user = await db.findOne<UserInDb>(usersCollectionName, {
+      _id: new ObjectId(applicationCreateData.userId),
+    });
+    if (!user) throw new ServerException(404);
+
+    const applicationForSameUser = await db.findOne<ApplicationInDb>(applicationsCollectionName, {
+      userId: new ObjectId(applicationCreateData.userId),
+    });
+    if (applicationForSameUser) throw new ServerException(409);
+  }
+
+  const newApplication: Omit<ApplicationInDb, '_id'> = {
+    applicationFormAnswer: applicationCreateData.applicationFormAnswer,
     comments: [],
     status: ApplicationStatus.WAITING_FOR_APPOINTMENT,
     createdAt: DateTime.now().toISO(),
+    ...(isDataWithUserId
+      ? { userId: new ObjectId(applicationCreateData.userId) }
+      : { discordName: applicationCreateData.discordName }),
   };
 
-  const newApplicationId = await db.insert<ApplicationInDb>(
-    applicationsCollectionName,
-    newApplication,
-  );
+  const newApplicationId = await db.insert(applicationsCollectionName, newApplication);
 
   res.status(201).json({ ...newApplication, _id: newApplicationId });
 };
