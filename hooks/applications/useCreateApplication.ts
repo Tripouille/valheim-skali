@@ -21,7 +21,10 @@ const useCreateApplication = ({
       displaySuccessToast({ title: 'La candidature a bien été créée.' });
       if (onSuccess) onSuccess(data, variables, context);
     },
-    onSettled: () => queryClient.invalidateQueries([QueryKeys.APPLICATIONS]),
+    onSettled: () => {
+      queryClient.invalidateQueries([QueryKeys.APPLICATIONS]);
+      queryClient.invalidateQueries([QueryKeys.APPLICATION_ASSOCIABLE_USERS]);
+    },
   });
 
   return createEvent;

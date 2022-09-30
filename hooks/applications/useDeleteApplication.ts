@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Application } from 'data/application';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
-import { QueryKeys, QueryTypes } from 'utils/queryClient';
+import { queryClient, QueryKeys, QueryTypes } from 'utils/queryClient';
 import { APIRoute } from 'utils/routes';
 
 const deleteApplicationOnServer = (deletedApplication: Application) => async () => {
@@ -18,6 +18,7 @@ const useDeleteApplication = (deletedApplication: Application) => {
     deleteApplicationOnServer(deletedApplication),
     getUpdatedApplications(deletedApplication),
     'La candidature a bien été supprimée.',
+    { onSettled: () => queryClient.invalidateQueries([QueryKeys.APPLICATION_ASSOCIABLE_USERS]) },
   );
 
   return deleteApplication;

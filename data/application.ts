@@ -1,6 +1,7 @@
 import { ObjectId } from 'bson';
 import { applicationPrivilege, PermissionCategory, Permissions } from 'utils/permissions';
 import { isFilled } from 'utils/validation';
+import { User, UserInDb } from './user';
 
 /** Main types */
 
@@ -44,9 +45,10 @@ interface ApplicationBaseWithoutUser<T extends string | ObjectId> {
   createdAt: string;
 }
 
-type ApplicationBaseWithUserId<T extends string | ObjectId> = ApplicationBaseWithoutUser<T> & {
-  userId: T;
-};
+export type ApplicationBaseWithUserId<T extends string | ObjectId> =
+  ApplicationBaseWithoutUser<T> & {
+    userId: T;
+  };
 export type ApplicationBaseWithDiscordName<T extends string | ObjectId> =
   ApplicationBaseWithoutUser<T> & {
     discordName: string;
@@ -61,18 +63,38 @@ export type ApplicationInDb = ApplicationBase<ObjectId>;
 
 export type WithDiscordInfos<A extends Application | ApplicationInDb> = Omit<A, 'comments'> & {
   discordName: string;
+  userId?: A extends Application ? string : ObjectId;
   discordImageUrl?: string;
   comments: WithUserInfos<ApplicationComment<A extends Application ? string : ObjectId>>[];
 };
 
-export type CreateApplicationData = Pick<
+type CreateApplicationDataWithDiscordName = Pick<
   ApplicationBaseWithDiscordName<string>,
   'applicationFormAnswer' | 'discordName'
 >;
+type CreateApplicationDataWithUserId = Pick<
+  ApplicationBaseWithUserId<string>,
+  'applicationFormAnswer' | 'userId'
+>;
+export type CreateApplicationData =
+  | CreateApplicationDataWithDiscordName
+  | CreateApplicationDataWithUserId;
+
+export const isCreateApplicationDataWithUserId = (
+  applicationData: CreateApplicationData,
+): applicationData is CreateApplicationDataWithUserId => 'userId' in applicationData;
 
 export type AddApplicationCommentData = Pick<ApplicationComment<string>, 'body'>;
 
 export type EditApplicationCommentData = Pick<ApplicationComment<string>, '_id' | 'body'>;
+
+export type ApplicationAssociableUser<T extends string | ObjectId = string> = Pick<
+  T extends string ? User : UserInDb,
+  '_id' | 'name' | 'nameInGame' | 'image'
+> & {
+  isMember: boolean;
+  applicationId?: T;
+};
 
 /** Database */
 
@@ -141,7 +163,7 @@ export const getApplicationValidationError = (
   applicationData: CreateApplicationData,
 ): string | null => {
   if (
-    !isFilled(applicationData.discordName) ||
+    (!('userId' in applicationData) && !isFilled(applicationData.discordName)) ||
     applicationFormKeys.some(key => !isFilled(applicationData.applicationFormAnswer?.[key]))
   ) {
     return 'Tous les champs sont obligatoires';

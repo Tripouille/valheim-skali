@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import Flex from 'components/core/Containers/Flex';
 import { Stack } from 'components/core/Containers/Stack';
 import FormElement from 'components/core/Form/FormElement';
 import FormModal from 'components/core/Form/FormModal';
 import Input from 'components/core/Form/Input';
 import Textarea from 'components/core/Form/Textarea';
 import { ModalBody, ModalHeader } from 'components/core/Overlay/Modal';
+import Text from 'components/core/Typography/Text';
 import {
   ApplicationFormAnswer,
   applicationFormKeys,
@@ -15,8 +17,13 @@ import {
   getApplicationValidationError,
   WithDiscordInfos,
   Application,
+  isCreateApplicationDataWithUserId,
 } from 'data/application';
 import { Callback } from 'utils/types';
+import Select from 'components/core/Form/Select';
+import { Grid } from 'components/core/Containers/Grid';
+import useApplicationAssociableUsers from 'hooks/applications/useApplicationAssociableUsers';
+import UserAvatar from '../Users/UserAvatar';
 
 const initialFormApplicationData: CreateApplicationData = {
   discordName: '',
@@ -29,8 +36,10 @@ const initialFormApplicationData: CreateApplicationData = {
 const getApplicationFormData = (
   application: WithDiscordInfos<Application>,
 ): CreateApplicationData => ({
-  discordName: application.discordName,
   applicationFormAnswer: application.applicationFormAnswer,
+  ...('userId' in application
+    ? { userId: application.userId as string }
+    : { discordName: application.discordName }),
 });
 
 type ApplicationFormProps = {
@@ -57,14 +66,43 @@ const ApplicationForm: React.FC<ApplicationFormProps> = props => {
     isEdition ? getApplicationFormData(application) : initialFormApplicationData,
   );
 
+  const applicationAssociableUsersQuery = useApplicationAssociableUsers(application?.userId);
+  const [associatedUserId, setAssociatedUserId] = useState<string>('');
+  const associatedUser =
+    associatedUserId &&
+    applicationAssociableUsersQuery.data?.find(user => user._id === associatedUserId);
+
   useEffect(
     function prefillFormData() {
-      if (isOpen)
+      if (isOpen) {
         setApplicationFormData(
           application ? getApplicationFormData(application) : initialFormApplicationData,
         );
+        setAssociatedUserId(application?.userId ? application.userId : '');
+      }
     },
     [application, isOpen],
+  );
+
+  useEffect(
+    function fillOnUserAssociation() {
+      if (associatedUser)
+        setApplicationFormData(prev => ({
+          ...prev,
+          discordName: associatedUser.name,
+          userId: associatedUser._id,
+          applicationFormAnswer: {
+            ...prev.applicationFormAnswer,
+            nameInGame: associatedUser.nameInGame ?? prev.applicationFormAnswer.nameInGame,
+          },
+        }));
+      else
+        setApplicationFormData(prev => ({
+          applicationFormAnswer: prev.applicationFormAnswer,
+          discordName: 'discordName' in prev ? prev.discordName : '',
+        }));
+    },
+    [associatedUser],
   );
 
   const setApplicationFormAnswerValue = (key: keyof ApplicationFormAnswer) => (value: string) =>
@@ -99,14 +137,43 @@ const ApplicationForm: React.FC<ApplicationFormProps> = props => {
       </ModalHeader>
       <ModalBody id="application-form-modal-body">
         <Stack spacing="5">
-          <FormElement label="Quel est ton pseudo Discord ?" isRequired vertical>
-            <Input
-              data-cy="discord_name"
-              value={applicationFormData.discordName}
-              onChange={value => setApplicationFormData(prev => ({ ...prev, discordName: value }))}
-              maxLength={APPLICATION_DISCORD_NAME_MAX_LENGTH}
-            />
-          </FormElement>
+          <Grid templateColumns="2fr 1fr" gap="3" overflow="hidden">
+            {isCreateApplicationDataWithUserId(applicationFormData) ? (
+              associatedUser && (
+                <Flex align="center">
+                  {associatedUser.image && <UserAvatar src={associatedUser.image} size="50px" />}
+                  <Text px="3" noOfLines={1}>
+                    {associatedUser.name}
+                  </Text>
+                </Flex>
+              )
+            ) : (
+              <FormElement label="Quel est ton pseudo Discord ?" isRequired vertical>
+                <Input
+                  data-cy="discord_name"
+                  value={applicationFormData.discordName}
+                  onChange={value =>
+                    setApplicationFormData(prev => ({ ...prev, discordName: value }))
+                  }
+                  maxLength={APPLICATION_DISCORD_NAME_MAX_LENGTH}
+                />
+              </FormElement>
+            )}
+            <FormElement label="Associer à un utilisateur" vertical>
+              <Select
+                data-cy="associate-to-user"
+                value={associatedUserId}
+                onChange={setAssociatedUserId}
+              >
+                <option></option>
+                {applicationAssociableUsersQuery.data?.map(user => (
+                  <option key={user._id} value={user._id}>
+                    {user.name}
+                  </option>
+                ))}
+              </Select>
+            </FormElement>
+          </Grid>
           {applicationFormKeys.map(key => (
             <FormElement
               key={key}

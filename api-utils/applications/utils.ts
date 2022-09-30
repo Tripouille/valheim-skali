@@ -5,6 +5,7 @@ import {
   APPLICATION_DISCORD_NAME_MAX_LENGTH,
   APPLICATION_FORM_KEYS_TO_FORM_PROPERTIES,
   CreateApplicationData,
+  isCreateApplicationDataWithUserId,
 } from 'data/application';
 import { isFilled } from 'utils/validation';
 
@@ -19,16 +20,24 @@ const applicationFormAnswerKeyToValueTypeCheck = applicationFormKeys.reduce(
 const isApplicationFormAnswer = (data: unknown): data is ApplicationFormAnswer =>
   isRequiredObjectType(data, applicationFormAnswerKeyToValueTypeCheck);
 
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+type CreateApplicationDataKeys = KeysOfUnion<CreateApplicationData>;
+
 const applicationKeyToValueTypeCheck: Record<
-  keyof CreateApplicationData,
+  CreateApplicationDataKeys,
   (value: unknown) => boolean
 > = {
   applicationFormAnswer: value => isApplicationFormAnswer(value),
-  discordName: value => typeof value === 'string',
+  discordName: value => value === undefined || typeof value === 'string',
+  userId: value => value === undefined || typeof value === 'string',
 };
 
 export const isCreateApplicationData = (data: unknown): data is CreateApplicationData =>
-  isRequiredObjectType(data, applicationKeyToValueTypeCheck);
+  isRequiredObjectType(data, applicationKeyToValueTypeCheck) &&
+  (data.discordName.length || data.userId.length);
+
+export const isValidCreateApplicationData = (data: CreateApplicationData) =>
+  isCreateApplicationDataWithUserId(data) ? data.userId.length : data.discordName.length;
 
 export const shortenApplicationTextProperties = (applicationCreateData: CreateApplicationData) => {
   for (const key of applicationFormKeys) {
@@ -38,8 +47,10 @@ export const shortenApplicationTextProperties = (applicationCreateData: CreateAp
       APPLICATION_FORM_KEYS_TO_FORM_PROPERTIES[key].maxLength,
     );
   }
-  applicationCreateData.discordName = applicationCreateData.discordName.substring(
-    0,
-    APPLICATION_DISCORD_NAME_MAX_LENGTH,
-  );
+  if (!isCreateApplicationDataWithUserId(applicationCreateData)) {
+    applicationCreateData.discordName = applicationCreateData.discordName.substring(
+      0,
+      APPLICATION_DISCORD_NAME_MAX_LENGTH,
+    );
+  }
 };

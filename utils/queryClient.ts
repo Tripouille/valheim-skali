@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Session } from 'next-auth';
 import { toast } from '@chakra-ui/react';
 import { InfiniteData, QueryClient } from '@tanstack/react-query';
-import { Application, WithDiscordInfos } from 'data/application';
+import { Application, ApplicationAssociableUser, WithDiscordInfos } from 'data/application';
 import { EventsPage } from 'data/event';
 import { Role } from 'data/role';
 import { User } from 'data/user';
@@ -43,6 +43,7 @@ export enum QueryKeys {
   WIKI_PAGES = 'wiki_pages',
   WIKI_PROPOSALS = 'wiki_proposals',
   APPLICATIONS = 'applications',
+  APPLICATION_ASSOCIABLE_USERS = 'application_associable_users',
 }
 
 export type QueryTypes = {
@@ -54,4 +55,5 @@ export type QueryTypes = {
   [QueryKeys.WIKI_PAGES]: WikiPage[];
   [QueryKeys.WIKI_PROPOSALS]: WikiProposalWithAuthor[];
   [QueryKeys.APPLICATIONS]: WithDiscordInfos<Application>[];
+  [QueryKeys.APPLICATION_ASSOCIABLE_USERS]: ApplicationAssociableUser[];
 };

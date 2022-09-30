@@ -2,7 +2,7 @@ import axios from 'axios';
 import { CreateApplicationData, Application } from 'data/application';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import { APIRoute } from 'utils/routes';
-import { QueryKeys } from 'utils/queryClient';
+import { queryClient, QueryKeys } from 'utils/queryClient';
 import { Callback } from 'utils/types';
 
 const editApplicationOnServer =
@@ -20,15 +20,14 @@ const useEditApplication = (
     (previousApplications, createApplicationData) =>
       previousApplications?.map(application =>
         application._id === editedApplication._id
-          ? {
-              ...application,
-              discordName: createApplicationData.discordName,
-              applicationFormAnswer: createApplicationData.applicationFormAnswer,
-            }
+          ? { ...application, ...createApplicationData }
           : application,
       ) ?? [],
     'La candidature a bien été mise à jour.',
-    { onSuccess },
+    {
+      onSuccess,
+      onSettled: () => queryClient.invalidateQueries([QueryKeys.APPLICATION_ASSOCIABLE_USERS]),
+    },
   );
 
   return editApplication;
