@@ -19,6 +19,8 @@ import {
   CreateApplicationData,
   WithDiscordInfos,
 } from 'data/application';
+import useDeleteApplication from 'hooks/applications/useDeleteApplication';
+import useEditApplication from 'hooks/applications/useEditApplication';
 import { applicationPrivilege, PermissionCategory } from 'utils/permissions';
 import { Callback, Entries } from 'utils/types';
 import ApplicationAnswerLine from './ApplicationAnswerLine';
@@ -27,8 +29,6 @@ import ApplicationDate from './ApplicationDate';
 import ApplicationIdentity from './ApplicationIdentity';
 import ApplicationForm from './ApplicationForm';
 import ApplicationModalStatus from './ApplicationModalStatus';
-import useDeleteApplication from 'hooks/applications/useDeleteApplication';
-import useEditApplication from 'hooks/applications/useEditApplication';
 
 const hasSameValues = (formAnswer1: ApplicationFormAnswer, formAnswer2: ApplicationFormAnswer) =>
   Object.entries(formAnswer1).every(
@@ -52,7 +52,9 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ application, isOpen
 
   const onEditionSubmit = (createApplicationData: CreateApplicationData) => {
     if (
-      createApplicationData.discordName !== application.discordName ||
+      ('discordName' in createApplicationData &&
+        createApplicationData.discordName !== application.discordName) ||
+      ('userId' in createApplicationData && createApplicationData.userId !== application.userId) ||
       !hasSameValues(createApplicationData.applicationFormAnswer, application.applicationFormAnswer)
     )
       editApplication(createApplicationData);
