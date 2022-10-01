@@ -55,6 +55,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ application, isOpen
       ('discordName' in createApplicationData &&
         createApplicationData.discordName !== application.discordName) ||
       ('userId' in createApplicationData && createApplicationData.userId !== application.userId) ||
+      (!('userId' in createApplicationData) && application.userId) ||
       !hasSameValues(createApplicationData.applicationFormAnswer, application.applicationFormAnswer)
     )
       editApplication(createApplicationData);

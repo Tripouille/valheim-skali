@@ -15,14 +15,17 @@ const IconList: React.FC<IconListProps> = ({
   icon = FaArrowCircleRight,
   iconColor = 'blue.200',
 }) => (
-  <List spacing={3}>
-    {list.map((content: Children, index: number) => (
-      // eslint-disable-next-line react/no-array-index-key
-      <ListItem key={index} display="flex" alignItems="center">
-        <ListIcon as={icon} color={iconColor} boxSize="1.2em" />
-        {content}
-      </ListItem>
-    ))}
+  <List spacing={3} maxW="full">
+    {list.map(
+      (content: Children, index: number) =>
+        content && (
+          // eslint-disable-next-line react/no-array-index-key
+          <ListItem key={index} display="flex" alignItems="center">
+            <ListIcon as={icon} color={iconColor} boxSize="1.2em" />
+            {content}
+          </ListItem>
+        ),
+    )}
   </List>
 );
 

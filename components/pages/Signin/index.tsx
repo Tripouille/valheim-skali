@@ -1,20 +1,14 @@
 import { useRouter } from 'next/router';
-import { signIn } from 'next-auth/react';
 import React from 'react';
-import { GiVikingHelmet } from 'react-icons/gi';
 import Background from 'components/core/Containers/Background';
 import Center from 'components/core/Containers/Center';
-import Button from 'components/core/Interactive/Button';
 import Text from 'components/core/Typography/Text';
 import { getRouteParameterAsString } from 'utils/routes';
 import { getAuthErrorMessage } from './utils';
+import SigninButton from 'components/core/Authentication/SigninButton';
 
 const Signin = () => {
   const router = useRouter();
-
-  const onClick = () => {
-    signIn('discord', { callbackUrl: getRouteParameterAsString(router.query.callbackUrl) });
-  };
 
   return (
     <Background data-cy="signin" h="full">
@@ -22,9 +16,7 @@ const Signin = () => {
         {router.query.error && (
           <Text mb="3">{getAuthErrorMessage(getRouteParameterAsString(router.query.error))}</Text>
         )}
-        <Button data-cy="signin" leftIcon={<GiVikingHelmet />} onClick={onClick}>
-          Cliquez ici pour vous connecter avec Discord
-        </Button>
+        <SigninButton label="Cliquez ici pour vous connecter avec Discord" />
       </Center>
     </Background>
   );
