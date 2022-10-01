@@ -1,7 +1,7 @@
 import axios from 'axios';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import { APIRoute } from 'utils/routes';
-import { QueryKeys } from 'utils/queryClient';
+import { queryClient, QueryKeys } from 'utils/queryClient';
 import { Application, ApplicationStatus, WithDiscordInfos } from 'data/application';
 
 const setApplicationStatusOnServer =
@@ -28,6 +28,7 @@ const useSetApplicationStatus = (application: Application) => {
       return getUpdatedApplications(previousApplications, application, newStatus);
     },
     'La candidature a bien été mise à jour avec un nouveau statut.',
+    { onSettled: () => queryClient.invalidateQueries([QueryKeys.USERS]) },
   );
 
   return mutate;

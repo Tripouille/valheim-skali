@@ -6,8 +6,8 @@ import { RoleInDb, SpecialRoleName } from 'data/role';
 import { UserInDb, usersCollectionName } from 'data/user';
 
 const getAssociableUsers = async (req: Req, res: Res) => {
-  const collection = await db.connectToCollection<UserInDb>(usersCollectionName);
-  const users = (await collection
+  const usersCollection = await db.connectToCollection<UserInDb>(usersCollectionName);
+  const usersWithRolesAndApplications = (await usersCollection
     .aggregate(
       [
         {
@@ -31,7 +31,7 @@ const getAssociableUsers = async (req: Req, res: Res) => {
     )
     .toArray()) as (UserInDb & { roles: RoleInDb[] } & { applications: ApplicationInDb[] })[];
 
-  const usersResult: ApplicationAssociableUser<ObjectId>[] = users.map(
+  const usersResult: ApplicationAssociableUser<ObjectId>[] = usersWithRolesAndApplications.map(
     ({ _id, name, image, nameInGame, roles, applications }) => ({
       _id,
       name,
