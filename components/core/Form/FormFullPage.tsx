@@ -31,7 +31,7 @@ const FormFullPage = <F extends object, C extends object>(props: FormFullPagePro
   const canDelete = isEdition && (props.canDelete ?? true);
 
   return (
-    <Stack>
+    <Stack spacing={5}>
       {children}
       {(canSubmit || canDelete) && (
         <Center w="full">
