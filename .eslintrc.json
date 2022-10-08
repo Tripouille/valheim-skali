@@ -38,6 +38,7 @@
   "rules": {
     "import/no-extraneous-dependencies": "off",
     "react/function-component-definition": "off",
+    "react/prop-types": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "jsx-a11y/alt-text": "error",
     "@typescript-eslint/no-unused-vars": "error",
