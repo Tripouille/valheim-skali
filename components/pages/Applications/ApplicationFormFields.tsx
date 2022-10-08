@@ -18,6 +18,7 @@ import {
   ApplicationFormAnswer,
 } from 'data/application';
 import useApplicationAssociableUsers from 'hooks/applications/useApplicationAssociableUsers';
+import useSession from 'hooks/useSession';
 import { applicationPrivilege, PermissionCategory } from 'utils/permissions';
 import UserAvatar from '../Users/UserAvatar';
 
@@ -27,11 +28,25 @@ interface ApplicationFormFieldsProps {
 }
 
 const ApplicationFormFields: React.FC<ApplicationFormFieldsProps> = ({ formData, setFormData }) => {
+  const { data: session, hasRequiredPermissions } = useSession();
+  const hasManageApplicationsPermission = hasRequiredPermissions({
+    [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE,
+  });
+
   const applicationAssociableUsersQuery = useApplicationAssociableUsers();
   const [associatedUserId, setAssociatedUserId] = useState<string>('');
   const associatedUser =
     associatedUserId &&
     applicationAssociableUsersQuery.data?.find(user => user._id === associatedUserId);
+
+  useEffect(
+    function setCurrentUserIfCandidate() {
+      if (session?.user._id && !hasManageApplicationsPermission) {
+        setAssociatedUserId(session?.user._id);
+      }
+    },
+    [hasManageApplicationsPermission, session?.user._id],
+  );
 
   useEffect(
     function fillOnUserAssociation() {

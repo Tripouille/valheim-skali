@@ -13,7 +13,7 @@ const createApplicationOnServer = async (applicationData: CreateApplicationData)
 const useCreateApplication = ({
   onSuccess,
 }: {
-  onSuccess: UseMutationOptions<void, unknown, CreateApplicationData>['onSuccess'];
+  onSuccess?: UseMutationOptions<void, unknown, CreateApplicationData>['onSuccess'];
 }) => {
   const { mutate: createEvent } = useMutation(createApplicationOnServer, {
     onError: error => displayErrorToast({ title: getMessageFromError(error) }),
