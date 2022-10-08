@@ -34,7 +34,7 @@ const RulesEndButton = () => {
     return <SigninButton label="Fini de lire ? Clique ici pour te connecter !" />;
   } else if (session && session.isNonMember && !session.hasApplication) {
     return (
-      <NextLink href={getRoute('application/new')}>
+      <NextLink href={getRoute('applications/new')}>
         <Button rightIcon={<GiFeather />}>
           Fini de lire ? Clique ici pour écrire ta candidature !
         </Button>

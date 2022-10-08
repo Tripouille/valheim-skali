@@ -10,8 +10,8 @@ import PageTitle from 'components/core/Typography/PageTitle';
 import useApplications from 'hooks/applications/useApplications';
 import useCreateApplication from 'hooks/applications/useCreateApplication';
 import { applicationPrivilege, PermissionCategory } from 'utils/permissions';
-import ApplicationForm from './ApplicationForm';
 import ApplicationItem from './ApplicationAccordionItem';
+import ApplicationForm from './ApplicationForm';
 
 const Applications = () => {
   const applicationsQuery = useApplications();
@@ -41,6 +41,7 @@ const Applications = () => {
               Ajouter une candidature
             </Button>
             <ApplicationForm
+              display="modal"
               isOpen={createModal.isOpen}
               onClose={createModal.onClose}
               onSubmit={createApplication}

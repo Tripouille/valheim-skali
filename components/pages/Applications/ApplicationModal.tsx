@@ -26,8 +26,8 @@ import { Callback, Entries } from 'utils/types';
 import ApplicationAnswerLine from './ApplicationAnswerLine';
 import ApplicationComments from './ApplicationComments';
 import ApplicationDate from './ApplicationDate';
-import ApplicationIdentity from './ApplicationIdentity';
 import ApplicationForm from './ApplicationForm';
+import ApplicationIdentity from './ApplicationIdentity';
 import ApplicationModalStatus from './ApplicationModalStatus';
 
 const hasSameValues = (formAnswer1: ApplicationFormAnswer, formAnswer2: ApplicationFormAnswer) =>
@@ -89,6 +89,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ application, isOpen
               onClick={editionModal.onOpen}
             />
             <ApplicationForm
+              display="modal"
               isOpen={editionModal.isOpen}
               onClose={editionModal.onClose}
               application={application}
