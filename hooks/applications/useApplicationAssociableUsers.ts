@@ -1,8 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 import { ApplicationAssociableUser } from 'data/application';
-import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 
 const getApplicationAssociableUsersOnServer = async (): Promise<ApplicationAssociableUser[]> => {
   const { data } = await axios.get<ApplicationAssociableUser[]>(

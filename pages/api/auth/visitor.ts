@@ -1,6 +1,6 @@
 import { NextApiHandler } from 'next';
-import { ServerException } from 'api-utils/common';
 import { getVisitorPermissions } from 'api-utils/auth';
+import { ServerException } from 'api-utils/common';
 
 const eventsHandler: NextApiHandler = async (req, res) => {
   try {

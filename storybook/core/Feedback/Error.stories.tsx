@@ -1,6 +1,6 @@
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import Error, { ErrorProps } from 'components/core/Feedback/Error';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<ErrorProps>(
   Error,

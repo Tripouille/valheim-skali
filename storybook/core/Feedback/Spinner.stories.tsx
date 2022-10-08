@@ -1,6 +1,6 @@
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import Spinner, { SpinnerProps } from 'components/core/Feedback/Spinner';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<SpinnerProps>(
   Spinner,

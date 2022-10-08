@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions';
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
+import Box from 'components/core/Containers/Box';
+import Button from 'components/core/Interactive/Button';
 import {
   Modal,
   ModalProps,
@@ -9,9 +9,9 @@ import {
   ModalCloseButton,
   ModalBody,
 } from 'components/core/Overlay/Modal';
-import Box from 'components/core/Containers/Box';
-import Button from 'components/core/Interactive/Button';
 import Text from 'components/core/Typography/Text';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<ModalProps>(
   Modal,

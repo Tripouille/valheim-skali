@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { CreateApplicationData, Application } from 'data/application';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
-import { APIRoute } from 'utils/routes';
 import { queryClient, QueryKeys } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 import { Callback } from 'utils/types';
 
 const editApplicationOnServer =

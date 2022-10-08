@@ -1,8 +1,8 @@
 import { StackDivider } from '@chakra-ui/react';
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import Box from 'components/core/Containers/Box';
 import { Stack, HStack, StackProps } from 'components/core/Containers/Stack';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<StackProps>(
   HStack,

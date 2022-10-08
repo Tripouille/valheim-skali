@@ -1,5 +1,3 @@
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import {
   Alert,
   AlertProps,
@@ -7,6 +5,8 @@ import {
   AlertTitle,
   AlertDescription,
 } from 'components/core/Feedback/Alert';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<AlertProps>(
   Alert,

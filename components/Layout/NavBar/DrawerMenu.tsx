@@ -1,11 +1,10 @@
-import { chakra, useDisclosure } from '@chakra-ui/react';
 import { RiMenuLine } from 'react-icons/ri';
-import { NavRoute } from 'utils/routes';
-import { ROUTES_TO_PERMISSIONS } from 'utils/permissions';
-import IconButton from 'components/core/Interactive/IconButton';
-import Button from 'components/core/Interactive/Button';
-import NavItem from 'components/core/Interactive/NavItem';
+import { chakra, useDisclosure } from '@chakra-ui/react';
+import Secured from 'components/core/Authentication/Secured';
 import { VStack } from 'components/core/Containers/Stack';
+import Button from 'components/core/Interactive/Button';
+import IconButton from 'components/core/Interactive/IconButton';
+import NavItem from 'components/core/Interactive/NavItem';
 import {
   Drawer,
   DrawerOverlay,
@@ -13,7 +12,8 @@ import {
   DrawerBody,
   DrawerFooter,
 } from 'components/core/Overlay/Drawer';
-import Secured from 'components/core/Authentication/Secured';
+import { ROUTES_TO_PERMISSIONS } from 'utils/permissions';
+import { NavRoute } from 'utils/routes';
 
 export interface DrawerMenuProps {
   serverName: string;

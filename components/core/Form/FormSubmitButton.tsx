@@ -1,5 +1,5 @@
-import Button from 'components/core/Interactive/Button';
 import { useEffect, useState } from 'react';
+import Button from 'components/core/Interactive/Button';
 
 interface FormSubmitButtonProps<F, C> {
   isEdition: boolean;

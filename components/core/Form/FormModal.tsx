@@ -1,4 +1,5 @@
-import { Callback, Children, CypressProps } from 'utils/types';
+import Center from 'components/core/Containers/Center';
+import ButtonGroup from 'components/core/Interactive/ButtonGroup';
 import {
   Modal,
   ModalCloseButton,
@@ -6,8 +7,7 @@ import {
   ModalOverlay,
   ModalFooter,
 } from 'components/core/Overlay/Modal';
-import Center from 'components/core/Containers/Center';
-import ButtonGroup from 'components/core/Interactive/ButtonGroup';
+import { Callback, Children, CypressProps } from 'utils/types';
 import DeletePopover from './DeletePopover';
 import FormSubmitButton from './FormSubmitButton';
 

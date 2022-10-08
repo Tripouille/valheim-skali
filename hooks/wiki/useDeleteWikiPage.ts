@@ -2,8 +2,8 @@ import axios from 'axios';
 import { useQueryClient } from '@tanstack/react-query';
 import { WikiPage } from 'data/wiki';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
-import { APIRoute } from 'utils/routes';
 import { QueryKeys, QueryTypes } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 
 const deleteWikiPageOnServer = (deletedWikiPage: WikiPage) => async () => {
   await axios.delete(`${APIRoute.WIKI}/${deletedWikiPage._id}`);

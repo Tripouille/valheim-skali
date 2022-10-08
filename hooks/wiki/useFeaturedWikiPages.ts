@@ -1,8 +1,8 @@
-import { QueryObserverSuccessResult, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { QueryObserverSuccessResult, useQuery } from '@tanstack/react-query';
 import { FeaturedWikiPages } from 'data/wiki';
-import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 
 const getFeaturedWikiPagesFromServer = async (): Promise<FeaturedWikiPages> => {
   const { data } = await axios.get<FeaturedWikiPages>(`${APIRoute.WIKI}/featured`);

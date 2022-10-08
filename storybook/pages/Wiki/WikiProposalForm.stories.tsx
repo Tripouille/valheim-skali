@@ -1,7 +1,7 @@
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import WikiProposalForm from 'components/pages/Wiki/WikiProposals/WikiProposalForm';
 import { WikiProposal } from 'data/wiki';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import wikiPageWithMarkup from './wikiPageWithMarkup.json';
 import wikiProposals from './wikiProposals.json';

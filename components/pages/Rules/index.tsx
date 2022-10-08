@@ -15,10 +15,10 @@ import useSession from 'hooks/useSession';
 import { SessionStatus } from 'utils/auth';
 import { PermissionCategory, rulesPrivilege } from 'utils/permissions';
 import { getRoute, NavRoute, ROUTES_TO_LABEL } from 'utils/routes';
-import Preambule from './Preambule';
 import DiscordRules from './DiscordRules';
-import GameRules from './GameRules';
 import GameGuides from './GameGuides';
+import GameRules from './GameRules';
+import Preambule from './Preambule';
 
 const ruleParts: Record<string, JSX.Element> = {
   Préambule: <Preambule />,

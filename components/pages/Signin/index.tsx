@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import SigninButton from 'components/core/Authentication/SigninButton';
 import Background from 'components/core/Containers/Background';
 import Center from 'components/core/Containers/Center';
 import Text from 'components/core/Typography/Text';
 import { getRouteParameterAsString } from 'utils/routes';
-import SigninButton from 'components/core/Authentication/SigninButton';
 import { getAuthErrorMessage } from './utils';
 
 const Signin = () => {

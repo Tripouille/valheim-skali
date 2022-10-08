@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import Secured from 'components/core/Authentication/Secured';
 import Flex from 'components/core/Containers/Flex';
+import { Grid } from 'components/core/Containers/Grid';
 import { Stack } from 'components/core/Containers/Stack';
 import FormElement from 'components/core/Form/FormElement';
 import Input from 'components/core/Form/Input';
+import Select from 'components/core/Form/Select';
 import Textarea from 'components/core/Form/Textarea';
 import Text from 'components/core/Typography/Text';
 import {
@@ -14,9 +17,6 @@ import {
   CreateApplicationData,
   ApplicationFormAnswer,
 } from 'data/application';
-import Select from 'components/core/Form/Select';
-import { Grid } from 'components/core/Containers/Grid';
-import Secured from 'components/core/Authentication/Secured';
 import useApplicationAssociableUsers from 'hooks/applications/useApplicationAssociableUsers';
 import { applicationPrivilege, PermissionCategory } from 'utils/permissions';
 import UserAvatar from '../Users/UserAvatar';

@@ -8,8 +8,8 @@ import { Role } from 'data/role';
 import { User } from 'data/user';
 import { WikiPage, WikiProposalWithAuthor } from 'data/wiki';
 import { getMessageFromError } from './error';
-import { displayErrorToast } from './toast';
 import { Permissions } from './permissions';
+import { displayErrorToast } from './toast';
 
 export const queryErrorHandler = (error: unknown) => {
   const id = axios.isAxiosError(error) ? error.config.url : undefined;

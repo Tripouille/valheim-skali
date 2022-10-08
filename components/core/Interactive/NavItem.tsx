@@ -1,8 +1,8 @@
-import React from 'react';
 import NextLink from 'next/link';
+import React from 'react';
+import Button from 'components/core/Interactive/Button';
 import { Route, ROUTES_TO_LABEL } from 'utils/routes';
 import { Callback } from 'utils/types';
-import Button from 'components/core/Interactive/Button';
 
 export interface NavItemProps {
   root: string;

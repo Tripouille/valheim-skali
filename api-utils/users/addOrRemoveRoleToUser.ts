@@ -1,11 +1,11 @@
-import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { ObjectId } from 'bson';
+import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
+import { requirePermissions } from 'api-utils/auth';
+import { isRequiredObjectType, ServerException, updateOneInCollection } from 'api-utils/common';
+import db from 'api-utils/db';
 import { Role, rolesCollectionName } from 'data/role';
 import { UpdateUserRolesData, UserInDb, usersCollectionName } from 'data/user';
 import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
-import { isRequiredObjectType, ServerException, updateOneInCollection } from 'api-utils/common';
-import { requirePermissions } from 'api-utils/auth';
-import db from 'api-utils/db';
 
 export enum Action {
   ADD,

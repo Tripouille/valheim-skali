@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions';
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
+import Box from 'components/core/Containers/Box';
+import Button from 'components/core/Interactive/Button';
 import {
   Drawer,
   DrawerProps,
@@ -9,8 +9,8 @@ import {
   DrawerBody,
   DrawerFooter,
 } from 'components/core/Overlay/Drawer';
-import Box from 'components/core/Containers/Box';
-import Button from 'components/core/Interactive/Button';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<DrawerProps>(
   Drawer,

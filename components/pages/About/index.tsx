@@ -1,13 +1,13 @@
 import React from 'react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { BiLinkExternal } from 'react-icons/bi';
-import { MenuRoute, ROUTES_TO_LABEL } from 'utils/routes';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import Background from 'components/core/Containers/Background';
 import { VStack } from 'components/core/Containers/Stack';
-import PageTitle from 'components/core/Typography/PageTitle';
-import Text from 'components/core/Typography/Text';
 import { UnorderedList, ListItem } from 'components/core/DataDisplay/List';
 import Icon from 'components/core/Images/Icon';
+import PageTitle from 'components/core/Typography/PageTitle';
+import Text from 'components/core/Typography/Text';
+import { MenuRoute, ROUTES_TO_LABEL } from 'utils/routes';
 import ExternalLink from './ExternalLink';
 
 const About = () => (

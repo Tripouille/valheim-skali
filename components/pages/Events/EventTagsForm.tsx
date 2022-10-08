@@ -1,9 +1,9 @@
 import { FocusEventHandler, useEffect, useRef, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
-import { CONTINUOUS_LABEL } from 'utils/constants';
 import { Wrap, WrapItem } from 'components/core/Containers/Wrap';
 import Tag from 'components/core/DataDisplay/Tag';
 import Button from 'components/core/Interactive/Button';
+import { CONTINUOUS_LABEL } from 'utils/constants';
 import EventNewTagForm from './EventNewTagForm';
 
 export interface EventTagsFormProps {

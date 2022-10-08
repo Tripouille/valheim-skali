@@ -1,15 +1,15 @@
 import { forwardRef } from 'react';
-import { Event } from 'data/event';
-import { formatDateInterval } from 'utils/format';
-import { CONTINUOUS_LABEL } from 'utils/constants';
 import Box from 'components/core/Containers/Box';
 import Flex from 'components/core/Containers/Flex';
-import Heading from 'components/core/Typography/Heading';
-import Text from 'components/core/Typography/Text';
 import { Stack } from 'components/core/Containers/Stack';
 import { Wrap } from 'components/core/Containers/Wrap';
 import Tag from 'components/core/DataDisplay/Tag';
 import DiscordButton from 'components/core/Interactive/DiscordButton';
+import Heading from 'components/core/Typography/Heading';
+import Text from 'components/core/Typography/Text';
+import { Event } from 'data/event';
+import { CONTINUOUS_LABEL } from 'utils/constants';
+import { formatDateInterval } from 'utils/format';
 import { EventContext } from './utils';
 
 export interface EventItemProps {

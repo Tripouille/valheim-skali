@@ -1,10 +1,10 @@
-import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { ObjectId } from 'bson';
-import { EventInDb, eventsCollectionName } from 'data/event';
-import { PermissionCategory, eventPrivilege } from 'utils/permissions';
+import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { requirePermissions } from 'api-utils/auth';
 import { ServerException } from 'api-utils/common';
 import db from 'api-utils/db';
+import { EventInDb, eventsCollectionName } from 'data/event';
+import { PermissionCategory, eventPrivilege } from 'utils/permissions';
 import { revalidateEventsPage } from './utils';
 
 const deleteEvent = async (req: Req, res: Res) => {

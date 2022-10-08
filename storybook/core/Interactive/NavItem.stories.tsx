@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import NavItem, { NavItemProps } from 'components/core/Interactive/NavItem';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 import { NavRoute } from 'utils/routes';
 
 const { defaultExport, StoryFactory } = storybookSetup<NavItemProps>(

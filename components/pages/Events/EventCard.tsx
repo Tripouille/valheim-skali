@@ -2,10 +2,9 @@ import { useRouter } from 'next/router';
 import React, { KeyboardEventHandler, MouseEventHandler, Ref, useEffect, useRef } from 'react';
 import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
-import { CypressProps } from 'utils/types';
-import { eventPrivilege, PermissionCategory } from 'utils/permissions';
-import { Event, isEventClosed } from 'data/event';
 import Secured from 'components/core/Authentication/Secured';
+import Box from 'components/core/Containers/Box';
+import IconButton from 'components/core/Interactive/IconButton';
 import {
   Modal,
   ModalBody,
@@ -13,13 +12,14 @@ import {
   ModalContent,
   ModalOverlay,
 } from 'components/core/Overlay/Modal';
-import Box from 'components/core/Containers/Box';
-import IconButton from 'components/core/Interactive/IconButton';
-import useUpdateEvent from 'hooks/events/useUpdateEvent';
+import { Event, isEventClosed } from 'data/event';
 import useDeleteEvent from 'hooks/events/useDeleteEvent';
-import { editIconSize, EventContext } from './utils';
-import EventItem from './EventItem';
+import useUpdateEvent from 'hooks/events/useUpdateEvent';
+import { eventPrivilege, PermissionCategory } from 'utils/permissions';
+import { CypressProps } from 'utils/types';
 import EventForm from './EventForm';
+import EventItem from './EventItem';
+import { editIconSize, EventContext } from './utils';
 
 export interface EventCardProps extends CypressProps {
   event: Event;

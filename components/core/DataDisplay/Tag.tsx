@@ -5,8 +5,8 @@ import {
   TagLabel,
   TagCloseButton,
 } from '@chakra-ui/react';
-import { TagColors } from 'utils/constants';
 import { autoBgColor, autoTextColor } from 'utils/color';
+import { TagColors } from 'utils/constants';
 import { CypressProps } from 'utils/types';
 
 export type TagProps = ChakraTagProps &

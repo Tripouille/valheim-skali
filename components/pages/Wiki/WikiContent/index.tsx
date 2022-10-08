@@ -7,8 +7,8 @@ import DynamicallyLoadedIcon from 'components/core/Images/DynamicallyLoadedIcon'
 import ZoomableImage from 'components/core/Images/ZoomableImage';
 import DiscordButton from 'components/core/Interactive/DiscordButton';
 import Link from 'components/core/Interactive/Link';
-import Spoiler from 'components/core/Typography/Spoiler';
 import Heading from 'components/core/Typography/Heading';
+import Spoiler from 'components/core/Typography/Spoiler';
 import {
   getInternalLinkProperties,
   getMarkupDiscordLinkProperties,

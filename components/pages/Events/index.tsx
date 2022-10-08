@@ -3,19 +3,19 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { useInView } from 'react-intersection-observer';
 import { useDisclosure } from '@chakra-ui/react';
-import { getRouteParameterAsString, NavRoute, ROUTES_TO_LABEL } from 'utils/routes';
-import { eventPrivilege, PermissionCategory } from 'utils/permissions';
-import PageTitle from 'components/core/Typography/PageTitle';
+import Secured from 'components/core/Authentication/Secured';
 import Background from 'components/core/Containers/Background';
 import { VStack } from 'components/core/Containers/Stack';
-import Secured from 'components/core/Authentication/Secured';
-import Button from 'components/core/Interactive/Button';
 import Loading from 'components/core/Feedback/Loading';
-import useInfiniteEvents from 'hooks/events/useInfiniteEvents';
+import Button from 'components/core/Interactive/Button';
+import PageTitle from 'components/core/Typography/PageTitle';
 import useCreateEvent from 'hooks/events/useCreateEvent';
+import useInfiniteEvents from 'hooks/events/useInfiniteEvents';
+import { eventPrivilege, PermissionCategory } from 'utils/permissions';
+import { getRouteParameterAsString, NavRoute, ROUTES_TO_LABEL } from 'utils/routes';
 import { scrollIntoViewIfNeeded } from 'utils/window';
-import EventForm from './EventForm';
 import EventCard from './EventCard';
+import EventForm from './EventForm';
 
 const Events = () => {
   const router = useRouter();

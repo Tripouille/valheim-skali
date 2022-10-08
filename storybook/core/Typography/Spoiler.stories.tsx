@@ -1,6 +1,6 @@
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import Spoiler, { SpoilerProps } from 'components/core/Typography/Spoiler';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<SpoilerProps>(
   Spoiler,

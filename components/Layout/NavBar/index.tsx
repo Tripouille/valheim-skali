@@ -1,19 +1,19 @@
 import NextLink from 'next/link';
 import React from 'react';
-import { GiStakeHammer, GiVikingHelmet } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
 import { CgInfo } from 'react-icons/cg';
+import { GiStakeHammer, GiVikingHelmet } from 'react-icons/gi';
 import { chakra, useBreakpointValue } from '@chakra-ui/react';
+import Secured from 'components/core/Authentication/Secured';
 import Center from 'components/core/Containers/Center';
 import IconButton from 'components/core/Interactive/IconButton';
 import { Menu, MenuButton, MenuDivider, MenuItem, MenuList } from 'components/core/Overlay/Menu';
-import Secured from 'components/core/Authentication/Secured';
 import useSession from 'hooks/useSession';
+import { SessionStatus } from 'utils/auth';
 import { ROUTES_TO_PERMISSIONS } from 'utils/permissions';
 import { MenuRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
-import { SessionStatus } from 'utils/auth';
-import HeaderMenu from './HeaderMenu';
 import DrawerMenu from './DrawerMenu';
+import HeaderMenu from './HeaderMenu';
 import SignInOut from './SignInOut';
 
 enum MenuType {

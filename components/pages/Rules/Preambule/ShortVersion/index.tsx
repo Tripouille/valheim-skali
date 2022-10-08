@@ -1,9 +1,9 @@
 import React from 'react';
 import { MdCancel, MdCheckCircle } from 'react-icons/md';
 import Box from 'components/core/Containers/Box';
-import Heading from 'components/core/Typography/Heading';
 import { VStack } from 'components/core/Containers/Stack';
 import IconList from 'components/core/DataDisplay/IconList';
+import Heading from 'components/core/Typography/Heading';
 
 const invalidRules = [
   `Vous cherchez des conseils ou de l’aide pour votre partie perso. Ici on ne traite que de notre serveur.`,

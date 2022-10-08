@@ -1,9 +1,9 @@
 import { chakra } from '@chakra-ui/react';
-import { ROUTES_TO_PERMISSIONS } from 'utils/permissions';
-import { NavRoute } from 'utils/routes';
+import Secured from 'components/core/Authentication/Secured';
 import ButtonGroup from 'components/core/Interactive/ButtonGroup';
 import NavItem from 'components/core/Interactive/NavItem';
-import Secured from 'components/core/Authentication/Secured';
+import { ROUTES_TO_PERMISSIONS } from 'utils/permissions';
+import { NavRoute } from 'utils/routes';
 
 export interface HeaderMenuProps {
   serverName: string;

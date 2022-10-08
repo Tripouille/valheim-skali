@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { QueryObserverSuccessResult, useQuery, UseQueryResult } from '@tanstack/react-query';
 import { WikiPage } from 'data/wiki';
-import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 
 const getWikiPage = (id?: string) => async (): Promise<WikiPage> => {
   const { data } = await axios.get<WikiPage>(`${APIRoute.WIKI}/${id}`);

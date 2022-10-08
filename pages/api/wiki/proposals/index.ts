@@ -1,8 +1,8 @@
 import { NextApiHandler } from 'next';
+import { requirePermissions } from 'api-utils/auth';
 import { ServerException } from 'api-utils/common';
 import getWikiProposals from 'api-utils/wiki/getWikiProposals';
 import proposeWikiPageCreation from 'api-utils/wiki/proposeWikiPageCreation';
-import { requirePermissions } from 'api-utils/auth';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 
 const wikiProposalsHandler: NextApiHandler = async (req, res) => {

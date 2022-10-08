@@ -1,10 +1,10 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
-import { ServerException } from 'api-utils/common';
-import setApplicationStatus from 'api-utils/applications/setApplicationStatus';
 import addApplicationComment from 'api-utils/applications/addApplicationComment';
-import editApplicationComment from 'api-utils/applications/editApplicationComment';
-import editApplication from 'api-utils/applications/editApplication';
 import deleteApplication from 'api-utils/applications/deleteApplication';
+import editApplication from 'api-utils/applications/editApplication';
+import editApplicationComment from 'api-utils/applications/editApplicationComment';
+import setApplicationStatus from 'api-utils/applications/setApplicationStatus';
+import { ServerException } from 'api-utils/common';
 
 const patchApplicationComments = async (req: NextApiRequest, res: NextApiResponse) => {
   if ('_id' in req.body.comment) await editApplicationComment(req, res);

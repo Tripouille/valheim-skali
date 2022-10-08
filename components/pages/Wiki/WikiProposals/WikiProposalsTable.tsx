@@ -1,8 +1,8 @@
-import { Table, Th, Thead, Tr, Tbody } from 'components/core/DataDisplay/Table';
 import Box from 'components/core/Containers/Box';
+import { Table, Th, Thead, Tr, Tbody } from 'components/core/DataDisplay/Table';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
-import { tableStyleProps, getCellWidth, rowIconWidth } from 'theme/admin';
 import { useWikiProposals } from 'hooks/wiki/useWikiProposals';
+import { tableStyleProps, getCellWidth, rowIconWidth } from 'theme/admin';
 import WikiProposalRow from './WikiProposalRow';
 
 export interface WikiProposalsTableProps {

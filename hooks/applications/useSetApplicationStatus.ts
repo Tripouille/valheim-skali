@@ -1,8 +1,8 @@
 import axios from 'axios';
-import useOptimisticMutation from 'hooks/useOptimisticMutation';
-import { APIRoute } from 'utils/routes';
-import { queryClient, QueryKeys } from 'utils/queryClient';
 import { Application, ApplicationStatus, WithDiscordInfos } from 'data/application';
+import useOptimisticMutation from 'hooks/useOptimisticMutation';
+import { queryClient, QueryKeys } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 
 const setApplicationStatusOnServer =
   (application: Application) => async (status: ApplicationStatus) => {

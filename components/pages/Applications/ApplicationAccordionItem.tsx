@@ -4,8 +4,8 @@ import { AccordionItem, AccordionPanel } from 'components/core/Disclosure/Accord
 import Button from 'components/core/Interactive/Button';
 import { Application, WithDiscordInfos } from 'data/application';
 import { Entries } from 'utils/types';
-import ApplicationHeader from './ApplicationHeader';
 import ApplicationAnswerLine from './ApplicationAnswerLine';
+import ApplicationHeader from './ApplicationHeader';
 import ApplicationModal from './ApplicationModal';
 
 interface ApplicationAccordionItemProps {

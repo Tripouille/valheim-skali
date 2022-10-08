@@ -18,8 +18,8 @@ import {
   WikiPage,
 } from 'data/wiki';
 import { NavRoute, serverName } from 'utils/routes';
-import WikiProposalFormPreview from './WikiProposalFormPreview';
 import { getWikiFormDataLocalStorageKey, saveWikiFormDataToLocalStorage } from './utils';
+import WikiProposalFormPreview from './WikiProposalFormPreview';
 
 const getFormDataFromWikiProposal = (wikiProposal: WikiProposal): WikiPageContent => {
   const lastSuggestion = wikiProposal.suggestions[0] as WikiPageContent;

@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next';
 import React from 'react';
-import WikiHome from 'components/pages/Wiki';
 import getFeaturedWikiPages from 'api-utils/wiki/getFeaturedWikiPages';
+import WikiHome from 'components/pages/Wiki';
 import useFeaturedWikiPages from 'hooks/wiki/useFeaturedWikiPages';
 
 interface WikiHomePageProps {

@@ -1,8 +1,8 @@
 import Router from 'next/router';
 import React, { useEffect, useRef } from 'react';
 import { useBoolean } from '@chakra-ui/react';
-import Flex from 'components/core/Containers/Flex';
 import Box from 'components/core/Containers/Box';
+import Flex from 'components/core/Containers/Flex';
 import Progress from 'components/core/Feedback/Progress';
 import NavBar from './NavBar';
 

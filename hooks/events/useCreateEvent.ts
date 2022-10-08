@@ -1,9 +1,9 @@
-import { useMutation, UseMutationOptions, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { useMutation, UseMutationOptions, useQueryClient } from '@tanstack/react-query';
 import { CreateEventData, getEventDataForServer } from 'data/event';
 import { getMessageFromError } from 'utils/error';
-import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 import { displayErrorToast, displaySuccessToast } from 'utils/toast';
 
 const createEventOnServer = async (eventData: CreateEventData) => {

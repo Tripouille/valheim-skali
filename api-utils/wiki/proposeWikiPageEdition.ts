@@ -1,12 +1,12 @@
 import { ObjectId } from 'bson';
+import { DateTime } from 'luxon';
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { getSession } from 'next-auth/react';
-import { DateTime } from 'luxon';
 import { requirePermissions } from 'api-utils/auth';
+import { ServerException } from 'api-utils/common';
 import db from 'api-utils/db';
 import { WikiEditionProposalInDb, wikiProposalsCollectionName } from 'data/wiki';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
-import { ServerException } from 'api-utils/common';
 import { getWikiPageContentFromBody } from './utils';
 
 const proposeWikiPageEdition = async (req: Req, res: Res) => {

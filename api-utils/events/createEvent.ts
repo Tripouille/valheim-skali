@@ -1,8 +1,8 @@
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
-import { EventInDb, eventsCollectionName } from 'data/event';
-import { PermissionCategory, eventPrivilege } from 'utils/permissions';
 import { requirePermissions } from 'api-utils/auth';
 import db from 'api-utils/db';
+import { EventInDb, eventsCollectionName } from 'data/event';
+import { PermissionCategory, eventPrivilege } from 'utils/permissions';
 import { getNewEventFromBody, revalidateEventsPage } from './utils';
 
 const createEvent = async (req: Req, res: Res) => {

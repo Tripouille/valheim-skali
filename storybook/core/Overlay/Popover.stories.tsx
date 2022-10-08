@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions';
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
+import Center from 'components/core/Containers/Center';
+import Button from 'components/core/Interactive/Button';
 import {
   Popover,
   PopoverProps,
@@ -12,8 +12,8 @@ import {
   PopoverArrow,
   PopoverCloseButton,
 } from 'components/core/Overlay/Popover';
-import Button from 'components/core/Interactive/Button';
-import Center from 'components/core/Containers/Center';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<PopoverProps>(
   Popover,

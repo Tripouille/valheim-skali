@@ -1,10 +1,10 @@
-import React from 'react';
 import { ImageProps as NextImageProps } from 'next/image';
+import React from 'react';
 import { chakra, shouldForwardProp, useBoolean } from '@chakra-ui/react';
-import { CypressProps } from 'utils/types';
-import ImageModal from 'components/core/Overlay/ImageModal';
-import Button from 'components/core/Interactive/Button';
 import Image from 'components/core/Images/Image';
+import Button from 'components/core/Interactive/Button';
+import ImageModal from 'components/core/Overlay/ImageModal';
+import { CypressProps } from 'utils/types';
 import Box from '../Containers/Box';
 
 export interface ZoomableImageProps extends CypressProps {

@@ -1,10 +1,10 @@
+import axios from 'axios';
 import { useCallback } from 'react';
 import { UseMutationOptions, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { CreateRoleData } from 'data/role';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
-import { APIRoute } from 'utils/routes';
 import { QueryKeys, QueryTypes } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 import { displayErrorToast } from 'utils/toast';
 
 const createRoleOnServer = async (roleData: CreateRoleData) => {

@@ -1,12 +1,12 @@
 import React from 'react';
 import Background from 'components/core/Containers/Background';
 import { VStack } from 'components/core/Containers/Stack';
-import { Alert, AlertDescription, AlertIcon, AlertTitle } from 'components/core/Feedback/Alert';
-import PageTitle from 'components/core/Typography/PageTitle';
-import Paragraphs from 'components/core/Typography/Paragraphs';
 import IconList from 'components/core/DataDisplay/IconList';
+import { Alert, AlertDescription, AlertIcon, AlertTitle } from 'components/core/Feedback/Alert';
 import Figure from 'components/core/Images/Figure';
 import ZoomableImage from 'components/core/Images/ZoomableImage';
+import PageTitle from 'components/core/Typography/PageTitle';
+import Paragraphs from 'components/core/Typography/Paragraphs';
 
 const World = () => {
   return (

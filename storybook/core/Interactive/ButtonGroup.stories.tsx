@@ -1,7 +1,7 @@
-import ButtonGroup, { ButtonGroupProps } from 'components/core/Interactive/ButtonGroup';
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import Button from 'components/core/Interactive/Button';
+import ButtonGroup, { ButtonGroupProps } from 'components/core/Interactive/ButtonGroup';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<ButtonGroupProps>(
   ButtonGroup,

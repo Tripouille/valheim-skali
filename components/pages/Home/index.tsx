@@ -2,14 +2,14 @@ import NextLink from 'next/link';
 import React from 'react';
 import { GiOpenGate } from 'react-icons/gi';
 import VisitorOnly from 'components/core/Authentication/VisitorOnly';
-import Heading from 'components/core/Typography/Heading';
-import Box from 'components/core/Containers/Box';
-import PageTitle from 'components/core/Typography/PageTitle';
 import Background from 'components/core/Containers/Background';
-import Paragraphs from 'components/core/Typography/Paragraphs';
-import Carousel from 'components/core/Images/Carousel';
+import Box from 'components/core/Containers/Box';
 import { VStack } from 'components/core/Containers/Stack';
+import Carousel from 'components/core/Images/Carousel';
 import Button from 'components/core/Interactive/Button';
+import Heading from 'components/core/Typography/Heading';
+import PageTitle from 'components/core/Typography/PageTitle';
+import Paragraphs from 'components/core/Typography/Paragraphs';
 import { getRoute } from 'utils/routes';
 
 const Home = () => (

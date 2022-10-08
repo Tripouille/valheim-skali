@@ -2,21 +2,21 @@ import { MouseEventHandler, useMemo } from 'react';
 import { BiEdit } from 'react-icons/bi';
 import { GiArmorUpgrade } from 'react-icons/gi';
 import { useDisclosure } from '@chakra-ui/react';
-import { getUserRoles, User } from 'data/user';
-import { compareRolesFromName, Role, SpecialRoleName } from 'data/role';
-import { Wrap } from 'components/core/Containers/Wrap';
-import IconButton from 'components/core/Interactive/IconButton';
-import Tag from 'components/core/DataDisplay/Tag';
-import { Td, Tr } from 'components/core/DataDisplay/Table';
 import Secured from 'components/core/Authentication/Secured';
+import { Wrap } from 'components/core/Containers/Wrap';
+import { Td, Tr } from 'components/core/DataDisplay/Table';
+import Tag from 'components/core/DataDisplay/Tag';
+import IconButton from 'components/core/Interactive/IconButton';
 import Text from 'components/core/Typography/Text';
+import { compareRolesFromName, Role, SpecialRoleName } from 'data/role';
+import { getUserRoles, User } from 'data/user';
 import useUpdateUser from 'hooks/users/useUpdateUser';
 import { UserQueryFilter } from 'hooks/users/useUsers';
 import { rowIconSize } from 'theme/admin';
 import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
 import { CypressProps } from 'utils/types';
-import UserForm from './UserForm';
 import UserAvatar from './UserAvatar';
+import UserForm from './UserForm';
 
 export interface UserRowProps extends CypressProps {
   user: User;

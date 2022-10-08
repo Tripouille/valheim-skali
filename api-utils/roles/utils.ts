@@ -1,4 +1,6 @@
 import { NextApiResponse as Res } from 'next';
+import { isRequiredObjectType, ServerException, isObject } from 'api-utils/common';
+import { revalidateEventsPage } from 'api-utils/events/utils';
 import { CreateRoleData, getRoleValidationError, ROLE_NAME_IN_GAME_MAX_LENGTH } from 'data/role';
 import {
   isAdminPrivilege,
@@ -12,8 +14,6 @@ import {
   isPermissionCategory,
 } from 'utils/permissions';
 import { isFilled } from 'utils/validation';
-import { isRequiredObjectType, ServerException, isObject } from 'api-utils/common';
-import { revalidateEventsPage } from 'api-utils/events/utils';
 
 /** Validate body shape */
 

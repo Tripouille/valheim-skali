@@ -27,6 +27,9 @@
   ],
   "extends": [
     "plugin:@next/next/core-web-vitals",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:react/jsx-runtime",
     "airbnb-typescript",
     "plugin:storybook/recommended",
     "plugin:@typescript-eslint/recommended",
@@ -40,14 +43,34 @@
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error",
     "local/no-react-node": "error",
+    "import/no-unresolved": "error",
     "import/order": [
       "error",
       {
-        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"]
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "pathGroups": [
+          {
+            "group": "external",
+            "pattern": "@*/**",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["@*/**"]
       }
     ]
   },
   "env": {
     "jest": true
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
+    }
   }
 }

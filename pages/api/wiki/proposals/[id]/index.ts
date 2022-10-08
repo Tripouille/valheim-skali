@@ -1,7 +1,7 @@
 import { NextApiHandler } from 'next';
 import { ServerException } from 'api-utils/common';
-import getWikiProposal from 'api-utils/wiki/getWikiProposal';
 import addWikiSuggestion from 'api-utils/wiki/addWikiSuggestion';
+import getWikiProposal from 'api-utils/wiki/getWikiProposal';
 import proposeWikiPageEdition from 'api-utils/wiki/proposeWikiPageEdition';
 
 const wikiProposalsHandler: NextApiHandler = async (req, res) => {

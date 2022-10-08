@@ -2,8 +2,8 @@ import axios from 'axios';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { getWikiProposalWithAuthorName, WikiProposal, WikiProposalWithAuthor } from 'data/wiki';
 import { useUsers } from 'hooks/users/useUsers';
-import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 
 const getWikiProposal = (id?: string) => async (): Promise<WikiProposal> => {
   const { data } = await axios.get<WikiProposal>(`${APIRoute.WIKI_PROPOSALS}/${id}`);

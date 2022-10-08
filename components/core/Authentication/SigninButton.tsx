@@ -1,6 +1,6 @@
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { GiVikingHelmet } from 'react-icons/gi';
-import { signIn } from 'next-auth/react';
 import Button from 'components/core/Interactive/Button';
 import { getRouteParameterAsString } from 'utils/routes';
 

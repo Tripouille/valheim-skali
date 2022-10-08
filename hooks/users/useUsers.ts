@@ -1,10 +1,10 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import axios from 'axios';
-import { getUserRoles, User } from 'data/user';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { SpecialRoleName } from 'data/role';
+import { getUserRoles, User } from 'data/user';
 import useRoles from 'hooks/roles/useRoles';
-import { APIRoute } from 'utils/routes';
 import { QueryKeys, QueryTypes } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 
 export enum UserQueryFilter {
   MEMBER = 'member',

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Callback } from 'utils/types';
 import FormFullPage from 'components/core/Form/FormFullPage';
-import { ModalBody, ModalHeader } from 'components/core/Overlay/Modal';
 import FormModal from 'components/core/Form/FormModal';
+import { ModalBody, ModalHeader } from 'components/core/Overlay/Modal';
 import {
   Application,
   ApplicationFormAnswer,
@@ -11,6 +10,7 @@ import {
   getApplicationValidationError,
   WithDiscordInfos,
 } from 'data/application';
+import { Callback } from 'utils/types';
 import ApplicationFormFields from './ApplicationFormFields';
 
 const initialFormApplicationData: CreateApplicationData = {

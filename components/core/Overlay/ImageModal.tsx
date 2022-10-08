@@ -1,10 +1,10 @@
-import React from 'react';
 import { ImageProps as NextImageProps } from 'next/image';
-import { Callback, CypressProps } from 'utils/types';
-import Portal from 'components/core/Overlay/Portal';
+import React from 'react';
 import Box from 'components/core/Containers/Box';
 import Center from 'components/core/Containers/Center';
 import Image from 'components/core/Images/Image';
+import Portal from 'components/core/Overlay/Portal';
+import { Callback, CypressProps } from 'utils/types';
 
 export interface ImageModalProps extends CypressProps {
   src: string;

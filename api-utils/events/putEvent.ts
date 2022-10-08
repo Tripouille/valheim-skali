@@ -1,9 +1,9 @@
-import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { ObjectId } from 'bson';
-import { EventInDb, eventsCollectionName } from 'data/event';
-import { PermissionCategory, eventPrivilege } from 'utils/permissions';
+import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { requirePermissions } from 'api-utils/auth';
 import { ServerException, replaceOneInCollection } from 'api-utils/common';
+import { EventInDb, eventsCollectionName } from 'data/event';
+import { PermissionCategory, eventPrivilege } from 'utils/permissions';
 import db from '../db';
 import { getNewEventFromBody, revalidateEventsPage } from './utils';
 

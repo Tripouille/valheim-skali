@@ -1,4 +1,5 @@
 import React from 'react';
+import { BsSun } from 'react-icons/bs';
 import {
   GiAbdominalArmor,
   GiBeerHorn,
@@ -10,26 +11,25 @@ import {
   GiStoneWall,
   GiSwitchWeapon,
 } from 'react-icons/gi';
-import { SiHappycow } from 'react-icons/si';
 import { HiCursorClick } from 'react-icons/hi';
-import { BsSun } from 'react-icons/bs';
 import { MdShareLocation } from 'react-icons/md';
-import { OldNavRoute, ROUTES_TO_LABEL } from 'utils/routes';
+import { SiHappycow } from 'react-icons/si';
 import Background from 'components/core/Containers/Background';
 import Box from 'components/core/Containers/Box';
 import { VStack } from 'components/core/Containers/Stack';
-import { Alert, AlertDescription, AlertIcon, AlertTitle } from 'components/core/Feedback/Alert';
-import PageTitle from 'components/core/Typography/PageTitle';
-import Text from 'components/core/Typography/Text';
-import Paragraphs from 'components/core/Typography/Paragraphs';
-import IconTitle from 'components/core/Typography/IconTitle';
-import Spoiler from 'components/core/Typography/Spoiler';
-import Heading from 'components/core/Typography/Heading';
+import Code from 'components/core/DataDisplay/Code';
 import IconList from 'components/core/DataDisplay/IconList';
 import InlineKbd from 'components/core/DataDisplay/InlineKbd';
-import Code from 'components/core/DataDisplay/Code';
+import { Alert, AlertDescription, AlertIcon, AlertTitle } from 'components/core/Feedback/Alert';
 import Icon from 'components/core/Images/Icon';
 import ZoomableImage from 'components/core/Images/ZoomableImage';
+import Heading from 'components/core/Typography/Heading';
+import IconTitle from 'components/core/Typography/IconTitle';
+import PageTitle from 'components/core/Typography/PageTitle';
+import Paragraphs from 'components/core/Typography/Paragraphs';
+import Spoiler from 'components/core/Typography/Spoiler';
+import Text from 'components/core/Typography/Text';
+import { OldNavRoute, ROUTES_TO_LABEL } from 'utils/routes';
 
 const Mods = () => {
   return (

@@ -1,6 +1,6 @@
-import { ImageAttributes, CypressProps } from 'utils/types';
-import ZoomableImage, { ZoomableImageProps } from 'components/core/Images/ZoomableImage';
 import { HStack } from 'components/core/Containers/Stack';
+import ZoomableImage, { ZoomableImageProps } from 'components/core/Images/ZoomableImage';
+import { ImageAttributes, CypressProps } from 'utils/types';
 
 export interface CarouselProps extends CypressProps {
   images: ImageAttributes[];

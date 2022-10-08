@@ -1,8 +1,8 @@
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import Admin from 'components/Layout/Admin';
-import { APIRoute } from 'utils/routes';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 import { wikiPrivilege, PermissionCategory } from 'utils/permissions';
+import { APIRoute } from 'utils/routes';
 import wikiPages from './wikiPages.json';
 
 const { defaultExport, StoryFactory } = storybookSetup(

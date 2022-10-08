@@ -1,5 +1,5 @@
-import { NextRouter } from 'next/router';
 import { rest } from 'msw';
+import { NextRouter } from 'next/router';
 import { ArgTypes, ComponentMeta, ComponentStory } from '@storybook/react';
 import { Permissions } from 'utils/permissions';
 import { APIRoute } from 'utils/routes';

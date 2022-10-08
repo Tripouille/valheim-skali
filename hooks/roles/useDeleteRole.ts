@@ -1,10 +1,10 @@
-import { useCallback } from 'react';
 import axios from 'axios';
+import { useCallback } from 'react';
 import { Role } from 'data/role';
-import { useUsers } from 'hooks/users/useUsers';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
-import { APIRoute } from 'utils/routes';
+import { useUsers } from 'hooks/users/useUsers';
 import { QueryKeys, QueryTypes } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 import { displayErrorToast } from 'utils/toast';
 
 const deleteRoleOnServer = (deletedRole: Role) => async () => {

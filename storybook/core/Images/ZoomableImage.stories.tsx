@@ -1,7 +1,7 @@
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import Box from 'components/core/Containers/Box';
 import ZoomableImage, { ZoomableImageProps } from 'components/core/Images/ZoomableImage';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<ZoomableImageProps>(
   ZoomableImage,

@@ -1,4 +1,5 @@
 import { NextApiResponse as Res } from 'next';
+import { isRequiredObjectType, ServerException } from 'api-utils/common';
 import {
   CreateEventData,
   eventTextKeys,
@@ -6,7 +7,6 @@ import {
   EVENT_VALUES_MAX_LENGTH,
   getEventValidationError,
 } from 'data/event';
-import { isRequiredObjectType, ServerException } from 'api-utils/common';
 import { NavRoute, serverName } from 'utils/routes';
 
 const eventKeyToValueTypeCheck: Record<keyof CreateEventData, (value: unknown) => boolean> = {

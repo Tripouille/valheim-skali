@@ -1,9 +1,9 @@
-import { action } from '@storybook/addon-actions';
-import Button, { ButtonProps } from 'components/core/Interactive/Button';
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import { FaSpinner } from 'react-icons/fa';
 import { MdComputer } from 'react-icons/md';
+import { action } from '@storybook/addon-actions';
+import Button, { ButtonProps } from 'components/core/Interactive/Button';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<ButtonProps>(
   Button,

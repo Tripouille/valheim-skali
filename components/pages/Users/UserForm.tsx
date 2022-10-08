@@ -1,21 +1,21 @@
 import { useMemo } from 'react';
-import { Role } from 'data/role';
-import { canUserAssignRole, getUserRoles, User, USER_NAME_IN_GAME_MAX_LENGTH } from 'data/user';
 import Secured from 'components/core/Authentication/Secured';
 import Center from 'components/core/Containers/Center';
-import { ModalBody, ModalHeader } from 'components/core/Overlay/Modal';
 import { Table, Tbody, Td, Th, Tr } from 'components/core/DataDisplay/Table';
-import Text from 'components/core/Typography/Text';
-import Editable from 'components/core/Interactive/Editable';
 import FormModal from 'components/core/Form/FormModal';
-import useUpdateUser from 'hooks/users/useUpdateUser';
+import Editable from 'components/core/Interactive/Editable';
+import { ModalBody, ModalHeader } from 'components/core/Overlay/Modal';
+import Text from 'components/core/Typography/Text';
+import { Role } from 'data/role';
+import { canUserAssignRole, getUserRoles, User, USER_NAME_IN_GAME_MAX_LENGTH } from 'data/user';
 import useDeleteUser from 'hooks/users/useDeleteUser';
+import useUpdateUser from 'hooks/users/useUpdateUser';
 import useSession from 'hooks/useSession';
 import { darkerBackgroundColor, modalTableHeaderWidth } from 'theme/admin';
 import { PermissionCategory, rolePrivilege, userPrivilege } from 'utils/permissions';
 import { CypressProps, Callback } from 'utils/types';
-import UserRolesForm from './UserRolesForm';
 import UserAvatar from './UserAvatar';
+import UserRolesForm from './UserRolesForm';
 
 export interface UserFormProps extends CypressProps {
   isOpen: boolean;

@@ -1,5 +1,5 @@
-import { useDisclosure } from '@chakra-ui/react';
 import { BiEdit } from 'react-icons/bi';
+import { useDisclosure } from '@chakra-ui/react';
 import Secured from 'components/core/Authentication/Secured';
 import Box from 'components/core/Containers/Box';
 import Center from 'components/core/Containers/Center';

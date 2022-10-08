@@ -1,4 +1,10 @@
 import { FiHelpCircle } from 'react-icons/fi';
+import Flex from 'components/core/Containers/Flex';
+import { Table, Tbody, Td, Th, Tr } from 'components/core/DataDisplay/Table';
+import { FormLabel } from 'components/core/Form/FormControl';
+import Select from 'components/core/Form/Select';
+import Tooltip from 'components/core/Overlay/Tooltip';
+import { modalTableHeaderWidth } from 'theme/admin';
 import {
   PermissionCategory,
   Permissions,
@@ -6,12 +12,6 @@ import {
   PERMISSION_PRIVILEGE_TO_LABEL,
   userPrivilege,
 } from 'utils/permissions';
-import { Table, Tbody, Td, Th, Tr } from 'components/core/DataDisplay/Table';
-import { FormLabel } from 'components/core/Form/FormControl';
-import Select from 'components/core/Form/Select';
-import Flex from 'components/core/Containers/Flex';
-import Tooltip from 'components/core/Overlay/Tooltip';
-import { modalTableHeaderWidth } from 'theme/admin';
 
 export interface RoleReqPermsFormProps {
   requiredPermissionsToAssign: Permissions;

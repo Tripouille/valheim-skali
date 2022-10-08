@@ -1,6 +1,6 @@
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import Secured, { SecuredProps } from 'components/core/Authentication/Secured';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 import { eventPrivilege, PermissionCategory, Permissions } from 'utils/permissions';
 
 const { defaultExport, StoryFactory } = storybookSetup<SecuredProps>(

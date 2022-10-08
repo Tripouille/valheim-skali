@@ -1,7 +1,7 @@
 import { NextApiHandler } from 'next';
 import { ServerException } from 'api-utils/common';
-import getWikiPage from 'api-utils/wiki/getWikiPage';
 import deleteWikiPage from 'api-utils/wiki/deleteWikiPage';
+import getWikiPage from 'api-utils/wiki/getWikiPage';
 
 const wikiPageHandler: NextApiHandler = async (req, res) => {
   try {

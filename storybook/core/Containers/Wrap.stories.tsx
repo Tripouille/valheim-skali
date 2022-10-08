@@ -1,7 +1,7 @@
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
-import { Wrap, WrapProps, WrapItem } from 'components/core/Containers/Wrap';
 import Center from 'components/core/Containers/Center';
+import { Wrap, WrapProps, WrapItem } from 'components/core/Containers/Wrap';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<WrapProps>(
   Wrap,

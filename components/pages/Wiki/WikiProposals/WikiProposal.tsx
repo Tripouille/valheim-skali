@@ -9,20 +9,20 @@ import {
   chakra,
 } from '@chakra-ui/react';
 import Secured from 'components/core/Authentication/Secured';
-import { Accordion } from 'components/core/Disclosure/Accordion';
 import Flex from 'components/core/Containers/Flex';
-import Link from 'components/core/Interactive/Link';
-import Heading from 'components/core/Typography/Heading';
-import ButtonGroup from 'components/core/Interactive/ButtonGroup';
+import { Accordion } from 'components/core/Disclosure/Accordion';
 import Button from 'components/core/Interactive/Button';
+import ButtonGroup from 'components/core/Interactive/ButtonGroup';
+import Link from 'components/core/Interactive/Link';
+import { ActionPopover } from 'components/core/Overlay/Popover';
+import Heading from 'components/core/Typography/Heading';
 import Text from 'components/core/Typography/Text';
-import useAnswerWikiProposal from 'hooks/wiki/useAnswerWikiProposal';
+import { WikiProposalWithAuthor } from 'data/wiki';
 import useSession from 'hooks/useSession';
+import useAnswerWikiProposal from 'hooks/wiki/useAnswerWikiProposal';
+import useWikiPage from 'hooks/wiki/useWikiPage';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import { AdminNavRoute, MenuRoute, NavRoute, serverName } from 'utils/routes';
-import { ActionPopover } from 'components/core/Overlay/Popover';
-import { WikiProposalWithAuthor } from 'data/wiki';
-import useWikiPage from 'hooks/wiki/useWikiPage';
 import WikiContent from '../WikiContent';
 
 export interface WikiProposalComponentProps {
