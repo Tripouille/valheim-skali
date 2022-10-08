@@ -1,6 +1,7 @@
 import { ObjectId } from 'bson';
 import { DateTime } from 'luxon';
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
+import { getSession } from 'next-auth/react';
 import { requirePermissions } from 'api-utils/auth';
 import { ServerException } from 'api-utils/common';
 import db from 'api-utils/db';
@@ -19,8 +20,6 @@ import {
 } from './utils';
 
 const createApplication = async (req: Req, res: Res) => {
-  await requirePermissions({ [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE }, req);
-
   const applicationCreateData: unknown = req.body;
   if (!isCreateApplicationData(applicationCreateData)) throw new ServerException(400);
   if (!isValidCreateApplicationData(applicationCreateData)) throw new ServerException(400);
@@ -39,6 +38,14 @@ const createApplication = async (req: Req, res: Res) => {
     });
     if (applicationForSameUser) throw new ServerException(409);
   }
+
+  // For non managers, allow only own application
+  const session = await getSession({ req });
+  if (!isDataWithUserId || session?.user._id !== applicationCreateData.userId)
+    await requirePermissions(
+      { [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE },
+      req,
+    );
 
   const newApplication: Omit<ApplicationInDb, '_id'> = {
     applicationFormAnswer: applicationCreateData.applicationFormAnswer,
