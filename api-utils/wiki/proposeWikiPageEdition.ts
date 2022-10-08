@@ -6,8 +6,8 @@ import { requirePermissions } from 'api-utils/auth';
 import db from 'api-utils/db';
 import { WikiEditionProposalInDb, wikiProposalsCollectionName } from 'data/wiki';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
-import { getWikiPageContentFromBody } from './utils';
 import { ServerException } from 'api-utils/common';
+import { getWikiPageContentFromBody } from './utils';
 
 const proposeWikiPageEdition = async (req: Req, res: Res) => {
   await requirePermissions({ [PermissionCategory.WIKI]: wikiPrivilege.PROPOSE }, req);

@@ -1,8 +1,8 @@
 import { storybookSetup } from 'storybook/config/setup';
 import { StoryCategory } from 'storybook/config/constants';
 import WikiHome from 'components/pages/Wiki';
-import featured from './featured.json';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
+import featured from './featured.json';
 
 const { defaultExport, StoryFactory } = storybookSetup(WikiHome, StoryCategory.PAGE_WIKI);
 

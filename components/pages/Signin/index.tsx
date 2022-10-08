@@ -4,8 +4,8 @@ import Background from 'components/core/Containers/Background';
 import Center from 'components/core/Containers/Center';
 import Text from 'components/core/Typography/Text';
 import { getRouteParameterAsString } from 'utils/routes';
-import { getAuthErrorMessage } from './utils';
 import SigninButton from 'components/core/Authentication/SigninButton';
+import { getAuthErrorMessage } from './utils';
 
 const Signin = () => {
   const router = useRouter();

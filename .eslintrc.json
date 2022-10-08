@@ -16,9 +16,17 @@
       }
     }
   ],
-  "plugins": ["@typescript-eslint", "local"],
+  "plugins": [
+    "@next/next",
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+    "@typescript-eslint",
+    "import",
+    "local"
+  ],
   "extends": [
-    "next",
+    "plugin:@next/next/core-web-vitals",
     "airbnb-typescript",
     "plugin:storybook/recommended",
     "plugin:@typescript-eslint/recommended",
@@ -31,7 +39,13 @@
     "jsx-a11y/alt-text": "error",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error",
-    "local/no-react-node": "error"
+    "local/no-react-node": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"]
+      }
+    ]
   },
   "env": {
     "jest": true

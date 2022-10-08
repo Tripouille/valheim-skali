@@ -13,9 +13,9 @@ import Button from 'components/core/Interactive/Button';
 import Loading from 'components/core/Feedback/Loading';
 import useInfiniteEvents from 'hooks/events/useInfiniteEvents';
 import useCreateEvent from 'hooks/events/useCreateEvent';
+import { scrollIntoViewIfNeeded } from 'utils/window';
 import EventForm from './EventForm';
 import EventCard from './EventCard';
-import { scrollIntoViewIfNeeded } from 'utils/window';
 
 const Events = () => {
   const router = useRouter();
