@@ -1,10 +1,8 @@
 import { RiMenuLine } from 'react-icons/ri';
 import { chakra, useDisclosure } from '@chakra-ui/react';
-import Secured from 'components/core/Authentication/Secured';
 import { VStack } from 'components/core/Containers/Stack';
 import Button from 'components/core/Interactive/Button';
 import IconButton from 'components/core/Interactive/IconButton';
-import NavItem from 'components/core/Interactive/NavItem';
 import {
   Drawer,
   DrawerOverlay,
@@ -12,14 +10,13 @@ import {
   DrawerBody,
   DrawerFooter,
 } from 'components/core/Overlay/Drawer';
-import { ROUTES_TO_PERMISSIONS } from 'utils/permissions';
-import { NavRoute } from 'utils/routes';
+import { Callback, Children } from 'utils/types';
 
-export interface DrawerMenuProps {
-  serverName: string;
+interface DrawerMenuProps {
+  navItems: (onClick: Callback) => Children;
 }
 
-const DrawerMenu: React.FC<DrawerMenuProps> = ({ serverName }) => {
+const DrawerMenu: React.FC<DrawerMenuProps> = ({ navItems }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -39,13 +36,7 @@ const DrawerMenu: React.FC<DrawerMenuProps> = ({ serverName }) => {
         <DrawerContent bgColor="opaqueBackground" fontFamily="Norse">
           <DrawerBody mt="2" px={{ base: 3, sm: 6 }}>
             <chakra.nav>
-              <VStack align="stretch">
-                {Object.values(NavRoute).map(route => (
-                  <Secured key={route} permissions={ROUTES_TO_PERMISSIONS[route]}>
-                    <NavItem root={`/${serverName}`} route={route} onClick={onClose} />
-                  </Secured>
-                ))}
-              </VStack>
+              <VStack align="stretch">{navItems(onClose)}</VStack>
             </chakra.nav>
           </DrawerBody>
           <DrawerFooter>

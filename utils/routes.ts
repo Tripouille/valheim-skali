@@ -18,9 +18,9 @@ export enum APIRoute {
 export enum NavRoute {
   HOME = '/',
   RULES = '/rules',
+  APPLICATIONS = '/applications',
   EVENTS = '/events',
   WIKI = '/wiki',
-  APPLICATIONS = '/applications',
 }
 export enum OldNavRoute {
   TRADE = '/trade',
@@ -41,10 +41,11 @@ export enum MenuRoute {
 export enum AuthRoute {
   SIGNIN = '/auth/signin',
 }
-export enum OtherRoute {
+export enum CandidateRoute {
   JOIN = '/join',
+  MY_APPLICATION = '/applications/me',
 }
-export type Route = NavRoute | AdminNavRoute | MenuRoute | AuthRoute | OldNavRoute | OtherRoute;
+export type Route = NavRoute | AdminNavRoute | MenuRoute | AuthRoute | OldNavRoute | CandidateRoute;
 
 /** Maps navigation routes to displayed labels (e.g.., in navbar) */
 export const ROUTES_TO_LABEL: Record<Route, string> = {
@@ -64,7 +65,8 @@ export const ROUTES_TO_LABEL: Record<Route, string> = {
   [MenuRoute.ABOUT]: 'A propos du site',
   [MenuRoute.ADMIN]: 'Administration',
   [AuthRoute.SIGNIN]: 'Connexion',
-  [OtherRoute.JOIN]: 'Rejoindre le Valhabba',
+  [CandidateRoute.JOIN]: 'Rejoindre le Valhabba',
+  [CandidateRoute.MY_APPLICATION]: 'Ma candidature',
 };
 
 export const isAdminNavRoute = (route: string): route is AdminNavRoute =>

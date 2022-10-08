@@ -4,7 +4,7 @@ import {
   MenuRoute,
   NavRoute,
   OldNavRoute,
-  OtherRoute,
+  CandidateRoute,
   Route,
 } from './routes';
 
@@ -191,5 +191,6 @@ export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions | Permissions[]> =
   ],
   [MenuRoute.ABOUT]: {},
   [AuthRoute.SIGNIN]: {},
-  [OtherRoute.JOIN]: {},
+  [CandidateRoute.JOIN]: {},
+  [CandidateRoute.MY_APPLICATION]: {},
 };

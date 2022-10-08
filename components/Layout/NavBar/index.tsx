@@ -1,5 +1,5 @@
 import NextLink from 'next/link';
-import React from 'react';
+import { Fragment } from 'react';
 import { BiChevronDown } from 'react-icons/bi';
 import { CgInfo } from 'react-icons/cg';
 import { GiStakeHammer, GiVikingHelmet } from 'react-icons/gi';
@@ -7,29 +7,44 @@ import { chakra, useBreakpointValue } from '@chakra-ui/react';
 import Secured from 'components/core/Authentication/Secured';
 import Center from 'components/core/Containers/Center';
 import IconButton from 'components/core/Interactive/IconButton';
+import NavItem from 'components/core/Interactive/NavItem';
 import { Menu, MenuButton, MenuDivider, MenuItem, MenuList } from 'components/core/Overlay/Menu';
 import useSession from 'hooks/useSession';
 import { SessionStatus } from 'utils/auth';
 import { ROUTES_TO_PERMISSIONS } from 'utils/permissions';
-import { MenuRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
+import { CandidateRoute, MenuRoute, NavRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
 import DrawerMenu from './DrawerMenu';
 import HeaderMenu from './HeaderMenu';
 import SignInOut from './SignInOut';
 
-enum MenuType {
-  DRAWER,
-  HEADER,
-}
-
 const NavBar = () => {
   const session = useSession();
-  const menuType = useBreakpointValue({ base: MenuType.DRAWER, lg: MenuType.HEADER }, 'lg');
+  const menuType = useBreakpointValue<'drawer' | 'header'>({ base: 'drawer', lg: 'header' }, 'lg');
+  const MenuComponent = menuType === 'drawer' ? DrawerMenu : HeaderMenu;
 
   return (
     <chakra.header height="header" bgColor="overlay" data-cy="nav-bar">
       <Center justifyContent="space-between" h="full">
-        {menuType === MenuType.HEADER && <HeaderMenu serverName={serverName} />}
-        {menuType === MenuType.DRAWER && <DrawerMenu serverName={serverName} />}
+        <MenuComponent
+          navItems={onClick =>
+            Object.values(NavRoute).map(route => (
+              <Fragment key={route}>
+                <Secured permissions={ROUTES_TO_PERMISSIONS[route]}>
+                  <NavItem root={`/${serverName}`} route={route} />
+                </Secured>
+                {route === NavRoute.RULES &&
+                  session.data?.isNonMember &&
+                  session.data.hasApplication && (
+                    <NavItem
+                      root={`/${serverName}`}
+                      route={CandidateRoute.MY_APPLICATION}
+                      onClick={onClick}
+                    />
+                  )}
+              </Fragment>
+            ))
+          }
+        />
         <Menu id="account-menu" isLazy>
           <MenuButton
             data-cy="menu"
