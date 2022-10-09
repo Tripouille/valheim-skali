@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import React from 'react';
 import SigninButton from 'components/core/Authentication/SigninButton';
 import Background from 'components/core/Containers/Background';
 import Center from 'components/core/Containers/Center';

@@ -1,4 +1,3 @@
-import React from 'react';
 import Background from 'components/core/Containers/Background';
 import { VStack } from 'components/core/Containers/Stack';
 import IconList from 'components/core/DataDisplay/IconList';

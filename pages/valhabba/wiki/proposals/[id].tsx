@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import Background from 'components/core/Containers/Background';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';

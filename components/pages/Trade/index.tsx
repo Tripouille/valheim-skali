@@ -1,4 +1,3 @@
-import React from 'react';
 import { BsShopWindow } from 'react-icons/bs';
 import { GiPilgrimHat, GiStabbedNote } from 'react-icons/gi';
 import Background from 'components/core/Containers/Background';

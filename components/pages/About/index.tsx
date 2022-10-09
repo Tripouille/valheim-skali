@@ -1,4 +1,3 @@
-import React from 'react';
 import { BiLinkExternal } from 'react-icons/bi';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import Background from 'components/core/Containers/Background';

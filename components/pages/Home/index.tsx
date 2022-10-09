@@ -1,5 +1,4 @@
 import NextLink from 'next/link';
-import React from 'react';
 import { GiOpenGate } from 'react-icons/gi';
 import VisitorOnly from 'components/core/Authentication/VisitorOnly';
 import Background from 'components/core/Containers/Background';

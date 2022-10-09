@@ -1,4 +1,3 @@
-import React from 'react';
 import { GiPig, GiVillage, GiWarPick } from 'react-icons/gi';
 import { MdComputer } from 'react-icons/md';
 import Box from 'components/core/Containers/Box';

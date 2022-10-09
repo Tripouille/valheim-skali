@@ -1,4 +1,3 @@
-import React from 'react';
 import Box from 'components/core/Containers/Box';
 import Heading from 'components/core/Typography/Heading';
 import Paragraphs from 'components/core/Typography/Paragraphs';
