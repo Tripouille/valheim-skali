@@ -27,41 +27,41 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     callbacks: {
       async session({ session, token }) {
         delete session.user.email;
-        const usersCollection = await db.connectToCollection<UserInDb>(usersCollectionName);
-        const usersWithRolesAndApplications = (await usersCollection
-          .aggregate(
-            [
-              { $match: { _id: new ObjectId(token.sub) } },
-              {
-                $lookup: {
-                  from: 'applications',
-                  localField: '_id',
-                  foreignField: 'userId',
-                  as: 'applications',
+				session.permissions = {};
+        if (token.sub) {
+          const usersCollection = await db.connectToCollection<UserInDb>(usersCollectionName);
+          const usersWithRolesAndApplications = (await usersCollection
+            .aggregate(
+              [
+                { $match: { _id: new ObjectId(token.sub) } },
+                {
+                  $lookup: {
+                    from: 'applications',
+                    localField: '_id',
+                    foreignField: 'userId',
+                    as: 'applications',
+                  },
                 },
-              },
-              {
-                $lookup: {
-                  from: 'roles',
-                  localField: 'roleIds',
-                  foreignField: '_id',
-                  as: 'roles',
+                {
+                  $lookup: {
+                    from: 'roles',
+                    localField: 'roleIds',
+                    foreignField: '_id',
+                    as: 'roles',
+                  },
                 },
-              },
-            ],
-            {},
-          )
-          .toArray()) as WithRolesAndApplications<UserInDb>[];
-        const user = usersWithRolesAndApplications[0];
-        if (user) {
-          session.permissions = await getRolesPermissions(user.roles);
-          session.isNonMember = !user.roles.some(role => role.name === SpecialRoleName.MEMBER);
-          session.hasApplication = user.applications.length > 0;
-        } else {
-          session.permissions = {};
+              ],
+              {},
+            )
+            .toArray()) as WithRolesAndApplications<UserInDb>[];
+          const user = usersWithRolesAndApplications[0];
+          if (user) {
+            session.permissions = await getRolesPermissions(user.roles);
+            session.isNonMember = !user.roles.some(role => role.name === SpecialRoleName.MEMBER);
+            session.hasApplication = user.applications.length > 0;
+            session.user.nameInGame = user.nameInGame;
+          }
         }
-        session.user._id = token.sub;
-        session.user.nameInGame = user?.nameInGame;
         return session;
       },
       async signIn({ user, profile }) {

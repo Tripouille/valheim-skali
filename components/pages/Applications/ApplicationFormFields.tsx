@@ -1,3 +1,4 @@
+import { Session } from 'next-auth';
 import React, { useEffect, useState } from 'react';
 import Secured from 'components/core/Authentication/Secured';
 import Flex from 'components/core/Containers/Flex';
@@ -32,35 +33,37 @@ const ApplicationFormFields: React.FC<ApplicationFormFieldsProps> = ({ formData,
   const hasManageApplicationsPermission = hasRequiredPermissions({
     [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE,
   });
+  const isOwnApplication = !hasManageApplicationsPermission;
 
   const applicationAssociableUsersQuery = useApplicationAssociableUsers();
   const [associatedUserId, setAssociatedUserId] = useState<string>('');
-  const associatedUser =
-    associatedUserId &&
-    applicationAssociableUsersQuery.data?.find(user => user._id === associatedUserId);
+  console.log({ associatedUserId });
+  let associatedUser: Session['user'] | undefined;
+  if (associatedUserId.length > 0) {
+    if (isOwnApplication && session?.user) associatedUser = session.user;
+    else
+      associatedUser = applicationAssociableUsersQuery.data?.find(
+        user => user._id === associatedUserId,
+      );
+  }
 
   useEffect(
     function setCurrentUserIfCandidate() {
-      if (session?.user._id && !hasManageApplicationsPermission) {
-        setAssociatedUserId(session?.user._id);
-      }
+      if (isOwnApplication && session?.user._id) setAssociatedUserId(session.user._id);
     },
-    [hasManageApplicationsPermission, session?.user._id],
+    [isOwnApplication, session?.user._id],
   );
 
   useEffect(
     function fillOnUserAssociation() {
-      if (associatedUser)
+      if (associatedUser) {
+        const definedAssociatedUser = associatedUser;
         setFormData(prev => ({
           ...prev,
-          discordName: associatedUser.name,
-          userId: associatedUser._id,
-          applicationFormAnswer: {
-            ...prev.applicationFormAnswer,
-            nameInGame: associatedUser.nameInGame ?? prev.applicationFormAnswer.nameInGame,
-          },
+          discordName: definedAssociatedUser.name,
+          userId: definedAssociatedUser._id,
         }));
-      else
+      } else
         setFormData(prev => ({
           applicationFormAnswer: prev.applicationFormAnswer,
           discordName: 'discordName' in prev ? prev.discordName : '',

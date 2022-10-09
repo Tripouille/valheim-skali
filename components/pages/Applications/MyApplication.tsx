@@ -34,7 +34,12 @@ const MyApplication = () => {
           )}
           <Stack>
             {applicationFormEntries.map(([questionKey, answer]) => (
-              <ApplicationAnswerLine key={questionKey} questionKey={questionKey} answer={answer} />
+              <ApplicationAnswerLine
+                key={questionKey}
+                questionKey={questionKey}
+                answer={answer}
+                alwaysShowFullAnswer
+              />
             ))}
           </Stack>
           <NextLink href={getRoute('applications/me/edit')} passHref>

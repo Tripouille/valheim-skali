@@ -9,7 +9,7 @@ declare module 'next-auth' {
     isNonMember: boolean;
     hasApplication: boolean;
     user: DefaultSession['user'] & {
-      _id?: string;
+      _id: string;
       nameInGame?: string;
     };
   }
