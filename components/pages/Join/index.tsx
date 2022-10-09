@@ -25,9 +25,8 @@ const JoinIntroductionMainButton: React.FC<JoinIntroductionMainButtonProps> = ({
   hasApplication,
 }) => {
   if (hasApplication) {
-    //TODO
     return (
-      <NextLink href={getRoute('rules')}>
+      <NextLink href={getRoute('applications/me')}>
         <Button rightIcon={<GiFeather />}>Clique ici pour voir ta candidature</Button>
       </NextLink>
     );
