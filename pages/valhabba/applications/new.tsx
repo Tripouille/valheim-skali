@@ -1,10 +1,22 @@
+import { useRouter } from 'next/router';
 import Background from 'components/core/Containers/Background';
 import PageTitle from 'components/core/Typography/PageTitle';
 import ApplicationForm from 'components/pages/Applications/ApplicationForm';
+import { Application } from 'data/application';
 import useCreateApplication from 'hooks/applications/useCreateApplication';
+import { queryClient, QueryKeys } from 'utils/queryClient';
+import { getRoute } from 'utils/routes';
+import { displaySuccessToast } from 'utils/toast';
 
 const NewApplicationPage = () => {
-  const createApplication = useCreateApplication({});
+  const router = useRouter();
+  const createApplication = useCreateApplication({
+    onSuccess: (application: Application) => {
+      displaySuccessToast({ title: 'Votre candidature a bien été enregistrée !' });
+      queryClient.setQueryData([QueryKeys.MY_APPLICATION], application);
+      router.push(getRoute('applications/me'));
+    },
+  });
 
   return (
     <Background>

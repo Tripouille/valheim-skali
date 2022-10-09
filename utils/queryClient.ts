@@ -44,6 +44,7 @@ export enum QueryKeys {
   WIKI_PROPOSALS = 'wiki_proposals',
   APPLICATIONS = 'applications',
   APPLICATION_ASSOCIABLE_USERS = 'application_associable_users',
+  MY_APPLICATION = 'my_application',
 }
 
 export type QueryTypes = {
@@ -56,4 +57,5 @@ export type QueryTypes = {
   [QueryKeys.WIKI_PROPOSALS]: WikiProposalWithAuthor[];
   [QueryKeys.APPLICATIONS]: WithDiscordInfos<Application>[];
   [QueryKeys.APPLICATION_ASSOCIABLE_USERS]: ApplicationAssociableUser[];
+  [QueryKeys.MY_APPLICATION]: WithDiscordInfos<Application>;
 };

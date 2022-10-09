@@ -2,7 +2,6 @@ import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
 import Secured from 'components/core/Authentication/Secured';
 import Box from 'components/core/Containers/Box';
-import Center from 'components/core/Containers/Center';
 import IconButton from 'components/core/Interactive/IconButton';
 import {
   Modal,
@@ -67,10 +66,10 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ application, isOpen
       <ModalOverlay />
       <ModalContent data-cy="application-modal">
         <ModalCloseButton />
-        <ModalHeader>
-          <Center>
+        <ModalHeader display="flex" justifyContent="center">
+          <Box maxWidth="full">
             <ApplicationIdentity application={application} />
-          </Center>
+          </Box>
         </ModalHeader>
         <ModalBody>
           <Text textAlign="end" fontStyle="italic">

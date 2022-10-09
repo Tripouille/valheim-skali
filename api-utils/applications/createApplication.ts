@@ -40,8 +40,9 @@ const createApplication = async (req: Req, res: Res) => {
   }
 
   // For non managers, allow only own application
-  const session = await getSession({ req });
-  if (!isDataWithUserId || session?.user._id !== applicationCreateData.userId)
+	const session = await getSession({ req });
+  const isOwnApplication = isDataWithUserId && session?.user._id === applicationCreateData.userId;
+  if (!isOwnApplication)
     await requirePermissions(
       { [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE },
       req,
@@ -59,7 +60,14 @@ const createApplication = async (req: Req, res: Res) => {
 
   const newApplicationId = await db.insert(applicationsCollectionName, newApplication);
 
-  res.status(201).json({ ...newApplication, _id: newApplicationId });
+  res.status(201).json({
+    ...newApplication,
+    _id: newApplicationId,
+    ...(isOwnApplication && {
+      discordName: session.user.name,
+      discordImageUrl: session.user.image,
+    }),
+  });
 };
 
 export default createApplication;

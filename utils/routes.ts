@@ -11,6 +11,7 @@ export enum APIRoute {
   WIKI_PROPOSALS = '/api/wiki/proposals',
   APPLICATIONS = '/api/applications',
   APPLICATION_ASSOCIABLE_USERS = '/api/applications/associable-users',
+  MY_APPLICATION = '/api/applications/me',
   SESSION = '/api/auth/session',
   VISITOR = '/api/auth/visitor',
 }

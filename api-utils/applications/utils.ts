@@ -1,12 +1,16 @@
+import { ObjectId } from 'bson';
 import { isRequiredObjectType } from 'api-utils/common';
 import {
+  ApplicationComment,
   ApplicationFormAnswer,
   applicationFormKeys,
   APPLICATION_DISCORD_NAME_MAX_LENGTH,
   APPLICATION_FORM_KEYS_TO_FORM_PROPERTIES,
   CreateApplicationData,
   isCreateApplicationDataWithUserId,
+  WithUserInfos,
 } from 'data/application';
+import { UserInDb } from 'data/user';
 import { isFilled } from 'utils/validation';
 
 const applicationFormAnswerKeyToValueTypeCheck = applicationFormKeys.reduce(
@@ -53,4 +57,20 @@ export const shortenApplicationTextProperties = (applicationCreateData: CreateAp
       APPLICATION_DISCORD_NAME_MAX_LENGTH,
     );
   }
+};
+
+export const getCommentWithUserInfos = (
+  comment: ApplicationComment<ObjectId>,
+  users: UserInDb[],
+): WithUserInfos<ApplicationComment<ObjectId>> => {
+  const commentAuthor = users.find(user => user._id.equals(comment.authorId));
+  return {
+    ...comment,
+    discordName:
+      comment.authorId === 'system'
+        ? comment.authorId
+        : commentAuthor?.name ?? 'Utilisateur supprimé',
+    nameInGame: commentAuthor?.nameInGame,
+    discordImageUrl: commentAuthor?.image,
+  };
 };
