@@ -1,6 +1,5 @@
 import Center from 'components/core/Containers/Center';
 import { Stack } from 'components/core/Containers/Stack';
-import ButtonGroup from 'components/core/Interactive/ButtonGroup';
 import { Callback, Children } from 'utils/types';
 import DeletePopover from './DeletePopover';
 import FormSubmitButton from './FormSubmitButton';
@@ -35,7 +34,7 @@ const FormFullPage = <F extends object, C extends object>(props: FormFullPagePro
       {children}
       {(canSubmit || canDelete) && (
         <Center w="full">
-          <ButtonGroup>
+          <Stack direction={{ base: 'column-reverse', md: 'row' }}>
             {canDelete && (
               <DeletePopover
                 onDelete={props.onDelete}
@@ -51,7 +50,7 @@ const FormFullPage = <F extends object, C extends object>(props: FormFullPagePro
                 onSubmit={onSubmit}
               />
             )}
-          </ButtonGroup>
+          </Stack>
         </Center>
       )}
     </Stack>

@@ -1,5 +1,5 @@
 import Center from 'components/core/Containers/Center';
-import ButtonGroup from 'components/core/Interactive/ButtonGroup';
+import { Stack } from 'components/core/Containers/Stack';
 import {
   Modal,
   ModalCloseButton,
@@ -58,7 +58,7 @@ const FormModal = <F extends object, C extends object>(props: FormModalProps<F, 
         {(canSubmit || canDelete) && (
           <ModalFooter>
             <Center w="full">
-              <ButtonGroup>
+              <Stack direction={{ base: 'column-reverse', md: 'row' }}>
                 {canDelete && (
                   <DeletePopover
                     onDelete={props.onDelete}
@@ -74,7 +74,7 @@ const FormModal = <F extends object, C extends object>(props: FormModalProps<F, 
                     onSubmit={onSubmit}
                   />
                 )}
-              </ButtonGroup>
+              </Stack>
             </Center>
           </ModalFooter>
         )}
