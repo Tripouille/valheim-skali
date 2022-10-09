@@ -27,7 +27,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     callbacks: {
       async session({ session, token }) {
         delete session.user.email;
-				session.permissions = {};
+        session.permissions = {};
         if (token.sub) {
           const usersCollection = await db.connectToCollection<UserInDb>(usersCollectionName);
           const usersWithRolesAndApplications = (await usersCollection
@@ -56,6 +56,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
             .toArray()) as WithRolesAndApplications<UserInDb>[];
           const user = usersWithRolesAndApplications[0];
           if (user) {
+            session.user._id = token.sub;
             session.permissions = await getRolesPermissions(user.roles);
             session.isNonMember = !user.roles.some(role => role.name === SpecialRoleName.MEMBER);
             session.hasApplication = user.applications.length > 0;

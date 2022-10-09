@@ -10,6 +10,8 @@ import {
   getApplicationValidationError,
   WithDiscordInfos,
 } from 'data/application';
+import useSession from 'hooks/useSession';
+import { applicationPrivilege, PermissionCategory } from 'utils/permissions';
 import { Callback } from 'utils/types';
 import ApplicationFormFields from './ApplicationFormFields';
 
@@ -47,13 +49,20 @@ const ApplicationForm: React.FC<ApplicationFormProps> = props => {
   const { application, onSubmit } = props;
   const isEdition = !!application;
 
+  const { hasRequiredPermissions } = useSession();
+  const hasManageApplicationsPermission = hasRequiredPermissions({
+    [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE,
+  });
+  const isOwnApplication = !hasManageApplicationsPermission;
+
   const [applicationFormData, setApplicationFormData] = useState<CreateApplicationData>(
     isEdition ? getApplicationFormData(application) : initialFormApplicationData,
   );
 
-  const deleteLabel = 'Supprimer la candidature';
-  const deletePopoverBody =
-    'Êtes-vous sûr de vouloir supprimer cette candidature ? Vous pouvez la refuser et la garder pour archive.';
+  const deleteLabel = isOwnApplication ? 'Supprimer ma candidature' : 'Supprimer la candidature';
+  const deletePopoverBody = isOwnApplication
+    ? "Êtes-vous sûr de vouloir supprimer votre candidature ? Si vous avez été refusé, ce n'est pas nécessaire. Sinon, n'hésitez pas à venir nous parler de ce qui vous dérange. Vous devrez recommencer tout le processus de recrutement si vous souhaitez nous rejoindre."
+    : 'Êtes-vous sûr de vouloir supprimer cette candidature ? Vous pouvez la refuser et la garder pour archive.';
 
   if (props.display === 'modal')
     return (

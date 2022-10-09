@@ -3,6 +3,7 @@ import Background from 'components/core/Containers/Background';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
 import PageTitle from 'components/core/Typography/PageTitle';
 import ApplicationForm from 'components/pages/Applications/ApplicationForm';
+import useDeleteMyApplication from 'hooks/applications/useDeleteMyApplication';
 import useEditMyApplication from 'hooks/applications/useEditMyApplication';
 import useMyApplication from 'hooks/applications/useMyApplication';
 import { getRoute } from 'utils/routes';
@@ -15,6 +16,7 @@ const EditMyApplicationPage = () => {
   const editMyApplication = useEditMyApplication(application, {
     onSuccess: () => router.push(getRoute('applications/me')),
   });
+  const deleteMyApplication = useDeleteMyApplication(application);
 
   return (
     <Background>
@@ -25,7 +27,7 @@ const EditMyApplicationPage = () => {
             display="fullPage"
             application={application}
             onSubmit={editMyApplication}
-            onDelete={() => {}}
+            onDelete={deleteMyApplication}
           />
         )}
       </QueryHandler>

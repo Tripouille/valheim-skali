@@ -37,7 +37,6 @@ const ApplicationFormFields: React.FC<ApplicationFormFieldsProps> = ({ formData,
 
   const applicationAssociableUsersQuery = useApplicationAssociableUsers();
   const [associatedUserId, setAssociatedUserId] = useState<string>('');
-  console.log({ associatedUserId });
   let associatedUser: Session['user'] | undefined;
   if (associatedUserId.length > 0) {
     if (isOwnApplication && session?.user) associatedUser = session.user;
