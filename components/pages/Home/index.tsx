@@ -34,6 +34,7 @@ const Home = () => (
       <VisitorOnly>
         <NextLink href={getRoute('join')}>
           <Button
+            data-cy="join"
             size="lg"
             colorScheme="twitter"
             outline="4px lightskyblue solid"

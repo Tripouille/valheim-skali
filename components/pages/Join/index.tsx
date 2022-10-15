@@ -33,7 +33,9 @@ const JoinIntroductionMainButton: React.FC<JoinIntroductionMainButtonProps> = ({
   } else if (isConnected) {
     return (
       <NextLink href={getRoute('rules')}>
-        <Button rightIcon={<GiOpenBook />}>Prêt ? Clique ici pour aller au règlement !</Button>
+        <Button data-cy="go-to-rules" rightIcon={<GiOpenBook />}>
+          Prêt ? Clique ici pour aller au règlement !
+        </Button>
       </NextLink>
     );
   } else {

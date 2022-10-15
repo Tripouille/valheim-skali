@@ -35,7 +35,7 @@ const RulesEndButton = () => {
   } else if (session && session.isNonMember && !session.hasApplication) {
     return (
       <NextLink href={getRoute('applications/new')}>
-        <Button rightIcon={<GiFeather />}>
+        <Button data-cy="write-application" rightIcon={<GiFeather />}>
           Fini de lire ? Clique ici pour écrire ta candidature !
         </Button>
       </NextLink>
@@ -91,6 +91,7 @@ const Rules = () => {
             {tabIndex < ruleKeys.length - 1 ? (
               <>
                 <Button
+                  data-cy="next"
                   rightIcon={<HiOutlineArrowNarrowRight />}
                   onClick={goToNextTab}
                 >{`Lire la partie suivante "${ruleKeys[tabIndex + 1]}"`}</Button>
