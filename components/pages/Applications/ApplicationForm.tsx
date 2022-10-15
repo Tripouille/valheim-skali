@@ -10,6 +10,7 @@ import {
   getApplicationValidationError,
   WithDiscordInfos,
 } from 'data/application';
+import useApplicationAssociableUsers from 'hooks/applications/useApplicationAssociableUsers';
 import useSession from 'hooks/useSession';
 import { applicationPrivilege, PermissionCategory } from 'utils/permissions';
 import { Callback } from 'utils/types';
@@ -55,6 +56,8 @@ const ApplicationForm: React.FC<ApplicationFormProps> = props => {
   });
   const isOwnApplication = !hasManageApplicationsPermission;
 
+  const applicationAssociableUsersQuery = useApplicationAssociableUsers(application?.userId);
+
   const [applicationFormData, setApplicationFormData] = useState<CreateApplicationData>(
     isEdition ? getApplicationFormData(application) : initialFormApplicationData,
   );
@@ -91,6 +94,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = props => {
           <ApplicationFormFields
             formData={applicationFormData}
             setFormData={setApplicationFormData}
+            associableUsers={applicationAssociableUsersQuery.data}
           />
         </ModalBody>
       </FormModal>
@@ -109,6 +113,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = props => {
         <ApplicationFormFields
           formData={applicationFormData}
           setFormData={setApplicationFormData}
+          associableUsers={applicationAssociableUsersQuery.data}
         />
       </FormFullPage>
     );

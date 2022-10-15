@@ -17,8 +17,8 @@ import {
   isCreateApplicationDataWithUserId,
   CreateApplicationData,
   ApplicationFormAnswer,
+  ApplicationAssociableUser,
 } from 'data/application';
-import useApplicationAssociableUsers from 'hooks/applications/useApplicationAssociableUsers';
 import useSession from 'hooks/useSession';
 import { applicationPrivilege, PermissionCategory } from 'utils/permissions';
 import UserAvatar from '../Users/UserAvatar';
@@ -26,24 +26,27 @@ import UserAvatar from '../Users/UserAvatar';
 interface ApplicationFormFieldsProps {
   formData: CreateApplicationData;
   setFormData: React.Dispatch<React.SetStateAction<CreateApplicationData>>;
+  associableUsers?: ApplicationAssociableUser[];
 }
 
-const ApplicationFormFields: React.FC<ApplicationFormFieldsProps> = ({ formData, setFormData }) => {
+const ApplicationFormFields: React.FC<ApplicationFormFieldsProps> = ({
+  formData,
+  setFormData,
+  associableUsers,
+}) => {
   const { data: session, hasRequiredPermissions } = useSession();
   const hasManageApplicationsPermission = hasRequiredPermissions({
     [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE,
   });
   const isOwnApplication = !hasManageApplicationsPermission;
 
-  const applicationAssociableUsersQuery = useApplicationAssociableUsers();
-  const [associatedUserId, setAssociatedUserId] = useState<string>('');
+  const [associatedUserId, setAssociatedUserId] = useState<string>(
+    isCreateApplicationDataWithUserId(formData) ? formData.userId : '',
+  );
   let associatedUser: Session['user'] | undefined;
   if (associatedUserId.length > 0) {
     if (isOwnApplication && session?.user) associatedUser = session.user;
-    else
-      associatedUser = applicationAssociableUsersQuery.data?.find(
-        user => user._id === associatedUserId,
-      );
+    else associatedUser = associableUsers?.find(user => user._id === associatedUserId);
   }
 
   useEffect(
@@ -55,20 +58,22 @@ const ApplicationFormFields: React.FC<ApplicationFormFieldsProps> = ({ formData,
 
   useEffect(
     function fillOnUserAssociation() {
-      if (associatedUser) {
-        const definedAssociatedUser = associatedUser;
-        setFormData(prev => ({
-          ...prev,
-          discordName: definedAssociatedUser.name,
-          userId: definedAssociatedUser._id,
-        }));
+      if (associatedUserId) {
+        if (associatedUser) {
+          const definedAssociatedUser = associatedUser;
+          setFormData(prev => ({
+            ...prev,
+            discordName: definedAssociatedUser.name,
+            userId: definedAssociatedUser._id,
+          }));
+        }
       } else
         setFormData(prev => ({
           applicationFormAnswer: prev.applicationFormAnswer,
           discordName: 'discordName' in prev ? prev.discordName : '',
         }));
     },
-    [associatedUser, setFormData],
+    [associatedUserId, associatedUser, setFormData],
   );
 
   const setApplicationFormAnswerValue = (key: keyof ApplicationFormAnswer) => (value: string) =>
@@ -107,7 +112,7 @@ const ApplicationFormFields: React.FC<ApplicationFormFieldsProps> = ({ formData,
               onChange={setAssociatedUserId}
             >
               <option></option>
-              {applicationAssociableUsersQuery.data?.map(user => (
+              {associableUsers?.map(user => (
                 <option key={user._id} value={user._id}>
                   {user.name}
                 </option>
