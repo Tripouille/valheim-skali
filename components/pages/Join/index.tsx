@@ -66,10 +66,11 @@ const JoinIntroduction = () => {
             ),
             'Lire notre règlement',
             'Ecrire une candidature, répondant à quelques questions et avec une présentation de ton personnage (RP)',
-            "Passer un petit test, pour s'assurer que tu comprends bien le règlement",
-            "Discuter avec un Viking du Valhabba, pour s'assurer que tu es prêt à rejoindre le Valhabba",
+            "Répondre à un questionnaire, pour s'assurer que tu comprends bien le règlement",
+            "T'annoncer sur notre Discord, pour nous rencontrer et donner tes disponibilités pour un rendez-vous",
+            "Discuter quelques minutes avec un Viking du Valhabba pour s'assurer que tu es prêt à rejoindre ce nouveau monde",
             'Installer nos mods et venir jouer !',
-            'Choisir un clan (🔵Est ou 🟢Ouest) pour avoir accès aux canaux du Discord et à ta zone de clan',
+            'Choisir un clan (🔵Est ou 🟢Ouest) pour avoir accès à ses canaux du Discord et à ta zone de clan',
           ]}
         />
         {session && !session.isNonMember ? (

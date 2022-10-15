@@ -1,11 +1,14 @@
 import NextLink from 'next/link';
 import { BiEdit } from 'react-icons/bi';
 import Background from 'components/core/Containers/Background';
+import Box from 'components/core/Containers/Box';
 import Flex from 'components/core/Containers/Flex';
 import { Stack } from 'components/core/Containers/Stack';
+import IconList from 'components/core/DataDisplay/IconList';
 import Tag from 'components/core/DataDisplay/Tag';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
 import Button from 'components/core/Interactive/Button';
+import DiscordButton from 'components/core/Interactive/DiscordButton';
 import PageTitle from 'components/core/Typography/PageTitle';
 import ApplicationAnswerLine from 'components/pages/Applications/ApplicationAnswerLine';
 import ApplicationIdentity from 'components/pages/Applications/ApplicationIdentity';
@@ -47,6 +50,32 @@ const MyApplication = () => {
               Modifier
             </Button>
           </NextLink>
+          <Box>
+            Si tu es satisfait de ta candidature,
+            <IconList
+              list={[
+                <a
+                  key="go-to-questionnaire"
+                  href="https://forms.gle/3oWojXWAFCm43oMS6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button as="a" data-cy="go-to-questionnaire">
+                    Clique ici pour répondre au questionnaire sur le règlement
+                  </Button>
+                </a>,
+                <Box key="discord-make-appointment">
+                  <DiscordButton
+                    data-cy="discord-make-appointment"
+                    href="https://discord.com/channels/1020648216552816661/1023619919830601809"
+                    label="Rejoins notre Discord"
+                  />{' '}
+                  et donne tes disponibilités pour prendre rendez-vous avec un Viking du Valhabba
+                </Box>,
+              ]}
+              marginTop="3"
+            />
+          </Box>
         </QueryHandler>
       </Stack>
     </Background>
