@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormFullPage from 'components/core/Form/FormFullPage';
 import FormModal from 'components/core/Form/FormModal';
 import { ModalBody, ModalHeader } from 'components/core/Overlay/Modal';
@@ -58,6 +58,13 @@ const ApplicationForm: React.FC<ApplicationFormProps> = props => {
   const [applicationFormData, setApplicationFormData] = useState<CreateApplicationData>(
     isEdition ? getApplicationFormData(application) : initialFormApplicationData,
   );
+
+  useEffect(() => {
+    if (props.display === 'modal' && props.isOpen)
+      setApplicationFormData(
+        isEdition ? getApplicationFormData(application) : initialFormApplicationData,
+      );
+  }, [application, isEdition, props.display, props.isOpen]);
 
   const deleteLabel = isOwnApplication ? 'Supprimer ma candidature' : 'Supprimer la candidature';
   const deletePopoverBody = isOwnApplication
