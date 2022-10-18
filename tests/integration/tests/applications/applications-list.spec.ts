@@ -1,6 +1,11 @@
 import { ApplicationStatus } from 'data/application';
 import { SpecialRoleName } from 'data/role';
-import { applicationPrivilege, PermissionCategory } from 'utils/permissions';
+import {
+  applicationPrivilege,
+  PermissionCategory,
+  rolePrivilege,
+  userPrivilege,
+} from 'utils/permissions';
 import { getRoute } from 'utils/routes';
 import * as Action from './action';
 
@@ -50,20 +55,10 @@ describe('applications list', () => {
     });
 
     it('creates an application with an input discord name and from a real user', () => {
-      const fillApplicationForm = ({ nameInGame }) => {
-        cy.dataCy('nameInGame', 'input').type(nameInGame);
-        cy.dataCy('steamName', 'input').type('Steam name');
-        cy.dataCy('steamID', 'input').type('Steam id');
-        cy.dataCy('whereDidYouFindTheServer', 'textarea').type('I found the server...');
-        cy.dataCy('whyDidYouChooseThisServer', 'textarea').type('I chose this server...');
-        cy.dataCy('whatAreYourPlansAsAViking', 'textarea').type('I plan to...');
-        cy.dataCy('background', 'textarea').type('I was a Viking...');
-      };
-
       // Writing the discord name
       cy.dataCy('create-application').click();
       cy.dataCy('discordName', 'input').type('New discord name');
-      fillApplicationForm({ nameInGame: 'New name in game' });
+      Action.fillApplicationForm({ nameInGame: 'New name in game' });
       cy.dataCy('submit', 'button').click();
       cy.dataCy('create-application-modal').should('not.exist');
       cy.dataCy('application-modal').should('not.exist');
@@ -78,7 +73,7 @@ describe('applications list', () => {
       cy.dataCy('associate-to-user', 'select').select('User1');
       cy.dataCy('discordName', 'input').should('not.exist');
       cy.dataCy('create-application-modal').find('p').should('contain.text', 'User1');
-      fillApplicationForm({ nameInGame: 'Name in game2' });
+      Action.fillApplicationForm({ nameInGame: 'Name in game2' });
       cy.dataCy('submit', 'button').click();
       cy.dataCy('create-application-modal').should('not.exist');
       cy.dataCy('application-modal').should('not.exist');
@@ -195,6 +190,90 @@ describe('applications list', () => {
       cy.dataCy('comment')
         .should('contain.text', 'I like this guy !2')
         .and('contain.text', '(édité le');
+    });
+  });
+
+  context('with promote permission', () => {
+    before(() => {
+      cy.setPermission(
+        SpecialRoleName.MEMBER,
+        PermissionCategory.APPLICATION,
+        applicationPrivilege.PROMOTE,
+      );
+      cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.ROLE, rolePrivilege.READ);
+      cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.USER, userPrivilege.READ);
+    });
+
+    it('can promote and demote applications', () => {
+      cy.intercept('/api/users').as('getUsers');
+
+      // Promote and demote an application non associated to any user
+      cy.dataCy('application').first().dataCy('see').click();
+      cy.dataCy('application-modal').dataCy('choose-another-status').click();
+      Action.chooseAnotherStatus(ApplicationStatus.PROMOTED);
+      cy.dataCy('application-modal').should('contain.text', 'Promu(e) Viking');
+      cy.dataCy('application-modal').dataCy('choose-another-status').click();
+      Action.chooseAnotherStatus(ApplicationStatus.REFUSED);
+      cy.dataCy('application-modal').should('contain.text', 'Refusé(e)');
+      cy.dataCy('application-modal').dataCy('choose-another-status').click();
+      Action.chooseAnotherStatus(ApplicationStatus.WAITING_FOR_APPOINTMENT);
+      cy.dataCy('application-modal').should('contain.text', "En attente d'un entretien");
+      cy.dataCy('close-modal').click();
+
+      // Create an application associated to a user
+      cy.dataCy('create-application').click();
+      cy.dataCy('associate-to-user', 'select').select('User1');
+      cy.dataCy('create-application-modal').find('p').should('contain.text', 'User1');
+      Action.fillApplicationForm({ nameInGame: 'Name in game2' });
+      cy.dataCy('submit', 'button').click();
+      cy.dataCy('application')
+        .should('have.length', 3)
+        .and('contain.text', 'Name in game2 (User1)');
+
+      // Promote the application and check in admin
+      cy.dataCy('application').first().dataCy('see').click();
+      cy.dataCy('application-modal').dataCy('choose-another-status').click();
+      Action.chooseAnotherStatus(ApplicationStatus.WAITING_FOR_ANSWER);
+      cy.dataCy('application-modal').should('contain.text', 'En attente de réponse');
+      cy.dataCy('change-status-to-next').click();
+      cy.dataCy('application-modal').should('contain.text', 'Promu(e) Viking');
+
+      cy.dataCy('close-modal').click();
+      cy.dataCy('nav-bar').dataCy('menu', 'button').click();
+      cy.dataCy('nav-bar').dataCy('admin').click();
+      cy.wait('@getUsers');
+      cy.dataCy('user-1').closest('tr').should('contain.text', 'User1');
+
+      cy.dataCy('Candidatures-nav-item').click();
+
+      // Demote the application and check in admin
+      cy.dataCy('application').first().dataCy('see').click();
+      cy.dataCy('application-modal').dataCy('choose-another-status').click();
+      Action.chooseAnotherStatus(ApplicationStatus.WAITING_FOR_ANSWER);
+      cy.dataCy('application-modal').should('contain.text', 'En attente de réponse');
+
+      cy.dataCy('close-modal').click();
+      cy.dataCy('nav-bar').dataCy('menu', 'button').click();
+      cy.dataCy('nav-bar').dataCy('admin').click();
+      cy.dataCy('Âmes perdues').click();
+      cy.wait('@getUsers');
+      cy.main().should('contain.text', 'User1');
+
+      cy.dataCy('Candidatures-nav-item').click();
+
+      // Refuse the application and check in admin
+      cy.dataCy('application').first().dataCy('see').click();
+      cy.dataCy('application-modal').dataCy('choose-another-status').click();
+      Action.chooseAnotherStatus(ApplicationStatus.REFUSED);
+      cy.dataCy('application-modal').should('contain.text', 'Refusé(e)');
+
+      cy.dataCy('close-modal').click();
+      cy.dataCy('nav-bar').dataCy('menu', 'button').click();
+      cy.dataCy('nav-bar').dataCy('admin').click();
+      cy.wait('@getUsers');
+      cy.main().should('not.contain.text', 'User1');
+      cy.dataCy('Âmes perdues').click();
+      cy.main().should('contain.text', 'User1');
     });
   });
 });
