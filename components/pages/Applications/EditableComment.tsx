@@ -17,12 +17,14 @@ const EditableControls = () => {
   return isEditing ? (
     <ButtonGroup flexDirection="column" alignItems="center" gap="2" size="sm" spacing="0">
       <IconButton
+        data-cy="submit-edited-comment"
         aria-label="Envoyer"
         title="Envoyer"
         icon={<BsCheckLg />}
         {...getSubmitButtonProps()}
       />
       <IconButton
+        data-cy="cancel-comment-edition"
         aria-label="Annuler"
         title="Annuler"
         icon={<BsXLg />}
@@ -32,6 +34,7 @@ const EditableControls = () => {
   ) : (
     <Flex justifyContent="center">
       <IconButton
+        data-cy="edit"
         aria-label="Modifier"
         title="Modifier"
         size="sm"

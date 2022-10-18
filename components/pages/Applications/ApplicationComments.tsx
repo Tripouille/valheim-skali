@@ -31,7 +31,7 @@ const ApplicationComments: React.FC<ApplicationCommentsProps> = ({ application }
   return (
     <Stack marginTop="9" spacing="8">
       {application.comments.map(comment => (
-        <Box key={comment._id} bgColor="#ffffff10" borderRadius="md">
+        <Box key={comment._id} data-cy="comment" bgColor="#ffffff10" borderRadius="md">
           {comment.authorId === 'system' ? (
             <Flex justify="space-between" align="center" borderRadius="md" padding="2">
               <Text fontStyle="italic">La candidature a été mise à jour.</Text>
@@ -71,11 +71,13 @@ const ApplicationComments: React.FC<ApplicationCommentsProps> = ({ application }
       ))}
       <chakra.form display="flex" alignItems="center" gap="2" onSubmit={submitCommentForm}>
         <Textarea
+          data-cy="comment-body"
           value={commentBody}
           onChange={setCommentBody}
           placeholder="Votre commentaire ici..."
         />
         <IconButton
+          data-cy="submit-comment"
           type="submit"
           aria-label="Envoyer"
           title="Envoyer"

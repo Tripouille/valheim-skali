@@ -20,13 +20,13 @@ const ApplicationAccordionItem: React.FC<ApplicationAccordionItemProps> = ({ app
   >;
 
   return (
-    <AccordionItem key={application._id} id={application._id}>
+    <AccordionItem key={application._id} data-cy="application" id={application._id}>
       <ApplicationHeader application={application} />
       <AccordionPanel pb={4}>
         {applicationFormEntries.map(([questionKey, answer]) => (
           <ApplicationAnswerLine key={questionKey} questionKey={questionKey} answer={answer} />
         ))}
-        <Button marginTop="3" leftIcon={<GiNotebook />} onClick={onOpen}>
+        <Button data-cy="see" marginTop="3" leftIcon={<GiNotebook />} onClick={onOpen}>
           Voir la fiche complète
         </Button>
         <ApplicationModal application={application} isOpen={isOpen} onClose={onClose} />

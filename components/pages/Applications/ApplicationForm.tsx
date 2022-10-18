@@ -77,7 +77,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = props => {
   if (props.display === 'modal')
     return (
       <FormModal
-        data-cy={isEdition ? 'edit-application-modal' : 'create-application-modal'}
+        data-cy={isEdition ? 'edit-application' : 'create-application'}
         isOpen={props.isOpen}
         onClose={props.onClose}
         formData={applicationFormData}

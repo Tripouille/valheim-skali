@@ -98,7 +98,7 @@ const ApplicationFormFields: React.FC<ApplicationFormFieldsProps> = ({
           ) : (
             <FormElement label="Quel est ton pseudo Discord ?" isRequired vertical>
               <Input
-                data-cy="discord_name"
+                data-cy="discordName"
                 value={formData.discordName}
                 onChange={value => setFormData(prev => ({ ...prev, discordName: value }))}
                 maxLength={APPLICATION_DISCORD_NAME_MAX_LENGTH}

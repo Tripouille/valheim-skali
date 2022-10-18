@@ -1,7 +1,8 @@
+import { ApplicationStatus } from 'data/application';
 import { SpecialRoleName } from 'data/role';
 import { applicationPrivilege, PermissionCategory, rulesPrivilege } from 'utils/permissions';
 
-describe('application as candidate', () => {
+describe('join flow', () => {
   before(() => {
     cy.task('seedCollection', { collectionName: 'applications', data: [] });
     cy.setPermission(
@@ -35,17 +36,19 @@ describe('application as candidate', () => {
       cy.dataCy('signin').should('exist');
 
       // Test application page
-      cy.dataCy('applications').should('not.exist');
+      cy.dataCy('Candidatures-nav-item').should('not.exist');
     });
   });
 
-  context('when signed in as non member with no application', () => {
+  context('when signed in as non member', () => {
     before(() => {
       cy.setUserRoles([]);
       cy.login();
     });
 
-    it.only('should see the join flow and apply', () => {
+    it('should see the join flow and apply', () => {
+      cy.dataCy('Candidatures-nav-item').should('not.exist');
+
       // Click join button in home
       cy.dataCy('join').click();
 
@@ -93,6 +96,18 @@ describe('application as candidate', () => {
         .should('contain.text', "En attente d'un entretien")
         .and('contain.text', 'Name in game2');
 
+      // Can see questionnaire and discord links
+      cy.dataCy('go-to-questionnaire', 'a').should('exist');
+      cy.dataCy('discord-make-appointment', 'a').should('exist');
+
+      // Still see the join link on home
+      cy.dataCy('Skali-nav-item').click();
+      cy.dataCy('join').should('exist');
+
+      // Use "My application" nav item
+      cy.dataCy('Candidatures-nav-item').should('not.exist');
+      cy.dataCy('Ma candidature-nav-item').click();
+
       // Delete application
       cy.dataCy('edit').click();
       cy.main().should('contain.text', 'Modifier ma candidature');
@@ -101,6 +116,31 @@ describe('application as candidate', () => {
       cy.dataCy('confirm-delete').click();
       cy.get('body').should('contain.text', 'Votre candidature a bien été supprimée');
       cy.main().should('contain.text', 'Bienvenue');
+    });
+  });
+
+  context('when signed in as member with an accepted application', () => {
+    before(() => {
+      cy.task('seedCollection', {
+        collectionName: 'applications',
+        data: [
+          {
+            _id: 'abb0935d99a9ab9e2caaa9f1',
+            userId: '6330935d99a9ab9e2caaa9fe',
+            comments: [],
+            applicationFormAnswer: {},
+            status: ApplicationStatus.PROMOTED,
+            createdAt: '',
+          },
+        ],
+      });
+      cy.setUserRoles([SpecialRoleName.MEMBER]);
+      cy.login();
+    });
+
+    it('should not see the join flow', () => {
+      cy.dataCy('join').should('not.exist');
+      cy.dataCy('Ma candidature-nav-item').should('not.exist');
     });
   });
 });

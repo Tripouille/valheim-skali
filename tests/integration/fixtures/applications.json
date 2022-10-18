@@ -1,0 +1,41 @@
+[
+  {
+    "_id": "abb0935d99a9ab9e2caaa9f1",
+    "userId": "6330935d99a9ab9e2caaa9fe",
+    "comments": [
+      {
+        "_id": "ceb0935d99a9ab9e2caaa9f1",
+        "authorId": "6202bebf77bf75b3aa47c2ae",
+        "body": "Appointment programmed for tomorrow",
+        "createdAt": "2000-01-01T19:00:00.000Z"
+      }
+    ],
+    "applicationFormAnswer": {
+      "nameInGame": "TestUser name in game",
+      "steamName": "TestUser",
+      "steamID": "76561198000000000",
+      "whereDidYouFindTheServer": "I found it...",
+      "whyDidYouChooseThisServer": "I chose it...",
+      "whatAreYourPlansAsAViking": "I plan to...",
+      "background": "I was a Viking..."
+    },
+    "status": "promoted",
+    "createdAt": "2000-01-01T13:00:00.000Z"
+  },
+  {
+    "_id": "abb0935d99a9ab9e2caaa9f2",
+    "discordName": "Discord name",
+    "comments": [],
+    "applicationFormAnswer": {
+      "nameInGame": "Name in game",
+      "steamName": "Steam name",
+      "steamID": "76561198000000001",
+      "whereDidYouFindTheServer": "I found it... 2",
+      "whyDidYouChooseThisServer": "I chose it... 2",
+      "whatAreYourPlansAsAViking": "I plan to... 2",
+      "background": "I was a Viking... 2"
+    },
+    "status": "waiting_for_appointment",
+    "createdAt": "2000-01-02T13:00:00.000Z"
+  }
+]

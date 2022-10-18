@@ -42,12 +42,13 @@ const ApplicationModalStatusChoiceButton: React.FC<ApplicationModalStatusChoiceB
     <Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose} isLazy placement="right">
       <PopoverTrigger>
         <IconButton
+          data-cy="choose-another-status"
           aria-label="Choisir un autre statut"
           title="Choisir un autre statut"
           icon={icon}
         />
       </PopoverTrigger>
-      <PopoverContent bgColor="blue.800">
+      <PopoverContent data-cy="choose-another-status-popover" bgColor="blue.800">
         <PopoverArrow />
         <PopoverHeader textAlign="center" fontWeight="bold">
           Choisir un autre statut

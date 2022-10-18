@@ -64,7 +64,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ application, isOpen
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent data-cy="application-modal">
+      <ModalContent data-cy="application">
         <ModalCloseButton />
         <ModalHeader display="flex" justifyContent="center">
           <Box maxWidth="full">
@@ -82,6 +82,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ application, isOpen
           </Box>
           <Secured permissions={{ [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE }}>
             <IconButton
+              data-cy="edit"
               aria-label="Modifier la candidature"
               title="Modifier la candidature"
               icon={<BiEdit />}
