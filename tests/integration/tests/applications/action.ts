@@ -1,6 +1,6 @@
 import { ApplicationStatus } from 'data/application';
 
-export const fillApplicationForm = ({ nameInGame }) => {
+export const fillApplicationForm = ({ nameInGame }: { nameInGame: string }) => {
   cy.dataCy('nameInGame', 'input').type(nameInGame);
   cy.dataCy('steamName', 'input').type('Steam name');
   cy.dataCy('steamID', 'input').type('Steam id');
