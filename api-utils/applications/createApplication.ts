@@ -40,7 +40,7 @@ const createApplication = async (req: Req, res: Res) => {
   }
 
   // For non managers, allow only own application
-	const session = await getSession({ req });
+  const session = await getSession({ req });
   const isOwnApplication = isDataWithUserId && session?.user._id === applicationCreateData.userId;
   if (!isOwnApplication)
     await requirePermissions(
