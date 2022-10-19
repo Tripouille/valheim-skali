@@ -1,5 +1,5 @@
 import { Session } from 'next-auth';
-import React, { useEffect, useState } from 'react';
+import { createElement, useEffect, useState } from 'react';
 import Secured from 'components/core/Authentication/Secured';
 import Flex from 'components/core/Containers/Flex';
 import { Grid } from 'components/core/Containers/Grid';
@@ -137,7 +137,7 @@ const ApplicationFormFields: React.FC<ApplicationFormFieldsProps> = ({
             isRequired
             vertical
           >
-            {React.createElement(inputType === 'input' ? Input : Textarea, {
+            {createElement(inputType === 'input' ? Input : Textarea, {
               'data-cy': key,
               value: formData.applicationFormAnswer[key],
               onChange: setApplicationFormAnswerValue(key),

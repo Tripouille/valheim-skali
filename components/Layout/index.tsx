@@ -1,4 +1,4 @@
-import Router from 'next/router';
+import { Router } from 'next/router';
 import React, { useEffect, useRef } from 'react';
 import { useBoolean } from '@chakra-ui/react';
 import Box from 'components/core/Containers/Box';
