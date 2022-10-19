@@ -12,7 +12,7 @@ import useCreateApplication from 'hooks/applications/useCreateApplication';
 import { applicationPrivilege, PermissionCategory } from 'utils/permissions';
 import { queryClient, QueryKeys } from 'utils/queryClient';
 import { displaySuccessToast } from 'utils/toast';
-import ApplicationItem from './ApplicationAccordionItem';
+import ApplicationAccordionItem from './ApplicationAccordionItem';
 import ApplicationForm from './ApplicationForm';
 
 const Applications = () => {
@@ -59,7 +59,7 @@ const Applications = () => {
           <QueryHandler query={applicationsQuery}>
             <Accordion width="full" defaultIndex={[0]} allowMultiple>
               {applicationsQuery.data?.map(application => (
-                <ApplicationItem key={application._id} application={application} />
+                <ApplicationAccordionItem key={application._id} application={application} />
               ))}
             </Accordion>
           </QueryHandler>

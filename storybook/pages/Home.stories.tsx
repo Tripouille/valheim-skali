@@ -8,4 +8,8 @@ const { defaultExport, StoryFactory } = storybookSetup(HomePage, StoryCategory.P
 
 export default defaultExport;
 
-export const Home = StoryFactory({});
+export const AsVisitor = StoryFactory({});
+
+export const AsNonMember = StoryFactory({}, { sessionRequestResult: { isNonMember: true } });
+
+export const AsMember = StoryFactory({}, { sessionRequestResult: { isNonMember: false } });

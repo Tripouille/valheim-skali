@@ -44,6 +44,7 @@ export const storybookSetup = <Props,>(
       permissions?: Permissions;
       requestResults?: { url: string; result: object }[];
       router?: Partial<NextRouter>;
+      sessionRequestResult?: object;
     },
   ) => {
     const template = Template.bind({});
@@ -51,18 +52,23 @@ export const storybookSetup = <Props,>(
     template.argTypes = { children: { control: false } } as Partial<ArgTypes<Props>>;
     template.parameters = {};
 
-    if (parameters?.permissions || parameters?.requestResults) {
-      template.parameters.msw = {
-        handlers: {
-          visitor: rest.get(APIRoute.VISITOR, (req, res, ctx) =>
-            res(ctx.json(parameters.permissions)),
-          ),
-          story: parameters.requestResults?.map(({ url, result }) =>
+    template.parameters.msw = {
+      handlers: {
+        visitor:
+          parameters?.permissions &&
+          rest.get(APIRoute.VISITOR, (req, res, ctx) => res(ctx.json(parameters.permissions))),
+        story:
+          parameters?.requestResults &&
+          parameters.requestResults?.map(({ url, result }) =>
             rest.get(url, (req, res, ctx) => res(ctx.json(result))),
           ),
-        },
-      };
-    }
+        session:
+          parameters?.sessionRequestResult &&
+          rest.get(APIRoute.SESSION, (req, res, ctx) =>
+            res(ctx.json(parameters.sessionRequestResult)),
+          ),
+      },
+    };
 
     template.parameters.nextRouter = parameters?.router;
 
