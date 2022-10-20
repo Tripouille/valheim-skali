@@ -13,7 +13,7 @@ import Text from 'components/core/Typography/Text';
 import useSession from 'hooks/useSession';
 import { SessionStatus } from 'utils/auth';
 import { eventPrivilege, PermissionCategory } from 'utils/permissions';
-import { getRoute, CandidateRoute, ROUTES_TO_LABEL } from 'utils/routes';
+import { getRoute, HiddenRoute, ROUTES_TO_LABEL } from 'utils/routes';
 
 interface JoinIntroductionMainButtonProps {
   isConnected: boolean;
@@ -50,7 +50,7 @@ const JoinIntroduction = () => {
   return (
     <Background data-cy="join-introduction">
       <VStack spacing="7">
-        <PageTitle title={ROUTES_TO_LABEL[CandidateRoute.JOIN]} />
+        <PageTitle title={ROUTES_TO_LABEL[HiddenRoute.JOIN]} />
         <Text>Pour rejoindre le Valhabba, tu devras:</Text>
         <IconList
           list={[

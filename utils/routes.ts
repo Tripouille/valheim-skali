@@ -19,6 +19,7 @@ export enum APIRoute {
 export enum NavRoute {
   HOME = '/',
   RULES = '/rules',
+  MY_APPLICATION = '/applications/me',
   APPLICATIONS = '/applications',
   EVENTS = '/events',
   WIKI = '/wiki',
@@ -42,18 +43,18 @@ export enum MenuRoute {
 export enum AuthRoute {
   SIGNIN = '/auth/signin',
 }
-export enum CandidateRoute {
+export enum HiddenRoute {
   JOIN = '/join',
-  MY_APPLICATION = '/applications/me',
 }
-export type Route = NavRoute | AdminNavRoute | MenuRoute | AuthRoute | OldNavRoute | CandidateRoute;
+export type Route = NavRoute | AdminNavRoute | MenuRoute | AuthRoute | OldNavRoute | HiddenRoute;
 
 /** Maps navigation routes to displayed labels (e.g.., in navbar) */
 export const ROUTES_TO_LABEL: Record<Route, string> = {
   [NavRoute.HOME]: 'Skali',
   [NavRoute.RULES]: 'Règlement',
-  [NavRoute.EVENTS]: 'Événements',
+  [NavRoute.MY_APPLICATION]: 'Ma candidature',
   [NavRoute.APPLICATIONS]: 'Candidatures',
+  [NavRoute.EVENTS]: 'Événements',
   [OldNavRoute.TRADE]: 'Commerce',
   [OldNavRoute.MODS]: 'Mods',
   [OldNavRoute.WORLD]: 'Monde',
@@ -66,8 +67,7 @@ export const ROUTES_TO_LABEL: Record<Route, string> = {
   [MenuRoute.ABOUT]: 'A propos du site',
   [MenuRoute.ADMIN]: 'Administration',
   [AuthRoute.SIGNIN]: 'Connexion',
-  [CandidateRoute.JOIN]: 'Rejoindre le Valhabba',
-  [CandidateRoute.MY_APPLICATION]: 'Ma candidature',
+  [HiddenRoute.JOIN]: 'Rejoindre le Valhabba',
 };
 
 export const isAdminNavRoute = (route: string): route is AdminNavRoute =>

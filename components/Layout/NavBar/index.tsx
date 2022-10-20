@@ -1,5 +1,4 @@
 import NextLink from 'next/link';
-import { Fragment } from 'react';
 import { BiChevronDown } from 'react-icons/bi';
 import { CgInfo } from 'react-icons/cg';
 import { GiStakeHammer, GiVikingHelmet } from 'react-icons/gi';
@@ -12,7 +11,7 @@ import { Menu, MenuButton, MenuDivider, MenuItem, MenuList } from 'components/co
 import useSession from 'hooks/useSession';
 import { SessionStatus } from 'utils/auth';
 import { ROUTES_TO_PERMISSIONS } from 'utils/permissions';
-import { CandidateRoute, MenuRoute, NavRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
+import { MenuRoute, NavRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
 import DrawerMenu from './DrawerMenu';
 import HeaderMenu from './HeaderMenu';
 import SignInOut from './SignInOut';
@@ -27,22 +26,24 @@ const NavBar = () => {
       <Center justifyContent="space-between" h="full">
         <MenuComponent
           navItems={onClick =>
-            Object.values(NavRoute).map(route => (
-              <Fragment key={route}>
-                <Secured permissions={ROUTES_TO_PERMISSIONS[route]}>
-                  <NavItem root={`/${serverName}`} route={route} />
-                </Secured>
-                {route === NavRoute.RULES &&
-                  session.data?.isNonMember &&
-                  session.data.hasApplication && (
+            Object.values(NavRoute).map(route => {
+              if (route === NavRoute.MY_APPLICATION) {
+                if (session.data?.isNonMember && session.data.hasApplication)
+                  return (
                     <NavItem
                       root={`/${serverName}`}
-                      route={CandidateRoute.MY_APPLICATION}
+                      route={NavRoute.MY_APPLICATION}
                       onClick={onClick}
                     />
-                  )}
-              </Fragment>
-            ))
+                  );
+                else return null;
+              }
+              return (
+                <Secured key={route} permissions={ROUTES_TO_PERMISSIONS[route]}>
+                  <NavItem root={`/${serverName}`} route={route} onClick={onClick} />
+                </Secured>
+              );
+            })
           }
         />
         <Menu id="account-menu" isLazy>

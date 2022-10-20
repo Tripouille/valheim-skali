@@ -35,9 +35,7 @@ describe('applications list', () => {
       cy.dataCy('create-application').should('not.exist');
       cy.dataCy('application').last().click();
       cy.dataCy('application').last().dataCy('see').click();
-      cy.dataCy('application-modal')
-        .should('contain.text', 'Candidature créée le 1 janv., 14:00')
-        .and('contain.text', 'Promu(e) Viking');
+      cy.dataCy('application-modal').and('contain.text', 'Promu(e) Viking');
       cy.dataCy('application-modal').dataCy('edit').should('not.exist');
       cy.dataCy('application-modal').dataCy('change-status-to-next').should('not.exist');
       cy.dataCy('application-modal').dataCy('choose-another-status').should('not.exist');
@@ -55,11 +53,14 @@ describe('applications list', () => {
     });
 
     it('creates an application with an input discord name and from a real user', () => {
+      cy.intercept('POST', '/api/applications').as('createApplication');
+
       // Writing the discord name
       cy.dataCy('create-application').click();
       cy.dataCy('discordName', 'input').type('New discord name');
       Action.fillApplicationForm({ nameInGame: 'New name in game' });
       cy.dataCy('submit', 'button').click();
+      cy.wait('@createApplication').its('response.statusCode').should('eq', 201);
       cy.dataCy('create-application-modal').should('not.exist');
       cy.dataCy('application-modal').should('not.exist');
       cy.dataCy('application')
@@ -75,6 +76,7 @@ describe('applications list', () => {
       cy.dataCy('create-application-modal').find('p').should('contain.text', 'User1');
       Action.fillApplicationForm({ nameInGame: 'Name in game2' });
       cy.dataCy('submit', 'button').click();
+      cy.wait('@createApplication').its('response.statusCode').should('eq', 201);
       cy.dataCy('create-application-modal').should('not.exist');
       cy.dataCy('application-modal').should('not.exist');
       cy.dataCy('application')
@@ -83,6 +85,8 @@ describe('applications list', () => {
     });
 
     it('edits an application', () => {
+      cy.intercept('PUT', '/api/applications/*').as('editApplication');
+
       // Edit an application associated with user
       cy.dataCy('application').last().click();
       cy.dataCy('application').last().dataCy('see').click();
@@ -92,6 +96,7 @@ describe('applications list', () => {
       cy.dataCy('discordName', 'input').should('not.exist');
       cy.dataCy('nameInGame', 'input').should('have.value', 'TestUser name in game').type('2');
       cy.dataCy('submit', 'button').click();
+      cy.wait('@editApplication').its('response.statusCode').should('eq', 200);
       cy.dataCy('application-modal').should('contain.text', 'TestUser name in game2');
       cy.dataCy('edit-application-modal').should('not.exist');
       cy.dataCy('application-modal').should('contain.text', 'La candidature a été mise à jour');
@@ -106,6 +111,7 @@ describe('applications list', () => {
       cy.dataCy('discordName', 'input').should('have.value', 'Discord name').type('2');
       cy.dataCy('nameInGame', 'input').should('have.value', 'Name in game').type('2');
       cy.dataCy('submit', 'button').click();
+      cy.wait('@editApplication').its('response.statusCode').should('eq', 200);
       cy.dataCy('edit-application-modal').should('not.exist');
       cy.dataCy('application-modal')
         .should('contain.text', 'Discord name2')
@@ -118,6 +124,7 @@ describe('applications list', () => {
       cy.dataCy('edit-application-modal').find('img').should('exist');
       cy.dataCy('discordName', 'input').should('not.exist');
       cy.dataCy('submit', 'button').click();
+      cy.wait('@editApplication').its('response.statusCode').should('eq', 200);
       cy.dataCy('application-modal').should('contain.text', 'Name in game2 (User1)');
       cy.dataCy('application-modal').should('contain.text', 'La candidature a été mise à jour');
       cy.dataCy('application-modal').dataCy('comment').should('have.length', 1);
@@ -136,28 +143,34 @@ describe('applications list', () => {
     });
 
     it('changes application status except from/to promoted', () => {
+      cy.intercept('PATCH', '/api/applications/*').as('patchApplication');
       // Cannot change a promoted application status
       cy.dataCy('application').last().click();
       cy.dataCy('application').last().dataCy('see').click();
       cy.dataCy('application-modal').dataCy('change-status-to-next').should('not.exist');
       cy.dataCy('application-modal').dataCy('choose-another-status').should('not.exist');
       cy.dataCy('close-modal').click();
+      cy.dataCy('application-modal').should('not.exist');
 
       // Can change an application status back and forth
       cy.dataCy('application').first().dataCy('see').click();
       cy.dataCy('application-modal').should('contain.text', "En attente d'un entretien");
       cy.dataCy('application-modal').dataCy('change-status-to-next').click();
+      cy.wait('@patchApplication').its('response.statusCode').should('eq', 200);
       cy.dataCy('application-modal').should('contain.text', 'Entretien programmé');
       cy.dataCy('application-modal').dataCy('change-status-to-next').click();
+      cy.wait('@patchApplication').its('response.statusCode').should('eq', 200);
       cy.dataCy('application-modal').should('contain.text', 'En attente de réponse');
       cy.dataCy('application-modal').dataCy('choose-another-status').click();
       cy.dataCy('choose-another-status-popover')
         .find('input[type="radio"][value="promoted"]')
         .should('be.disabled');
       Action.chooseAnotherStatus(ApplicationStatus.SCHEDULED_APPOINTMENT);
+      cy.wait('@patchApplication').its('response.statusCode').should('eq', 200);
       cy.dataCy('application-modal').should('contain.text', 'Entretien programmé');
       cy.dataCy('application-modal').dataCy('choose-another-status').click();
       Action.chooseAnotherStatus(ApplicationStatus.WAITING_FOR_APPOINTMENT);
+      cy.wait('@patchApplication').its('response.statusCode').should('eq', 200);
       cy.dataCy('application-modal').should('contain.text', "En attente d'un entretien");
     });
 
@@ -206,26 +219,32 @@ describe('applications list', () => {
 
     it('can promote and demote applications', () => {
       cy.intercept('/api/users').as('getUsers');
+      cy.intercept('PATCH', '/api/applications/*').as('patchApplication');
 
       // Promote and demote an application non associated to any user
       cy.dataCy('application').first().dataCy('see').click();
       cy.dataCy('application-modal').dataCy('choose-another-status').click();
       Action.chooseAnotherStatus(ApplicationStatus.PROMOTED);
+      cy.wait('@patchApplication').its('response.statusCode').should('eq', 200);
       cy.dataCy('application-modal').should('contain.text', 'Promu(e) Viking');
       cy.dataCy('application-modal').dataCy('choose-another-status').click();
       Action.chooseAnotherStatus(ApplicationStatus.REFUSED);
+      cy.wait('@patchApplication').its('response.statusCode').should('eq', 200);
       cy.dataCy('application-modal').should('contain.text', 'Refusé(e)');
       cy.dataCy('application-modal').dataCy('choose-another-status').click();
       Action.chooseAnotherStatus(ApplicationStatus.WAITING_FOR_APPOINTMENT);
+      cy.wait('@patchApplication').its('response.statusCode').should('eq', 200);
       cy.dataCy('application-modal').should('contain.text', "En attente d'un entretien");
       cy.dataCy('close-modal').click();
 
       // Create an application associated to a user
+      cy.intercept('POST', '/api/applications').as('createApplication');
       cy.dataCy('create-application').click();
       cy.dataCy('associate-to-user', 'select').select('User1');
       cy.dataCy('create-application-modal').find('p').should('contain.text', 'User1');
       Action.fillApplicationForm({ nameInGame: 'Name in game2' });
       cy.dataCy('submit', 'button').click();
+      cy.wait('@createApplication').its('response.statusCode').should('eq', 201);
       cy.dataCy('application')
         .should('have.length', 3)
         .and('contain.text', 'Name in game2 (User1)');
@@ -234,8 +253,10 @@ describe('applications list', () => {
       cy.dataCy('application').first().dataCy('see').click();
       cy.dataCy('application-modal').dataCy('choose-another-status').click();
       Action.chooseAnotherStatus(ApplicationStatus.WAITING_FOR_ANSWER);
+      cy.wait('@patchApplication').its('response.statusCode').should('eq', 200);
       cy.dataCy('application-modal').should('contain.text', 'En attente de réponse');
       cy.dataCy('change-status-to-next').click();
+      cy.wait('@patchApplication').its('response.statusCode').should('eq', 200);
       cy.dataCy('application-modal').should('contain.text', 'Promu(e) Viking');
 
       cy.dataCy('close-modal').click();
@@ -250,6 +271,7 @@ describe('applications list', () => {
       cy.dataCy('application').first().dataCy('see').click();
       cy.dataCy('application-modal').dataCy('choose-another-status').click();
       Action.chooseAnotherStatus(ApplicationStatus.WAITING_FOR_ANSWER);
+      cy.wait('@patchApplication').its('response.statusCode').should('eq', 200);
       cy.dataCy('application-modal').should('contain.text', 'En attente de réponse');
 
       cy.dataCy('close-modal').click();
@@ -265,6 +287,7 @@ describe('applications list', () => {
       cy.dataCy('application').first().dataCy('see').click();
       cy.dataCy('application-modal').dataCy('choose-another-status').click();
       Action.chooseAnotherStatus(ApplicationStatus.REFUSED);
+      cy.wait('@patchApplication').its('response.statusCode').should('eq', 200);
       cy.dataCy('application-modal').should('contain.text', 'Refusé(e)');
 
       cy.dataCy('close-modal').click();

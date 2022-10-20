@@ -83,6 +83,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
           serverQueryClient.setQueryData([QueryKeys.SESSION], session);
         } else {
           const visitorPermissions = await getVisitorPermissions();
+          serverQueryClient.setQueryData([QueryKeys.SESSION], null);
           serverQueryClient.setQueryData([QueryKeys.VISITOR], visitorPermissions);
         }
       }),
