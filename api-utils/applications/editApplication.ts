@@ -10,13 +10,8 @@ import {
   applicationsCollectionName,
   isCreateApplicationDataWithUserId,
 } from 'data/application';
-import { UserInDb, usersCollectionName } from 'data/user';
 import { PermissionCategory, applicationPrivilege } from 'utils/permissions';
-import {
-  isCreateApplicationData,
-  isValidCreateApplicationData,
-  shortenApplicationTextProperties,
-} from './utils';
+import { checkApplicationUserExists, getCreateApplicationData } from './utils';
 
 const editApplication = async (req: Req, res: Res) => {
   const { id } = req.query as { id: string };
@@ -40,19 +35,12 @@ const editApplication = async (req: Req, res: Res) => {
   const lastComment = application.comments[0];
   const lastCommentIsApplicationEdition = lastComment?.authorId === 'system';
 
-  const applicationCreateData: unknown = req.body;
-  if (!isCreateApplicationData(applicationCreateData)) throw new ServerException(400);
-  if (!isValidCreateApplicationData(applicationCreateData)) throw new ServerException(400);
-  shortenApplicationTextProperties(applicationCreateData);
+  const applicationCreateData = getCreateApplicationData(req.body);
 
   const isDataWithUserId = isCreateApplicationDataWithUserId(applicationCreateData);
 
   if (isDataWithUserId) {
-    const user = await db.findOne<UserInDb>(usersCollectionName, {
-      _id: new ObjectId(applicationCreateData.userId),
-    });
-    if (!user) throw new ServerException(404);
-
+    await checkApplicationUserExists(applicationCreateData);
     const applicationForSameUser = await db.findOne<ApplicationInDb>(applicationsCollectionName, {
       userId: new ObjectId(applicationCreateData.userId),
       ...('userId' in application && { _id: { $ne: new ObjectId(id) } }),

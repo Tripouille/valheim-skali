@@ -2,7 +2,6 @@ import Component from 'components/pages/Applications/MyApplication';
 import { Application } from 'data/application';
 import { StoryCategory } from 'storybook/config/constants';
 import { storybookSetup } from 'storybook/config/setup';
-// import { PermissionCategory, applicationPrivilege } from 'utils/permissions';
 import { APIRoute } from 'utils/routes';
 import applications from './applications.json';
 
