@@ -1,8 +1,8 @@
-import { action } from '@storybook/addon-actions';
-import { GiVikingHelmet } from 'react-icons/gi';
 import { BiChevronDown } from 'react-icons/bi';
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
+import { GiVikingHelmet } from 'react-icons/gi';
+import { action } from '@storybook/addon-actions';
+import Button from 'components/core/Interactive/Button';
+import IconButton from 'components/core/Interactive/IconButton';
 import {
   Menu,
   MenuProps,
@@ -11,8 +11,8 @@ import {
   MenuItem,
   MenuDivider,
 } from 'components/core/Overlay/Menu';
-import IconButton from 'components/core/Interactive/IconButton';
-import Button from 'components/core/Interactive/Button';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<MenuProps>(
   Menu,

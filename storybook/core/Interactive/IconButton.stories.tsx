@@ -1,8 +1,8 @@
+import { FaDiscord, FaSpinner } from 'react-icons/fa';
 import { action } from '@storybook/addon-actions';
 import IconButton, { IconButtonProps } from 'components/core/Interactive/IconButton';
-import { storybookSetup } from 'storybook/config/setup';
 import { StoryCategory } from 'storybook/config/constants';
-import { FaDiscord, FaSpinner } from 'react-icons/fa';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<IconButtonProps>(
   IconButton,

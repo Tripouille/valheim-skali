@@ -1,12 +1,12 @@
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { WikiPageContent } from 'data/wiki';
+import { getMessageFromError } from 'utils/error';
 import { QueryKeys } from 'utils/queryClient';
 import { APIRoute, NavRoute, serverName } from 'utils/routes';
-import { displayErrorToast, displaySuccessToast } from 'utils/toast';
-import { getMessageFromError } from 'utils/error';
 import { clearLocalStorageStartingWith } from 'utils/storage';
+import { displayErrorToast, displaySuccessToast } from 'utils/toast';
 
 const addWikiSuggestionOnServer =
   (wikiProposalId?: string) => async (pageData: WikiPageContent) => {

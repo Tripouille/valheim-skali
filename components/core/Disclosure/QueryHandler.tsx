@@ -1,7 +1,7 @@
 import { UseQueryResult } from '@tanstack/react-query';
-import { Children } from 'utils/types';
 import ErrorAlert from 'components/core/Feedback/ErrorAlert';
 import Loading from 'components/core/Feedback/Loading';
+import { Children } from 'utils/types';
 
 export interface QueryHandlerProps<T> {
   query: UseQueryResult<T, unknown>;

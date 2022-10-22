@@ -1,11 +1,11 @@
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import {
   UnorderedList,
   UnorderedListProps,
   List,
   ListItem,
 } from 'components/core/DataDisplay/List';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<UnorderedListProps>(
   UnorderedList,

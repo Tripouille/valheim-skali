@@ -12,5 +12,6 @@ export enum StoryCategory {
   PAGE = 'page',
   PAGE_ADMIN = 'page/Admin',
   PAGE_WIKI = 'page/Wiki',
+  PAGE_APPLICATIONS = 'page/Applications',
   LAYOUT = 'layout',
 }

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
-import { displayErrorToast, displaySuccessToast } from 'utils/toast';
+import { HStack } from 'components/core/Containers/Stack';
 import Toast, { ToastProps } from 'components/core/Feedback/Toast';
 import Input from 'components/core/Form/Input';
 import Button from 'components/core/Interactive/Button';
-import { HStack } from 'components/core/Containers/Stack';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
+import { displayErrorToast, displaySuccessToast } from 'utils/toast';
 
 const { defaultExport } = storybookSetup<ToastProps>(Toast, StoryCategory.CORE_FEEDBACK);
 

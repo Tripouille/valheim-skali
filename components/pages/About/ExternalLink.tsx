@@ -1,6 +1,6 @@
 import { chakra } from '@chakra-ui/react';
-import { CypressProps, Children } from 'utils/types';
 import Link from 'components/core/Interactive/Link';
+import { CypressProps, Children } from 'utils/types';
 
 export interface ExternalLinkProps extends Partial<CypressProps> {
   href: string;

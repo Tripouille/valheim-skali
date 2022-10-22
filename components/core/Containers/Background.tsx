@@ -1,7 +1,7 @@
 import React from 'react';
 import { As, chakra, shouldForwardProp } from '@chakra-ui/react';
-import { CypressProps, Children } from 'utils/types';
 import Box from 'components/core/Containers/Box';
+import { CypressProps, Children } from 'utils/types';
 
 export interface BackgroundProps extends Partial<CypressProps> {
   className?: string;

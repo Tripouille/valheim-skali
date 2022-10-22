@@ -10,14 +10,23 @@ import PageTitle from 'components/core/Typography/PageTitle';
 import useApplications from 'hooks/applications/useApplications';
 import useCreateApplication from 'hooks/applications/useCreateApplication';
 import { applicationPrivilege, PermissionCategory } from 'utils/permissions';
+import { queryClient, QueryKeys } from 'utils/queryClient';
+import { displaySuccessToast } from 'utils/toast';
+import ApplicationAccordionItem from './ApplicationAccordionItem';
 import ApplicationForm from './ApplicationForm';
-import ApplicationItem from './ApplicationAccordionItem';
 
 const Applications = () => {
   const applicationsQuery = useApplications();
 
   const createModal = useDisclosure();
-  const createApplication = useCreateApplication({ onSuccess: createModal.onClose });
+  const createApplication = useCreateApplication({
+    onSuccess: () => {
+      displaySuccessToast({ title: 'La candidature a bien été créée.' });
+      queryClient.invalidateQueries([QueryKeys.APPLICATIONS]);
+      queryClient.invalidateQueries([QueryKeys.APPLICATION_ASSOCIABLE_USERS]);
+      createModal.onClose();
+    },
+  });
 
   return (
     <Secured
@@ -41,6 +50,7 @@ const Applications = () => {
               Ajouter une candidature
             </Button>
             <ApplicationForm
+              display="modal"
               isOpen={createModal.isOpen}
               onClose={createModal.onClose}
               onSubmit={createApplication}
@@ -49,7 +59,7 @@ const Applications = () => {
           <QueryHandler query={applicationsQuery}>
             <Accordion width="full" defaultIndex={[0]} allowMultiple>
               {applicationsQuery.data?.map(application => (
-                <ApplicationItem key={application._id} application={application} />
+                <ApplicationAccordionItem key={application._id} application={application} />
               ))}
             </Accordion>
           </QueryHandler>

@@ -4,8 +4,8 @@ import {
   MenuRoute,
   NavRoute,
   OldNavRoute,
-  OtherRoute,
   Route,
+  HiddenRoute,
 } from './routes';
 
 export enum PermissionCategory {
@@ -173,9 +173,10 @@ export const permissionsMeetRequirement = (
 export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions | Permissions[]> = {
   [NavRoute.HOME]: {},
   [NavRoute.RULES]: { [PermissionCategory.RULES]: rulesPrivilege.READ },
+  [NavRoute.MY_APPLICATION]: {},
+  [NavRoute.APPLICATIONS]: { [PermissionCategory.APPLICATION]: applicationPrivilege.READ },
   [NavRoute.EVENTS]: { [PermissionCategory.EVENT]: eventPrivilege.READ },
   [NavRoute.WIKI]: {},
-  [NavRoute.APPLICATIONS]: { [PermissionCategory.APPLICATION]: applicationPrivilege.READ },
   [OldNavRoute.TRADE]: {},
   [OldNavRoute.MODS]: {},
   [OldNavRoute.WORLD]: {},
@@ -191,5 +192,5 @@ export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions | Permissions[]> =
   ],
   [MenuRoute.ABOUT]: {},
   [AuthRoute.SIGNIN]: {},
-  [OtherRoute.JOIN]: {},
+  [HiddenRoute.JOIN]: {},
 };

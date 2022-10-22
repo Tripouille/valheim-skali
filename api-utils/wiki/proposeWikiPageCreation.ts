@@ -1,13 +1,13 @@
 import { ObjectId } from 'bson';
+import { DateTime } from 'luxon';
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { getSession } from 'next-auth/react';
-import { DateTime } from 'luxon';
 import { requirePermissions } from 'api-utils/auth';
+import { ServerException } from 'api-utils/common';
 import db from 'api-utils/db';
 import { WikiCreationProposalInDb, wikiProposalsCollectionName } from 'data/wiki';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import { getWikiPageContentFromBody } from './utils';
-import { ServerException } from 'api-utils/common';
 
 const proposeWikiPageCreation = async (req: Req, res: Res) => {
   await requirePermissions({ [PermissionCategory.WIKI]: wikiPrivilege.PROPOSE }, req);

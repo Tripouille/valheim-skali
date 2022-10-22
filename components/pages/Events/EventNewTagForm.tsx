@@ -1,14 +1,14 @@
 import React, { KeyboardEventHandler, RefObject, useEffect, useRef, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
-import { EVENT_TAG_MAX_LENGTH } from 'data/event';
-import { CONTINUOUS_LABEL } from 'utils/constants';
 import { ListItem } from 'components/core/DataDisplay/List';
 import Tag from 'components/core/DataDisplay/Tag';
-import { FormControl } from 'components/core/Form/FormControl';
 import Combobox from 'components/core/Form/Combobox';
+import { FormControl } from 'components/core/Form/FormControl';
 import Input from 'components/core/Form/Input';
 import IconButton from 'components/core/Interactive/IconButton';
+import { EVENT_TAG_MAX_LENGTH } from 'data/event';
 import useFilteredTags from 'hooks/events/useFilteredTags';
+import { CONTINUOUS_LABEL } from 'utils/constants';
 
 export interface EventNewTagFormProps {
   tags: string[];

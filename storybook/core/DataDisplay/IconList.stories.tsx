@@ -1,7 +1,7 @@
 import { FaArrowCircleRight } from 'react-icons/fa';
+import IconList, { IconListProps } from 'components/core/DataDisplay/IconList';
 import { StoryCategory } from 'storybook/config/constants';
 import { storybookSetup } from 'storybook/config/setup';
-import IconList, { IconListProps } from 'components/core/DataDisplay/IconList';
 
 const { defaultExport, StoryFactory } = storybookSetup<IconListProps>(
   IconList,

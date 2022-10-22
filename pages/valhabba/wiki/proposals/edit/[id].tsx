@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
-import WikiProposalForm from 'components/pages/Wiki/WikiProposals/WikiProposalForm';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
-import { useWikiProposal } from 'hooks/wiki/useWikiProposal';
+import WikiProposalForm from 'components/pages/Wiki/WikiProposals/WikiProposalForm';
 import useAddWikiSuggestion from 'hooks/wiki/useAddWikiSuggestion';
+import { useWikiProposal } from 'hooks/wiki/useWikiProposal';
 import { getRouteParameterAsString } from 'utils/routes';
 
 const EditWikiProposalPage = () => {

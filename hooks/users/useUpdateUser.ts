@@ -1,12 +1,12 @@
+import axios from 'axios';
 import { useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
-import { User, UpdateUserData, UpdateUserRolesData } from 'data/user';
 import { Role } from 'data/role';
+import { User, UpdateUserData, UpdateUserRolesData } from 'data/user';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import useSession from 'hooks/useSession';
-import { APIRoute } from 'utils/routes';
 import { QueryKeys, QueryTypes } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 
 const updateUserOnServer = (updatedUser: User) => async (updateUserData: UpdateUserData) => {
   await axios.patch(`${APIRoute.USERS}/${updatedUser._id}`, updateUserData);

@@ -1,10 +1,10 @@
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import {
   TitleAccordionItem,
   TitleAccordionItemProps,
   Accordion,
 } from 'components/core/Disclosure/Accordion';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<TitleAccordionItemProps>(
   TitleAccordionItem,

@@ -1,5 +1,3 @@
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import {
   Table,
   TableProps,
@@ -11,6 +9,8 @@ import {
   Td,
   TableCaption,
 } from 'components/core/DataDisplay/Table';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<TableProps>(
   Table,

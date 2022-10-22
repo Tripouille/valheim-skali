@@ -1,6 +1,9 @@
 import { ObjectId } from 'bson';
 import { UseSessionReturn } from 'hooks/useSession';
+import { ApplicationInDb } from './application';
 import { Role, RoleInDb } from './role';
+
+/** Main types */
 
 export interface User {
   _id: string;
@@ -16,18 +19,27 @@ export type UserInDb = Omit<User, '_id' | 'roleIds'> & {
   roleIds?: RoleInDb['_id'][];
 };
 
-export const usersCollectionName = 'users';
+export type WithRolesAndApplications<T extends UserInDb> = T & {
+  roles: RoleInDb[];
+} & {
+  applications: ApplicationInDb[];
+};
 
-export const USER_NAME_IN_GAME_MAX_LENGTH = 20;
-
-/** The only keys that can be updated for a simple user patch */
 export type UpdateUserData = {
   nameInGame: User['nameInGame'];
 };
 
 export type UpdateUserRolesData = { roleId: string };
 
-/** User roles utils */
+/** Database */
+
+export const usersCollectionName = 'users';
+
+/** Validation */
+
+export const USER_NAME_IN_GAME_MAX_LENGTH = 20;
+
+/** Roles utils */
 
 export const canUserAssignRole = (
   role: Role,

@@ -72,7 +72,7 @@ type CreateApplicationDataWithDiscordName = Pick<
   ApplicationBaseWithDiscordName<string>,
   'applicationFormAnswer' | 'discordName'
 >;
-type CreateApplicationDataWithUserId = Pick<
+export type CreateApplicationDataWithUserId = Pick<
   ApplicationBaseWithUserId<string>,
   'applicationFormAnswer' | 'userId'
 >;

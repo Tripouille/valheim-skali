@@ -16,9 +16,20 @@
       }
     }
   ],
-  "plugins": ["@typescript-eslint", "local"],
+  "plugins": [
+    "@next/next",
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+    "@typescript-eslint",
+    "import",
+    "local"
+  ],
   "extends": [
-    "next",
+    "plugin:@next/next/core-web-vitals",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:react/jsx-runtime",
     "airbnb-typescript",
     "plugin:storybook/recommended",
     "plugin:@typescript-eslint/recommended",
@@ -27,13 +38,41 @@
   "rules": {
     "import/no-extraneous-dependencies": "off",
     "react/function-component-definition": "off",
+    "react/prop-types": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "jsx-a11y/alt-text": "error",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error",
-    "local/no-react-node": "error"
+    "local/no-react-node": "error",
+    "import/no-unresolved": "error",
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "pathGroups": [
+          {
+            "group": "external",
+            "pattern": "@*/**",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["@*/**"]
+      }
+    ]
   },
   "env": {
     "jest": true
+  },
+  "settings": {
+    "react": { "version": "detect" },
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
+    }
   }
 }

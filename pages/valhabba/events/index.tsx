@@ -1,5 +1,4 @@
 import { GetStaticProps } from 'next';
-import React from 'react';
 import { InfiniteData } from '@tanstack/react-query';
 import { getVisitorPermissions } from 'api-utils/auth';
 import { getEventsPage } from 'api-utils/events/getEvents';

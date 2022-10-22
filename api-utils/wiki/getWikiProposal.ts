@@ -1,9 +1,9 @@
-import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { ObjectId } from 'bson';
+import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { getSession } from 'next-auth/react';
-import db from 'api-utils/db';
 import { requirePermissions } from 'api-utils/auth';
 import { ServerException } from 'api-utils/common';
+import db from 'api-utils/db';
 import { WikiProposalInDb, wikiProposalsCollectionName } from 'data/wiki';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 

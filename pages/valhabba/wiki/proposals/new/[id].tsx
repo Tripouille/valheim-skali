@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import React from 'react';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
 import WikiProposalForm from 'components/pages/Wiki/WikiProposals/WikiProposalForm';
 import useProposeWikiPage from 'hooks/wiki/useProposeWikiPage';

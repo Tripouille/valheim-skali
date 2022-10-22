@@ -1,6 +1,6 @@
 import { SpecialRoleName } from 'data/role';
 import { eventPrivilege } from 'utils/permissions';
-import { APIRoute, serverName } from 'utils/routes';
+import { APIRoute, getRoute, serverName } from 'utils/routes';
 import * as Action from './action';
 import * as Select from './select';
 
@@ -8,6 +8,8 @@ describe('events with read permission', () => {
   before(() => {
     cy.seedCollection('events', 'events');
   });
+
+  beforeEach(() => cy.revalidate([getRoute('events')]));
 
   context('as visitor without read permission', () => {
     before(() => {

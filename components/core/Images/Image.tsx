@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import NextImage, { ImageProps as NextImageProps } from 'next/image';
-import nextConfig from 'next.config';
 import { chakra } from '@chakra-ui/react';
+import nextConfig from 'next.config';
 
 export type ImageProps = NextImageProps & { src: string };
 

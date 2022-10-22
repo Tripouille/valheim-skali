@@ -1,8 +1,7 @@
-import { useDisclosure } from '@chakra-ui/react';
 import { BiEdit } from 'react-icons/bi';
+import { useDisclosure } from '@chakra-ui/react';
 import Secured from 'components/core/Authentication/Secured';
 import Box from 'components/core/Containers/Box';
-import Center from 'components/core/Containers/Center';
 import IconButton from 'components/core/Interactive/IconButton';
 import {
   Modal,
@@ -26,8 +25,8 @@ import { Callback, Entries } from 'utils/types';
 import ApplicationAnswerLine from './ApplicationAnswerLine';
 import ApplicationComments from './ApplicationComments';
 import ApplicationDate from './ApplicationDate';
-import ApplicationIdentity from './ApplicationIdentity';
 import ApplicationForm from './ApplicationForm';
+import ApplicationIdentity from './ApplicationIdentity';
 import ApplicationModalStatus from './ApplicationModalStatus';
 
 const hasSameValues = (formAnswer1: ApplicationFormAnswer, formAnswer2: ApplicationFormAnswer) =>
@@ -55,6 +54,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ application, isOpen
       ('discordName' in createApplicationData &&
         createApplicationData.discordName !== application.discordName) ||
       ('userId' in createApplicationData && createApplicationData.userId !== application.userId) ||
+      (!('userId' in createApplicationData) && application.userId) ||
       !hasSameValues(createApplicationData.applicationFormAnswer, application.applicationFormAnswer)
     )
       editApplication(createApplicationData);
@@ -64,12 +64,12 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ application, isOpen
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent data-cy="application-modal">
+      <ModalContent data-cy="application">
         <ModalCloseButton />
-        <ModalHeader>
-          <Center>
+        <ModalHeader display="flex" justifyContent="center">
+          <Box maxWidth="full">
             <ApplicationIdentity application={application} />
-          </Center>
+          </Box>
         </ModalHeader>
         <ModalBody>
           <Text textAlign="end" fontStyle="italic">
@@ -82,12 +82,14 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ application, isOpen
           </Box>
           <Secured permissions={{ [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE }}>
             <IconButton
+              data-cy="edit"
               aria-label="Modifier la candidature"
               title="Modifier la candidature"
               icon={<BiEdit />}
               onClick={editionModal.onOpen}
             />
             <ApplicationForm
+              display="modal"
               isOpen={editionModal.isOpen}
               onClose={editionModal.onClose}
               application={application}

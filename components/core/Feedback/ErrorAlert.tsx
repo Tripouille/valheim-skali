@@ -1,6 +1,6 @@
-import { getMessageFromError } from 'utils/error';
 import Center from 'components/core/Containers/Center';
 import { Alert, AlertIcon, AlertTitle } from 'components/core/Feedback/Alert';
+import { getMessageFromError } from 'utils/error';
 
 export interface ErrorAlertProps {
   error: unknown;

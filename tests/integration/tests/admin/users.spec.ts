@@ -24,6 +24,7 @@ describe('users pages', () => {
       });
 
       it('should display members and not edition tools', () => {
+        cy.dataCy('admin').should('exist');
         cy.dataCy('admin').should('contain.text', 'Vikings');
         Select.usersLines().should('have.length', 4);
         cy.dataCy('edit', 'button').should('not.exist');

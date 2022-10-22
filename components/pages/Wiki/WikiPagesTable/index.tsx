@@ -1,5 +1,5 @@
-import { Table, Th, Thead, Tr, Tbody } from 'components/core/DataDisplay/Table';
 import Box from 'components/core/Containers/Box';
+import { Table, Th, Thead, Tr, Tbody } from 'components/core/DataDisplay/Table';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
 import useWikiPages from 'hooks/wiki/useWikiPages';
 import { getCellWidth, rowIconWidth, tableStyleProps } from 'theme/admin';

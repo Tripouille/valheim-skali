@@ -1,9 +1,9 @@
 import { ObjectId } from 'bson';
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import db from 'api-utils/db';
-import { ApplicationAssociableUser, ApplicationInDb } from 'data/application';
-import { RoleInDb, SpecialRoleName } from 'data/role';
-import { UserInDb, usersCollectionName } from 'data/user';
+import { ApplicationAssociableUser } from 'data/application';
+import { SpecialRoleName } from 'data/role';
+import { UserInDb, usersCollectionName, WithRolesAndApplications } from 'data/user';
 
 const getAssociableUsers = async (req: Req, res: Res) => {
   const usersCollection = await db.connectToCollection<UserInDb>(usersCollectionName);
@@ -29,7 +29,7 @@ const getAssociableUsers = async (req: Req, res: Res) => {
       ],
       {},
     )
-    .toArray()) as (UserInDb & { roles: RoleInDb[] } & { applications: ApplicationInDb[] })[];
+    .toArray()) as WithRolesAndApplications<UserInDb>[];
 
   const usersResult: ApplicationAssociableUser<ObjectId>[] = usersWithRolesAndApplications.map(
     ({ _id, name, image, nameInGame, roles, applications }) => ({

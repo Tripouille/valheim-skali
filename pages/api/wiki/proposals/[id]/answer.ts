@@ -1,7 +1,7 @@
 import { NextApiHandler } from 'next';
 import { ServerException } from 'api-utils/common';
-import validateWikiProposal from 'api-utils/wiki/validateWikiProposal';
 import rejectWikiProposal from 'api-utils/wiki/rejectWikiProposal';
+import validateWikiProposal from 'api-utils/wiki/validateWikiProposal';
 
 const answerWikiProposalHandler: NextApiHandler = async (req, res) => {
   try {

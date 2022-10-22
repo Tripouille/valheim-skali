@@ -14,13 +14,14 @@ interface ApplicationHeaderProps {
 const ApplicationHeader: React.FC<ApplicationHeaderProps> = ({ application }) => (
   <AccordionButton gap="5">
     <Flex
+      maxWidth="full"
       flex="1"
       direction={['column', null, 'row']}
       justify="space-between"
       align="center"
       gap="3"
     >
-      <Heading size="l" display="flex" alignItems="center">
+      <Heading minWidth="0" size="l" display="flex" alignItems="center">
         <ApplicationIdentity application={application} />
         <ApplicationDate date={application.createdAt} />
       </Heading>

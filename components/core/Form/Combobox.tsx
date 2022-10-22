@@ -1,4 +1,6 @@
 import { RefObject, useCallback, useEffect, useState } from 'react';
+import { ListItemProps, UnorderedList } from 'components/core/DataDisplay/List';
+import { InputProps } from 'components/core/Form/Input';
 import {
   Popover,
   PopoverBody,
@@ -6,8 +8,6 @@ import {
   PopoverAnchor,
   PopoverContentProps,
 } from 'components/core/Overlay/Popover';
-import { ListItemProps, UnorderedList } from 'components/core/DataDisplay/List';
-import { InputProps } from 'components/core/Form/Input';
 import useCircularCounter from 'hooks/useCircularCounter';
 import { Children } from 'utils/types';
 import { scrollIntoViewIfNeeded } from 'utils/window';

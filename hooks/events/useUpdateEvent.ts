@@ -2,8 +2,8 @@ import axios from 'axios';
 import { InfiniteData } from '@tanstack/react-query';
 import { Event, CreateEventData, getEventDataForServer, EventsPage } from 'data/event';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
-import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 
 const updateEventOnServer = (updatedEvent: Event) => async (newEvent: CreateEventData) => {
   await axios.put(`${APIRoute.EVENTS}/${updatedEvent._id}`, getEventDataForServer(newEvent));

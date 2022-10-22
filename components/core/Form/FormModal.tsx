@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Callback, Children, CypressProps } from 'utils/types';
+import Center from 'components/core/Containers/Center';
+import { Stack } from 'components/core/Containers/Stack';
 import {
   Modal,
   ModalCloseButton,
@@ -7,13 +7,12 @@ import {
   ModalOverlay,
   ModalFooter,
 } from 'components/core/Overlay/Modal';
-import Center from 'components/core/Containers/Center';
-import Button from 'components/core/Interactive/Button';
-import ButtonGroup from 'components/core/Interactive/ButtonGroup';
+import { Callback, Children, CypressProps } from 'utils/types';
 import DeletePopover from './DeletePopover';
+import FormSubmitButton from './FormSubmitButton';
 
-/** T = CreateObjectData */
-export type FormModalProps<F, T> = CypressProps & {
+/** F = FormData (usually Partial<C>), C = CreateObjectData */
+export type FormModalProps<F, C> = CypressProps & {
   /** Set initial focus to close button or first tabbable element in modal */
   initialFocusOnCloseButton?: boolean;
   /** Modal is open */
@@ -21,10 +20,10 @@ export type FormModalProps<F, T> = CypressProps & {
   /** Function to close the modal */
   onClose: Callback;
   formData?: F;
-  /** Function returning validation error message or null */
-  getValidationError?: (object: F) => string | null;
+  /** Function returning validation error message or null (--> formData is C) */
+  getValidationError?: (formData: F) => string | null;
   canSubmit?: boolean;
-  onSubmit?: (newObject: T) => void;
+  onSubmit?: (newObject: C) => void;
   /** Form */
   children: Children;
 } & (
@@ -38,9 +37,10 @@ export type FormModalProps<F, T> = CypressProps & {
       }
   );
 
-const FormModal = <F extends object, T extends object>(props: FormModalProps<F, T>) => {
+const FormModal = <F extends object, C extends object>(props: FormModalProps<F, C>) => {
   const {
     'data-cy': dataCy,
+    isEdition,
     formData,
     getValidationError,
     canSubmit = true,
@@ -48,20 +48,7 @@ const FormModal = <F extends object, T extends object>(props: FormModalProps<F, 
     children,
   } = props;
 
-  const [validationError, setValidationError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (getValidationError && formData) {
-      setValidationError(getValidationError(formData));
-    }
-  }, [formData, getValidationError]);
-
-  const handleSubmit = () => {
-    /** If validationError is null, formData is T */
-    if (validationError === null && onSubmit) onSubmit(formData as unknown as T);
-  };
-
-  const canDelete = props.isEdition && (props.canDelete ?? true);
+  const canDelete = isEdition && (props.canDelete ?? true);
 
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose}>
@@ -71,7 +58,7 @@ const FormModal = <F extends object, T extends object>(props: FormModalProps<F, 
         {(canSubmit || canDelete) && (
           <ModalFooter>
             <Center w="full">
-              <ButtonGroup>
+              <Stack direction={{ base: 'column-reverse', md: 'row' }}>
                 {canDelete && (
                   <DeletePopover
                     onDelete={props.onDelete}
@@ -80,17 +67,14 @@ const FormModal = <F extends object, T extends object>(props: FormModalProps<F, 
                   />
                 )}
                 {canSubmit && (
-                  <Button
-                    data-cy="submit"
-                    colorScheme="green"
-                    onClick={handleSubmit}
-                    isDisabled={!!validationError}
-                    title={validationError ?? undefined}
-                  >
-                    {props.isEdition ? 'Valider les changements' : 'Valider la création'}
-                  </Button>
+                  <FormSubmitButton
+                    isEdition={isEdition}
+                    formData={formData}
+                    getValidationError={getValidationError}
+                    onSubmit={onSubmit}
+                  />
                 )}
-              </ButtonGroup>
+              </Stack>
             </Center>
           </ModalFooter>
         )}

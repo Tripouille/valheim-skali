@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import Select, { SelectProps } from 'components/core/Form/Select';
-import { storybookSetup } from 'storybook/config/setup';
 import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<SelectProps<string>>(
   Select,

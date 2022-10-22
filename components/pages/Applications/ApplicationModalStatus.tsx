@@ -57,6 +57,7 @@ const ApplicationModalStatus: React.FC<ApplicationModalStatusProps> = ({ applica
           {canUpdateStatusToNext ? (
             <>
               <Button
+                data-cy="change-status-to-next"
                 size="sm"
                 leftIcon={<HiOutlineArrowNarrowRight />}
                 onClick={() => setApplicationStatus(nextStatus)}

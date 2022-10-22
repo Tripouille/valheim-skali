@@ -1,8 +1,8 @@
-import { useBoolean } from '@chakra-ui/react';
 import { FaDiscord } from 'react-icons/fa';
-import { CypressProps } from 'utils/types';
-import Button from 'components/core/Interactive/Button';
+import { chakra, useBoolean } from '@chakra-ui/react';
 import Spinner from 'components/core/Feedback/Spinner';
+import Button from 'components/core/Interactive/Button';
+import { CypressProps } from 'utils/types';
 
 export interface DiscordButtonProps extends CypressProps {
   href: string;
@@ -52,7 +52,9 @@ const DiscordButton: React.FC<DiscordButtonProps> = ({
       onClick={openLink}
       lineHeight="1em"
     >
-      <span>{label}</span>
+      <chakra.span overflow="hidden" textOverflow="ellipsis">
+        {label}
+      </chakra.span>
     </Button>
   );
 };

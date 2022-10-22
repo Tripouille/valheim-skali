@@ -1,6 +1,6 @@
 import { PlacementWithLogical, useBreakpointValue } from '@chakra-ui/react';
-import { Callback } from 'utils/types';
 import { ActionPopover } from 'components/core/Overlay/Popover';
+import { Callback } from 'utils/types';
 
 export interface DeletePopoverProps {
   onDelete: Callback;

@@ -1,13 +1,12 @@
 import { useRouter } from 'next/router';
-import React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import Background from 'components/core/Containers/Background';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
 import WikiProposalComponent from 'components/pages/Wiki/WikiProposals/WikiProposal';
 import { WikiProposal } from 'data/wiki';
 import { useWikiProposal } from 'hooks/wiki/useWikiProposal';
-import { getRouteParameterAsString } from 'utils/routes';
 import { QueryKeys, QueryTypes } from 'utils/queryClient';
+import { getRouteParameterAsString } from 'utils/routes';
 
 const WikiProposalPage = () => {
   const router = useRouter();

@@ -1,14 +1,14 @@
 import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
-import { isAdminRole, Role } from 'data/role';
 import Secured from 'components/core/Authentication/Secured';
-import IconButton from 'components/core/Interactive/IconButton';
 import { Table, Td, Tr, Th, Tbody } from 'components/core/DataDisplay/Table';
 import Tag from 'components/core/DataDisplay/Tag';
+import IconButton from 'components/core/Interactive/IconButton';
+import { isAdminRole, Role } from 'data/role';
 import useDeleteRole from 'hooks/roles/useDeleteRole';
 import useUpdateRole from 'hooks/roles/useUpdateRole';
 import useSession from 'hooks/useSession';
-import { CypressProps } from 'utils/types';
+import { rowIconSize } from 'theme/admin';
 import {
   rolePrivilege,
   PermissionCategory,
@@ -16,7 +16,7 @@ import {
   PERMISSION_PRIVILEGE_TO_LABEL,
   isPermissionCategory,
 } from 'utils/permissions';
-import { rowIconSize } from 'theme/admin';
+import { CypressProps } from 'utils/types';
 import RoleForm from './RoleForm';
 
 export interface RoleRowProps extends CypressProps {

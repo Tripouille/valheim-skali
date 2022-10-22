@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   SimpleGrid as ChakraSimpleGrid,
   SimpleGridProps as ChakraSimpleGridProps,

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Flex as ChakraFlex, FlexProps as ChakraFlexProps, forwardRef } from '@chakra-ui/react';
 
 export type FlexProps = ChakraFlexProps;

@@ -1,23 +1,14 @@
 import { chakra } from '@chakra-ui/react';
-import { ROUTES_TO_PERMISSIONS } from 'utils/permissions';
-import { NavRoute } from 'utils/routes';
 import ButtonGroup from 'components/core/Interactive/ButtonGroup';
-import NavItem from 'components/core/Interactive/NavItem';
-import Secured from 'components/core/Authentication/Secured';
+import { Children } from 'utils/types';
 
-export interface HeaderMenuProps {
-  serverName: string;
+interface HeaderMenuProps {
+  navItems: (onClick: undefined) => Children;
 }
 
-const HeaderMenu: React.FC<HeaderMenuProps> = ({ serverName }) => (
+const HeaderMenu: React.FC<HeaderMenuProps> = ({ navItems }) => (
   <chakra.nav ms="2" fontFamily="Norse">
-    <ButtonGroup variant="ghost">
-      {Object.values(NavRoute).map(route => (
-        <Secured key={route} permissions={ROUTES_TO_PERMISSIONS[route]}>
-          <NavItem root={`/${serverName}`} route={route} />
-        </Secured>
-      ))}
-    </ButtonGroup>
+    <ButtonGroup variant="ghost">{navItems(undefined)}</ButtonGroup>
   </chakra.nav>
 );
 

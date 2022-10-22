@@ -1,10 +1,10 @@
-import Router from 'next/router';
+import { Router } from 'next/router';
 import React, { useEffect, useRef } from 'react';
 import { useBoolean } from '@chakra-ui/react';
-import NavBar from './NavBar';
-import Flex from 'components/core/Containers/Flex';
 import Box from 'components/core/Containers/Box';
+import Flex from 'components/core/Containers/Flex';
 import Progress from 'components/core/Feedback/Progress';
+import NavBar from './NavBar';
 
 const Layout: React.FC = ({ children }) => {
   const main = useRef<HTMLDivElement>(null);

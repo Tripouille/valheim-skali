@@ -1,7 +1,7 @@
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
-import Input from 'components/core/Form/Input';
 import FormElement, { FormElementProps } from 'components/core/Form/FormElement';
+import Input from 'components/core/Form/Input';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<FormElementProps>(
   FormElement,

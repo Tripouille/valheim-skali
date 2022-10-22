@@ -1,8 +1,8 @@
-import { Role } from 'data/role';
-import { rolePrivilege, PermissionCategory } from 'utils/permissions';
 import Secured from 'components/core/Authentication/Secured';
 import { Table, Th, Thead, Tr, Tbody } from 'components/core/DataDisplay/Table';
+import { Role } from 'data/role';
 import { tableStyleProps, getCellWidth, rowIconWidth } from 'theme/admin';
+import { rolePrivilege, PermissionCategory } from 'utils/permissions';
 import RoleRow from './RoleRow';
 
 export interface RolesTableProps {

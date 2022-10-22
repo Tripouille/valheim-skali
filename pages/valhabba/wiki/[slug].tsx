@@ -1,11 +1,11 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import React, { useRef } from 'react';
-import getWikiPage from 'api-utils/wiki/getWikiPage';
 import { ServerException } from 'api-utils/common';
+import getWikiPage from 'api-utils/wiki/getWikiPage';
 import getWikiPages from 'api-utils/wiki/getWikiPages';
 import WikiPageComponent from 'components/pages/Wiki/WikiPage';
-import useWikiPage from 'hooks/wiki/useWikiPage';
 import { WikiPage } from 'data/wiki';
+import useWikiPage from 'hooks/wiki/useWikiPage';
 
 interface WikiPageProps {
   wikiPageSerialized: string;

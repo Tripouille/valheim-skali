@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useSession from 'hooks/useSession';
-import { Children } from 'utils/types';
+import { AuthError, SessionStatus } from 'utils/auth';
 import { Permissions } from 'utils/permissions';
 import { getSigninRoute } from 'utils/routes';
-import { AuthError, SessionStatus } from 'utils/auth';
+import { Children } from 'utils/types';
 
 export interface SecuredProps {
   permissions: Permissions | Permissions[];

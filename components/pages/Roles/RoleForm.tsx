@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
-import { CypressProps, Callback } from 'utils/types';
+import Secured from 'components/core/Authentication/Secured';
+import { Table, Tbody, Td, Th, Tr } from 'components/core/DataDisplay/Table';
+import FormModal from 'components/core/Form/FormModal';
+import Input from 'components/core/Form/Input';
+import { ModalBody } from 'components/core/Overlay/Modal';
+import Text from 'components/core/Typography/Text';
 import {
   CreateRoleData,
   getRoleValidationError,
@@ -9,19 +14,14 @@ import {
   ROLE_NAME_IN_GAME_MAX_LENGTH,
   SpecialRoleName,
 } from 'data/role';
+import { darkerBackgroundColor, modalTableHeaderWidth } from 'theme/admin';
 import {
   PermissionCategory,
   PermissionPrivilege,
   rolePrivilege,
   userPrivilege,
 } from 'utils/permissions';
-import Secured from 'components/core/Authentication/Secured';
-import { ModalBody } from 'components/core/Overlay/Modal';
-import { Table, Tbody, Td, Th, Tr } from 'components/core/DataDisplay/Table';
-import Text from 'components/core/Typography/Text';
-import FormModal from 'components/core/Form/FormModal';
-import Input from 'components/core/Form/Input';
-import { darkerBackgroundColor, modalTableHeaderWidth } from 'theme/admin';
+import { CypressProps, Callback } from 'utils/types';
 import RolePermissionsForm from './RolePermissionsForm';
 import RoleReqPermsForm from './RoleReqPermsForm';
 import { getRoleFormData } from './utils';

@@ -1,4 +1,3 @@
-import React from 'react';
 import WikiProposalForm from 'components/pages/Wiki/WikiProposals/WikiProposalForm';
 import useProposeWikiPage from 'hooks/wiki/useProposeWikiPage';
 

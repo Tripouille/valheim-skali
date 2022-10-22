@@ -1,7 +1,7 @@
 import { MdComputer } from 'react-icons/md';
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import IconTitle, { IconTitleProps } from 'components/core/Typography/IconTitle';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<IconTitleProps>(
   IconTitle,

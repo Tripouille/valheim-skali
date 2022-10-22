@@ -19,8 +19,8 @@ import {
   PlacementWithLogical,
 } from '@chakra-ui/react';
 import { Callback, Children, CypressProps } from 'utils/types';
-import Button from '../Interactive/Button';
 import Box from '../Containers/Box';
+import Button from '../Interactive/Button';
 import Portal from './Portal';
 
 export type PopoverProps = ChakraPopoverProps;

@@ -1,10 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 import { compareRolesFromName, Role } from 'data/role';
 import useSession from 'hooks/useSession';
-import { APIRoute } from 'utils/routes';
-import { QueryKeys } from 'utils/queryClient';
 import { PermissionCategory, rolePrivilege } from 'utils/permissions';
+import { QueryKeys } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 
 const getRoles = async (): Promise<Role[]> => {
   const { data } = await axios.get<Role[]>(APIRoute.ROLES);

@@ -1,6 +1,6 @@
 import React from 'react';
-import Heading from 'components/core/Typography/Heading';
 import IconList from 'components/core/DataDisplay/IconList';
+import Heading from 'components/core/Typography/Heading';
 
 const discordRules = [
   'Soyez respectueux et utilisez votre tête, ainsi vous n’aurez pas à vous préoccuper du reste (mais lisez quand même la suite !).',

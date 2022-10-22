@@ -1,8 +1,8 @@
-import { useRouter } from 'next/router';
+import axios from 'axios';
 import { Session } from 'next-auth';
+import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import axios from 'axios';
 import { AuthError, SessionStatus } from 'utils/auth';
 import { Permissions, permissionsMeetRequirement } from 'utils/permissions';
 import { QueryKeys, QueryTypes } from 'utils/queryClient';

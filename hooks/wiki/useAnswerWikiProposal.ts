@@ -1,11 +1,11 @@
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { WikiPage, WikiProposal } from 'data/wiki';
+import { getMessageFromError } from 'utils/error';
 import { QueryKeys } from 'utils/queryClient';
 import { AdminNavRoute, APIRoute, MenuRoute, NavRoute, serverName } from 'utils/routes';
 import { displayErrorToast, displaySuccessToast } from 'utils/toast';
-import { getMessageFromError } from 'utils/error';
 
 const updateWikiProposalOnServer =
   (wikiProposal: WikiProposal) => async (answer: 'validated' | 'rejected') => {

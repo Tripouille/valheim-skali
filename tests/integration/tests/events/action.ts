@@ -1,6 +1,6 @@
 import { SpecialRoleName } from 'data/role';
 import { PermissionCategory, PermissionPrivilege } from 'utils/permissions';
-import { APIRoute, NavRoute, serverName } from 'utils/routes';
+import { APIRoute, getRoute, NavRoute, serverName } from 'utils/routes';
 
 export const seedEvents = () => cy.seedCollection('events', 'events');
 
@@ -11,6 +11,11 @@ export const setVisitorEventPermission = (
 export const setMemberEventPermission = (
   permissionPrivilege: PermissionPrivilege<PermissionCategory.EVENT>,
 ) => cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.EVENT, permissionPrivilege);
+
+export const visitEventsPage = (eventId?: string) => {
+  const queryParams = eventId ? `?id=${eventId}` : '';
+  cy.visit(`${getRoute('events')}${queryParams}`);
+};
 
 export const visitEventsPageAndWaitFor = (routeStartToWaitFor: APIRoute, eventId?: string) => {
   const routeToWaitFor = `${routeStartToWaitFor}*`;

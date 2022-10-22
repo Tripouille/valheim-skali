@@ -1,7 +1,7 @@
 import { action } from '@storybook/addon-actions';
 import Editable, { EditableProps } from 'components/core/Interactive/Editable';
-import { storybookSetup } from 'storybook/config/setup';
 import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<EditableProps>(
   Editable,

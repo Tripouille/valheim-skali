@@ -10,8 +10,8 @@ import {
   AccordionPanelProps as ChakraAccordionPanelProps,
   AccordionIcon,
 } from '@chakra-ui/react';
-import Heading from 'components/core/Typography/Heading';
 import Box from 'components/core/Containers/Box';
+import Heading from 'components/core/Typography/Heading';
 import { Children } from 'utils/types';
 
 export type AccordionProps = ChakraAccordionProps;

@@ -1,5 +1,5 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import axios from 'axios';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import {
   getWikiProposalWithAuthorName,
   sortWikiProposals,
@@ -9,8 +9,8 @@ import {
 import { useUsers } from 'hooks/users/useUsers';
 import useSession from 'hooks/useSession';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
-import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 
 export const getWikiProposalsOnServer = async (): Promise<WikiProposal[]> => {
   const { data } = await axios.get<WikiProposal[]>(APIRoute.WIKI_PROPOSALS);

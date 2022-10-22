@@ -1,6 +1,6 @@
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import WikiPageComponent from 'components/pages/Wiki/WikiPage';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import wikiPageWithMarkup from './wikiPageWithMarkup.json';
 

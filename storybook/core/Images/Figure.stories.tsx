@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import Figure, { FigureProps } from 'components/core/Images/Figure';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<FigureProps>(
   Figure,

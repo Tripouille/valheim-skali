@@ -1,5 +1,5 @@
-import React from 'react';
 import { signIn, signOut } from 'next-auth/react';
+import React from 'react';
 import { MdLogin, MdLogout } from 'react-icons/md';
 import { MenuItem } from 'components/core/Overlay/Menu';
 

@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
-import { compareRolesFromName, Role } from 'data/role';
-import { canUserAssignRole, getUserRoles, User } from 'data/user';
-import { Wrap } from 'components/core/Containers/Wrap';
 import Box from 'components/core/Containers/Box';
-import { Menu, MenuButton, MenuItem, MenuList } from 'components/core/Overlay/Menu';
+import { Wrap } from 'components/core/Containers/Wrap';
 import Tag from 'components/core/DataDisplay/Tag';
 import Button from 'components/core/Interactive/Button';
+import { Menu, MenuButton, MenuItem, MenuList } from 'components/core/Overlay/Menu';
+import { compareRolesFromName, Role } from 'data/role';
+import { canUserAssignRole, getUserRoles, User } from 'data/user';
 import useUpdateUser from 'hooks/users/useUpdateUser';
 import useSession from 'hooks/useSession';
 import { PermissionCategory, userPrivilege } from 'utils/permissions';

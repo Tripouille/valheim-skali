@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { User } from 'data/user';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
-import { APIRoute } from 'utils/routes';
 import { QueryKeys, QueryTypes } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 
 const deleteUserOnServer = (deletedUser: User) => async () => {
   await axios.delete(`${APIRoute.USERS}/${deletedUser._id}`);

@@ -1,8 +1,8 @@
 import { action } from '@storybook/addon-actions';
-import Textarea, { TextareaProps } from 'components/core/Form/Textarea';
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import { FormLabel } from 'components/core/Form/FormControl';
+import Textarea, { TextareaProps } from 'components/core/Form/Textarea';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<TextareaProps>(
   Textarea,

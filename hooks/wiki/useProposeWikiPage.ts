@@ -1,6 +1,6 @@
-import { useRouter } from 'next/router';
 import axios from 'axios';
 import { DateTime } from 'luxon';
+import { useRouter } from 'next/router';
 import { WikiPageContent, WikiProposalWithAuthor } from 'data/wiki';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import useSession from 'hooks/useSession';

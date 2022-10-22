@@ -1,7 +1,7 @@
 import React from 'react';
+import { Accordion, TitleAccordionItem } from 'components/core/Disclosure/Accordion';
 import Heading from 'components/core/Typography/Heading';
 import Paragraphs from 'components/core/Typography/Paragraphs';
-import { Accordion, TitleAccordionItem } from 'components/core/Disclosure/Accordion';
 import InstanceRules from './InstanceRules';
 import StreamerRules from './StreamerRules';
 

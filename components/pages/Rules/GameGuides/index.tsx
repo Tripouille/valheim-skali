@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdCircle } from 'react-icons/md';
-import { Accordion, TitleAccordionItem } from 'components/core/Disclosure/Accordion';
 import IconList from 'components/core/DataDisplay/IconList';
+import { Accordion, TitleAccordionItem } from 'components/core/Disclosure/Accordion';
 
 const forbidden = [
   `Se cacher, ou de cacher sa base, derrière une muraille de terre surélevée, derrière un fossé, derrière des murs d’arbres ou derrière une construction boguée et invulnérable.`,

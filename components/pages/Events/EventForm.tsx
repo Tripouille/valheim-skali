@@ -1,21 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
 import { DateTime } from 'luxon';
-import { CypressProps, Callback } from 'utils/types';
-import { CONTINUOUS_LABEL } from 'utils/constants';
+import { useEffect, useRef, useState } from 'react';
+import { Stack } from 'components/core/Containers/Stack';
+import FormElement from 'components/core/Form/FormElement';
+import FormModal from 'components/core/Form/FormModal';
+import Input from 'components/core/Form/Input';
+import Switch from 'components/core/Form/Switch';
+import Textarea from 'components/core/Form/Textarea';
+import { ModalBody, ModalHeader } from 'components/core/Overlay/Modal';
 import {
   CreateEventData,
   Event,
   EVENT_VALUES_MAX_LENGTH,
   getEventValidationError,
 } from 'data/event';
-import { ModalBody, ModalHeader } from 'components/core/Overlay/Modal';
-import { Stack } from 'components/core/Containers/Stack';
-import FormModal from 'components/core/Form/FormModal';
-import FormElement from 'components/core/Form/FormElement';
-import Input from 'components/core/Form/Input';
-import Switch from 'components/core/Form/Switch';
-import Textarea from 'components/core/Form/Textarea';
+import { CONTINUOUS_LABEL } from 'utils/constants';
 import { toInputDatetimeFormat } from 'utils/format';
+import { CypressProps, Callback } from 'utils/types';
 import EventTagsForm from './EventTagsForm';
 
 const getDefaultEventFormData = (): Partial<CreateEventData> => ({

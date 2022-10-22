@@ -2,11 +2,11 @@ import NextLink from 'next/link';
 import { BsPlusLg } from 'react-icons/bs';
 import Background from 'components/core/Containers/Background';
 import { Grid } from 'components/core/Containers/Grid';
+import { VStack } from 'components/core/Containers/Stack';
+import Button from 'components/core/Interactive/Button';
+import Link from 'components/core/Interactive/Link';
 import PageTitle from 'components/core/Typography/PageTitle';
 import WikiProposalsTable from 'components/pages/Wiki/WikiProposals/WikiProposalsTable';
-import Button from 'components/core/Interactive/Button';
-import { VStack } from 'components/core/Containers/Stack';
-import Link from 'components/core/Interactive/Link';
 import { NavRoute, serverName } from 'utils/routes';
 
 const UserWikiProposals = () => {

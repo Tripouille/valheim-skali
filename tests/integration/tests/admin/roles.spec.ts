@@ -102,6 +102,7 @@ describe('roles page', () => {
     it('should be able to edit a role', () => {
       cy.intercept('PUT', `${APIRoute.ROLES}/*`).as('updateRole');
 
+      Select.roleLines().should('have.length', 5);
       cy.dataCy('role-2').dataCy('edit', 'button').click();
       cy.dataCy('edit-role-modal').dataCy('name', 'input').should('have.value', 'Modo').type('2');
       Select.permissionsFormSelect('USER').select('1_READ');

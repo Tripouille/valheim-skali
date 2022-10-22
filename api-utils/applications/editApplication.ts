@@ -1,6 +1,7 @@
 import { ObjectId } from 'bson';
 import { DateTime } from 'luxon';
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
+import { getSession } from 'next-auth/react';
 import { requirePermissions } from 'api-utils/auth';
 import { ServerException } from 'api-utils/common';
 import db from 'api-utils/db';
@@ -9,41 +10,40 @@ import {
   applicationsCollectionName,
   isCreateApplicationDataWithUserId,
 } from 'data/application';
-import { UserInDb, usersCollectionName } from 'data/user';
 import { PermissionCategory, applicationPrivilege } from 'utils/permissions';
-import {
-  isCreateApplicationData,
-  isValidCreateApplicationData,
-  shortenApplicationTextProperties,
-} from './utils';
+import { checkApplicationUserExists, getCreateApplicationData } from './utils';
 
 const editApplication = async (req: Req, res: Res) => {
-  await requirePermissions({ [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE }, req);
-
   const { id } = req.query as { id: string };
 
   const application = await db.findOne<ApplicationInDb>(applicationsCollectionName, {
     _id: new ObjectId(id),
   });
   if (!application) throw new ServerException(404);
+
+  const session = await getSession({ req });
+  const isOwnApplication =
+    'userId' in application &&
+    application.userId &&
+    session?.user._id === application.userId.toString();
+  if (!isOwnApplication)
+    await requirePermissions(
+      { [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE },
+      req,
+    );
+
   const lastComment = application.comments[0];
   const lastCommentIsApplicationEdition = lastComment?.authorId === 'system';
 
-  const applicationCreateData: unknown = req.body;
-  if (!isCreateApplicationData(applicationCreateData)) throw new ServerException(400);
-  if (!isValidCreateApplicationData(applicationCreateData)) throw new ServerException(400);
-  shortenApplicationTextProperties(applicationCreateData);
+  const applicationCreateData = getCreateApplicationData(req.body);
 
   const isDataWithUserId = isCreateApplicationDataWithUserId(applicationCreateData);
 
-  if (isDataWithUserId && !('userId' in application)) {
-    const user = await db.findOne<UserInDb>(usersCollectionName, {
-      _id: new ObjectId(applicationCreateData.userId),
-    });
-    if (!user) throw new ServerException(404);
-
+  if (isDataWithUserId) {
+    await checkApplicationUserExists(applicationCreateData);
     const applicationForSameUser = await db.findOne<ApplicationInDb>(applicationsCollectionName, {
       userId: new ObjectId(applicationCreateData.userId),
+      ...('userId' in application && { _id: { $ne: new ObjectId(id) } }),
     });
     if (applicationForSameUser) throw new ServerException(409);
   }
@@ -78,7 +78,7 @@ const editApplication = async (req: Req, res: Res) => {
   );
   if (!result.ok) throw new ServerException(500);
 
-  res.status(200).json(result.value);
+  res.status(200).end();
 };
 
 export default editApplication;

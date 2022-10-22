@@ -2,8 +2,8 @@ import axios from 'axios';
 import { useQueryClient } from '@tanstack/react-query';
 import { WikiPage, WikiPageTag } from 'data/wiki';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
-import { APIRoute } from 'utils/routes';
 import { QueryKeys } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 
 enum AddOrRemoveAction {
   ADD = 'add',

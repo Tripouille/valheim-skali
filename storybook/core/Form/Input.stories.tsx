@@ -1,8 +1,8 @@
 import { action } from '@storybook/addon-actions';
-import Input, { InputProps } from 'components/core/Form/Input';
-import { storybookSetup } from 'storybook/config/setup';
-import { StoryCategory } from 'storybook/config/constants';
 import { FormLabel } from 'components/core/Form/FormControl';
+import Input, { InputProps } from 'components/core/Form/Input';
+import { StoryCategory } from 'storybook/config/constants';
+import { storybookSetup } from 'storybook/config/setup';
 
 const { defaultExport, StoryFactory } = storybookSetup<InputProps>(Input, StoryCategory.CORE_FORM, {
   decorators: [

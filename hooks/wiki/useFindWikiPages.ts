@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { WikiPage } from 'data/wiki';
-import { APIRoute } from 'utils/routes';
-import { QueryKeys } from 'utils/queryClient';
 import { sendGoogleTagManagerCustomEvent } from 'utils/googleTagManager';
+import { QueryKeys } from 'utils/queryClient';
+import { APIRoute } from 'utils/routes';
 
 const findWikiPageOnServer = (searchString: string) => async (): Promise<WikiPage[]> => {
   sendGoogleTagManagerCustomEvent('search_wiki_page', { search_term: searchString });

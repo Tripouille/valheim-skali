@@ -1,15 +1,14 @@
-import React from 'react';
-import { OldNavRoute, ROUTES_TO_LABEL } from 'utils/routes';
-import { GiPilgrimHat, GiStabbedNote } from 'react-icons/gi';
 import { BsShopWindow } from 'react-icons/bs';
+import { GiPilgrimHat, GiStabbedNote } from 'react-icons/gi';
 import Background from 'components/core/Containers/Background';
 import { VStack } from 'components/core/Containers/Stack';
-import PageTitle from 'components/core/Typography/PageTitle';
-import Text from 'components/core/Typography/Text';
-import Paragraphs from 'components/core/Typography/Paragraphs';
-import IconTitle from 'components/core/Typography/IconTitle';
-import DiscordButton from 'components/core/Interactive/DiscordButton';
 import ZoomableImage from 'components/core/Images/ZoomableImage';
+import DiscordButton from 'components/core/Interactive/DiscordButton';
+import IconTitle from 'components/core/Typography/IconTitle';
+import PageTitle from 'components/core/Typography/PageTitle';
+import Paragraphs from 'components/core/Typography/Paragraphs';
+import Text from 'components/core/Typography/Text';
+import { OldNavRoute, ROUTES_TO_LABEL } from 'utils/routes';
 
 const Trade = () => {
   return (

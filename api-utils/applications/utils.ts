@@ -1,12 +1,18 @@
-import { isRequiredObjectType } from 'api-utils/common';
+import { ObjectId } from 'bson';
+import { isRequiredObjectType, ServerException } from 'api-utils/common';
+import db from 'api-utils/db';
 import {
+  ApplicationComment,
   ApplicationFormAnswer,
   applicationFormKeys,
   APPLICATION_DISCORD_NAME_MAX_LENGTH,
   APPLICATION_FORM_KEYS_TO_FORM_PROPERTIES,
   CreateApplicationData,
+  CreateApplicationDataWithUserId,
   isCreateApplicationDataWithUserId,
+  WithUserInfos,
 } from 'data/application';
+import { UserInDb, usersCollectionName } from 'data/user';
 import { isFilled } from 'utils/validation';
 
 const applicationFormAnswerKeyToValueTypeCheck = applicationFormKeys.reduce(
@@ -32,14 +38,14 @@ const applicationKeyToValueTypeCheck: Record<
   userId: value => value === undefined || typeof value === 'string',
 };
 
-export const isCreateApplicationData = (data: unknown): data is CreateApplicationData =>
+const isCreateApplicationData = (data: unknown): data is CreateApplicationData =>
   isRequiredObjectType(data, applicationKeyToValueTypeCheck) &&
   (data.discordName.length || data.userId.length);
 
-export const isValidCreateApplicationData = (data: CreateApplicationData) =>
+const isValidCreateApplicationData = (data: CreateApplicationData) =>
   isCreateApplicationDataWithUserId(data) ? data.userId.length : data.discordName.length;
 
-export const shortenApplicationTextProperties = (applicationCreateData: CreateApplicationData) => {
+const shortenApplicationTextProperties = (applicationCreateData: CreateApplicationData) => {
   for (const key of applicationFormKeys) {
     const value = applicationCreateData.applicationFormAnswer[key];
     applicationCreateData.applicationFormAnswer[key] = value.substring(
@@ -53,4 +59,36 @@ export const shortenApplicationTextProperties = (applicationCreateData: CreateAp
       APPLICATION_DISCORD_NAME_MAX_LENGTH,
     );
   }
+};
+
+export const getCreateApplicationData = (data: unknown): CreateApplicationData => {
+  if (!isCreateApplicationData(data)) throw new ServerException(400);
+  if (!isValidCreateApplicationData(data)) throw new ServerException(400);
+  shortenApplicationTextProperties(data);
+  return data;
+};
+
+export const getCommentWithUserInfos = (
+  comment: ApplicationComment<ObjectId>,
+  users: UserInDb[],
+): WithUserInfos<ApplicationComment<ObjectId>> => {
+  const commentAuthor = users.find(user => user._id.equals(comment.authorId));
+  return {
+    ...comment,
+    discordName:
+      comment.authorId === 'system'
+        ? comment.authorId
+        : commentAuthor?.name ?? 'Utilisateur supprimé',
+    nameInGame: commentAuthor?.nameInGame,
+    discordImageUrl: commentAuthor?.image,
+  };
+};
+
+export const checkApplicationUserExists = async (
+  applicationCreateData: CreateApplicationDataWithUserId,
+) => {
+  const user = await db.findOne<UserInDb>(usersCollectionName, {
+    _id: new ObjectId(applicationCreateData.userId),
+  });
+  if (!user) throw new ServerException(404);
 };
