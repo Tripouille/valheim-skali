@@ -3,7 +3,7 @@ import reactStringReplace from 'react-string-replace';
 import { chakra } from '@chakra-ui/react';
 import Box from 'components/core/Containers/Box';
 import { Grid } from 'components/core/Containers/Grid';
-import DynamicallyLoadedIcon from 'components/core/Images/DynamicallyLoadedIcon';
+import DynamicIcon from 'components/core/Images/DynamicIcon';
 import ZoomableImage from 'components/core/Images/ZoomableImage';
 import DiscordButton from 'components/core/Interactive/DiscordButton';
 import Link from 'components/core/Interactive/Link';
@@ -77,9 +77,7 @@ const simpleMarkups: SimpleMarkupProperties[] = [
   {
     startSymbol: '{{',
     endSymbol: '}}',
-    getComponent: (content, _, key) => (
-      <DynamicallyLoadedIcon key={++key.value} iconName={content} />
-    ),
+    getComponent: (content, _, key) => <DynamicIcon key={++key.value} iconName={content} />,
   },
   {
     startSymbol: '\\[',

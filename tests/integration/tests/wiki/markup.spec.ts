@@ -97,8 +97,8 @@ describe('markup', () => {
     cy.dataCy('content', 'div').should('include.html', '<span title="Icône non trouvée"');
     cy.dataCy('content', 'textarea').clear().type('{{}{{}Gi3DHammer}}');
     cy.dataCy('content', 'div')
-      .should('not.include.html', '<span title="Icône non trouvée"')
-      .and('include.html', '<svg');
+      .should('include.html', '<svg')
+      .and('not.include.html', '<span title="Icône non trouvée"');
   });
 
   it('Image', () => {
