@@ -42,16 +42,18 @@ const WikiProposalForm: React.FC<WikiProposalFormProps> = ({
   onSubmit,
 }) => {
   const [formData, setFormData] = useState<Partial<WikiPageContent>>(() => {
-    const localStorageData =
-      typeof window !== 'undefined'
-        ? localStorage.getItem(getWikiFormDataLocalStorageKey({ wikiProposal, wikiPage }))
-        : null;
-    if (localStorageData) return JSON.parse(localStorageData);
-    else if (wikiProposal) return getFormDataFromWikiProposal(wikiProposal);
+    if (wikiProposal) return getFormDataFromWikiProposal(wikiProposal);
     else if (wikiPage) return getFormDataFromWikiPage(wikiPage);
     else return {};
   });
   const [validationError, setValidationError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const localStorageFormData = localStorage.getItem(
+      getWikiFormDataLocalStorageKey({ wikiProposal, wikiPage }),
+    );
+    if (localStorageFormData) setFormData(JSON.parse(localStorageFormData));
+  }, [wikiPage, wikiProposal]);
 
   const onFormDataChange =
     <T extends keyof WikiPageContent>(key: T) =>
