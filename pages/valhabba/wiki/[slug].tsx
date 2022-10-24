@@ -1,5 +1,4 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import React, { useRef } from 'react';
 import { ServerException } from 'api-utils/common';
 import getWikiPage from 'api-utils/wiki/getWikiPage';
 import getWikiPages from 'api-utils/wiki/getWikiPages';
@@ -12,7 +11,7 @@ interface WikiPageProps {
 }
 
 const WikiPagePage: React.FC<WikiPageProps> = ({ wikiPageSerialized }) => {
-  const initialWikiPage = useRef<WikiPage>(JSON.parse(wikiPageSerialized)).current;
+  const initialWikiPage: WikiPage = JSON.parse(wikiPageSerialized);
 
   const wikiPageQuery = useWikiPage(initialWikiPage._id, { initialData: initialWikiPage });
 

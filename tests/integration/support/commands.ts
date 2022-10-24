@@ -6,7 +6,7 @@ Cypress.Commands.add('dataCy', { prevSubject: 'optional' }, (subject, value, sel
     return (subject as Cypress.Chainable<JQuery<HTMLElement>>).find(
       `${selector}[data-cy="${value}"]`,
     );
-  return cy.get(`${selector}[data-cy="${value}"]`, { timeout: 3000 });
+  return cy.get(`${selector}[data-cy="${value}"]`, { timeout: 5000 });
 });
 
 Cypress.Commands.add('main', options => cy.get('main', options));
