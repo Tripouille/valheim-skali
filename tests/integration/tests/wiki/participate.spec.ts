@@ -1,4 +1,5 @@
 import { SpecialRoleName } from 'data/role';
+import { WikiPage } from 'data/wiki';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
 import { APIRoute, NavRoute, serverName } from 'utils/routes';
 import * as Action from './action';
@@ -27,6 +28,28 @@ describe('participate to wiki and edit wiki pages', () => {
   context('without wiki permission', () => {
     before(() => {
       cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.WIKI, wikiPrivilege.NONE);
+    });
+
+    it('can use an internal link', () => {
+      cy.fixture<Array<WikiPage>>('wikiPages').then(data =>
+        cy.task('seedCollection', {
+          collectionName: 'wikiPages',
+          data: [
+            ...data,
+            {
+              ...data[0],
+              _id: '6228cb385f506b78affc0ac4',
+              slug: 'wiki-page-4',
+              title: 'Wiki page 4',
+              content: 'Here is an internal link: [[Wiki page 1]].',
+            },
+          ],
+        }),
+      );
+      cy.revalidate([`/${serverName}/wiki/wiki-page-4`]);
+      Action.visitWikiPage('wiki-page-4');
+      cy.main().get('a').contains('Wiki page 1').click();
+      cy.main({ timeout: 10000 }).should('contain.text', 'Wiki page 1 content');
     });
 
     it('should not see the participate button in wiki home', () => {

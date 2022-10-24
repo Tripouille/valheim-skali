@@ -112,7 +112,7 @@ describe('wiki pages', () => {
         cy.main().should('not.contain.text', "L'essentielWiki page 1Wiki page 2Wiki page 3");
       });
 
-      it.only('should navigate to wiki page on click and track views', () => {
+      it('should navigate to wiki page on click and track views', () => {
         cy.intercept('PUT', `${APIRoute.WIKI}/wiki-page-1/trackView`).as('trackView');
         Select.wikiPagesLines().should('have.length', 3);
         cy.dataCy('wiki-page-0').find('td').first().click();
