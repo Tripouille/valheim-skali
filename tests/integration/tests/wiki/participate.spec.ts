@@ -1,7 +1,7 @@
 import { SpecialRoleName } from 'data/role';
 import { WikiPage } from 'data/wiki';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
-import { APIRoute, NavRoute, serverName } from 'utils/routes';
+import { APIRoute, getRoute, NavRoute, serverName } from 'utils/routes';
 import * as Action from './action';
 import * as Select from './select';
 
@@ -48,7 +48,11 @@ describe('participate to wiki and edit wiki pages', () => {
       );
       cy.revalidate([`/${serverName}/wiki/wiki-page-4`]);
       Action.visitWikiPage('wiki-page-4');
-      cy.main().get('a').contains('Wiki page 1').click();
+      cy.main()
+        .find('a')
+        .should('have.attr', 'href', getRoute('wiki/wiki-page-1'))
+        .and('contain.text', 'Wiki page 1')
+        .click();
       cy.main({ timeout: 10000 }).should('contain.text', 'Wiki page 1 content');
     });
 

@@ -119,7 +119,6 @@ describe('wiki pages', () => {
         cy.get('main', { timeout: 6000 }).should('contain.text', 'Wiki page 1 content');
         cy.wait('@trackView');
 
-        cy.intercept(APIRoute.WIKI).as('getWikiPages');
         cy.go('back');
         cy.wait('@getWikiPages');
         cy.dataCy('wiki-page-0').dataCy('views').should('contain.text', 1);
