@@ -184,7 +184,7 @@ describe('participate to wiki and edit wiki pages', () => {
       cy.intercept('GET', APIRoute.WIKI_PROPOSALS).as('getWikiProposals');
       cy.intercept('GET', `${APIRoute.WIKI_PROPOSALS}/*`).as('getWikiProposal');
 
-      // Propose edition
+      // Edit proposal
       Action.visitWikiPage();
       cy.dataCy('participate').click();
       cy.wait('@getWikiProposals');
@@ -197,18 +197,20 @@ describe('participate to wiki and edit wiki pages', () => {
       cy.dataCy('title', 'input').should('have.value', 'Proposal 1').type(' edited');
       cy.dataCy('content', 'textarea')
         .should('have.value', 'Content of proposal 1')
-        .type(' edited');
+        .clear()
+        .type('Content edited of proposal 1');
       cy.dataCy('submit', 'button').click();
+      cy.wait('@editWikiProposal');
 
       // See proposal
-      cy.wait('@editWikiProposal');
       cy.wait('@getWikiProposal');
+      cy.main().find('button').last().click();
       cy.main()
         .should('contain.text', '← Voir toutes mes propositions')
         .and('contain.text', 'Modifier')
         .and('contain.text', 'Proposal 1 edited')
-        .and('contain.text', 'Content of proposal 1 edited')
-        .and('contain.text', 'Proposal 1')
+        .and('contain.text', 'Content edited of proposal 1')
+        .and('contain.text', 'Content of proposal 1')
         .and('contain.text', 'Proposé par TestUser');
 
       // Validate
@@ -220,7 +222,7 @@ describe('participate to wiki and edit wiki pages', () => {
       cy.dataCy('validate').click();
       cy.dataCy('confirm-validate').click();
       cy.url({ timeout: 5000 }).should('include', '/wiki/proposal-1-edited');
-      cy.main().should('have.text', 'Proposal 1 editedContent of proposal 1 edited');
+      cy.main().should('have.text', 'Proposal 1 editedContent edited of proposal 1');
     });
 
     it('should be able to edit a wiki page edition proposal, and the last version is used when validated', () => {
