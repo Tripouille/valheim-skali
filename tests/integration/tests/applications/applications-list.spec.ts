@@ -193,6 +193,7 @@ describe('applications list', () => {
       cy.dataCy('comment').dataCy('cancel-comment-edition').click();
       cy.dataCy('comment').find('textarea').should('not.be.visible');
       cy.dataCy('comment').should('contain.text', 'I like this guy !');
+      cy.wait(200);
 
       // Edit comment
       cy.dataCy('comment').dataCy('edit').click();

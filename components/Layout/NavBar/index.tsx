@@ -31,6 +31,7 @@ const NavBar = () => {
                 if (session.data?.isNonMember && session.data.hasApplication)
                   return (
                     <NavItem
+                      key={NavRoute.MY_APPLICATION}
                       root={`/${serverName}`}
                       route={NavRoute.MY_APPLICATION}
                       onClick={onClick}

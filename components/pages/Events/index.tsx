@@ -53,7 +53,7 @@ const Events = () => {
   const createEvent = useCreateEvent(createModal.onClose);
 
   return (
-    <Secured permissions={{ [PermissionCategory.EVENT]: eventPrivilege.READ }} redirectOnFail>
+    <Secured permissions={{ [PermissionCategory.EVENT]: eventPrivilege.READ }}>
       <Background data-cy="events">
         <VStack spacing="7" position="relative">
           <PageTitle title={ROUTES_TO_LABEL[NavRoute.EVENTS]} />

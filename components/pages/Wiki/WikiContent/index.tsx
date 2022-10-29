@@ -165,17 +165,6 @@ export const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
     );
   });
 
-  component = reactStringReplace(component, simpleMarkupsRegex, match => {
-    for (const markup of simpleMarkups) {
-      const matchResult = match.match(
-        new RegExp(`^${markup.startSymbol}(?<content>.+?)${markup.endSymbol}$`),
-      );
-      if (matchResult)
-        return markup.getComponent(matchResult.groups?.content as string, convertMarkup, key);
-    }
-    console.error("Couldn't find simple markup");
-  });
-
   component = reactStringReplace(
     component,
     /(<<.+?>>(?:\d+x\d+)?(?:[trhbgd])*(?:\(.*\))?)/g,
@@ -192,12 +181,23 @@ export const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
             height={height ? Number(height) : 200}
             objectFit={objectFit}
             objectPosition={objectPosition}
-            legend={legend}
+            legend={legend ? convertMarkup(legend, key) : undefined}
           />
         </Box>
       );
     },
   );
+
+  component = reactStringReplace(component, simpleMarkupsRegex, match => {
+    for (const markup of simpleMarkups) {
+      const matchResult = match.match(
+        new RegExp(`^${markup.startSymbol}(?<content>.+?)${markup.endSymbol}$`),
+      );
+      if (matchResult)
+        return markup.getComponent(matchResult.groups?.content as string, convertMarkup, key);
+    }
+    console.error("Couldn't find simple markup");
+  });
 
   component = reactStringReplace(component, /(\r\n|\r|\n)/g, () => <br key={++key.value} />);
 

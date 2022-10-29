@@ -4,7 +4,7 @@ import { chakra, shouldForwardProp, useBoolean } from '@chakra-ui/react';
 import Image from 'components/core/Images/Image';
 import Button from 'components/core/Interactive/Button';
 import ImageModal from 'components/core/Overlay/ImageModal';
-import { CypressProps } from 'utils/types';
+import { Children, CypressProps } from 'utils/types';
 import Box from '../Containers/Box';
 
 export interface ZoomableImageProps extends CypressProps {
@@ -14,7 +14,7 @@ export interface ZoomableImageProps extends CypressProps {
   height: number;
   objectFit?: NextImageProps['objectFit'];
   objectPosition?: NextImageProps['objectPosition'];
-  legend?: string;
+  legend?: Children;
   className?: string;
 }
 

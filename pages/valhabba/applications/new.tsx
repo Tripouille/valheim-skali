@@ -14,6 +14,7 @@ const NewApplicationPage = () => {
     onSuccess: (application: Application) => {
       displaySuccessToast({ title: 'Votre candidature a bien été enregistrée !' });
       queryClient.setQueryData([QueryKeys.MY_APPLICATION], application);
+      queryClient.invalidateQueries([QueryKeys.SESSION]);
       router.push(getRoute('applications/me'));
     },
   });
