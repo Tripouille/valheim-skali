@@ -24,8 +24,8 @@ const ImageModal: React.FC<ImageModalProps> = ({ 'data-cy': dataCy, src, alt, on
       onClick={onClick}
       data-cy={`${dataCy}-modal`}
     >
-      <Box pos="relative" cursor="pointer" w="95%" h="95%">
-        <Image layout="fill" objectFit="contain" src={src} alt={alt} borderRadius="xl" />
+      <Box pos="relative" cursor="pointer" w="95%" h="95%" display="flex" justifyContent="center">
+        <Image layout="fill" objectFit="scale-down" src={src} alt={alt} borderRadius="xl" />
       </Box>
     </Center>
   </Portal>
