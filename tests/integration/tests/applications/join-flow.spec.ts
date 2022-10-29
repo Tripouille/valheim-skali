@@ -99,6 +99,7 @@ describe('join flow', () => {
 
       // Can see questionnaire and discord links
       cy.dataCy('go-to-questionnaire', 'a').should('exist');
+      cy.dataCy('discord-invite', 'a').should('exist');
       cy.dataCy('discord-make-appointment', 'a').should('exist');
 
       // Still see the join link on home

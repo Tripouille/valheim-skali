@@ -7,16 +7,20 @@ import { CypressProps } from 'utils/types';
 export interface DiscordButtonProps extends CypressProps {
   href: string;
   label?: string;
+  isInvitation?: true;
 }
 
 const DiscordButton: React.FC<DiscordButtonProps> = ({
   'data-cy': dataCy,
   href,
   label = 'Lien discord',
+  isInvitation,
 }) => {
   const [isLoading, setLoading] = useBoolean();
 
   const openLink = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (isInvitation) return;
+
     e.preventDefault();
     e.stopPropagation();
 
@@ -51,6 +55,7 @@ const DiscordButton: React.FC<DiscordButtonProps> = ({
       leftIcon={isLoading ? <Spinner size="sm" emptyColor="blue.200" /> : <FaDiscord />}
       onClick={openLink}
       lineHeight="1em"
+      target="_blank"
     >
       <chakra.span overflow="hidden" textOverflow="ellipsis">
         {label}
