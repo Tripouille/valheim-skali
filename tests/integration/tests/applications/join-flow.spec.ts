@@ -79,6 +79,7 @@ describe('join flow', () => {
 
       // See my application
       cy.get('body').should('contain.text', 'Votre candidature a bien été enregistrée !');
+      cy.dataCy('Ma candidature-nav-item').should('exist');
       cy.main()
         .should('contain.text', "En attente d'un entretien")
         .and(
