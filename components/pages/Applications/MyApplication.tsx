@@ -64,14 +64,19 @@ const MyApplication = () => {
                     Clique ici pour répondre au questionnaire sur le règlement
                   </Button>
                 </a>,
-                <Box key="discord-make-appointment">
-                  <DiscordButton
-                    data-cy="discord-make-appointment"
-                    href="https://discord.com/channels/1020648216552816661/1023619919830601809"
-                    label="Rejoins notre Discord"
-                  />{' '}
-                  et donne tes disponibilités pour prendre rendez-vous avec un Viking du Valhabba
-                </Box>,
+                <DiscordButton
+                  key="discord-invite"
+                  data-cy="discord-invite"
+                  href="https://discord.gg/Bvs2HjgDN5"
+                  label="Rejoins notre Discord"
+                  isInvitation
+                />,
+                <DiscordButton
+                  key="discord-make-appointment"
+                  data-cy="discord-make-appointment"
+                  href="https://discord.com/channels/1020648216552816661/1023619919830601809"
+                  label="Rends-toi dans le salon #Prendre-un-rendez-vous pour donner tes disponibilités et être contacté par un Sympathiseur !"
+                />,
               ]}
               marginTop="3"
             />
