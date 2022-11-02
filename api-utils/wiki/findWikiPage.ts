@@ -8,7 +8,7 @@ const getResultScore = (wikiPage: WikiPageInDb, regex: RegExp) => {
 };
 
 const findWikiPage = async (searchString: string): Promise<WikiPageInDb[]> => {
-  const regex = new RegExp(searchString.trim(), 'i');
+  const regex = new RegExp(searchString.replace(/[-\/.*+?^${}()|[\]\\]/g, '\\$&').trim(), 'i');
   const mongoRegex = { $regex: regex };
   const wikiPages = await db.find<WikiPageInDb>(
     wikiPagesCollectionName,
