@@ -21,8 +21,8 @@ import {
 import useDeleteApplication from 'hooks/applications/useDeleteApplication';
 import useEditApplication from 'hooks/applications/useEditApplication';
 import { applicationPrivilege, PermissionCategory } from 'utils/permissions';
-import { Callback, Entries } from 'utils/types';
-import ApplicationAnswerLine from './ApplicationAnswerLine';
+import { Callback } from 'utils/types';
+import ApplicationAnswers from './ApplicationAnswers';
 import ApplicationComments from './ApplicationComments';
 import ApplicationDate from './ApplicationDate';
 import ApplicationForm from './ApplicationForm';
@@ -44,10 +44,6 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ application, isOpen
   const editionModal = useDisclosure();
   const editApplication = useEditApplication(application, { onSuccess: editionModal.onClose });
   const deleteApplication = useDeleteApplication(application);
-
-  const applicationFormEntries = Object.entries(application.applicationFormAnswer) as Entries<
-    typeof application['applicationFormAnswer']
-  >;
 
   const onEditionSubmit = (createApplicationData: CreateApplicationData) => {
     if (
@@ -75,11 +71,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ application, isOpen
           <Text textAlign="end" fontStyle="italic">
             Candidature créée le <ApplicationDate date={application.createdAt} />
           </Text>
-          <Box>
-            {applicationFormEntries.map(([questionKey, answer]) => (
-              <ApplicationAnswerLine key={questionKey} questionKey={questionKey} answer={answer} />
-            ))}
-          </Box>
+          <ApplicationAnswers application={application} />
           <Secured permissions={{ [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE }}>
             <IconButton
               data-cy="edit"
