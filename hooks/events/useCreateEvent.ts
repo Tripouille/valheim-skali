@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CreateEventData, Event, getEventDataForServer } from 'data/event';
 import { getMessageFromError } from 'utils/error';
 import { QueryKeys } from 'utils/queryClient';
-import { APIRoute, getRoute } from 'utils/routes';
+import { APIRoute, getRoute, NavRoute } from 'utils/routes';
 import { displayErrorToast, displaySuccessToast } from 'utils/toast';
 
 const createEventOnServer = async (eventData: CreateEventData) => {
@@ -21,7 +21,7 @@ const useCreateEvent = () => {
     onError: error => displayErrorToast({ title: getMessageFromError(error) }),
     onSuccess: newEvent => {
       displaySuccessToast({ title: "L'événement a bien été créé." });
-      router.push(getRoute(`events?id=${newEvent._id}`));
+      router.push(getRoute(`${NavRoute.EVENTS}?id=${newEvent._id}`));
     },
     onSettled: () => queryClient.invalidateQueries([QueryKeys.EVENTS]),
   });

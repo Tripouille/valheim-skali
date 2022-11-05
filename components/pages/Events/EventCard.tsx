@@ -17,7 +17,7 @@ import {
 } from 'components/core/Overlay/Modal';
 import { Event, isEventClosed } from 'data/event';
 import { eventPrivilege, PermissionCategory } from 'utils/permissions';
-import { getRoute } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 import { CypressProps } from 'utils/types';
 import EventItem from './EventItem';
 import { editIconSize, EventContext } from './utils';
@@ -67,7 +67,7 @@ const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event, isOpen,
         onKeyPress={handleCardKeyPress}
       >
         <Secured permissions={{ [PermissionCategory.EVENT]: eventPrivilege.READ_WRITE }}>
-          <NextLink href={getRoute(`events/edit/${event._id}`)} passHref>
+          <NextLink href={getRoute(`${NavRoute.EVENTS}/edit/${event._id}`)} passHref>
             <IconButton
               data-cy="edit"
               as="a"
@@ -99,7 +99,7 @@ const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event, isOpen,
           </ModalBody>
           <ModalFooter>
             <Secured permissions={{ [PermissionCategory.EVENT]: eventPrivilege.READ_WRITE }}>
-              <NextLink href={getRoute(`events/edit/${event._id}`)} passHref>
+              <NextLink href={getRoute(`${NavRoute.EVENTS}/edit/${event._id}`)} passHref>
                 <Button data-cy="edit" leftIcon={<BiEdit />}>
                   Modifier
                 </Button>

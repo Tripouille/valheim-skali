@@ -13,7 +13,7 @@ import PageTitle from 'components/core/Typography/PageTitle';
 import ApplicationIdentity from 'components/pages/Applications/ApplicationIdentity';
 import { APPLICATION_STATUS_TO_LABEL } from 'data/application';
 import useMyApplication from 'hooks/applications/useMyApplication';
-import { getRoute } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 import ApplicationAnswers from './ApplicationAnswers';
 
 const MyApplication = () => {
@@ -32,7 +32,7 @@ const MyApplication = () => {
             </Flex>
           )}
           {application && <ApplicationAnswers application={application} showFullAnswers />}
-          <NextLink href={getRoute('applications/me/edit')} passHref>
+          <NextLink href={getRoute(`${NavRoute.APPLICATIONS}/me/edit`)} passHref>
             <Button as="a" alignSelf="start" data-cy="edit" leftIcon={<BiEdit />}>
               Modifier
             </Button>

@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { WikiPageContent } from 'data/wiki';
 import { getMessageFromError } from 'utils/error';
 import { QueryKeys } from 'utils/queryClient';
-import { APIRoute, NavRoute, serverName } from 'utils/routes';
+import { APIRoute, getRoute, NavRoute } from 'utils/routes';
 import { clearLocalStorageStartingWith } from 'utils/storage';
 import { displayErrorToast, displaySuccessToast } from 'utils/toast';
 
@@ -23,7 +23,7 @@ const useAddWikiSuggestion = (wikiProposalId?: string) => {
       displaySuccessToast({
         title: 'La proposition wiki a bien été modifiée.',
       });
-      router.push(`/${serverName}${NavRoute.WIKI}/proposals/${wikiProposalId}`);
+      router.push(getRoute(`${NavRoute.WIKI}/proposals/${wikiProposalId}`));
       clearLocalStorageStartingWith('wikiFormData');
     },
     onSettled: () => queryClient.invalidateQueries([QueryKeys.WIKI_PROPOSALS, wikiProposalId]),

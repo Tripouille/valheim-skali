@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { WikiPage, WikiProposal } from 'data/wiki';
 import { getMessageFromError } from 'utils/error';
 import { QueryKeys } from 'utils/queryClient';
-import { AdminNavRoute, APIRoute, MenuRoute, NavRoute, serverName } from 'utils/routes';
+import { AdminNavRoute, APIRoute, getRoute, MenuRoute, NavRoute } from 'utils/routes';
 import { displayErrorToast, displaySuccessToast } from 'utils/toast';
 
 const updateWikiProposalOnServer =
@@ -30,10 +30,10 @@ const useAnswerWikiProposal = (wikiProposal: WikiProposal) => {
       });
       if (answer === 'validated') {
         queryClient.setQueryData([QueryKeys.WIKI_PAGES, newWikiPage?._id], newWikiPage);
-        router.push(`/${serverName}${NavRoute.WIKI}/${newWikiPage?.slug}`);
+        router.push(getRoute(`${NavRoute.WIKI}/${newWikiPage?.slug}`));
       } else {
         queryClient.refetchQueries([QueryKeys.WIKI_PROPOSALS]);
-        router.push(`/${serverName}${MenuRoute.ADMIN}${AdminNavRoute.WIKI_PROPOSALS}`);
+        router.push(getRoute(`${MenuRoute.ADMIN}/${AdminNavRoute.WIKI_PROPOSALS}`));
       }
     },
     onSettled: () => queryClient.invalidateQueries([QueryKeys.WIKI_PROPOSALS]),

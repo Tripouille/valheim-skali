@@ -1,6 +1,6 @@
 import { SpecialRoleName } from 'data/role';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
-import { APIRoute, serverName } from 'utils/routes';
+import { APIRoute, getRoute, NavRoute } from 'utils/routes';
 import * as Action from './action';
 import * as Select from './select';
 
@@ -61,8 +61,8 @@ describe('wiki pages', () => {
     context('with wiki pages', () => {
       beforeEach(() => {
         cy.seedCollection('wikiPages', 'wikiPages');
-        cy.revalidate([`/${serverName}/wiki`]);
-        cy.revalidate([`/${serverName}/wiki/wiki-page-1`]);
+        cy.revalidate([getRoute(`${NavRoute.WIKI}`)]);
+        cy.revalidate([getRoute(`${NavRoute.WIKI}/wiki-page-1`)]);
         Action.visitWikiPagesPage();
       });
 
@@ -121,6 +121,7 @@ describe('wiki pages', () => {
 
         cy.go('back');
         cy.wait('@getWikiPages');
+        cy.wait(200);
         cy.dataCy('wiki-page-0').dataCy('views').should('contain.text', 1);
       });
 
@@ -136,7 +137,7 @@ describe('wiki pages', () => {
         cy.dataCy('Propositions Wiki', 'a').click();
         cy.main().should('not.contain.text', 'Wiki page 1');
 
-        cy.visit(`/${serverName}/wiki/wiki-page-1`, { failOnStatusCode: false });
+        cy.visit(getRoute(`${NavRoute.WIKI}/wiki-page-1`), { failOnStatusCode: false });
         cy.main().should('contain.text', '404');
       });
     });

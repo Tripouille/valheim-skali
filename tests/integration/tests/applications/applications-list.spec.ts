@@ -6,7 +6,7 @@ import {
   rolePrivilege,
   userPrivilege,
 } from 'utils/permissions';
-import { getRoute } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 import * as Action from './action';
 
 describe('applications list', () => {
@@ -18,7 +18,7 @@ describe('applications list', () => {
   beforeEach(() => {
     cy.seedCollection('applications', 'applications');
     cy.login();
-    cy.visit(getRoute('applications'));
+    cy.visit(getRoute(NavRoute.APPLICATIONS));
   });
 
   context('with read only permission', () => {

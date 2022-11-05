@@ -11,7 +11,7 @@ import PageTitle from 'components/core/Typography/PageTitle';
 import Text from 'components/core/Typography/Text';
 import { FeaturedWikiPages, WIKI_PAGE_TAG_TO_LABEL } from 'data/wiki';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
-import { NavRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
+import { getRoute, NavRoute, ROUTES_TO_LABEL } from 'utils/routes';
 import WikiLinksGroup from './WikiLinksGroup';
 import WikiSearchBar from './WikiSearchBar';
 
@@ -57,7 +57,7 @@ const WikiHome: React.FC<WikiHomeProps> = ({ featuredWikiPages }) => (
         <WikiLinksGroup title="Les plus populaires" pages={featuredWikiPages.popularPages} />
       </SimpleGrid>
       <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.PROPOSE }}>
-        <NextLink href={`/${serverName}${NavRoute.WIKI}/proposals`} passHref>
+        <NextLink href={getRoute(`${NavRoute.WIKI}/proposals`)} passHref>
           <IconButton
             data-cy="participate"
             as="a"

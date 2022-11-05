@@ -24,7 +24,7 @@ import AdminLayout from './AdminLayout';
 
 const Admin = () => {
   const router = useRouter();
-  const urlEndPoint = '/' + (getRouteParameterAsString(router.query.route) ?? '');
+  const urlEndPoint = getRouteParameterAsString(router.query.route) ?? '';
 
   const session = useSession();
   const hasUserReadPermission = session.hasRequiredPermissions({

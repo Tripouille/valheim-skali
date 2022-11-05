@@ -7,7 +7,7 @@ import {
   EVENT_VALUES_MAX_LENGTH,
   getEventValidationError,
 } from 'data/event';
-import { NavRoute, serverName } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 
 const eventKeyToValueTypeCheck: Record<keyof CreateEventData, (value: unknown) => boolean> = {
   name: value => typeof value === 'string',
@@ -45,5 +45,5 @@ export const getNewEventFromBody = (body: unknown): CreateEventData => {
 };
 
 export const revalidateEventsPage = async (res: Res) => {
-  await res.unstable_revalidate(`/${serverName}${NavRoute.EVENTS}`);
+  await res.unstable_revalidate(getRoute(NavRoute.EVENTS));
 };

@@ -6,7 +6,7 @@ import ApplicationForm from 'components/pages/Applications/ApplicationForm';
 import useDeleteMyApplication from 'hooks/applications/useDeleteMyApplication';
 import useEditMyApplication from 'hooks/applications/useEditMyApplication';
 import useMyApplication from 'hooks/applications/useMyApplication';
-import { getRoute } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 
 const EditMyApplicationPage = () => {
   const router = useRouter();
@@ -14,7 +14,7 @@ const EditMyApplicationPage = () => {
   const myApplicationQuery = useMyApplication();
   const application = myApplicationQuery.data;
   const editMyApplication = useEditMyApplication(application, {
-    onSuccess: () => router.push(getRoute('applications/me')),
+    onSuccess: () => router.push(getRoute(`${NavRoute.APPLICATIONS}/me`)),
   });
   const deleteMyApplication = useDeleteMyApplication(application);
 

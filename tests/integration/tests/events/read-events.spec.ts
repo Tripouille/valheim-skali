@@ -1,6 +1,6 @@
 import { SpecialRoleName } from 'data/role';
 import { eventPrivilege } from 'utils/permissions';
-import { APIRoute, getRoute } from 'utils/routes';
+import { APIRoute, getRoute, NavRoute } from 'utils/routes';
 import * as Action from './action';
 import * as Select from './select';
 
@@ -66,7 +66,7 @@ describe('events with read permission', () => {
       Action.setVisitorEventPermission(eventPrivilege.NONE);
       Action.setMemberEventPermission(eventPrivilege.READ);
       cy.setUserRoles([SpecialRoleName.MEMBER]);
-      cy.revalidate([getRoute('events')]);
+      cy.revalidate([getRoute(NavRoute.EVENTS)]);
       cy.login();
       Action.visitEventsPageAndWaitFor(APIRoute.EVENTS);
     });

@@ -4,7 +4,7 @@ import { InfiniteData } from '@tanstack/react-query';
 import { CreateEventData, getEventDataForServer, EventsPage } from 'data/event';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import { QueryKeys } from 'utils/queryClient';
-import { APIRoute, getRoute } from 'utils/routes';
+import { APIRoute, getRoute, NavRoute } from 'utils/routes';
 
 const updateEventOnServer = (updatedEventId?: string) => async (newEvent: CreateEventData) => {
   await axios.put(`${APIRoute.EVENTS}/${updatedEventId}`, getEventDataForServer(newEvent));
@@ -30,7 +30,7 @@ const useUpdateEvent = (updatedEventId?: string) => {
     updateEventOnServer(updatedEventId),
     getUpdatedEvents(updatedEventId),
     "L'événement a bien été mis à jour.",
-    { onSuccess: () => router.push(getRoute(`events?id=${updatedEventId}`)) },
+    { onSuccess: () => router.push(getRoute(`${NavRoute.EVENTS}?id=${updatedEventId}`)) },
   );
 
   return updateEvent;

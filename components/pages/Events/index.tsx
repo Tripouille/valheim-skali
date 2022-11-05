@@ -53,7 +53,7 @@ const Events = () => {
         <VStack spacing="7" position="relative">
           <PageTitle title={ROUTES_TO_LABEL[NavRoute.EVENTS]} />
           <Secured permissions={{ [PermissionCategory.EVENT]: eventPrivilege.READ_WRITE }}>
-            <NextLink href={getRoute('events/new')} passHref>
+            <NextLink href={getRoute(`${NavRoute.EVENTS}/new`)} passHref>
               <Button
                 data-cy="create-event"
                 as="a"

@@ -4,7 +4,7 @@ import { InfiniteData } from '@tanstack/react-query';
 import { EventsPage } from 'data/event';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import { QueryKeys } from 'utils/queryClient';
-import { APIRoute, getRoute } from 'utils/routes';
+import { APIRoute, getRoute, NavRoute } from 'utils/routes';
 
 const deleteEventOnServer = (deletedEventId?: string) => async () => {
   await axios.delete(`${APIRoute.EVENTS}/${deletedEventId}`);
@@ -27,7 +27,7 @@ const useDeleteEvent = (deletedEventId?: string) => {
     deleteEventOnServer(deletedEventId),
     getUpdatedEvents(deletedEventId),
     "L'événement a bien été supprimé.",
-    { onSuccess: () => router.push(getRoute('events')) },
+    { onSuccess: () => router.push(getRoute(NavRoute.EVENTS)) },
   );
 
   return deleteEvent;

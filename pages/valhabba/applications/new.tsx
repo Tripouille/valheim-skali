@@ -5,7 +5,7 @@ import ApplicationForm from 'components/pages/Applications/ApplicationForm';
 import { Application } from 'data/application';
 import useCreateApplication from 'hooks/applications/useCreateApplication';
 import { queryClient, QueryKeys } from 'utils/queryClient';
-import { getRoute } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 import { displaySuccessToast } from 'utils/toast';
 
 const NewApplicationPage = () => {
@@ -15,7 +15,7 @@ const NewApplicationPage = () => {
       displaySuccessToast({ title: 'Votre candidature a bien été enregistrée !' });
       queryClient.setQueryData([QueryKeys.MY_APPLICATION], application);
       queryClient.invalidateQueries([QueryKeys.SESSION]);
-      router.push(getRoute('applications/me'));
+      router.push(getRoute(`${NavRoute.APPLICATIONS}/me`));
     },
   });
 

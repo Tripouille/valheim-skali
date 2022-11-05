@@ -10,7 +10,7 @@ import IconButton from 'components/core/Interactive/IconButton';
 import PageTitle from 'components/core/Typography/PageTitle';
 import { WikiPage } from 'data/wiki';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
-import { NavRoute, serverName } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 import WikiContent from './WikiContent';
 
 export interface WikiPageComponentProps {
@@ -25,10 +25,7 @@ const WikiPageComponent: React.FC<WikiPageComponentProps> = ({ wikiPage }) => {
           <PageTitle title={wikiPage.title} gridArea="title" />
           <ButtonGroup gridArea="buttons" justifySelf="end">
             <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.PROPOSE }}>
-              <NextLink
-                href={`/${serverName}${NavRoute.WIKI}/proposals/new/${wikiPage._id}`}
-                passHref
-              >
+              <NextLink href={getRoute(`${NavRoute.WIKI}/proposals/new/${wikiPage._id}`)} passHref>
                 <IconButton
                   data-cy="edit"
                   aria-label="Proposer une modification"
