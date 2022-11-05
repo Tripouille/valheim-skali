@@ -1,21 +1,19 @@
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { useInView } from 'react-intersection-observer';
-import { useDisclosure } from '@chakra-ui/react';
 import Secured from 'components/core/Authentication/Secured';
 import Background from 'components/core/Containers/Background';
 import { VStack } from 'components/core/Containers/Stack';
 import Loading from 'components/core/Feedback/Loading';
 import Button from 'components/core/Interactive/Button';
 import PageTitle from 'components/core/Typography/PageTitle';
-import useCreateEvent from 'hooks/events/useCreateEvent';
 import useInfiniteEvents from 'hooks/events/useInfiniteEvents';
 import { eventPrivilege, PermissionCategory } from 'utils/permissions';
-import { getRouteParameterAsString, NavRoute, ROUTES_TO_LABEL } from 'utils/routes';
+import { getRoute, getRouteParameterAsString, NavRoute, ROUTES_TO_LABEL } from 'utils/routes';
 import { scrollIntoViewIfNeeded } from 'utils/window';
 import EventCard from './EventCard';
-import EventForm from './EventForm';
 
 const Events = () => {
   const router = useRouter();
@@ -49,32 +47,25 @@ const Events = () => {
     if (queryEventRef.current) scrollIntoViewIfNeeded(queryEventRef.current);
   }, [queryEventId, data?.pages.length]);
 
-  const createModal = useDisclosure();
-  const createEvent = useCreateEvent(createModal.onClose);
-
   return (
     <Secured permissions={{ [PermissionCategory.EVENT]: eventPrivilege.READ }}>
       <Background data-cy="events">
         <VStack spacing="7" position="relative">
           <PageTitle title={ROUTES_TO_LABEL[NavRoute.EVENTS]} />
           <Secured permissions={{ [PermissionCategory.EVENT]: eventPrivilege.READ_WRITE }}>
-            <Button
-              data-cy="create-event"
-              position={{ md: 'absolute' }}
-              alignSelf={{ base: 'center', md: 'end' }}
-              mt="1rem !important"
-              leftIcon={<BsPlusLg />}
-              colorScheme="green"
-              onClick={createModal.onOpen}
-            >
-              Créer un événement
-            </Button>
-            <EventForm
-              data-cy="create-event"
-              isOpen={createModal.isOpen}
-              onSubmit={createEvent}
-              onClose={createModal.onClose}
-            />
+            <NextLink href={getRoute(`${NavRoute.EVENTS}/new`)} passHref>
+              <Button
+                data-cy="create-event"
+                as="a"
+                position={{ md: 'absolute' }}
+                alignSelf={{ base: 'center', md: 'end' }}
+                mt="1rem !important"
+                leftIcon={<BsPlusLg />}
+                colorScheme="green"
+              >
+                Créer un événement
+              </Button>
+            </NextLink>
           </Secured>
           {queryEventId && !queryEventIsInData ? (
             <>

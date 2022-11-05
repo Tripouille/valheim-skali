@@ -6,10 +6,10 @@ import {
   AccordionPanel,
   chakra,
 } from '@chakra-ui/react';
+import FromMarkup from 'components/core/DataDisplay/FromMarkup';
 import { Accordion } from 'components/core/Disclosure/Accordion';
 import Heading from 'components/core/Typography/Heading';
 import { WikiProposalWithAuthor } from 'data/wiki';
-import WikiContent from '../WikiContent';
 import WikiProposalHeader from './WikiProposalHeader';
 
 export interface WikiProposalComponentProps {
@@ -57,7 +57,7 @@ const WikiProposalComponent: React.FC<WikiProposalComponentProps> = ({ wikiPropo
               <AccordionIcon gridArea="icon" justifySelf="end" alignSelf="start" />
             </AccordionButton>
             <AccordionPanel>
-              <WikiContent content={suggestion.content} />
+              <FromMarkup content={suggestion.content} />
             </AccordionPanel>
           </AccordionItem>
         ))}

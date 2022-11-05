@@ -1,23 +1,24 @@
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import React, { KeyboardEventHandler, MouseEventHandler, Ref, useEffect, useRef } from 'react';
+import React, { KeyboardEventHandler, Ref, useEffect, useRef } from 'react';
 import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
 import Secured from 'components/core/Authentication/Secured';
 import Box from 'components/core/Containers/Box';
+import Button from 'components/core/Interactive/Button';
 import IconButton from 'components/core/Interactive/IconButton';
 import {
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
+  ModalFooter,
   ModalOverlay,
 } from 'components/core/Overlay/Modal';
 import { Event, isEventClosed } from 'data/event';
-import useDeleteEvent from 'hooks/events/useDeleteEvent';
-import useUpdateEvent from 'hooks/events/useUpdateEvent';
 import { eventPrivilege, PermissionCategory } from 'utils/permissions';
+import { getRoute, NavRoute } from 'utils/routes';
 import { CypressProps } from 'utils/types';
-import EventForm from './EventForm';
 import EventItem from './EventItem';
 import { editIconSize, EventContext } from './utils';
 
@@ -35,10 +36,6 @@ const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event, isOpen,
     onOpen: () => router.push(`events?id=${event._id}`, undefined, { shallow: true }),
     onClose: () => router.push('events', undefined, { shallow: true }),
   });
-  const editModal = useDisclosure();
-
-  const updateEvent = useUpdateEvent(event);
-  const deleteEvent = useDeleteEvent(event);
 
   const eventIsClosed = isEventClosed(event, new Date());
 
@@ -48,21 +45,13 @@ const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event, isOpen,
   }, [isOpen]);
 
   const handleCardKeyPress: KeyboardEventHandler<HTMLDivElement> = e => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      itemModal.onOpen();
-    }
-  };
-
-  const handleEditButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
-    e.stopPropagation();
-    editModal.onOpen();
+    if (e.key === 'Enter') itemModal.onOpen();
   };
 
   return (
     <>
       <Box
-        data-cy={dataCy}
+        data-cy={`${dataCy}-card`}
         ref={innerRef}
         role="button"
         tabIndex={0}
@@ -78,19 +67,21 @@ const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event, isOpen,
         onKeyPress={handleCardKeyPress}
       >
         <Secured permissions={{ [PermissionCategory.EVENT]: eventPrivilege.READ_WRITE }}>
-          <IconButton
-            data-cy="edit"
-            position="absolute"
-            top="3"
-            right="3"
-            aria-label="Modifier l'événement"
-            title="Modifier l'événement"
-            icon={<BiEdit size="30" />}
-            variant="ghost"
-            size={editIconSize}
-            onClick={handleEditButtonClick}
-            onKeyPress={e => e.stopPropagation()}
-          />
+          <NextLink href={getRoute(`${NavRoute.EVENTS}/edit/${event._id}`)} passHref>
+            <IconButton
+              data-cy="edit"
+              as="a"
+              position="absolute"
+              top="3"
+              right="3"
+              aria-label="Modifier l'événement"
+              title="Modifier l'événement"
+              icon={<BiEdit size="30" />}
+              variant="ghost"
+              size={editIconSize}
+              onClick={e => e.stopPropagation()}
+            />
+          </NextLink>
         </Secured>
         <EventItem
           event={event}
@@ -106,16 +97,17 @@ const EventCard: React.FC<EventCardProps> = ({ 'data-cy': dataCy, event, isOpen,
           <ModalBody>
             <EventItem event={event} context={EventContext.MODAL} eventIsClosed={eventIsClosed} />
           </ModalBody>
+          <ModalFooter>
+            <Secured permissions={{ [PermissionCategory.EVENT]: eventPrivilege.READ_WRITE }}>
+              <NextLink href={getRoute(`${NavRoute.EVENTS}/edit/${event._id}`)} passHref>
+                <Button data-cy="edit" leftIcon={<BiEdit />}>
+                  Modifier
+                </Button>
+              </NextLink>
+            </Secured>
+          </ModalFooter>
         </ModalContent>
       </Modal>
-      <EventForm
-        data-cy="edit-event"
-        event={event}
-        isOpen={editModal.isOpen}
-        onClose={editModal.onClose}
-        onSubmit={updateEvent}
-        onDelete={deleteEvent}
-      />
     </>
   );
 };

@@ -2,7 +2,7 @@ import NextLink from 'next/link';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
 import Link from 'components/core/Interactive/Link';
 import useFindWikiPages from 'hooks/wiki/useFindWikiPages';
-import { serverName } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 import { CypressProps } from 'utils/types';
 
 interface WikiInternalLinkProps extends CypressProps {
@@ -17,7 +17,7 @@ const WikiInternalLink: React.FC<WikiInternalLinkProps> = ({ pageName, label }) 
   return (
     <QueryHandler query={findWikiPagesQuery} loadingComponent={<Link color="white">{label}</Link>}>
       {firstWikiPageSlug ? (
-        <NextLink href={`/${serverName}/wiki/${firstWikiPageSlug}`} passHref>
+        <NextLink href={getRoute(`${NavRoute.WIKI}/${firstWikiPageSlug}`)} passHref>
           <Link>{label}</Link>
         </NextLink>
       ) : (

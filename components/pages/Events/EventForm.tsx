@@ -1,24 +1,27 @@
 import { DateTime } from 'luxon';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Stack } from 'components/core/Containers/Stack';
 import FormElement from 'components/core/Form/FormElement';
-import FormModal from 'components/core/Form/FormModal';
+import FormFullPage from 'components/core/Form/FormFullPage';
+import FormPreviewLayout from 'components/core/Form/FormPreviewLayout';
 import Input from 'components/core/Form/Input';
 import Switch from 'components/core/Form/Switch';
 import Textarea from 'components/core/Form/Textarea';
-import { ModalBody, ModalHeader } from 'components/core/Overlay/Modal';
 import {
   CreateEventData,
   Event,
   EVENT_VALUES_MAX_LENGTH,
   getEventValidationError,
+  isEventClosed,
 } from 'data/event';
 import { CONTINUOUS_LABEL } from 'utils/constants';
 import { toInputDatetimeFormat } from 'utils/format';
-import { CypressProps, Callback } from 'utils/types';
+import { Callback } from 'utils/types';
+import EventItem from './EventItem';
 import EventTagsForm from './EventTagsForm';
+import { EventContext } from './utils';
 
-const getDefaultEventFormData = (): Partial<CreateEventData> => ({
+const getDefaultEventFormData = () => ({
   continuous: false,
   tags: [],
   startDate: toInputDatetimeFormat(DateTime.now().startOf('day').toISO()),
@@ -31,68 +34,60 @@ const getEventFormData = (event: Event) => ({
   endDate: event.endDate ? toInputDatetimeFormat(event.endDate) : undefined,
 });
 
-export type EventFormProps = CypressProps & {
-  /** Modal is open */
-  isOpen: boolean;
-  /** Function to close the modal */
-  onClose: Callback;
+export type EventFormProps = {
   /** Function to create or update event */
   onSubmit: (newEvent: CreateEventData) => void;
-} & (
-    | {
-        /** If no role, this is a creation modal */
-        event: Event;
-        /** Function to delete role */
-        onDelete: Callback;
-      }
-    | { event?: never }
-  );
+} & ({ event: Event; onDelete: Callback } | { event?: never });
 
 const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
-  const { 'data-cy': dataCy, isOpen, onClose, event, onSubmit } = props;
+  const { event, onSubmit } = props;
+  const isEdition = !!event;
 
   const endDateInputRef = useRef<HTMLInputElement>(null);
 
-  const [eventFormData, setEventFormData] = useState(
-    event ? getEventFormData(event) : getDefaultEventFormData(),
+  const [eventFormData, setEventFormData] = useState<Partial<CreateEventData>>(
+    isEdition ? getEventFormData(event) : getDefaultEventFormData(),
   );
-
-  useEffect(() => {
-    if (isOpen) setEventFormData(event ? getEventFormData(event) : getDefaultEventFormData());
-  }, [event, isOpen]);
 
   const handleSubmit = (data: CreateEventData) => {
     if (!eventFormData.endDate && endDateInputRef.current) endDateInputRef.current.value = '';
     onSubmit(data);
   };
 
+  const setFormDataValue =
+    <K extends keyof CreateEventData>(key: K) =>
+    (value: CreateEventData[K]) =>
+      setEventFormData(prev => ({ ...prev, [key]: value }));
+
+  const fakeEventForPreview = {
+    _id: 'new',
+    ...getDefaultEventFormData(),
+    ...eventFormData,
+    name: eventFormData.name ?? '',
+    description: eventFormData.description ?? '',
+  };
+
   return (
-    <FormModal
-      data-cy={dataCy}
-      isOpen={isOpen}
-      onClose={onClose}
-      formData={eventFormData}
-      getValidationError={getEventValidationError}
-      onSubmit={handleSubmit}
-      {...(props.event
-        ? {
-            isEdition: true,
-            onDelete: props.onDelete,
-            deleteLabel: "Supprimer l'événement",
-            deletePopoverBody: "Êtes-vous sûr de vouloir supprimer l'événement ?",
-          }
-        : { isEdition: false })}
-    >
-      <ModalHeader textAlign="center">
-        {event ? "Modifier l'événement" : 'Créer un événement'}
-      </ModalHeader>
-      <ModalBody id="event-form-modal-body">
+    <>
+      <FormFullPage
+        formData={eventFormData}
+        getValidationError={getEventValidationError}
+        onSubmit={handleSubmit}
+        {...(isEdition
+          ? {
+              isEdition: true,
+              onDelete: props.onDelete,
+              deleteLabel: "Supprimer l'événement",
+              deletePopoverBody: "Êtes-vous sûr de vouloir supprimer l'événement ?",
+            }
+          : { isEdition: false })}
+      >
         <Stack spacing="5">
           <FormElement label="Nom" isRequired>
             <Input
               data-cy="name"
               value={eventFormData.name ?? ''}
-              onChange={name => setEventFormData(prev => ({ ...prev, name }))}
+              onChange={setFormDataValue('name')}
               maxLength={EVENT_VALUES_MAX_LENGTH.name}
             />
           </FormElement>
@@ -103,7 +98,7 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
             <Input
               data-cy="discord_link"
               value={eventFormData.discordLink ?? ''}
-              onChange={discordLink => setEventFormData(prev => ({ ...prev, discordLink }))}
+              onChange={setFormDataValue('discordLink')}
               maxLength={EVENT_VALUES_MAX_LENGTH.discordLink}
             />
           </FormElement>
@@ -112,7 +107,7 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
               data-cy="start_date"
               type="datetime-local"
               value={eventFormData.startDate ?? ''}
-              onChange={startDate => setEventFormData(prev => ({ ...prev, startDate }))}
+              onChange={setFormDataValue('startDate')}
             />
           </FormElement>
           <FormElement label="Date de fin">
@@ -120,7 +115,7 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
               data-cy="end_date"
               type="datetime-local"
               value={eventFormData.endDate ?? ''}
-              onChange={endDate => setEventFormData(prev => ({ ...prev, endDate }))}
+              onChange={setFormDataValue('endDate')}
               ref={endDateInputRef}
             />
           </FormElement>
@@ -128,7 +123,7 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
             <Switch
               data-cy="continuous"
               isChecked={eventFormData.continuous}
-              onChange={continuous => setEventFormData(prev => ({ ...prev, continuous }))}
+              onChange={setFormDataValue('continuous')}
               w="full"
               size="lg"
             />
@@ -137,7 +132,7 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
             <Input
               data-cy="location"
               value={eventFormData.location ?? ''}
-              onChange={location => setEventFormData(prev => ({ ...prev, location }))}
+              onChange={setFormDataValue('location')}
               maxLength={EVENT_VALUES_MAX_LENGTH.location}
             />
           </FormElement>
@@ -155,21 +150,34 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
             <Textarea
               data-cy="RPDescription"
               value={eventFormData.RPDescription ?? ''}
-              onChange={RPDescription => setEventFormData(prev => ({ ...prev, RPDescription }))}
+              onChange={setFormDataValue('RPDescription')}
               maxLength={EVENT_VALUES_MAX_LENGTH.RPDescription}
+              rows={5}
             />
           </FormElement>
           <FormElement label="Description" isRequired>
             <Textarea
               data-cy="description"
               value={eventFormData.description ?? ''}
-              onChange={description => setEventFormData(prev => ({ ...prev, description }))}
+              onChange={setFormDataValue('description')}
               maxLength={EVENT_VALUES_MAX_LENGTH.description}
+              rows={10}
             />
           </FormElement>
         </Stack>
-      </ModalBody>
-    </FormModal>
+      </FormFullPage>
+      {eventFormData.name && eventFormData.startDate && (
+        <FormPreviewLayout>
+          {({ previewHasRestrictedHeight }) => (
+            <EventItem
+              event={fakeEventForPreview}
+              context={previewHasRestrictedHeight ? EventContext.LIST : EventContext.MODAL}
+              eventIsClosed={isEventClosed(fakeEventForPreview, new Date())}
+            />
+          )}
+        </FormPreviewLayout>
+      )}
+    </>
   );
 };
 

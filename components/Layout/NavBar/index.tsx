@@ -11,7 +11,7 @@ import { Menu, MenuButton, MenuDivider, MenuItem, MenuList } from 'components/co
 import useSession from 'hooks/useSession';
 import { SessionStatus } from 'utils/auth';
 import { ROUTES_TO_PERMISSIONS } from 'utils/permissions';
-import { MenuRoute, NavRoute, ROUTES_TO_LABEL, serverName } from 'utils/routes';
+import { getRoute, MenuRoute, NavRoute, ROUTES_TO_LABEL } from 'utils/routes';
 import DrawerMenu from './DrawerMenu';
 import HeaderMenu from './HeaderMenu';
 import SignInOut from './SignInOut';
@@ -32,7 +32,6 @@ const NavBar = () => {
                   return (
                     <NavItem
                       key={NavRoute.MY_APPLICATION}
-                      root={`/${serverName}`}
                       route={NavRoute.MY_APPLICATION}
                       onClick={onClick}
                     />
@@ -41,7 +40,7 @@ const NavBar = () => {
               }
               return (
                 <Secured key={route} permissions={ROUTES_TO_PERMISSIONS[route]}>
-                  <NavItem root={`/${serverName}`} route={route} onClick={onClick} />
+                  <NavItem route={route} onClick={onClick} />
                 </Secured>
               );
             })
@@ -63,13 +62,13 @@ const NavBar = () => {
             <SignInOut isConnected={session.status === SessionStatus.AUTHENTICATED} />
             <MenuDivider />
             <Secured permissions={ROUTES_TO_PERMISSIONS[MenuRoute.ADMIN]}>
-              <NextLink href={`/${serverName}${MenuRoute.ADMIN}`} passHref>
+              <NextLink href={getRoute(MenuRoute.ADMIN)} passHref>
                 <MenuItem data-cy="admin" as="a" icon={<GiStakeHammer size="20" />}>
                   {ROUTES_TO_LABEL[MenuRoute.ADMIN]}
                 </MenuItem>
               </NextLink>
             </Secured>
-            <NextLink href={MenuRoute.ABOUT} passHref>
+            <NextLink href={`/${MenuRoute.ABOUT}`} passHref>
               <MenuItem data-cy="about" as="a" icon={<CgInfo size="20" />}>
                 {ROUTES_TO_LABEL[MenuRoute.ABOUT]}
               </MenuItem>

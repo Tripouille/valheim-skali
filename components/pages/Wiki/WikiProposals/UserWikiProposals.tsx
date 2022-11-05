@@ -7,19 +7,19 @@ import Button from 'components/core/Interactive/Button';
 import Link from 'components/core/Interactive/Link';
 import PageTitle from 'components/core/Typography/PageTitle';
 import WikiProposalsTable from 'components/pages/Wiki/WikiProposals/WikiProposalsTable';
-import { NavRoute, serverName } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 
 const UserWikiProposals = () => {
   return (
     <Background>
       <VStack spacing="7">
         <Grid templateColumns="1fr auto 1fr" gap="5" width="full">
-          <NextLink href={`/${serverName}${NavRoute.WIKI}`} passHref>
+          <NextLink href={getRoute(NavRoute.WIKI)} passHref>
             <Link>&larr; Retour au wiki</Link>
           </NextLink>
           <PageTitle title="Mes propositions wiki" size="xl" />
         </Grid>
-        <NextLink href={`/${serverName}${NavRoute.WIKI}/proposals/new`} passHref>
+        <NextLink href={getRoute(`${NavRoute.WIKI}/proposals/new`)} passHref>
           <Button
             data-cy="propose"
             as="a"

@@ -7,6 +7,7 @@ import DynamicIcon from 'components/core/Images/DynamicIcon';
 import ZoomableImage from 'components/core/Images/ZoomableImage';
 import DiscordButton from 'components/core/Interactive/DiscordButton';
 import Link from 'components/core/Interactive/Link';
+import WikiInternalLink from 'components/core/Interactive/WikiInternalLink';
 import Heading from 'components/core/Typography/Heading';
 import Spoiler from 'components/core/Typography/Spoiler';
 import {
@@ -17,7 +18,6 @@ import {
   getMarkupTitleProperties,
 } from 'utils/markup';
 import { StrictReactNode } from 'utils/types';
-import WikiInternalLink from './WikiInternalLink';
 
 type ConvertMarkupFunction = (
   markupString: string | StrictReactNode[],
@@ -204,12 +204,13 @@ export const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
   return component;
 };
 
-interface WikiContentProps {
+interface FromMarkupProps {
   content: string;
+  className?: string;
 }
 
 const delay = 500;
-const WikiContent: React.FC<WikiContentProps> = ({ content }) => {
+const FromMarkup: React.FC<FromMarkupProps> = ({ content, className }) => {
   const [replacedContent, setReplacedContent] = useState<string | StrictReactNode[]>(
     convertMarkup(content, { value: 0 }),
   );
@@ -237,11 +238,27 @@ const WikiContent: React.FC<WikiContentProps> = ({ content }) => {
     }
   }, [content, executeAndResetTimer]);
 
+  const ref = useRef<HTMLDivElement>(null);
+  const [overflows, setOverflows] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      if (ref.current && ref.current.clientHeight < ref.current.scrollHeight) setOverflows(true);
+      else setOverflows(false);
+    });
+  }, [replacedContent, className]);
+
   return (
-    <Box data-cy="content" w="full" overflowX="hidden">
-      {replacedContent}
-    </Box>
+    <>
+      <Box ref={ref} data-cy="content" w="full" overflowX="hidden" className={className}>
+        {replacedContent}
+      </Box>
+      {overflows && (
+        <Box data-cy="overflow" textAlign="center" marginBottom="-0.5rem">
+          ...
+        </Box>
+      )}
+    </>
   );
 };
 
-export default WikiContent;
+export default chakra(FromMarkup);

@@ -1,25 +1,27 @@
 import axios from 'axios';
-import { useMutation, UseMutationOptions, useQueryClient } from '@tanstack/react-query';
-import { CreateEventData, getEventDataForServer } from 'data/event';
+import { useRouter } from 'next/router';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { CreateEventData, Event, getEventDataForServer } from 'data/event';
 import { getMessageFromError } from 'utils/error';
 import { QueryKeys } from 'utils/queryClient';
-import { APIRoute } from 'utils/routes';
+import { APIRoute, getRoute, NavRoute } from 'utils/routes';
 import { displayErrorToast, displaySuccessToast } from 'utils/toast';
 
 const createEventOnServer = async (eventData: CreateEventData) => {
-  await axios.post(`${APIRoute.EVENTS}`, getEventDataForServer(eventData));
+  const { data } = await axios.post<Event>(`${APIRoute.EVENTS}`, getEventDataForServer(eventData));
+  return data;
 };
 
-const useCreateEvent = (
-  onSuccess: UseMutationOptions<void, unknown, CreateEventData>['onSuccess'],
-) => {
+const useCreateEvent = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
+  // Not using useOptimisticMutation because of infinite scrolling
   const { mutate: createEvent } = useMutation(createEventOnServer, {
     onError: error => displayErrorToast({ title: getMessageFromError(error) }),
-    onSuccess: (data, variables, context) => {
+    onSuccess: newEvent => {
       displaySuccessToast({ title: "L'événement a bien été créé." });
-      if (onSuccess) onSuccess(data, variables, context);
+      router.push(getRoute(`${NavRoute.EVENTS}?id=${newEvent._id}`));
     },
     onSettled: () => queryClient.invalidateQueries([QueryKeys.EVENTS]),
   });

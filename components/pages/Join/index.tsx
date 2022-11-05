@@ -13,7 +13,7 @@ import Text from 'components/core/Typography/Text';
 import useSession from 'hooks/useSession';
 import { SessionStatus } from 'utils/auth';
 import { eventPrivilege, PermissionCategory } from 'utils/permissions';
-import { getRoute, HiddenRoute, ROUTES_TO_LABEL } from 'utils/routes';
+import { getRoute, HiddenRoute, NavRoute, ROUTES_TO_LABEL } from 'utils/routes';
 
 interface JoinIntroductionMainButtonProps {
   isConnected: boolean;
@@ -26,7 +26,7 @@ const JoinIntroductionMainButton: React.FC<JoinIntroductionMainButtonProps> = ({
 }) => {
   if (hasApplication) {
     return (
-      <NextLink href={getRoute('applications/me')}>
+      <NextLink href={getRoute(`${NavRoute.APPLICATIONS}/me`)}>
         <Button rightIcon={<GiFeather />}>Clique ici pour voir ta candidature</Button>
       </NextLink>
     );
@@ -83,12 +83,12 @@ const JoinIntroduction = () => {
             />
             <Text>
               Si tu hésites à nous rejoindre, ou que tu es en attente, jette un oeil à notre{' '}
-              <NextLink href={getRoute('wiki')}>
+              <NextLink href={getRoute(NavRoute.WIKI)}>
                 <Button>Wiki</Button>
               </NextLink>{' '}
               <Secured permissions={{ [PermissionCategory.EVENT]: eventPrivilege.READ }}>
                 ou encore aux{' '}
-                <NextLink href={getRoute('events')}>
+                <NextLink href={getRoute(NavRoute.EVENTS)}>
                   <Button>événements en cours</Button>
                 </NextLink>{' '}
               </Secured>

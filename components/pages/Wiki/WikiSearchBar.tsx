@@ -9,7 +9,7 @@ import Input from 'components/core/Form/Input';
 import Icon from 'components/core/Images/Icon';
 import { WikiPage, WIKI_SEARCH_MAX_RESULTS_NB } from 'data/wiki';
 import useFindWikiPages from 'hooks/wiki/useFindWikiPages';
-import { serverName } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 
 const WikiSearchBar = () => {
   const router = useRouter();
@@ -21,7 +21,7 @@ const WikiSearchBar = () => {
   const findWikiPagesQuery = useFindWikiPages(searchString);
 
   const navigateToWikiPage = useCallback(
-    (wikiPage: WikiPage) => router.push(`/${serverName}/wiki/${wikiPage.slug}`),
+    (wikiPage: WikiPage) => router.push(getRoute(`${NavRoute.WIKI}/${wikiPage.slug}`)),
     [router],
   );
 
@@ -42,7 +42,7 @@ const WikiSearchBar = () => {
           textDecoration={isSelected ? 'underline' : 'none'}
           _hover={{ ...listItemProps._hover, textDecoration: 'underline' }}
         >
-          <NextLink href={`/${serverName}/wiki/${wikiPage.slug}`}>{wikiPage.title}</NextLink>
+          <NextLink href={getRoute(`${NavRoute.WIKI}/${wikiPage.slug}`)}>{wikiPage.title}</NextLink>
         </ListItem>
       )}
     >

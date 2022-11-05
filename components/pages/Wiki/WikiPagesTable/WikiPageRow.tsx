@@ -13,7 +13,7 @@ import { WikiPage, WikiPageTag, wikiPageTags, WIKI_PAGE_TAG_TO_LABEL } from 'dat
 import useDeleteWikiPage from 'hooks/wiki/useDeleteWikiPage';
 import useUpdateWikiPageTags from 'hooks/wiki/useUpdateWikiPageTags';
 import { rowIconSize } from 'theme/admin';
-import { NavRoute, serverName } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 import { CypressProps } from 'utils/types';
 
 export interface WikiPageRowProps extends CypressProps {
@@ -27,7 +27,7 @@ const WikiPageRow: React.FC<WikiPageRowProps> = ({ 'data-cy': dataCy, wikiPage }
   const deleteWikiPage = useDeleteWikiPage(wikiPage);
 
   const navigateToWikiPage = () => {
-    router.push(`/${serverName}${NavRoute.WIKI}/${wikiPage.slug}`);
+    router.push(getRoute(`${NavRoute.WIKI}/${wikiPage.slug}`));
   };
 
   const addableTags = useMemo(

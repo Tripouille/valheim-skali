@@ -1,32 +1,36 @@
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { InfiniteData } from '@tanstack/react-query';
-import { Event, CreateEventData, getEventDataForServer, EventsPage } from 'data/event';
+import { CreateEventData, getEventDataForServer, EventsPage } from 'data/event';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import { QueryKeys } from 'utils/queryClient';
-import { APIRoute } from 'utils/routes';
+import { APIRoute, getRoute, NavRoute } from 'utils/routes';
 
-const updateEventOnServer = (updatedEvent: Event) => async (newEvent: CreateEventData) => {
-  await axios.put(`${APIRoute.EVENTS}/${updatedEvent._id}`, getEventDataForServer(newEvent));
+const updateEventOnServer = (updatedEventId?: string) => async (newEvent: CreateEventData) => {
+  await axios.put(`${APIRoute.EVENTS}/${updatedEventId}`, getEventDataForServer(newEvent));
 };
 
 const getUpdatedEvents =
-  (updatedEvent: Event) =>
+  (updatedEventId?: string) =>
   (previousEvents: InfiniteData<EventsPage>, newEvent: CreateEventData) => ({
     pages: previousEvents.pages.map(eventsPage => ({
       ...eventsPage,
       events: eventsPage.events.map(event =>
-        event._id === updatedEvent._id ? { ...newEvent, _id: updatedEvent._id } : event,
+        event._id === updatedEventId ? { ...newEvent, _id: updatedEventId } : event,
       ),
     })),
     pageParams: previousEvents.pageParams,
   });
 
-const useUpdateEvent = (updatedEvent: Event) => {
+const useUpdateEvent = (updatedEventId?: string) => {
+  const router = useRouter();
+
   const updateEvent = useOptimisticMutation<QueryKeys.EVENTS, CreateEventData>(
     QueryKeys.EVENTS,
-    updateEventOnServer(updatedEvent),
-    getUpdatedEvents(updatedEvent),
+    updateEventOnServer(updatedEventId),
+    getUpdatedEvents(updatedEventId),
     "L'événement a bien été mis à jour.",
+    { onSuccess: () => router.push(getRoute(`${NavRoute.EVENTS}?id=${updatedEventId}`)) },
   );
 
   return updateEvent;

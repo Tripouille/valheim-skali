@@ -1,28 +1,33 @@
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { InfiniteData } from '@tanstack/react-query';
-import { Event, EventsPage } from 'data/event';
+import { EventsPage } from 'data/event';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import { QueryKeys } from 'utils/queryClient';
-import { APIRoute } from 'utils/routes';
+import { APIRoute, getRoute, NavRoute } from 'utils/routes';
 
-const deleteEventOnServer = (deletedEvent: Event) => async () => {
-  await axios.delete(`${APIRoute.EVENTS}/${deletedEvent._id}`);
+const deleteEventOnServer = (deletedEventId?: string) => async () => {
+  await axios.delete(`${APIRoute.EVENTS}/${deletedEventId}`);
 };
 
-const getUpdatedEvents = (deletedEvent: Event) => (previousEvents: InfiniteData<EventsPage>) => ({
-  pages: previousEvents.pages.map(eventsPage => ({
-    ...eventsPage,
-    events: eventsPage.events.filter(event => event._id !== deletedEvent._id),
-  })),
-  pageParams: previousEvents.pageParams,
-});
+const getUpdatedEvents =
+  (deletedEventId?: string) => (previousEvents: InfiniteData<EventsPage>) => ({
+    pages: previousEvents.pages.map(eventsPage => ({
+      ...eventsPage,
+      events: eventsPage.events.filter(event => event._id !== deletedEventId),
+    })),
+    pageParams: previousEvents.pageParams,
+  });
 
-const useDeleteEvent = (deletedEvent: Event) => {
+const useDeleteEvent = (deletedEventId?: string) => {
+  const router = useRouter();
+
   const deleteEvent = useOptimisticMutation(
     QueryKeys.EVENTS,
-    deleteEventOnServer(deletedEvent),
-    getUpdatedEvents(deletedEvent),
+    deleteEventOnServer(deletedEventId),
+    getUpdatedEvents(deletedEventId),
     "L'événement a bien été supprimé.",
+    { onSuccess: () => router.push(getRoute(NavRoute.EVENTS)) },
   );
 
   return deleteEvent;

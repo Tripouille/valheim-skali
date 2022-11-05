@@ -1,7 +1,7 @@
 import { SpecialRoleName } from 'data/role';
 import { WikiPage } from 'data/wiki';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
-import { APIRoute, getRoute, NavRoute, serverName } from 'utils/routes';
+import { APIRoute, getRoute, NavRoute } from 'utils/routes';
 import * as Action from './action';
 import * as Select from './select';
 
@@ -20,7 +20,7 @@ describe('participate to wiki and edit wiki pages', () => {
 
   beforeEach(() => {
     cy.seedCollection('wikiPages', 'wikiPages');
-    cy.revalidate([`/${serverName}/wiki/wiki-page-1`]);
+    cy.revalidate([getRoute(`${NavRoute.WIKI}/wiki-page-1`)]);
     cy.task('seedCollection', { collectionName: 'wikiProposals', data: [] });
     cy.login();
   });
@@ -46,11 +46,11 @@ describe('participate to wiki and edit wiki pages', () => {
           ],
         }),
       );
-      cy.revalidate([`/${serverName}/wiki/wiki-page-4`]);
+      cy.revalidate([getRoute(`${NavRoute.WIKI}/wiki-page-4`)]);
       Action.visitWikiPage('wiki-page-4');
       cy.main()
         .find('a')
-        .should('have.attr', 'href', getRoute('wiki/wiki-page-1'))
+        .should('have.attr', 'href', getRoute(`${NavRoute.WIKI}/wiki-page-1`))
         .and('contain.text', 'Wiki page 1')
         .click();
       cy.main({ timeout: 10000 }).should('contain.text', 'Wiki page 1 content');
@@ -236,7 +236,7 @@ describe('participate to wiki and edit wiki pages', () => {
           },
         ],
       });
-      cy.revalidate([`/${serverName}/wiki/wiki-page-1`]);
+      cy.revalidate([getRoute(`${NavRoute.WIKI}/wiki-page-1`)]);
       cy.intercept('PUT', `${APIRoute.WIKI_PROPOSALS}/*`).as('editWikiProposal');
       cy.intercept('GET', APIRoute.WIKI_PROPOSALS).as('getWikiProposals');
       cy.intercept('GET', `${APIRoute.WIKI_PROPOSALS}/*`).as('getWikiProposal');
@@ -385,8 +385,8 @@ describe('participate to wiki and edit wiki pages', () => {
       cy.seedCollection('wikiPages', 'wikiPages');
       cy.seedCollection('wikiProposals', 'wikiProposals');
       cy.revalidate([
-        `/${serverName}${NavRoute.WIKI}/wiki-page-1`,
-        `/${serverName}${NavRoute.WIKI}/proposal-1-edited`,
+        getRoute(`${NavRoute.WIKI}/wiki-page-1`),
+        getRoute(`${NavRoute.WIKI}/proposal-1-edited`),
       ]);
     });
 
@@ -408,7 +408,7 @@ describe('participate to wiki and edit wiki pages', () => {
       cy.wait('@getWikiProposals');
       cy.dataCy('rejected-icon').should('have.length', 2);
 
-      cy.visit(`/${serverName}/wiki/proposal-1-edited`, { failOnStatusCode: false });
+      cy.visit(getRoute(`${NavRoute.WIKI}/proposal-1-edited`), { failOnStatusCode: false });
       cy.main().should('contain.text', '404');
     });
 
@@ -422,7 +422,7 @@ describe('participate to wiki and edit wiki pages', () => {
       cy.wait('@getWikiProposals');
       cy.dataCy('rejected-icon').should('have.length', 2);
 
-      cy.visit(`/${serverName}/wiki/wiki-page-1`);
+      cy.visit(getRoute(`${NavRoute.WIKI}/wiki-page-1`));
       cy.main().should('contain.text', 'Wiki page 1 content');
       cy.main().should('not.contain.text', 'Wiki page 1 content edited');
     });

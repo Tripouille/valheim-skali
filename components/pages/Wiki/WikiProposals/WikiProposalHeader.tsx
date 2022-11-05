@@ -12,7 +12,7 @@ import useSession from 'hooks/useSession';
 import useAnswerWikiProposal from 'hooks/wiki/useAnswerWikiProposal';
 import useWikiPage from 'hooks/wiki/useWikiPage';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
-import { AdminNavRoute, MenuRoute, NavRoute, serverName } from 'utils/routes';
+import { AdminNavRoute, getRoute, MenuRoute, NavRoute } from 'utils/routes';
 
 interface WikiProposalHeaderProps {
   wikiProposal: WikiProposalWithAuthor;
@@ -43,7 +43,7 @@ const WikiProposalHeader: React.FC<WikiProposalHeaderProps> = ({ wikiProposal })
       <Flex mb="3" justify="space-between">
         <nav>
           {wikiPageSlug && (
-            <NextLink href={`/${serverName}${NavRoute.WIKI}/${wikiPageSlug}`} passHref>
+            <NextLink href={getRoute(`${NavRoute.WIKI}/${wikiPageSlug}`)} passHref>
               <Link display="block">
                 &larr;{' '}
                 {wikiProposal.status === 'validated'
@@ -54,13 +54,13 @@ const WikiProposalHeader: React.FC<WikiProposalHeaderProps> = ({ wikiProposal })
           )}
           <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.WRITE }}>
             <NextLink
-              href={`/${serverName}${MenuRoute.ADMIN}${AdminNavRoute.WIKI_PROPOSALS}`}
+              href={getRoute(`${MenuRoute.ADMIN}/${AdminNavRoute.WIKI_PROPOSALS}`)}
               passHref
             >
               <Link display="block">&larr; Voir toutes les propositions</Link>
             </NextLink>
           </Secured>
-          <NextLink href={`/${serverName}${NavRoute.WIKI}/proposals`} passHref>
+          <NextLink href={getRoute(`${NavRoute.WIKI}/proposals`)} passHref>
             <Link display="block">&larr; Voir toutes mes propositions</Link>
           </NextLink>
         </nav>
@@ -68,7 +68,7 @@ const WikiProposalHeader: React.FC<WikiProposalHeaderProps> = ({ wikiProposal })
           <ButtonGroup>
             {userIsAuthor && (
               <NextLink
-                href={`/${serverName}${NavRoute.WIKI}/proposals/edit/${wikiProposal._id}`}
+                href={getRoute(`${NavRoute.WIKI}/proposals/edit/${wikiProposal._id}`)}
                 passHref
               >
                 <Button as="a" data-cy="modify" leftIcon={<BiEdit />}>

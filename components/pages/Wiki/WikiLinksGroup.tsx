@@ -4,7 +4,7 @@ import Box from 'components/core/Containers/Box';
 import Link from 'components/core/Interactive/Link';
 import Heading from 'components/core/Typography/Heading';
 import { WikiPage } from 'data/wiki';
-import { NavRoute, serverName } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 
 export interface WikiLinksGroupProps {
   title: string;
@@ -20,7 +20,7 @@ const WikiLinksGroup: React.FC<WikiLinksGroupProps> = ({ title, pages }) => {
       </Heading>
       {pages.map(wikiPage => (
         <Fragment key={wikiPage._id}>
-          <NextLink href={`/${serverName}${NavRoute.WIKI}/${wikiPage.slug}`} passHref>
+          <NextLink href={getRoute(`${NavRoute.WIKI}/${wikiPage.slug}`)} passHref>
             <Link fontSize="lg">{wikiPage.title}</Link>
           </NextLink>
           <br />

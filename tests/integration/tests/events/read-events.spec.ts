@@ -1,6 +1,6 @@
 import { SpecialRoleName } from 'data/role';
 import { eventPrivilege } from 'utils/permissions';
-import { APIRoute, getRoute } from 'utils/routes';
+import { APIRoute, getRoute, NavRoute } from 'utils/routes';
 import * as Action from './action';
 import * as Select from './select';
 
@@ -36,6 +36,9 @@ describe('events with read permission', () => {
       Select.eventCards().should('have.length', 2);
       Select.createEventButton().should('not.exist');
       Select.editEventButton(0).should('not.exist');
+      Select.eventCards().first().click();
+      cy.dataCy('event-0-0-modal').should('contain.text', 'Une description 1');
+      cy.dataCy('event-0-0-modal').dataCy('edit', 'button').should('not.exist');
     });
 
     it('should scroll to event and open its modal when visiting events with id', () => {
@@ -63,7 +66,7 @@ describe('events with read permission', () => {
       Action.setVisitorEventPermission(eventPrivilege.NONE);
       Action.setMemberEventPermission(eventPrivilege.READ);
       cy.setUserRoles([SpecialRoleName.MEMBER]);
-      cy.revalidate([getRoute('events')]);
+      cy.revalidate([getRoute(NavRoute.EVENTS)]);
       cy.login();
       Action.visitEventsPageAndWaitFor(APIRoute.EVENTS);
     });

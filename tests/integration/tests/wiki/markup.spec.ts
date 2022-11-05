@@ -1,8 +1,8 @@
-import { NavRoute, serverName } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 
 describe('markup', () => {
   before(() => {
-    cy.visit(`/${serverName}${NavRoute.WIKI}/proposals/new`);
+    cy.visit(getRoute(`${NavRoute.WIKI}/proposals/new`));
   });
 
   it('Simple', () => {

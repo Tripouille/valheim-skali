@@ -5,7 +5,7 @@ import {
   WIKI_PAGE_VALUES_MAX_LENGTH,
   WikiPageContent,
 } from 'data/wiki';
-import { NavRoute, serverName } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 
 const wikiPageContentKeyToValueTypeCheck: Record<
   keyof WikiPageContent,
@@ -36,8 +36,6 @@ export const getWikiPageContentFromBody = (body: unknown): WikiPageContent => {
 
 export const revalidateWikiPage = async (slug: string, res: Res) => {
   await res.unstable_revalidate(
-    slug === 'featured'
-      ? `/${serverName}${NavRoute.WIKI}`
-      : `/${serverName}${NavRoute.WIKI}/${slug}`,
+    slug === 'featured' ? getRoute(NavRoute.WIKI) : getRoute(`${NavRoute.WIKI}/${slug}`),
   );
 };

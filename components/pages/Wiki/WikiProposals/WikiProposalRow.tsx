@@ -8,7 +8,7 @@ import IconButton from 'components/core/Interactive/IconButton';
 import { WikiProposalWithAuthor } from 'data/wiki';
 import { rowIconSize, rowIconWidth } from 'theme/admin';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
-import { NavRoute, serverName } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 import { CypressProps } from 'utils/types';
 
 export interface WikiProposalRowProps extends CypressProps {
@@ -24,7 +24,7 @@ const WikiProposalRow: React.FC<WikiProposalRowProps> = ({
   const router = useRouter();
 
   const navigateToWikiProposalPage = () => {
-    router.push(`/${serverName}${NavRoute.WIKI}/proposals/${wikiProposal._id}`);
+    router.push(getRoute(`${NavRoute.WIKI}/proposals/${wikiProposal._id}`));
   };
 
   const getSettledIcon = (status: 'validated' | 'rejected') => {

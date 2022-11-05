@@ -5,13 +5,13 @@ import Secured from 'components/core/Authentication/Secured';
 import Background from 'components/core/Containers/Background';
 import { Grid } from 'components/core/Containers/Grid';
 import { VStack } from 'components/core/Containers/Stack';
+import FromMarkup from 'components/core/DataDisplay/FromMarkup';
 import ButtonGroup from 'components/core/Interactive/ButtonGroup';
 import IconButton from 'components/core/Interactive/IconButton';
 import PageTitle from 'components/core/Typography/PageTitle';
 import { WikiPage } from 'data/wiki';
 import { PermissionCategory, wikiPrivilege } from 'utils/permissions';
-import { NavRoute, serverName } from 'utils/routes';
-import WikiContent from './WikiContent';
+import { getRoute, NavRoute } from 'utils/routes';
 
 export interface WikiPageComponentProps {
   wikiPage: WikiPage;
@@ -25,10 +25,7 @@ const WikiPageComponent: React.FC<WikiPageComponentProps> = ({ wikiPage }) => {
           <PageTitle title={wikiPage.title} gridArea="title" />
           <ButtonGroup gridArea="buttons" justifySelf="end">
             <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.PROPOSE }}>
-              <NextLink
-                href={`/${serverName}${NavRoute.WIKI}/proposals/new/${wikiPage._id}`}
-                passHref
-              >
+              <NextLink href={getRoute(`${NavRoute.WIKI}/proposals/new/${wikiPage._id}`)} passHref>
                 <IconButton
                   data-cy="edit"
                   aria-label="Proposer une modification"
@@ -40,7 +37,7 @@ const WikiPageComponent: React.FC<WikiPageComponentProps> = ({ wikiPage }) => {
             </Secured>
           </ButtonGroup>
         </Grid>
-        <WikiContent content={wikiPage.content} />
+        <FromMarkup content={wikiPage.content} />
       </VStack>
     </Background>
   );

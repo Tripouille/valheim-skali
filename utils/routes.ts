@@ -1,8 +1,6 @@
 import { AuthError } from './auth';
 import { OneOrMany } from './types';
 
-export const serverName = 'valhabba';
-
 export enum APIRoute {
   USERS = '/api/users',
   ROLES = '/api/roles',
@@ -17,34 +15,34 @@ export enum APIRoute {
 }
 
 export enum NavRoute {
-  HOME = '/',
-  RULES = '/rules',
-  MY_APPLICATION = '/applications/me',
-  APPLICATIONS = '/applications',
-  EVENTS = '/events',
-  WIKI = '/wiki',
+  HOME = '',
+  RULES = 'rules',
+  MY_APPLICATION = 'applications/me',
+  APPLICATIONS = 'applications',
+  EVENTS = 'events',
+  WIKI = 'wiki',
 }
 export enum OldNavRoute {
-  TRADE = '/trade',
-  MODS = '/mods',
-  WORLD = '/world',
+  TRADE = 'trade',
+  MODS = 'mods',
+  WORLD = 'world',
 }
 export enum AdminNavRoute {
-  MEMBERS = '/members',
-  NON_MEMBERS = '/non-members',
-  ROLES = '/roles',
-  WIKI_PROPOSALS = '/wiki-proposals',
-  WIKI = '/wiki-pages',
+  MEMBERS = 'members',
+  NON_MEMBERS = 'non-members',
+  ROLES = 'roles',
+  WIKI_PROPOSALS = 'wiki-proposals',
+  WIKI = 'wiki-pages',
 }
 export enum MenuRoute {
-  ABOUT = '/about',
-  ADMIN = '/admin',
+  ABOUT = 'about',
+  ADMIN = 'admin',
 }
 export enum AuthRoute {
-  SIGNIN = '/auth/signin',
+  SIGNIN = 'auth/signin',
 }
 export enum HiddenRoute {
-  JOIN = '/join',
+  JOIN = 'join',
 }
 export type Route = NavRoute | AdminNavRoute | MenuRoute | AuthRoute | OldNavRoute | HiddenRoute;
 
@@ -75,8 +73,8 @@ export const isAdminNavRoute = (route: string): route is AdminNavRoute =>
 
 export const getSigninRoute = (error: AuthError, callbackUrl?: string) =>
   callbackUrl
-    ? `${AuthRoute.SIGNIN}?error=${error}&callbackUrl=${callbackUrl}`
-    : `${AuthRoute.SIGNIN}?error=${error}`;
+    ? `/${AuthRoute.SIGNIN}?error=${error}&callbackUrl=${callbackUrl}`
+    : `/${AuthRoute.SIGNIN}?error=${error}`;
 
 export function getRouteParameterAsString(routeParameterValue: OneOrMany<string>): string;
 export function getRouteParameterAsString(
@@ -86,4 +84,5 @@ export function getRouteParameterAsString(routeParameterValue?: OneOrMany<string
   return Array.isArray(routeParameterValue) ? routeParameterValue[0] : routeParameterValue;
 }
 
+const serverName = 'valhabba';
 export const getRoute = (path: string) => `/${serverName}/${path}`;

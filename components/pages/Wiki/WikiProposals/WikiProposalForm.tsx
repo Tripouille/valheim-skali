@@ -17,7 +17,7 @@ import {
   WikiProposal,
   WikiPage,
 } from 'data/wiki';
-import { NavRoute, serverName } from 'utils/routes';
+import { getRoute, NavRoute } from 'utils/routes';
 import { getWikiFormDataLocalStorageKey, saveWikiFormDataToLocalStorage } from './utils';
 import WikiProposalFormPreview from './WikiProposalFormPreview';
 
@@ -79,19 +79,16 @@ const WikiProposalForm: React.FC<WikiProposalFormProps> = ({
       <Grid templateColumns="1fr auto 1fr" gap="5" width="full">
         <nav>
           {wikiPage && (
-            <NextLink href={`/${serverName}${NavRoute.WIKI}/${wikiPage.slug}`} passHref>
+            <NextLink href={getRoute(`${NavRoute.WIKI}/${wikiPage.slug}`)} passHref>
               <Link display="block">&larr; Retour à la page wiki</Link>
             </NextLink>
           )}
           {wikiProposal ? (
-            <NextLink
-              href={`/${serverName}${NavRoute.WIKI}/proposals/${wikiProposal?._id}`}
-              passHref
-            >
+            <NextLink href={getRoute(`${NavRoute.WIKI}/proposals/${wikiProposal?._id}`)} passHref>
               <Link display="block">&larr; Retour à la proposition</Link>
             </NextLink>
           ) : (
-            <NextLink href={`/${serverName}${NavRoute.WIKI}/proposals`} passHref>
+            <NextLink href={getRoute(`${NavRoute.WIKI}/proposals`)} passHref>
               <Link data-cy="back-to-my-proposals">&larr; Retour à mes propositions</Link>
             </NextLink>
           )}
