@@ -36,7 +36,7 @@ const EventItem = forwardRef<HTMLDivElement, EventItemProps>(
           {event.name} {eventIsClosed && '(terminé)'}
         </Heading>
       </Flex>
-      {event.tags.length && (
+      {(event.tags.length || event.continuous) && (
         <Wrap justify="center">
           {event.tags.map(tag => (
             <Tag key={tag} label={tag} />
