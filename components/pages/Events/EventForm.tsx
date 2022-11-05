@@ -1,12 +1,11 @@
 import { DateTime } from 'luxon';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Stack } from 'components/core/Containers/Stack';
 import FormElement from 'components/core/Form/FormElement';
-import FormModal from 'components/core/Form/FormModal';
+import FormFullPage from 'components/core/Form/FormFullPage';
 import Input from 'components/core/Form/Input';
 import Switch from 'components/core/Form/Switch';
 import Textarea from 'components/core/Form/Textarea';
-import { ModalBody, ModalHeader } from 'components/core/Overlay/Modal';
 import {
   CreateEventData,
   Event,
@@ -15,7 +14,7 @@ import {
 } from 'data/event';
 import { CONTINUOUS_LABEL } from 'utils/constants';
 import { toInputDatetimeFormat } from 'utils/format';
-import { CypressProps, Callback } from 'utils/types';
+import { Callback } from 'utils/types';
 import EventTagsForm from './EventTagsForm';
 
 const getDefaultEventFormData = (): Partial<CreateEventData> => ({
@@ -31,50 +30,37 @@ const getEventFormData = (event: Event) => ({
   endDate: event.endDate ? toInputDatetimeFormat(event.endDate) : undefined,
 });
 
-export type EventFormProps = CypressProps & {
-  /** Modal is open */
-  isOpen: boolean;
-  /** Function to close the modal */
-  onClose: Callback;
+export type EventFormProps = {
   /** Function to create or update event */
   onSubmit: (newEvent: CreateEventData) => void;
-} & (
-    | {
-        /** If no role, this is a creation modal */
-        event: Event;
-        /** Function to delete role */
-        onDelete: Callback;
-      }
-    | { event?: never }
-  );
+} & ({ event: Event; onDelete: Callback } | { event?: never });
 
 const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
-  const { 'data-cy': dataCy, isOpen, onClose, event, onSubmit } = props;
+  const { event, onSubmit } = props;
+  const isEdition = !!event;
 
   const endDateInputRef = useRef<HTMLInputElement>(null);
 
   const [eventFormData, setEventFormData] = useState(
-    event ? getEventFormData(event) : getDefaultEventFormData(),
+    isEdition ? getEventFormData(event) : getDefaultEventFormData(),
   );
-
-  useEffect(() => {
-    if (isOpen) setEventFormData(event ? getEventFormData(event) : getDefaultEventFormData());
-  }, [event, isOpen]);
 
   const handleSubmit = (data: CreateEventData) => {
     if (!eventFormData.endDate && endDateInputRef.current) endDateInputRef.current.value = '';
     onSubmit(data);
   };
 
+  const setFormDataValue =
+    <K extends keyof CreateEventData>(key: K) =>
+    (value: CreateEventData[K]) =>
+      setEventFormData(prev => ({ ...prev, [key]: value }));
+
   return (
-    <FormModal
-      data-cy={dataCy}
-      isOpen={isOpen}
-      onClose={onClose}
+    <FormFullPage
       formData={eventFormData}
       getValidationError={getEventValidationError}
       onSubmit={handleSubmit}
-      {...(props.event
+      {...(isEdition
         ? {
             isEdition: true,
             onDelete: props.onDelete,
@@ -83,93 +69,90 @@ const EventForm: React.FC<EventFormProps> = (props: EventFormProps) => {
           }
         : { isEdition: false })}
     >
-      <ModalHeader textAlign="center">
-        {event ? "Modifier l'événement" : 'Créer un événement'}
-      </ModalHeader>
-      <ModalBody id="event-form-modal-body">
-        <Stack spacing="5">
-          <FormElement label="Nom" isRequired>
-            <Input
-              data-cy="name"
-              value={eventFormData.name ?? ''}
-              onChange={name => setEventFormData(prev => ({ ...prev, name }))}
-              maxLength={EVENT_VALUES_MAX_LENGTH.name}
-            />
-          </FormElement>
-          <FormElement
-            label="Lien discord associé"
-            hint="Exemple: https://discord.com/channels/843826987466227722/885962703330508811/916087663176593458"
-          >
-            <Input
-              data-cy="discord_link"
-              value={eventFormData.discordLink ?? ''}
-              onChange={discordLink => setEventFormData(prev => ({ ...prev, discordLink }))}
-              maxLength={EVENT_VALUES_MAX_LENGTH.discordLink}
-            />
-          </FormElement>
-          <FormElement label="Date de début" isRequired>
-            <Input
-              data-cy="start_date"
-              type="datetime-local"
-              value={eventFormData.startDate ?? ''}
-              onChange={startDate => setEventFormData(prev => ({ ...prev, startDate }))}
-            />
-          </FormElement>
-          <FormElement label="Date de fin">
-            <Input
-              data-cy="end_date"
-              type="datetime-local"
-              value={eventFormData.endDate ?? ''}
-              onChange={endDate => setEventFormData(prev => ({ ...prev, endDate }))}
-              ref={endDateInputRef}
-            />
-          </FormElement>
-          <FormElement label={`${CONTINUOUS_LABEL} ?`}>
-            <Switch
-              data-cy="continuous"
-              isChecked={eventFormData.continuous}
-              onChange={continuous => setEventFormData(prev => ({ ...prev, continuous }))}
-              w="full"
-              size="lg"
-            />
-          </FormElement>
-          <FormElement label="Lieu">
-            <Input
-              data-cy="location"
-              value={eventFormData.location ?? ''}
-              onChange={location => setEventFormData(prev => ({ ...prev, location }))}
-              maxLength={EVENT_VALUES_MAX_LENGTH.location}
-            />
-          </FormElement>
-          <FormElement label="Tags">
-            <EventTagsForm
-              tags={eventFormData.tags}
-              onTagsChange={(fn: (oldTags: string[]) => string[]) =>
-                setEventFormData(prev => ({ ...prev, tags: fn(prev.tags ?? []) }))
-              }
-              continuous={eventFormData.continuous}
-              onContinuousChange={continuous => setEventFormData(prev => ({ ...prev, continuous }))}
-            />
-          </FormElement>
-          <FormElement label="Description RP">
-            <Textarea
-              data-cy="RPDescription"
-              value={eventFormData.RPDescription ?? ''}
-              onChange={RPDescription => setEventFormData(prev => ({ ...prev, RPDescription }))}
-              maxLength={EVENT_VALUES_MAX_LENGTH.RPDescription}
-            />
-          </FormElement>
-          <FormElement label="Description" isRequired>
-            <Textarea
-              data-cy="description"
-              value={eventFormData.description ?? ''}
-              onChange={description => setEventFormData(prev => ({ ...prev, description }))}
-              maxLength={EVENT_VALUES_MAX_LENGTH.description}
-            />
-          </FormElement>
-        </Stack>
-      </ModalBody>
-    </FormModal>
+      <Stack spacing="5">
+        <FormElement label="Nom" isRequired>
+          <Input
+            data-cy="name"
+            value={eventFormData.name ?? ''}
+            onChange={setFormDataValue('name')}
+            maxLength={EVENT_VALUES_MAX_LENGTH.name}
+          />
+        </FormElement>
+        <FormElement
+          label="Lien discord associé"
+          hint="Exemple: https://discord.com/channels/843826987466227722/885962703330508811/916087663176593458"
+        >
+          <Input
+            data-cy="discord_link"
+            value={eventFormData.discordLink ?? ''}
+            onChange={setFormDataValue('discordLink')}
+            maxLength={EVENT_VALUES_MAX_LENGTH.discordLink}
+          />
+        </FormElement>
+        <FormElement label="Date de début" isRequired>
+          <Input
+            data-cy="start_date"
+            type="datetime-local"
+            value={eventFormData.startDate ?? ''}
+            onChange={setFormDataValue('startDate')}
+          />
+        </FormElement>
+        <FormElement label="Date de fin">
+          <Input
+            data-cy="end_date"
+            type="datetime-local"
+            value={eventFormData.endDate ?? ''}
+            onChange={setFormDataValue('endDate')}
+            ref={endDateInputRef}
+          />
+        </FormElement>
+        <FormElement label={`${CONTINUOUS_LABEL} ?`}>
+          <Switch
+            data-cy="continuous"
+            isChecked={eventFormData.continuous}
+            onChange={setFormDataValue('continuous')}
+            w="full"
+            size="lg"
+          />
+        </FormElement>
+        <FormElement label="Lieu">
+          <Input
+            data-cy="location"
+            value={eventFormData.location ?? ''}
+            onChange={setFormDataValue('location')}
+            maxLength={EVENT_VALUES_MAX_LENGTH.location}
+          />
+        </FormElement>
+        <FormElement label="Tags">
+          <EventTagsForm
+            tags={eventFormData.tags}
+            onTagsChange={(fn: (oldTags: string[]) => string[]) =>
+              setEventFormData(prev => ({ ...prev, tags: fn(prev.tags ?? []) }))
+            }
+            continuous={eventFormData.continuous}
+            onContinuousChange={continuous => setEventFormData(prev => ({ ...prev, continuous }))}
+          />
+        </FormElement>
+        <FormElement label="Description RP">
+          <Textarea
+            data-cy="RPDescription"
+            value={eventFormData.RPDescription ?? ''}
+            onChange={setFormDataValue('RPDescription')}
+            maxLength={EVENT_VALUES_MAX_LENGTH.RPDescription}
+            rows={5}
+          />
+        </FormElement>
+        <FormElement label="Description" isRequired>
+          <Textarea
+            data-cy="description"
+            value={eventFormData.description ?? ''}
+            onChange={setFormDataValue('description')}
+            maxLength={EVENT_VALUES_MAX_LENGTH.description}
+            rows={10}
+          />
+        </FormElement>
+      </Stack>
+    </FormFullPage>
   );
 };
 

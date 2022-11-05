@@ -36,6 +36,9 @@ describe('events with read permission', () => {
       Select.eventCards().should('have.length', 2);
       Select.createEventButton().should('not.exist');
       Select.editEventButton(0).should('not.exist');
+      Select.eventCards().first().click();
+      cy.dataCy('event-0-0-modal').should('contain.text', 'Une description 1');
+      cy.dataCy('event-0-0-modal').dataCy('edit', 'button').should('not.exist');
     });
 
     it('should scroll to event and open its modal when visiting events with id', () => {
