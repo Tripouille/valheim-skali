@@ -2,7 +2,7 @@ import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
 import Secured from 'components/core/Authentication/Secured';
 import Box from 'components/core/Containers/Box';
-import IconButton from 'components/core/Interactive/IconButton';
+import Button from 'components/core/Interactive/Button';
 import {
   Modal,
   ModalBody,
@@ -73,13 +73,14 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ application, isOpen
           </Text>
           <ApplicationAnswers application={application} />
           <Secured permissions={{ [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE }}>
-            <IconButton
+            <Button
               data-cy="edit"
-              aria-label="Modifier la candidature"
-              title="Modifier la candidature"
-              icon={<BiEdit />}
+              marginTop={5}
+              leftIcon={<BiEdit />}
               onClick={editionModal.onOpen}
-            />
+            >
+              Modifier
+            </Button>
             <ApplicationForm
               display="modal"
               isOpen={editionModal.isOpen}
