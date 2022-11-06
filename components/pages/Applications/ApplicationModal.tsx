@@ -2,7 +2,7 @@ import { BiEdit } from 'react-icons/bi';
 import { useDisclosure } from '@chakra-ui/react';
 import Secured from 'components/core/Authentication/Secured';
 import Box from 'components/core/Containers/Box';
-import IconButton from 'components/core/Interactive/IconButton';
+import Button from 'components/core/Interactive/Button';
 import {
   Modal,
   ModalBody,
@@ -21,7 +21,7 @@ import {
 import useDeleteApplication from 'hooks/applications/useDeleteApplication';
 import useEditApplication from 'hooks/applications/useEditApplication';
 import { applicationPrivilege, PermissionCategory } from 'utils/permissions';
-import { Callback } from 'utils/types';
+import { Callback, Entries } from 'utils/types';
 import ApplicationAnswers from './ApplicationAnswers';
 import ApplicationComments from './ApplicationComments';
 import ApplicationDate from './ApplicationDate';
@@ -30,8 +30,8 @@ import ApplicationIdentity from './ApplicationIdentity';
 import ApplicationModalStatus from './ApplicationModalStatus';
 
 const hasSameValues = (formAnswer1: ApplicationFormAnswer, formAnswer2: ApplicationFormAnswer) =>
-  Object.entries(formAnswer1).every(
-    ([key, value]) => formAnswer2[key as keyof ApplicationFormAnswer] === value,
+  (Object.entries(formAnswer1) as Entries<ApplicationFormAnswer>).every(
+    ([key, value]) => formAnswer2[key] === value,
   );
 
 interface ApplicationModalProps {
@@ -73,13 +73,14 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ application, isOpen
           </Text>
           <ApplicationAnswers application={application} />
           <Secured permissions={{ [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE }}>
-            <IconButton
+            <Button
               data-cy="edit"
-              aria-label="Modifier la candidature"
-              title="Modifier la candidature"
-              icon={<BiEdit />}
+              marginTop={5}
+              leftIcon={<BiEdit />}
               onClick={editionModal.onOpen}
-            />
+            >
+              Modifier
+            </Button>
             <ApplicationForm
               display="modal"
               isOpen={editionModal.isOpen}

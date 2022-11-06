@@ -84,11 +84,13 @@ export const getCommentWithUserInfos = (
   };
 };
 
-export const checkApplicationUserExists = async (
+export const getApplicationUser = async (
   applicationCreateData: CreateApplicationDataWithUserId,
 ) => {
   const user = await db.findOne<UserInDb>(usersCollectionName, {
     _id: new ObjectId(applicationCreateData.userId),
   });
   if (!user) throw new ServerException(404);
+
+  return user;
 };

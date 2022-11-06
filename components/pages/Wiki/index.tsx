@@ -6,7 +6,7 @@ import Background from 'components/core/Containers/Background';
 import { Grid } from 'components/core/Containers/Grid';
 import SimpleGrid from 'components/core/Containers/SimpleGrid';
 import { VStack } from 'components/core/Containers/Stack';
-import IconButton from 'components/core/Interactive/IconButton';
+import Button from 'components/core/Interactive/Button';
 import PageTitle from 'components/core/Typography/PageTitle';
 import Text from 'components/core/Typography/Text';
 import { FeaturedWikiPages, WIKI_PAGE_TAG_TO_LABEL } from 'data/wiki';
@@ -58,14 +58,15 @@ const WikiHome: React.FC<WikiHomeProps> = ({ featuredWikiPages }) => (
       </SimpleGrid>
       <Secured permissions={{ [PermissionCategory.WIKI]: wikiPrivilege.PROPOSE }}>
         <NextLink href={getRoute(`${NavRoute.WIKI}/proposals`)} passHref>
-          <IconButton
+          <Button
             data-cy="participate"
             as="a"
-            icon={<GiFeather />}
-            aria-label="Participer au wiki"
+            rightIcon={<GiFeather />}
             title="Participer au wiki"
             alignSelf="end"
-          />
+          >
+            Participer
+          </Button>
         </NextLink>
       </Secured>
     </VStack>

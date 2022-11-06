@@ -11,21 +11,14 @@ import {
   ApplicationStatus,
   isCreateApplicationDataWithUserId,
 } from 'data/application';
+import { usersCollectionName } from 'data/user';
 import { PermissionCategory, applicationPrivilege } from 'utils/permissions';
-import { checkApplicationUserExists, getCreateApplicationData } from './utils';
+import { getApplicationUser, getCreateApplicationData } from './utils';
 
 const createApplication = async (req: Req, res: Res) => {
   const applicationCreateData = getCreateApplicationData(req.body);
 
   const isDataWithUserId = isCreateApplicationDataWithUserId(applicationCreateData);
-
-  if (isDataWithUserId) {
-    await checkApplicationUserExists(applicationCreateData);
-    const applicationForSameUser = await db.findOne<ApplicationInDb>(applicationsCollectionName, {
-      userId: new ObjectId(applicationCreateData.userId),
-    });
-    if (applicationForSameUser) throw new ServerException(409);
-  }
 
   // For non managers, allow only own application
   const session = await getSession({ req });
@@ -35,6 +28,21 @@ const createApplication = async (req: Req, res: Res) => {
       { [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE },
       req,
     );
+
+  if (isDataWithUserId) {
+    const user = await getApplicationUser(applicationCreateData);
+
+    const applicationForSameUser = await db.findOne<ApplicationInDb>(applicationsCollectionName, {
+      userId: new ObjectId(applicationCreateData.userId),
+    });
+    if (applicationForSameUser) throw new ServerException(409);
+
+    await db.updateOne(
+      usersCollectionName,
+      { _id: user._id },
+      { $set: { nameInGame: applicationCreateData.applicationFormAnswer.nameInGame } },
+    );
+  }
 
   const newApplication: Omit<ApplicationInDb, '_id'> = {
     applicationFormAnswer: applicationCreateData.applicationFormAnswer,

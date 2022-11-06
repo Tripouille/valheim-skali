@@ -20,6 +20,6 @@ export const visitEventsPage = (eventId?: string) => {
 export const visitEventsPageAndWaitFor = (routeStartToWaitFor: APIRoute, eventId?: string) => {
   const routeToWaitFor = `${routeStartToWaitFor}*`;
   cy.intercept(routeToWaitFor).as(routeToWaitFor);
-  cy.visit(getRoute(`${NavRoute.EVENTS}${eventId ? `?id=${eventId}` : ''}`));
+  cy.visit(getRoute(eventId ? `${NavRoute.EVENTS}?id=${eventId}` : NavRoute.EVENTS));
   cy.wait(`@${routeToWaitFor}`);
 };

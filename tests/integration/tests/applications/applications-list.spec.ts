@@ -264,7 +264,10 @@ describe('applications list', () => {
       cy.dataCy('nav-bar').dataCy('menu', 'button').click();
       cy.dataCy('nav-bar').dataCy('admin').click();
       cy.wait('@getUsers');
-      cy.dataCy('user-1').closest('tr').should('contain.text', 'User1');
+      cy.dataCy('user-1')
+        .closest('tr')
+        .should('contain.text', 'User1')
+        .and('contain.text', 'Name in game2');
 
       cy.dataCy('Candidatures-nav-item').click();
 
