@@ -21,7 +21,7 @@ import {
 import useDeleteApplication from 'hooks/applications/useDeleteApplication';
 import useEditApplication from 'hooks/applications/useEditApplication';
 import { applicationPrivilege, PermissionCategory } from 'utils/permissions';
-import { Callback } from 'utils/types';
+import { Callback, Entries } from 'utils/types';
 import ApplicationAnswers from './ApplicationAnswers';
 import ApplicationComments from './ApplicationComments';
 import ApplicationDate from './ApplicationDate';
@@ -30,8 +30,8 @@ import ApplicationIdentity from './ApplicationIdentity';
 import ApplicationModalStatus from './ApplicationModalStatus';
 
 const hasSameValues = (formAnswer1: ApplicationFormAnswer, formAnswer2: ApplicationFormAnswer) =>
-  Object.entries(formAnswer1).every(
-    ([key, value]) => formAnswer2[key as keyof ApplicationFormAnswer] === value,
+  (Object.entries(formAnswer1) as Entries<ApplicationFormAnswer>).every(
+    ([key, value]) => formAnswer2[key] === value,
   );
 
 interface ApplicationModalProps {
