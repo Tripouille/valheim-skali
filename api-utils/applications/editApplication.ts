@@ -10,8 +10,9 @@ import {
   applicationsCollectionName,
   isCreateApplicationDataWithUserId,
 } from 'data/application';
+import { usersCollectionName } from 'data/user';
 import { PermissionCategory, applicationPrivilege } from 'utils/permissions';
-import { checkApplicationUserExists, getCreateApplicationData } from './utils';
+import { getApplicationUser, getCreateApplicationData } from './utils';
 
 const editApplication = async (req: Req, res: Res) => {
   const { id } = req.query as { id: string };
@@ -40,12 +41,19 @@ const editApplication = async (req: Req, res: Res) => {
   const isDataWithUserId = isCreateApplicationDataWithUserId(applicationCreateData);
 
   if (isDataWithUserId) {
-    await checkApplicationUserExists(applicationCreateData);
+    const user = await getApplicationUser(applicationCreateData);
+
     const applicationForSameUser = await db.findOne<ApplicationInDb>(applicationsCollectionName, {
       userId: new ObjectId(applicationCreateData.userId),
       ...('userId' in application && { _id: { $ne: new ObjectId(id) } }),
     });
     if (applicationForSameUser) throw new ServerException(409);
+
+    await db.updateOne(
+      usersCollectionName,
+      { _id: user._id },
+      { $set: { nameInGame: applicationCreateData.applicationFormAnswer.nameInGame } },
+    );
   }
 
   const newComments = lastCommentIsApplicationEdition
