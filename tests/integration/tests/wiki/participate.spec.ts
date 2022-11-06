@@ -96,8 +96,7 @@ describe('participate to wiki and edit wiki pages', () => {
         .should('contain.text', '← Voir toutes mes propositions')
         .and('contain.text', 'Modifier')
         .and('contain.text', 'Title')
-        .and('contain.text', 'Content')
-        .and('contain.text', 'Proposé par TestUser');
+        .and('contain.text', 'Content');
       cy.dataCy('validate').should('not.exist');
 
       // Validate
@@ -138,8 +137,7 @@ describe('participate to wiki and edit wiki pages', () => {
         .and('contain.text', 'Voir la page wiki originale')
         .and('contain.text', 'Modifier')
         .and('contain.text', 'Wiki page 1 edited')
-        .and('contain.text', 'Wiki page 1 content edited')
-        .and('contain.text', 'Proposé par TestUser');
+        .and('contain.text', 'Wiki page 1 content edited');
       cy.dataCy('validate').should('not.exist');
 
       // Validate
@@ -210,8 +208,7 @@ describe('participate to wiki and edit wiki pages', () => {
         .and('contain.text', 'Modifier')
         .and('contain.text', 'Proposal 1 edited')
         .and('contain.text', 'Content edited of proposal 1')
-        .and('contain.text', 'Content of proposal 1')
-        .and('contain.text', 'Proposé par TestUser');
+        .and('contain.text', 'Content of proposal 1');
 
       // Validate
       cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.WIKI, wikiPrivilege.WRITE);
@@ -266,8 +263,7 @@ describe('participate to wiki and edit wiki pages', () => {
         .and('contain.text', 'Modifier')
         .and('contain.text', 'Proposal 1 edited')
         .and('contain.text', 'Content of proposal 1 edited')
-        .and('contain.text', 'Proposal 1')
-        .and('contain.text', 'Proposé par TestUser');
+        .and('contain.text', 'Proposal 1');
 
       // Validate
       cy.setPermission(SpecialRoleName.MEMBER, PermissionCategory.WIKI, wikiPrivilege.WRITE);
