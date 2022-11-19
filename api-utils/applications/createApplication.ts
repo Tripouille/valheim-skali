@@ -31,17 +31,18 @@ const createApplication = async (req: Req, res: Res) => {
 
   if (isDataWithUserId) {
     const user = await getApplicationUser(applicationCreateData);
+    if (user) {
+      const applicationForSameUser = await db.findOne<ApplicationInDb>(applicationsCollectionName, {
+        userId: new ObjectId(applicationCreateData.userId),
+      });
+      if (applicationForSameUser) throw new ServerException(409);
 
-    const applicationForSameUser = await db.findOne<ApplicationInDb>(applicationsCollectionName, {
-      userId: new ObjectId(applicationCreateData.userId),
-    });
-    if (applicationForSameUser) throw new ServerException(409);
-
-    await db.updateOne(
-      usersCollectionName,
-      { _id: user._id },
-      { $set: { nameInGame: applicationCreateData.applicationFormAnswer.nameInGame } },
-    );
+      await db.updateOne(
+        usersCollectionName,
+        { _id: user._id },
+        { $set: { nameInGame: applicationCreateData.applicationFormAnswer.nameInGame } },
+      );
+    }
   }
 
   const newApplication: Omit<ApplicationInDb, '_id'> = {

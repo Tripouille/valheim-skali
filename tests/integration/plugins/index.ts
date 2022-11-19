@@ -1,5 +1,5 @@
-import * as dotenv from 'dotenv';
 import { ObjectId } from 'bson';
+import * as dotenv from 'dotenv';
 import { OptionalId } from 'mongodb';
 import db from 'api-utils/db';
 import { RoleInDb, rolesCollectionName, SpecialRoleName } from 'data/role';

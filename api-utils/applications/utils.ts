@@ -40,7 +40,7 @@ const applicationKeyToValueTypeCheck: Record<
 
 const isCreateApplicationData = (data: unknown): data is CreateApplicationData =>
   isRequiredObjectType(data, applicationKeyToValueTypeCheck) &&
-  (data.discordName.length || data.userId.length);
+  (data.discordName?.length || data.userId?.length);
 
 const isValidCreateApplicationData = (data: CreateApplicationData) =>
   isCreateApplicationDataWithUserId(data) ? data.userId.length : data.discordName.length;
@@ -90,7 +90,5 @@ export const getApplicationUser = async (
   const user = await db.findOne<UserInDb>(usersCollectionName, {
     _id: new ObjectId(applicationCreateData.userId),
   });
-  if (!user) throw new ServerException(404);
-
   return user;
 };
