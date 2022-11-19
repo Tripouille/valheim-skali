@@ -1,6 +1,5 @@
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { getPermissionsFromRequest, requirePermissions } from 'api-utils/auth';
-import { ServerException } from 'api-utils/common';
 import db from 'api-utils/db';
 import { ApplicationInDb, applicationsCollectionName, WithDiscordInfos } from 'data/application';
 import { UserInDb, usersCollectionName } from 'data/user';
@@ -38,11 +37,10 @@ const getApplications = async (req: Req, res: Res) => {
       const applicant = users.find(user =>
         user._id.equals(applicationWithCommentsWithUserInfos.userId),
       );
-      if (!applicant) throw new ServerException(500);
       return {
         ...applicationWithCommentsWithUserInfos,
-        discordName: applicant.name,
-        discordImageUrl: applicant.image,
+        discordName: applicant?.name ?? 'Utilisateur supprimé',
+        discordImageUrl: applicant?.image,
       };
     },
   );
