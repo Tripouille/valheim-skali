@@ -1,0 +1,29 @@
+[
+  {
+    "_id": "622372a54fd4e3e67cc47af1",
+    "type": "preamble",
+    "label": "Preamble"
+  },
+  {
+    "_id": "622372a54fd4e3e67cc47af2",
+    "type": "simple",
+    "label": "How many wards can you have ?"
+  },
+  {
+    "_id": "622372a54fd4e3e67cc47af3",
+    "type": "long",
+    "label": "Do you think the rules are right ?"
+  },
+  {
+    "_id": "622372a54fd4e3e67cc47af4",
+    "type": "single-choice",
+    "label": "Can you open someone else's tomb ?",
+    "options": ["Yes", "No"]
+  },
+  {
+    "_id": "622372a54fd4e3e67cc47af5",
+    "type": "multiple-choice",
+    "label": "What minerals can you mine underground ?",
+    "options": ["Copper", "Tin", "Iron", "Silver"]
+  }
+]

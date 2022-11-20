@@ -17,7 +17,7 @@ const AdminNavItem: React.FC<AdminNavItemProps> = ({ route, hint }) => (
     <Flex align="center">
       <NextLink href={getRoute(`${MenuRoute.ADMIN}/${route}`)} passHref>
         <Button data-cy={ROUTES_TO_LABEL[route]} as="a" size="lg" w="full" px="3">
-          <Grid w="full" templateColumns="1fr auto 1fr" gap="3">
+          <Grid w="full" templateColumns="1fr auto 1fr" gap="3" minWidth="min-content">
             <GridItem colStart={2} fontSize="3xl">
               {ROUTES_TO_LABEL[route]}
             </GridItem>

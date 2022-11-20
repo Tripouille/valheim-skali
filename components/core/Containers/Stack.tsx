@@ -14,9 +14,10 @@ export const Stack = forwardRef<StackProps, 'div'>((chakraStackProps, ref) => (
 ));
 Stack.displayName = 'Stack';
 
-export const HStack: React.FC<StackProps> = chakraStackProps => (
-  <ChakraHStack {...chakraStackProps}></ChakraHStack>
-);
+export const HStack = forwardRef<StackProps, 'div'>((chakraStackProps, ref) => (
+  <ChakraHStack {...chakraStackProps} ref={ref}></ChakraHStack>
+));
+HStack.displayName = 'HStack';
 
 export const VStack: React.FC<StackProps> = chakraStackProps => (
   <ChakraVStack {...chakraStackProps}></ChakraVStack>

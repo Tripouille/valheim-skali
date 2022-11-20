@@ -10,6 +10,7 @@ export enum APIRoute {
   APPLICATIONS = '/api/applications',
   APPLICATION_ASSOCIABLE_USERS = '/api/applications/associable-users',
   MY_APPLICATION = '/api/applications/me',
+  RULES_QUESTIONNAIRE = '/api/rules-questionnaire',
   SESSION = '/api/auth/session',
   VISITOR = '/api/auth/visitor',
 }
@@ -33,6 +34,7 @@ export enum AdminNavRoute {
   ROLES = 'roles',
   WIKI_PROPOSALS = 'wiki-proposals',
   WIKI = 'wiki-pages',
+  RULES_QUESTIONNAIRE = 'rules-questionnaire',
 }
 export enum MenuRoute {
   ABOUT = 'about',
@@ -62,6 +64,7 @@ export const ROUTES_TO_LABEL: Record<Route, string> = {
   [AdminNavRoute.ROLES]: 'Rôles',
   [AdminNavRoute.WIKI_PROPOSALS]: 'Propositions Wiki',
   [AdminNavRoute.WIKI]: 'Pages Wiki',
+  [AdminNavRoute.RULES_QUESTIONNAIRE]: 'Questionnaire Règlement',
   [MenuRoute.ABOUT]: 'A propos du site',
   [MenuRoute.ADMIN]: 'Administration',
   [AuthRoute.SIGNIN]: 'Connexion',

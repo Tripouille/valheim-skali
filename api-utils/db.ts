@@ -86,6 +86,7 @@ async function replaceOne<T>(
   const collection = await connectToCollection<T>(collectionName);
   const result = await collection.findOneAndReplace(query, replacement, {
     returnDocument: 'after',
+    upsert: true,
   });
 
   return result;

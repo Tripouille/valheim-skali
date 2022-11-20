@@ -1,9 +1,11 @@
 import { Grid } from 'components/core/Containers/Grid';
 import { Children } from 'utils/types';
+import FromMarkup from '../DataDisplay/FromMarkup';
 import { FormControl, FormHelperText, FormLabel } from './FormControl';
 
 export interface FormElementProps {
   label: string;
+  withMarkup?: boolean;
   hint?: string;
   isDisabled?: boolean;
   isInvalid?: boolean;
@@ -17,6 +19,7 @@ export interface FormElementProps {
 /** A label and an input (provided as child) for a line in a classic form */
 const FormElement: React.FC<FormElementProps> = ({
   label,
+  withMarkup,
   hint,
   isDisabled,
   isInvalid,
@@ -37,7 +40,9 @@ const FormElement: React.FC<FormElementProps> = ({
       rowGap={vertical ? 1 : 0}
       alignItems="center"
     >
-      <FormLabel fontWeight="normal">{label}</FormLabel>
+      <FormLabel fontWeight="normal">
+        {withMarkup ? <FromMarkup content={label} /> : label}
+      </FormLabel>
       {children}
       {hint && (
         <FormHelperText
