@@ -10,25 +10,33 @@ import {
   getCreateQuestionDataForServer,
   isQuestionValid,
   Question,
+  QuestionPositionType,
   QUESTION_TYPE_TO_LABEL,
 } from 'data/rulesQuestionnaire';
 import useDeleteQuestion from 'hooks/rules-questionnaire/useDeleteQuestion';
 import useEditQuestion from 'hooks/rules-questionnaire/useEditQuestion';
+import useMoveQuestion from 'hooks/rules-questionnaire/useMoveQuestion';
 import EditableQuestionControls from './EditableQuestionControls';
 import MCQQuestion from './MCQQuestion';
 import QuestionForm from './QuestionForm';
 
 interface EditableQuestionProps {
   question: Question;
-  onChange?: (question: Question) => void;
+  questionIndex: number;
+  questionsLength: number;
 }
 
-const EditableQuestion: React.FC<EditableQuestionProps> = ({ question }) => {
+const EditableQuestion: React.FC<EditableQuestionProps> = ({
+  question,
+  questionIndex,
+  questionsLength,
+}) => {
   const [isEditing, setIsEditing] = useBoolean(false);
   const [questionFormData, setQuestionFormData] = useState<Partial<CreateQuestionData>>(question);
 
   const editQuestion = useEditQuestion(question._id, { onSuccess: setIsEditing.off });
   const deleteQuestion = useDeleteQuestion(question._id);
+  const moveQuestion = useMoveQuestion(question);
 
   const onCancel = () => {
     setIsEditing.off();
@@ -50,7 +58,7 @@ const EditableQuestion: React.FC<EditableQuestionProps> = ({ question }) => {
   }
 
   return (
-    <Flex gap={2}>
+    <Flex data-cy="question" gap={2}>
       <Box flex="1">
         {isEditing ? (
           <Stack as="form" spacing={5} onSubmit={() => {}}>
@@ -61,7 +69,11 @@ const EditableQuestion: React.FC<EditableQuestionProps> = ({ question }) => {
           </Stack>
         ) : (
           <>
-            <Text fontStyle="italic">{QUESTION_TYPE_TO_LABEL[question.type]}</Text>
+            <Text fontStyle="italic">
+              {QUESTION_TYPE_TO_LABEL[question.type]}
+              {question.positionType === QuestionPositionType.BEGINNING && ' (Au début)'}
+              {question.positionType === QuestionPositionType.END && ' (A la fin)'}
+            </Text>
             {QuestionComponent}
           </>
         )}
@@ -73,6 +85,13 @@ const EditableQuestion: React.FC<EditableQuestionProps> = ({ question }) => {
         onSubmit={() => editQuestion(getCreateQuestionDataForServer(questionFormData))}
         onCancel={onCancel}
         onDelete={deleteQuestion}
+        canMoveUp={question.positionType !== QuestionPositionType.RANDOM && questionIndex > 0}
+        canMoveDown={
+          question.positionType !== QuestionPositionType.RANDOM &&
+          questionIndex < questionsLength - 1
+        }
+        onMoveUp={() => moveQuestion(questionIndex - 1)}
+        onMoveDown={() => moveQuestion(questionIndex + 1)}
       />
     </Flex>
   );

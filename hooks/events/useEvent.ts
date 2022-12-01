@@ -17,7 +17,6 @@ const useEvent = (id?: string) => {
       const events: InfiniteData<EventsPage<Event>> | undefined = queryClient.getQueryData([
         QueryKeys.EVENTS,
       ]);
-      console.log({ events });
       events?.pages.forEach(eventsPage => {
         event = eventsPage.events.find(e => e._id === id) ?? event;
       });

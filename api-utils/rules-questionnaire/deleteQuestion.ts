@@ -3,7 +3,10 @@ import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { requirePermissions } from 'api-utils/auth';
 import { ServerException } from 'api-utils/common';
 import db from 'api-utils/db';
-import { PreambleInDb, Question, rulesQuestionnaireCollectionName } from 'data/rulesQuestionnaire';
+import {
+  rulesQuestionnaireCollectionName,
+  RulesQuestionnaireQuestionTypeObjectInDb,
+} from 'data/rulesQuestionnaire';
 import { PermissionCategory, rulesQuestionnairePrivilege } from 'utils/permissions';
 
 const deleteQuestion = async (req: Req, res: Res) => {
@@ -14,14 +17,18 @@ const deleteQuestion = async (req: Req, res: Res) => {
 
   const { id } = req.query as { id: string };
 
-  const question = await db.findOne<Question<ObjectId> | PreambleInDb>(
+  const questionTypeObject = await db.findOne<RulesQuestionnaireQuestionTypeObjectInDb>(
     rulesQuestionnaireCollectionName,
-    { _id: new ObjectId(id) },
+    { 'questions._id': new ObjectId(id) },
   );
-  if (!question) throw new ServerException(404);
-  if (question.type === 'preamble') throw new ServerException(400);
+  if (!questionTypeObject) throw new ServerException(404);
 
-  await db.remove<Question<ObjectId>>(rulesQuestionnaireCollectionName, id);
+  const result = await db.updateOne<RulesQuestionnaireQuestionTypeObjectInDb>(
+    rulesQuestionnaireCollectionName,
+    { 'questions._id': new ObjectId(id) },
+    { $pull: { questions: { _id: new ObjectId(id) } } },
+  );
+  if (!result.ok) throw new ServerException(500);
 
   res.status(200).end();
 };

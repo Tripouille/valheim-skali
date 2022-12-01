@@ -1,11 +1,15 @@
 import { useRadioGroup } from '@chakra-ui/react';
+import Flex from 'components/core/Containers/Flex';
 import { HStack } from 'components/core/Containers/Stack';
 import FormElement from 'components/core/Form/FormElement';
+import Select from 'components/core/Form/Select';
 import Textarea from 'components/core/Form/Textarea';
 import {
   CreateQuestionData,
   MCQQuestion,
+  QuestionPositionType,
   QuestionType,
+  QUESTION_POSITION_TO_LABEL,
   QUESTION_TYPE_TO_LABEL,
 } from 'data/rulesQuestionnaire';
 import { Children, Setter } from 'utils/types';
@@ -36,6 +40,13 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
       }),
   });
 
+  const changePositionType = (positionType: QuestionPositionType) => {
+    setQuestionFormData(prev => ({
+      ...prev,
+      positionType,
+    }));
+  };
+
   const changeOptions = (options: string[]) => {
     setQuestionFormData(prev => ({
       ...(prev as Partial<MCQQuestion>),
@@ -45,18 +56,29 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
 
   return (
     <>
-      <FormElement label="Type de question :" vertical>
-        <HStack {...getRootProps()}>
-          {Object.entries(QUESTION_TYPE_TO_LABEL).map(([value, label]) => {
-            const radio = getRadioProps({ value });
-            return (
-              <QuestionTypeRadioButton key={value} {...radio}>
+      <Flex align="center" columnGap={8} rowGap={3} wrap="wrap">
+        <FormElement label="Type de question :" vertical width="max-content">
+          <HStack {...getRootProps()}>
+            {Object.entries(QUESTION_TYPE_TO_LABEL).map(([value, label]) => {
+              const radio = getRadioProps({ value });
+              return (
+                <QuestionTypeRadioButton key={value} {...radio}>
+                  {label}
+                </QuestionTypeRadioButton>
+              );
+            })}
+          </HStack>
+        </FormElement>
+        <FormElement label="Position :" vertical width="max-content">
+          <Select value={questionFormData.positionType} onChange={changePositionType}>
+            {Object.entries(QUESTION_POSITION_TO_LABEL).map(([value, label]) => (
+              <option key={value} value={value}>
                 {label}
-              </QuestionTypeRadioButton>
-            );
-          })}
-        </HStack>
-      </FormElement>
+              </option>
+            ))}
+          </Select>
+        </FormElement>
+      </Flex>
       {questionFormData.type && (
         <>
           <Textarea

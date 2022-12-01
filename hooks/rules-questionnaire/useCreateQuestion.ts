@@ -14,9 +14,12 @@ const useCreateQuestion = ({ onSuccess }: { onSuccess: Callback }) => {
   const createQuestion = useOptimisticMutation(
     QueryKeys.RULES_QUESTIONS,
     createQuestionOnServer,
-    ({ preamble, questions: previousQuestions }, newQuestion) => ({
-      preamble,
-      questions: [...(previousQuestions ?? []), { ...newQuestion, _id: 'new' }],
+    (previousQuestionnaire, newQuestion) => ({
+      ...previousQuestionnaire,
+      [newQuestion.positionType]: [
+        ...(previousQuestionnaire[newQuestion.positionType] ?? []),
+        newQuestion,
+      ],
     }),
     'La question a bien été ajoutée.',
     { onSuccess },

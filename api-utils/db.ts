@@ -73,7 +73,10 @@ async function updateOne<T>(
   update: UpdateFilter<T> | Partial<T>,
 ): Promise<ModifyResult<T>> {
   const collection = await connectToCollection<T>(collectionName);
-  const result = await collection.findOneAndUpdate(query, update, { returnDocument: 'after' });
+  const result = await collection.findOneAndUpdate(query, update, {
+    returnDocument: 'after',
+    upsert: true,
+  });
 
   return result;
 }

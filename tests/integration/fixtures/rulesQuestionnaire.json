@@ -5,25 +5,57 @@
     "label": "Preamble"
   },
   {
-    "_id": "622372a54fd4e3e67cc47af2",
-    "type": "simple",
-    "label": "How many wards can you have ?"
+    "positionType": "random",
+    "questions": [
+      {
+        "_id": "622372a54fd4e3e67cc47af2",
+        "positionType": "random",
+        "type": "simple",
+        "label": "How many wards can you have ?"
+      },
+      {
+        "_id": "622372a54fd4e3e67cc47af3",
+        "positionType": "random",
+        "type": "long",
+        "label": "Do you think the rules are right ?"
+      },
+      {
+        "_id": "622372a54fd4e3e67cc47af4",
+        "positionType": "random",
+        "type": "single-choice",
+        "label": "Can you open someone else's tomb ?",
+        "options": ["Yes", "No"]
+      },
+      {
+        "_id": "622372a54fd4e3e67cc47af5",
+        "positionType": "random",
+        "type": "multiple-choice",
+        "label": "What minerals can you mine underground ?",
+        "options": ["Copper", "Tin", "Iron", "Silver"]
+      }
+    ]
   },
   {
-    "_id": "622372a54fd4e3e67cc47af3",
-    "type": "long",
-    "label": "Do you think the rules are right ?"
-  },
-  {
-    "_id": "622372a54fd4e3e67cc47af4",
-    "type": "single-choice",
-    "label": "Can you open someone else's tomb ?",
-    "options": ["Yes", "No"]
-  },
-  {
-    "_id": "622372a54fd4e3e67cc47af5",
-    "type": "multiple-choice",
-    "label": "What minerals can you mine underground ?",
-    "options": ["Copper", "Tin", "Iron", "Silver"]
+    "positionType": "end",
+    "questions": [
+      {
+        "_id": "622372a54fd4e3e67cc47af6",
+        "positionType": "end",
+        "type": "simple",
+        "label": "A question at the end 1"
+      },
+      {
+        "_id": "622372a54fd4e3e67cc47af7",
+        "positionType": "end",
+        "type": "simple",
+        "label": "A question at the end 2"
+      },
+      {
+        "_id": "622372a54fd4e3e67cc47af8",
+        "positionType": "end",
+        "type": "simple",
+        "label": "A question at the end 3"
+      }
+    ]
   }
 ]

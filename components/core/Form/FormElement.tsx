@@ -1,3 +1,4 @@
+import { chakra } from '@chakra-ui/react';
 import { Grid } from 'components/core/Containers/Grid';
 import { Children } from 'utils/types';
 import FromMarkup from '../DataDisplay/FromMarkup';
@@ -12,6 +13,7 @@ export interface FormElementProps {
   isReadOnly?: boolean;
   isRequired?: boolean;
   vertical?: true;
+  className?: string;
   /** The input, should be full width */
   children: Children;
 }
@@ -26,6 +28,7 @@ const FormElement: React.FC<FormElementProps> = ({
   isReadOnly,
   isRequired,
   vertical,
+  className,
   children,
 }) => (
   <FormControl
@@ -33,6 +36,7 @@ const FormElement: React.FC<FormElementProps> = ({
     isInvalid={isInvalid}
     isReadOnly={isReadOnly}
     isRequired={isRequired}
+    className={className}
   >
     <Grid
       templateColumns={vertical ? '1fr' : ['1fr 2fr', null, '1fr 3fr', '1fr 4fr']}
@@ -57,4 +61,4 @@ const FormElement: React.FC<FormElementProps> = ({
   </FormControl>
 );
 
-export default FormElement;
+export default chakra(FormElement);

@@ -5,6 +5,7 @@ import {
   CreateQuestionData,
   getCreateQuestionDataForServer,
   isQuestionValid,
+  QuestionPositionType,
 } from 'data/rulesQuestionnaire';
 import useCreateQuestion from 'hooks/rules-questionnaire/useCreateQuestion';
 import { Callback } from 'utils/types';
@@ -15,7 +16,9 @@ interface NewQuestionFormProps {
 }
 
 const NewQuestionForm: React.FC<NewQuestionFormProps> = ({ onQuestionCreated }) => {
-  const [newQuestion, setNewQuestion] = useState<Partial<CreateQuestionData>>({});
+  const [newQuestion, setNewQuestion] = useState<Partial<CreateQuestionData>>({
+    positionType: QuestionPositionType.RANDOM,
+  });
 
   const createQuestion = useCreateQuestion({
     onSuccess: () => {

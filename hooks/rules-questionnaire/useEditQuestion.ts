@@ -11,20 +11,20 @@ const editQuestionOnServer = (questionId: string) => async (newQuestion: CreateQ
 };
 
 const useEditQuestion = (questionId: string, { onSuccess }: { onSuccess: Callback }) => {
-  const editPreamble = useOptimisticMutation(
+  const editQuestion = useOptimisticMutation(
     QueryKeys.RULES_QUESTIONS,
     editQuestionOnServer(questionId),
-    ({ preamble, questions }, newQuestion) => ({
-      preamble,
-      questions: questions.map(question =>
-        question._id === questionId ? { ...newQuestion, _id: 'new' } : question,
+    (previousQuestionnaire, newQuestion) => ({
+      ...previousQuestionnaire,
+      [newQuestion.positionType]: previousQuestionnaire[newQuestion.positionType].map(question =>
+        question._id === questionId ? newQuestion : question,
       ),
     }),
     'La question a bien été modifiée.',
     { onSuccess },
   );
 
-  return editPreamble;
+  return editQuestion;
 };
 
 export default useEditQuestion;

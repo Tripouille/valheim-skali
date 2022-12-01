@@ -39,6 +39,8 @@ const EditablePreamble: React.FC<EditablePreambleProps> = ({ initialValue }) => 
           canSubmit={value !== initialValue}
           onSubmit={() => editPreamble(value)}
           onCancel={onCancel}
+          canMoveUp={false}
+          canMoveDown={false}
         />
       </Flex>
     </FormElement>

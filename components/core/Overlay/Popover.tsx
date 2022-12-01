@@ -17,6 +17,7 @@ import {
   PopoverCloseButtonProps as ChakraPopoverCloseButtonProps,
   PopoverAnchor as ChakraPopoverAnchor,
   PlacementWithLogical,
+  chakra,
 } from '@chakra-ui/react';
 import { Callback, Children, CypressProps } from 'utils/types';
 import Box from '../Containers/Box';
@@ -93,9 +94,10 @@ export interface ActionPopoverProps extends CypressProps {
   placement?: PlacementWithLogical;
   inPortal?: boolean;
   children?: (defaultButtonProps: ActionPopoverButtonProps) => Children;
+  className?: string;
 }
 
-export const ActionPopover: React.FC<ActionPopoverProps> = ({
+const UnstyledActionPopover: React.FC<ActionPopoverProps> = ({
   'data-cy': dataCy,
   action,
   label,
@@ -106,6 +108,7 @@ export const ActionPopover: React.FC<ActionPopoverProps> = ({
   placement = 'bottom',
   inPortal = false,
   children = defaultButtonProps => <Button {...defaultButtonProps} />,
+  className,
 }) => {
   const popoverContent = (
     <PopoverContent onClick={e => e.stopPropagation()} cursor="auto">
@@ -121,7 +124,7 @@ export const ActionPopover: React.FC<ActionPopoverProps> = ({
     </PopoverContent>
   );
   return (
-    <Box>
+    <Box className={className}>
       <Popover placement={placement} preventOverflow>
         <PopoverTrigger>
           {children({
@@ -138,3 +141,5 @@ export const ActionPopover: React.FC<ActionPopoverProps> = ({
     </Box>
   );
 };
+
+export const ActionPopover = chakra(UnstyledActionPopover);

@@ -1,5 +1,5 @@
 import { isRequiredObjectType, ServerException } from 'api-utils/common';
-import { CreateQuestionData, QuestionType } from 'data/rulesQuestionnaire';
+import { CreateQuestionData, QuestionPositionType, QuestionType } from 'data/rulesQuestionnaire';
 
 const questionKeyToValueTypeCheck: Record<
   keyof CreateQuestionData | 'options',
@@ -11,6 +11,9 @@ const questionKeyToValueTypeCheck: Record<
   options: value =>
     value === undefined ||
     (Array.isArray(value) && value.every(option => typeof option === 'string')),
+  positionType: value =>
+    typeof value === 'string' &&
+    Object.values(QuestionPositionType).includes(value as QuestionPositionType),
 };
 
 const isCreateQuestionData = (data: unknown): data is CreateQuestionData => {
@@ -28,7 +31,7 @@ const isCreateQuestionData = (data: unknown): data is CreateQuestionData => {
   }
 };
 
-export const getQuestionFromBody = (body: unknown): CreateQuestionData => {
+export const getQuestionFromBody = async (body: unknown): Promise<CreateQuestionData> => {
   if (!isCreateQuestionData(body)) throw new ServerException(400);
   return body;
 };

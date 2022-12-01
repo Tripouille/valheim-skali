@@ -59,7 +59,6 @@ const QuestionOptionsForm: React.FC<QuestionOptionsFormProps> = ({
     setTimeout(() => newOptionInputRef.current?.focus());
   };
 
-  console.log(theme);
   return (
     <IconList
       icon={questionType === 'single-choice' ? BiRadioCircle : BiCheckbox}

@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 import { OptionalId } from 'mongodb';
 import db from 'api-utils/db';
 import { RoleInDb, rolesCollectionName, SpecialRoleName } from 'data/role';
+import { Question } from 'data/rulesQuestionnaire';
 import { UserInDb, usersCollectionName } from 'data/user';
 import { PermissionCategory, Permissions } from 'utils/permissions';
 
@@ -28,14 +29,27 @@ const plugins = (on: Cypress.PluginEvents) => {
       } catch (e) {} // Drop throws error if collection doesn't exit
       if (data.length) {
         await collection.insertMany(
-          data.map((item: OptionalId<T> & Partial<{ roleIds: string[]; wikiPageId: string }>) => ({
-            ...item,
-            _id: new ObjectId(item._id),
-            ...(item.roleIds
-              ? { roleIds: item.roleIds && item.roleIds.map(roleId => new ObjectId(roleId)) }
-              : {}),
-            ...(item.wikiPageId ? { wikiPageId: new ObjectId(item.wikiPageId) } : {}),
-          })),
+          data.map(
+            (
+              item: OptionalId<T> &
+                Partial<{ roleIds: string[]; wikiPageId: string; questions: Question<ObjectId>[] }>,
+            ) => ({
+              ...item,
+              _id: new ObjectId(item._id),
+              ...(item.roleIds
+                ? { roleIds: item.roleIds && item.roleIds.map(roleId => new ObjectId(roleId)) }
+                : {}),
+              ...(item.wikiPageId ? { wikiPageId: new ObjectId(item.wikiPageId) } : {}),
+              ...(item.questions
+                ? {
+                    questions: item.questions.map(question => ({
+                      ...question,
+                      _id: new ObjectId(question._id),
+                    })),
+                  }
+                : {}),
+            }),
+          ),
         );
       }
       return null;

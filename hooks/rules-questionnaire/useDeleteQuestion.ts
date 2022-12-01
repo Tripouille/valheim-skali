@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { RulesQuestionnaire } from 'data/rulesQuestionnaire';
+import { QuestionPositionType, RulesQuestionnaire } from 'data/rulesQuestionnaire';
 import useOptimisticMutation from 'hooks/useOptimisticMutation';
 import { QueryKeys } from 'utils/queryClient';
 import { APIRoute } from 'utils/routes';
@@ -9,12 +9,20 @@ const deleteQuestionOnServer = (deletedQuestionId?: string) => async () => {
 };
 
 const getUpdatedQuestions =
-  (deletedQuestionId?: string) => (previousQuestionnaire: RulesQuestionnaire) => ({
-    preamble: '',
-    questions: previousQuestionnaire.questions.filter(
-      question => question._id !== deletedQuestionId,
-    ),
-  });
+  (deletedQuestionId?: string) => (previousQuestionnaire: RulesQuestionnaire) => {
+    const questionPositionType = Object.values(QuestionPositionType).find(key =>
+      previousQuestionnaire[key].find(question => question._id === deletedQuestionId),
+    );
+    if (!questionPositionType) return previousQuestionnaire;
+    return {
+      ...previousQuestionnaire,
+      [questionPositionType]: [
+        ...previousQuestionnaire[questionPositionType].filter(
+          question => question._id !== deletedQuestionId,
+        ),
+      ],
+    };
+  };
 
 const useDeleteQuestion = (deletedQuestionId?: string) => {
   const deleteQuestion = useOptimisticMutation(

@@ -15,9 +15,9 @@ const useEditPreamble = ({ onSuccess }: { onSuccess: Callback }) => {
   const editPreamble = useOptimisticMutation(
     QueryKeys.RULES_QUESTIONS,
     editPreambleOnServer,
-    ({ questions }, newPreamble) => ({
+    (previousQuestionnaire, newPreamble) => ({
+      ...previousQuestionnaire,
       preamble: newPreamble,
-      questions,
     }),
     'Le préambule a bien été modifié.',
     { onSuccess },

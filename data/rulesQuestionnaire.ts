@@ -2,12 +2,6 @@ import { ObjectId } from 'bson';
 
 /* Main types */
 
-export interface PreambleInDb {
-  _id: ObjectId;
-  type: 'preamble';
-  label: string;
-}
-
 export enum QuestionType {
   SIMPLE = 'simple',
   LONG = 'long',
@@ -15,10 +9,17 @@ export enum QuestionType {
   MULTIPLE_CHOICE = 'multiple-choice',
 }
 
-interface QuestionCore<T extends string | ObjectId = string> {
+export enum QuestionPositionType {
+  BEGINNING = 'beginning',
+  RANDOM = 'random',
+  END = 'end',
+}
+
+type QuestionCore<T extends string | ObjectId = string> = {
   _id: T;
   label: string;
-}
+  positionType: QuestionPositionType;
+};
 
 export type SimpleQuestion<T extends string | ObjectId = string> = QuestionCore<T> & {
   type: 'simple' | 'long';
@@ -32,10 +33,23 @@ export type Question<T extends string | ObjectId = string> = SimpleQuestion<T> |
 
 export type CreateQuestionData = Omit<SimpleQuestion, '_id'> | Omit<MCQQuestion, '_id'>;
 
-export interface RulesQuestionnaire {
-  preamble: string;
-  questions: Question[];
+export interface PreambleInDb {
+  _id: ObjectId;
+  type: 'preamble';
+  label: string;
 }
+
+export interface RulesQuestionnaireQuestionTypeObjectInDb {
+  _id: ObjectId;
+  positionType: QuestionPositionType;
+  questions: Question<ObjectId>[];
+}
+
+export type RulesQuestionnaire = {
+  preamble: string;
+} & {
+  [key in QuestionPositionType]: Question[];
+};
 
 /* Database */
 
@@ -55,6 +69,12 @@ export const QUESTION_TYPE_TO_EXPLANATION: Record<QuestionType, string> = {
   long: 'Destiné à une longue réponse libre, qui peut prendre plusieurs lignes',
   'single-choice': 'Doit choisir une seule option parmi une liste de choix',
   'multiple-choice': 'Doit choisir une à plusieurs options parmi une liste de choix',
+};
+
+export const QUESTION_POSITION_TO_LABEL: Record<QuestionPositionType, string> = {
+  random: 'Aléatoire',
+  beginning: 'Au début du questionnaire',
+  end: 'A la fin du questionnaire',
 };
 
 /* Validation */
@@ -80,6 +100,7 @@ export const isQuestionValid = (question: Partial<CreateQuestionData>) => {
 export const getCreateQuestionDataForServer = (question: Partial<CreateQuestionData>) =>
   ({
     type: question.type,
+    positionType: question.positionType,
     label: question.label,
     ...(question.type === 'single-choice' || question.type === 'multiple-choice'
       ? { options: question.options }

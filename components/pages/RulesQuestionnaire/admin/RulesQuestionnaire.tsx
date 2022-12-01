@@ -5,6 +5,7 @@ import { Stack } from 'components/core/Containers/Stack';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
 import Button from 'components/core/Interactive/Button';
 import IconButton from 'components/core/Interactive/IconButton';
+import { QuestionPositionType } from 'data/rulesQuestionnaire';
 import useQuestions from 'hooks/rules-questionnaire/useQuestions';
 import EditablePreamble from './EditablePreamble';
 import EditableQuestion from './EditableQuestion';
@@ -13,7 +14,6 @@ import NewQuestionForm from './NewQuestionForm';
 const RulesQuestionnaireAdmin = () => {
   const questionsQuery = useQuestions();
   const preamble = questionsQuery.data?.preamble ?? '';
-  const questions = questionsQuery.data?.questions ?? [];
 
   const [isAddingQuestion, setIsAddingQuestion] = useBoolean(false);
 
@@ -21,9 +21,16 @@ const RulesQuestionnaireAdmin = () => {
     <QueryHandler query={questionsQuery}>
       <Stack textAlign="start" spacing={3} divider={<StackDivider />}>
         <EditablePreamble initialValue={preamble} />
-        {questions.map(question => (
-          <EditableQuestion key={question._id} question={question} />
-        ))}
+        {Object.values(QuestionPositionType).map(position =>
+          questionsQuery.data?.[position]?.map((question, index) => (
+            <EditableQuestion
+              key={question._id}
+              question={question}
+              questionIndex={index}
+              questionsLength={questionsQuery.data[position].length}
+            />
+          )),
+        )}
         {isAddingQuestion && (
           <Flex gap={2}>
             <NewQuestionForm onQuestionCreated={setIsAddingQuestion.off} />
