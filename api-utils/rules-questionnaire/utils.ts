@@ -14,6 +14,7 @@ const questionKeyToValueTypeCheck: Record<
   positionType: value =>
     typeof value === 'string' &&
     Object.values(QuestionPositionType).includes(value as QuestionPositionType),
+  alwaysIncluded: value => typeof value === 'boolean',
 };
 
 const isCreateQuestionData = (data: unknown): data is CreateQuestionData => {

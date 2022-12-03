@@ -73,6 +73,7 @@ const EditableQuestion: React.FC<EditableQuestionProps> = ({
               {QUESTION_TYPE_TO_LABEL[question.type]}
               {question.positionType === QuestionPositionType.BEGINNING && ' (Au début)'}
               {question.positionType === QuestionPositionType.END && ' (A la fin)'}
+              {question.alwaysIncluded && ' (Toujours incluse)'}
             </Text>
             {QuestionComponent}
           </>

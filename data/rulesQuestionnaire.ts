@@ -19,6 +19,7 @@ type QuestionCore<T extends string | ObjectId = string> = {
   _id: T;
   label: string;
   positionType: QuestionPositionType;
+  alwaysIncluded: boolean;
 };
 
 export type SimpleQuestion<T extends string | ObjectId = string> = QuestionCore<T> & {
@@ -59,7 +60,7 @@ export const rulesQuestionnaireCollectionName = 'rules-questionnaire';
 
 export const QUESTION_TYPE_TO_LABEL: Record<QuestionType, string> = {
   simple: 'Simple',
-  long: 'Long',
+  long: 'Longue',
   'single-choice': 'Choix unique',
   'multiple-choice': 'Choix multiple',
 };
@@ -80,7 +81,8 @@ export const QUESTION_POSITION_TO_LABEL: Record<QuestionPositionType, string> = 
 /* Validation */
 
 export const isQuestionValid = (question: Partial<CreateQuestionData>) => {
-  if (!question.type || !question.label?.trim().length) return false;
+  if (!question.type || !question.label?.trim().length || question.alwaysIncluded == null)
+    return false;
   if (question.type === 'single-choice' || question.type === 'multiple-choice')
     return (
       !!question.options &&
@@ -105,4 +107,5 @@ export const getCreateQuestionDataForServer = (question: Partial<CreateQuestionD
     ...(question.type === 'single-choice' || question.type === 'multiple-choice'
       ? { options: question.options }
       : {}),
+    alwaysIncluded: question.alwaysIncluded,
   } as CreateQuestionData);

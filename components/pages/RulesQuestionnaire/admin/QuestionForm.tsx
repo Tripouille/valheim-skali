@@ -3,6 +3,7 @@ import Flex from 'components/core/Containers/Flex';
 import { HStack } from 'components/core/Containers/Stack';
 import FormElement from 'components/core/Form/FormElement';
 import Select from 'components/core/Form/Select';
+import Switch from 'components/core/Form/Switch';
 import Textarea from 'components/core/Form/Textarea';
 import {
   CreateQuestionData,
@@ -56,7 +57,7 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
 
   return (
     <>
-      <Flex align="center" columnGap={8} rowGap={3} wrap="wrap">
+      <Flex columnGap={8} rowGap={3} wrap="wrap">
         <FormElement label="Type de question :" vertical width="max-content">
           <HStack {...getRootProps()}>
             {Object.entries(QUESTION_TYPE_TO_LABEL).map(([value, label]) => {
@@ -77,6 +78,17 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
               </option>
             ))}
           </Select>
+        </FormElement>
+        <FormElement label="Toujours incluse :" vertical width="max-content">
+          <Switch
+            data-cy="always-included"
+            isChecked={questionFormData.alwaysIncluded}
+            onChange={alwaysIncluded =>
+              setQuestionFormData({ ...questionFormData, alwaysIncluded })
+            }
+            size="lg"
+            marginTop={1}
+          />
         </FormElement>
       </Flex>
       {questionFormData.type && (

@@ -18,6 +18,7 @@ interface NewQuestionFormProps {
 const NewQuestionForm: React.FC<NewQuestionFormProps> = ({ onQuestionCreated }) => {
   const [newQuestion, setNewQuestion] = useState<Partial<CreateQuestionData>>({
     positionType: QuestionPositionType.RANDOM,
+    alwaysIncluded: false,
   });
 
   const createQuestion = useCreateQuestion({

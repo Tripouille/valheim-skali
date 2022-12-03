@@ -83,17 +83,19 @@ describe('rules questionnaire', () => {
     );
     cy.get('body').should('contain.text', 'La question a bien été modifiée.');
 
-    // Switch from single-choice to long
+    // Switch from single-choice to long and always include
     cy.dataCy('admin').should('contain.text', "Can you open someone else's tomb ?YesNo");
     cy.dataCy('edit').eq(3).click();
     cy.get('ul input').should('have.length', 3);
     cy.get('[role=radiogroup]').find('label').eq(1).click();
     cy.get('ul input').should('not.exist');
+    cy.dataCy('admin').dataCy('always-included-switch').click();
     cy.get('textarea').should('have.value', "Can you open someone else's tomb ?");
     cy.dataCy('submit-edition').click();
     cy.get('textarea').should('not.exist');
     cy.dataCy('admin')
-      .should('contain.text', "Can you open someone else's tomb ?")
+      .should('contain.text', 'Longue (Toujours incluse)')
+      .and('contain.text', "Can you open someone else's tomb ?")
       .and('not.contain.text', 'YesNo');
     cy.get('body').should('contain.text', 'La question a bien été modifiée.');
 
@@ -107,7 +109,7 @@ describe('rules questionnaire', () => {
     cy.dataCy('new-option', 'input').type('No{enter}');
     cy.dataCy('submit-edition').click();
     cy.dataCy('admin')
-      .should('contain.text', 'Choix multiple (Au début)')
+      .should('contain.text', 'Choix multiple (Au début) (Toujours incluse)')
       .and('contain.text', 'Do you think the rules are right ?YesNo');
     cy.get('body').should('contain.text', 'La question a bien été modifiée.');
   });
