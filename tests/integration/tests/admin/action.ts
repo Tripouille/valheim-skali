@@ -23,3 +23,9 @@ export const visitWikiPagesPage = () => {
   cy.visit(getRoute(`${MenuRoute.ADMIN}/${AdminNavRoute.WIKI}`));
   cy.wait('@getWikiPages');
 };
+
+export const visitRulesQuestionnairePage = () => {
+  cy.intercept(APIRoute.RULES_QUESTIONNAIRE).as('getRulesQuestionnaire');
+  cy.visit(getRoute(`${MenuRoute.ADMIN}/${AdminNavRoute.RULES_QUESTIONNAIRE}`));
+  cy.wait('@getRulesQuestionnaire');
+};

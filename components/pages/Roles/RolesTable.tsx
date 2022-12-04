@@ -13,7 +13,7 @@ const RolesTable: React.FC<RolesTableProps> = ({ roles }) => {
   if (roles.length === 0) return null;
 
   return (
-    <Table {...tableStyleProps}>
+    <Table {...tableStyleProps} w={{ base: '100%', xl: '80%' }}>
       <Thead>
         <Tr>
           <Th textAlign="center" w={{ base: '36', xl: '2xs' }}>

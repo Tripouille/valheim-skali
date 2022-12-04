@@ -15,6 +15,7 @@ export enum PermissionCategory {
   WIKI = 'WIKI',
   RULES = 'RULES',
   APPLICATION = 'APPLICATION',
+  RULES_QUESTIONNAIRE = 'RULES_QUESTIONNAIRE',
 }
 
 export const isPermissionCategory = (category: string): category is PermissionCategory =>
@@ -64,6 +65,14 @@ export const applicationPrivilege = {
   ...CommonPermissionPrivilege,
 };
 
+enum QuestionnaireSpecialPrivilege {
+  MANAGE = '1_MANAGE',
+}
+export const rulesQuestionnairePrivilege = {
+  ...QuestionnaireSpecialPrivilege,
+  ...CommonPermissionPrivilege,
+};
+
 export type Permissions = {
   [PermissionCategory.EVENT]?: EventSpecialPrivilege | CommonPermissionPrivilege;
   [PermissionCategory.ROLE]?: RoleSpecialPrivilege | CommonPermissionPrivilege;
@@ -71,6 +80,9 @@ export type Permissions = {
   [PermissionCategory.WIKI]?: WikiSpecialPrivilege | CommonPermissionPrivilege;
   [PermissionCategory.RULES]?: RulesSpecialPrivilege | CommonPermissionPrivilege;
   [PermissionCategory.APPLICATION]?: ApplicationSpecialPrivilege | CommonPermissionPrivilege;
+  [PermissionCategory.RULES_QUESTIONNAIRE]?:
+    | QuestionnaireSpecialPrivilege
+    | CommonPermissionPrivilege;
 };
 
 const permissionCategoryToPrivilege = {
@@ -80,6 +92,7 @@ const permissionCategoryToPrivilege = {
   [PermissionCategory.WIKI]: wikiPrivilege,
   [PermissionCategory.RULES]: rulesPrivilege,
   [PermissionCategory.APPLICATION]: applicationPrivilege,
+  [PermissionCategory.RULES_QUESTIONNAIRE]: rulesQuestionnairePrivilege,
 };
 
 export const getSortedCategoryPrivileges = <C extends PermissionCategory>(category: C) =>
@@ -96,6 +109,7 @@ export const PERMISSION_CATEGORY_TO_LABEL: Record<PermissionCategory, string> = 
   [PermissionCategory.WIKI]: 'Wiki',
   [PermissionCategory.RULES]: 'Règlement',
   [PermissionCategory.APPLICATION]: 'Candidatures',
+  [PermissionCategory.RULES_QUESTIONNAIRE]: 'Questionnaire règlement',
 };
 
 const COMMON_PRIVILEGE_TO_LABEL = {
@@ -135,6 +149,10 @@ export const PERMISSION_PRIVILEGE_TO_LABEL: Record<PermissionCategory, Record<st
       'Créer/modifier des candidatures/commentaires, modifier le statut (sauf acceptation/refus)',
     [applicationPrivilege.PROMOTE]:
       'Créer/modifier des candidatures/commentaires, modifier le statut',
+  },
+  [PermissionCategory.RULES_QUESTIONNAIRE]: {
+    ...COMMON_PRIVILEGE_TO_LABEL,
+    [rulesQuestionnairePrivilege.MANAGE]: 'Gérer le questionnaire règlement',
   },
 };
 
@@ -185,10 +203,14 @@ export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions | Permissions[]> =
   [AdminNavRoute.ROLES]: { [PermissionCategory.ROLE]: rolePrivilege.READ },
   [AdminNavRoute.WIKI_PROPOSALS]: { [PermissionCategory.WIKI]: wikiPrivilege.WRITE },
   [AdminNavRoute.WIKI]: { [PermissionCategory.WIKI]: wikiPrivilege.WRITE },
+  [AdminNavRoute.RULES_QUESTIONNAIRE]: {
+    [PermissionCategory.RULES_QUESTIONNAIRE]: rulesQuestionnairePrivilege.MANAGE,
+  },
   [MenuRoute.ADMIN]: [
     { [PermissionCategory.USER]: userPrivilege.READ },
     { [PermissionCategory.ROLE]: rolePrivilege.READ },
     { [PermissionCategory.WIKI]: wikiPrivilege.WRITE },
+    { [PermissionCategory.RULES_QUESTIONNAIRE]: rulesQuestionnairePrivilege.MANAGE },
   ],
   [MenuRoute.ABOUT]: {},
   [AuthRoute.SIGNIN]: {},

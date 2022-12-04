@@ -67,7 +67,9 @@ const RolePermissionsForm: React.FC<RolePermissionsFormProps> = ({
         {Object.values(PermissionCategory).map(<C extends PermissionCategory>(category: C) => (
           <Tr key={category}>
             <Th w={modalTableHeaderWidth}>
-              <FormLabel htmlFor={category}>{PERMISSION_CATEGORY_TO_LABEL[category]}</FormLabel>
+              <FormLabel htmlFor={category} wordBreak="keep-all">
+                {PERMISSION_CATEGORY_TO_LABEL[category]}
+              </FormLabel>
             </Th>
             <Td>
               <Select

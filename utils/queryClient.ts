@@ -5,6 +5,7 @@ import { InfiniteData, QueryClient } from '@tanstack/react-query';
 import { Application, ApplicationAssociableUser, WithDiscordInfos } from 'data/application';
 import { EventsPage } from 'data/event';
 import { Role } from 'data/role';
+import { RulesQuestionnaire } from 'data/rulesQuestionnaire';
 import { User } from 'data/user';
 import { WikiPage, WikiProposalWithAuthor } from 'data/wiki';
 import { getMessageFromError } from './error';
@@ -45,6 +46,7 @@ export enum QueryKeys {
   APPLICATIONS = 'applications',
   APPLICATION_ASSOCIABLE_USERS = 'application_associable_users',
   MY_APPLICATION = 'my_application',
+  RULES_QUESTIONS = 'rule_questions',
 }
 
 export type QueryTypes = {
@@ -58,4 +60,5 @@ export type QueryTypes = {
   [QueryKeys.APPLICATIONS]: WithDiscordInfos<Application>[];
   [QueryKeys.APPLICATION_ASSOCIABLE_USERS]: ApplicationAssociableUser[];
   [QueryKeys.MY_APPLICATION]: WithDiscordInfos<Application>;
+  [QueryKeys.RULES_QUESTIONS]: RulesQuestionnaire;
 };

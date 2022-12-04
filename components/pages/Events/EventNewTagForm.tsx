@@ -1,4 +1,4 @@
-import React, { KeyboardEventHandler, RefObject, useEffect, useRef, useState } from 'react';
+import React, { RefObject, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { ListItem } from 'components/core/DataDisplay/List';
 import Tag from 'components/core/DataDisplay/Tag';
@@ -29,59 +29,28 @@ const EventNewTagForm: React.FC<EventNewTagFormProps> = ({
   const [tagEntry, setTagEntry] = useState('');
   const filteredTags = useFilteredTags(tags, tagEntry);
 
-  /** Briefly style input on error (adding a tag already chosen) */
-  const tagInputErrorTimeoutId = useRef<number>();
-  const [showInvalidTagInput, setShowInvalidTagInput] = useState(false);
-
-  useEffect(() => {
-    return () => {
-      const timeoutId = tagInputErrorTimeoutId.current;
-      clearTimeout(timeoutId);
-    };
-  }, []);
-
-  const startInvalidTagInputTimeout = () => {
-    clearTimeout(tagInputErrorTimeoutId.current);
-    setShowInvalidTagInput(true);
-    tagInputErrorTimeoutId.current = window.setTimeout(() => setShowInvalidTagInput(false), 400);
+  const isValidTag = (value: string) => {
+    return (
+      value.trim().length > 0 &&
+      !tags.some(tag => tag.trim().toLowerCase() === value.trim().toLowerCase()) &&
+      (value.trim().toLowerCase() !== CONTINUOUS_LABEL.toLowerCase() || !continuous)
+    );
   };
 
   /** Action to add tag */
-  const resetNewTagInput = () => {
+  const onNewTagSelection = (value: string) => {
+    if (!isValidTag(value)) return;
+    if (value.toLowerCase() === CONTINUOUS_LABEL.toLowerCase()) {
+      onContinuousChange(true);
+    } else {
+      onTagsChange(oldTags => [...oldTags, value]);
+    }
     setTagEntry('');
     newTagInputRef.current?.focus();
   };
 
-  const onNewTagSelection = (value: string) => {
-    if (!value) return;
-    if (value === CONTINUOUS_LABEL) {
-      if (continuous) {
-        startInvalidTagInputTimeout();
-      } else {
-        onContinuousChange(true);
-        resetNewTagInput();
-      }
-    } else {
-      onTagsChange(oldTags => {
-        if (!oldTags.includes(value)) {
-          resetNewTagInput();
-          return [...oldTags, value];
-        } else {
-          startInvalidTagInputTimeout();
-          newTagInputRef.current?.focus();
-          return oldTags;
-        }
-      });
-    }
-  };
-
-  /** Prevent closing the global event form modal */
-  const onNewTagInputKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
-    if (e.key === 'Escape') e.stopPropagation();
-  };
-
   return (
-    <FormControl display="flex" isInvalid={showInvalidTagInput}>
+    <FormControl display="flex">
       <Combobox
         id="event-tags-combobox"
         inputRef={newTagInputRef}
@@ -101,7 +70,6 @@ const EventNewTagForm: React.FC<EventNewTagFormProps> = ({
             w="36"
             showInvalidOverFocus
             maxLength={EVENT_TAG_MAX_LENGTH}
-            onKeyDown={onNewTagInputKeyDown}
             value={tagEntry}
             onChange={setTagEntry}
             {...inputProps}
@@ -115,6 +83,7 @@ const EventNewTagForm: React.FC<EventNewTagFormProps> = ({
         colorScheme="green"
         ms="1"
         onClick={() => onNewTagSelection(tagEntry)}
+        disabled={!isValidTag(tagEntry)}
       />
     </FormControl>
   );

@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import Secured from 'components/core/Authentication/Secured';
 import PageTitle from 'components/core/Typography/PageTitle';
 import Roles from 'components/pages/Roles';
+import RulesQuestionnaireAdmin from 'components/pages/RulesQuestionnaire/admin/RulesQuestionnaire';
 import UsersTable from 'components/pages/Users/UsersTable';
 import WikiPagesTable from 'components/pages/Wiki/WikiPagesTable';
 import WikiProposalsTable from 'components/pages/Wiki/WikiProposals/WikiProposalsTable';
@@ -12,6 +13,7 @@ import {
   PermissionCategory,
   userPrivilege,
   wikiPrivilege,
+  rulesQuestionnairePrivilege,
 } from 'utils/permissions';
 import {
   AdminNavRoute,
@@ -27,18 +29,22 @@ const Admin = () => {
   const urlEndPoint = getRouteParameterAsString(router.query.route) ?? '';
 
   const session = useSession();
-  const hasUserReadPermission = session.hasRequiredPermissions({
-    [PermissionCategory.USER]: userPrivilege.READ,
-  });
-  const hasWikiWritePermission = session.hasRequiredPermissions({
-    [PermissionCategory.WIKI]: wikiPrivilege.WRITE,
-  });
 
   let route: AdminNavRoute;
   if (isAdminNavRoute(urlEndPoint)) route = urlEndPoint;
   else {
+    const hasUserReadPermission = session.hasRequiredPermissions({
+      [PermissionCategory.USER]: userPrivilege.READ,
+    });
+    const hasWikiWritePermission = session.hasRequiredPermissions({
+      [PermissionCategory.WIKI]: wikiPrivilege.WRITE,
+    });
+    const hasRulesQuestionnaireManagePermission = session.hasRequiredPermissions({
+      [PermissionCategory.RULES_QUESTIONNAIRE]: rulesQuestionnairePrivilege.MANAGE,
+    });
     if (hasUserReadPermission) route = AdminNavRoute.MEMBERS;
     else if (hasWikiWritePermission) route = AdminNavRoute.WIKI_PROPOSALS;
+    else if (hasRulesQuestionnaireManagePermission) route = AdminNavRoute.RULES_QUESTIONNAIRE;
     else route = AdminNavRoute.ROLES;
   }
 
@@ -48,6 +54,7 @@ const Admin = () => {
     [AdminNavRoute.ROLES]: <Roles />,
     [AdminNavRoute.WIKI_PROPOSALS]: <WikiProposalsTable />,
     [AdminNavRoute.WIKI]: <WikiPagesTable />,
+    [AdminNavRoute.RULES_QUESTIONNAIRE]: <RulesQuestionnaireAdmin />,
   };
 
   return (

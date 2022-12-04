@@ -40,7 +40,7 @@ const RoleReqPermsForm: React.FC<RoleReqPermsFormProps> = ({
       <Tbody>
         <Tr>
           <Th w={modalTableHeaderWidth}>
-            <FormLabel htmlFor="required_to_assign">
+            <FormLabel htmlFor="required_to_assign" wordBreak="keep-all">
               {PERMISSION_CATEGORY_TO_LABEL[PermissionCategory.USER]}
             </FormLabel>
           </Th>
