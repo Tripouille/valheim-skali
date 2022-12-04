@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useBoolean } from '@chakra-ui/react';
 import Box from 'components/core/Containers/Box';
 import Flex from 'components/core/Containers/Flex';
@@ -16,6 +16,7 @@ import {
 import useDeleteQuestion from 'hooks/rules-questionnaire/useDeleteQuestion';
 import useEditQuestion from 'hooks/rules-questionnaire/useEditQuestion';
 import useMoveQuestion from 'hooks/rules-questionnaire/useMoveQuestion';
+import { scrollIntoViewIfNeeded } from 'utils/window';
 import EditableQuestionControls from './EditableQuestionControls';
 import MCQQuestion from './MCQQuestion';
 import QuestionForm from './QuestionForm';
@@ -37,6 +38,15 @@ const EditableQuestion: React.FC<EditableQuestionProps> = ({
   const editQuestion = useEditQuestion(question._id, { onSuccess: setIsEditing.off });
   const deleteQuestion = useDeleteQuestion(question._id);
   const moveQuestion = useMoveQuestion(question);
+
+  const formRef = useRef(null);
+  useEffect(
+    function scrollFormIntoView() {
+      const form = formRef.current;
+      if (isEditing && form) setTimeout(() => scrollIntoViewIfNeeded(form, undefined, 'smooth'));
+    },
+    [isEditing, questionFormData.type],
+  );
 
   const onCancel = () => {
     setIsEditing.off();
@@ -61,7 +71,7 @@ const EditableQuestion: React.FC<EditableQuestionProps> = ({
     <Flex data-cy="question" gap={2}>
       <Box flex="1">
         {isEditing ? (
-          <Stack as="form" spacing={5} onSubmit={() => {}}>
+          <Stack ref={formRef} as="form" spacing={5}>
             <QuestionForm
               questionFormData={questionFormData}
               setQuestionFormData={setQuestionFormData}

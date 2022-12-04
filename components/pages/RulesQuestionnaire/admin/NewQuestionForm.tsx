@@ -1,4 +1,4 @@
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import { Stack } from 'components/core/Containers/Stack';
 import Button from 'components/core/Interactive/Button';
 import {
@@ -9,6 +9,7 @@ import {
 } from 'data/rulesQuestionnaire';
 import useCreateQuestion from 'hooks/rules-questionnaire/useCreateQuestion';
 import { Callback } from 'utils/types';
+import { scrollIntoViewIfNeeded } from 'utils/window';
 import QuestionForm from './QuestionForm';
 
 interface NewQuestionFormProps {
@@ -33,8 +34,17 @@ const NewQuestionForm: React.FC<NewQuestionFormProps> = ({ onQuestionCreated }) 
     if (isQuestionValid(newQuestion)) createQuestion(getCreateQuestionDataForServer(newQuestion));
   };
 
+  const formRef = useRef(null);
+  useEffect(
+    function scrollFormIntoView() {
+      const form = formRef.current;
+      if (form) setTimeout(() => scrollIntoViewIfNeeded(form, undefined, 'smooth'));
+    },
+    [newQuestion.type],
+  );
+
   return (
-    <Stack as="form" flex="1" spacing={5} onSubmit={onSubmit}>
+    <Stack ref={formRef} as="form" flex="1" spacing={5} onSubmit={onSubmit}>
       <QuestionForm questionFormData={newQuestion} setQuestionFormData={setNewQuestion}>
         <Button
           data-cy="create-question"
