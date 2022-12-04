@@ -19,6 +19,7 @@ interface Props {
   onMoveUp?: Callback;
   canMoveDown: boolean;
   onMoveDown?: Callback;
+  horizontal?: boolean;
 }
 
 const EditableQuestionControls: React.FC<Props> = ({
@@ -32,10 +33,10 @@ const EditableQuestionControls: React.FC<Props> = ({
   onMoveUp,
   canMoveDown,
   onMoveDown,
+  horizontal = false,
 }) => (
   <ButtonGroup
     display="grid"
-    gridTemplateAreas={`"arrowup edit" "arrowdown delete"`}
     height="max-content"
     alignItems="center"
     gap="2"
@@ -50,7 +51,7 @@ const EditableQuestionControls: React.FC<Props> = ({
           title="Valider"
           icon={<BsCheckLg />}
           colorScheme="green"
-          gridArea="edit"
+          gridArea={horizontal ? '1 / 1' : '1 / 2'}
           onClick={onSubmit}
           disabled={!canSubmit}
         />
@@ -61,7 +62,7 @@ const EditableQuestionControls: React.FC<Props> = ({
           icon={<BsXLg />}
           bgColor="#708099"
           _hover={{ bgColor: '#607089' }}
-          gridArea="delete"
+          gridArea={horizontal ? '1 / 2' : '2 / 2'}
           onClick={onCancel}
         />
       </>
@@ -74,7 +75,7 @@ const EditableQuestionControls: React.FC<Props> = ({
             title="Remonter la question"
             icon={<BsArrowUp />}
             colorScheme="purple"
-            gridArea="arrowup"
+            gridArea="1 / 1"
             onClick={onMoveUp}
           />
         )}
@@ -85,7 +86,7 @@ const EditableQuestionControls: React.FC<Props> = ({
             title="Descendre la question"
             icon={<BsArrowDown />}
             colorScheme="purple"
-            gridArea="arrowdown"
+            gridArea="2 / 1"
             onClick={onMoveDown}
           />
         )}
@@ -96,7 +97,7 @@ const EditableQuestionControls: React.FC<Props> = ({
           alignSelf="center"
           icon={<BiEdit />}
           colorScheme="blue"
-          gridArea="edit"
+          gridArea="1 / 2"
           onClick={setIsEditing.on}
         />
         {onDelete && (
@@ -107,7 +108,7 @@ const EditableQuestionControls: React.FC<Props> = ({
             confirmLabel="Confirmer la suppression"
             confirmBody="Êtes-vous sûr de vouloir supprimer cette question ?"
             colorScheme="red"
-            gridArea="delete"
+            gridArea="2 / 2"
           >
             {({ children, ...props }) => (
               <IconButton

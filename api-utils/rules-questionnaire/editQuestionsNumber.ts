@@ -8,23 +8,23 @@ import {
 } from 'data/rulesQuestionnaire';
 import { PermissionCategory, rulesQuestionnairePrivilege } from 'utils/permissions';
 
-const editPreamble = async (req: Req, res: Res) => {
+const editQuestionsNumber = async (req: Req, res: Res) => {
   await requirePermissions(
     { [PermissionCategory.RULES_QUESTIONNAIRE]: rulesQuestionnairePrivilege.MANAGE },
     req,
   );
 
-  const preamble = req.body.preamble;
-  if (typeof preamble !== 'string') throw new ServerException(400);
+  const questionsNumber = req.body.number;
+  if (typeof questionsNumber !== 'number') throw new ServerException(400);
 
   const result = await db.updateOne<RulesQuestionnaireConfigInDb>(
     rulesQuestionnaireCollectionName,
     { type: 'config' },
-    { $set: { type: 'config', preamble: preamble } },
+    { $set: { type: 'config', questionsNumber: questionsNumber } },
   );
   if (!result.ok) throw new ServerException(500);
 
   res.status(200).end();
 };
 
-export default editPreamble;
+export default editQuestionsNumber;

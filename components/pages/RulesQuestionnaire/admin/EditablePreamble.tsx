@@ -4,6 +4,7 @@ import Flex from 'components/core/Containers/Flex';
 import FromMarkup from 'components/core/DataDisplay/FromMarkup';
 import FormElement from 'components/core/Form/FormElement';
 import Textarea from 'components/core/Form/Textarea';
+import Text from 'components/core/Typography/Text';
 import useEditPreamble from 'hooks/rules-questionnaire/useEditPreamble';
 import EditableQuestionControls from './EditableQuestionControls';
 
@@ -30,8 +31,12 @@ const EditablePreamble: React.FC<EditablePreambleProps> = ({ initialValue }) => 
       <Flex gap={2}>
         {isEditing ? (
           <Textarea value={value} onChange={setValue} />
-        ) : (
+        ) : initialValue ? (
           <FromMarkup content={initialValue} />
+        ) : (
+          <Text width="full" fontStyle="italic">
+            (Pas de préambule)
+          </Text>
         )}
         <EditableQuestionControls
           isEditing={isEditing}

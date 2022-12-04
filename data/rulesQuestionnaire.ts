@@ -34,10 +34,11 @@ export type Question<T extends string | ObjectId = string> = SimpleQuestion<T> |
 
 export type CreateQuestionData = Omit<SimpleQuestion, '_id'> | Omit<MCQQuestion, '_id'>;
 
-export interface PreambleInDb {
+export interface RulesQuestionnaireConfigInDb {
   _id: ObjectId;
-  type: 'preamble';
-  label: string;
+  type: 'config';
+  preamble: string;
+  questionsNumber: number;
 }
 
 export interface RulesQuestionnaireQuestionTypeObjectInDb {
@@ -46,15 +47,20 @@ export interface RulesQuestionnaireQuestionTypeObjectInDb {
   questions: Question<ObjectId>[];
 }
 
-export type RulesQuestionnaire = {
+export type RulesQuestionnaire<T extends string | ObjectId = string> = {
   preamble: string;
+  questionsNumber: number;
 } & {
-  [key in QuestionPositionType]: Question[];
+  [key in QuestionPositionType]: Question<T>[];
 };
 
 /* Database */
 
 export const rulesQuestionnaireCollectionName = 'rules-questionnaire';
+
+/* Default values */
+
+export const DEFAULT_QUESTIONS_NUMBER = 10;
 
 /* Labels */
 
