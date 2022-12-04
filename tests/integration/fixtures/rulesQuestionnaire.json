@@ -1,8 +1,8 @@
 [
   {
     "_id": "622372a54fd4e3e67cc47af1",
-    "type": "preamble",
-    "label": "Preamble"
+    "type": "config",
+    "preamble": "Preamble"
   },
   {
     "positionType": "random",

@@ -20,15 +20,23 @@ describe('rules questionnaire', () => {
   });
 
   it('should be able to edit the questions', () => {
-    cy.dataCy('edit').should('have.length', 8);
+    cy.dataCy('edit').should('have.length', 9);
+
+    // Questions number
+    cy.dataCy('admin').should('contain.text', 'Nombre total de questions :10');
+    cy.dataCy('admin').dataCy('edit').first().click();
+    cy.dataCy('admin').find('input').clear().type('42');
+    cy.dataCy('admin').dataCy('submit-edition').click();
+    cy.dataCy('admin').find('input').should('not.exist');
+    cy.dataCy('admin').should('contain.text', 'Nombre total de questions :42');
 
     // Preamble
     cy.dataCy('admin').should('contain.text', 'Preamble');
-    cy.dataCy('edit').first().click();
+    cy.dataCy('edit').eq(1).click();
     cy.get('textarea').should('have.value', 'Preamble').clear().type('New preamble');
     cy.dataCy('cancel-edition').click();
     cy.dataCy('admin').should('contain.text', 'Preamble').and('not.contain.text', 'New preamble');
-    cy.dataCy('edit').first().click();
+    cy.dataCy('edit').eq(1).click();
     cy.get('textarea').should('have.value', 'Preamble').clear().type('New preamble');
     cy.dataCy('submit-edition').click();
     cy.get('textarea').should('not.exist');
@@ -37,7 +45,7 @@ describe('rules questionnaire', () => {
 
     // Simple question
     cy.dataCy('admin').should('contain.text', 'How many wards can you have ?');
-    cy.dataCy('edit').eq(1).click();
+    cy.dataCy('edit').eq(2).click();
     cy.get('textarea')
       .should('have.value', 'How many wards can you have ?')
       .clear()
@@ -46,7 +54,7 @@ describe('rules questionnaire', () => {
     cy.dataCy('admin')
       .should('contain.text', 'How many wards can you have ?')
       .and('not.contain.text', 'How many beacons can you have ?');
-    cy.dataCy('edit').eq(1).click();
+    cy.dataCy('edit').eq(2).click();
     cy.get('textarea')
       .should('have.value', 'How many wards can you have ?')
       .clear()
@@ -62,7 +70,7 @@ describe('rules questionnaire', () => {
       'What minerals can you mine underground ?CopperTinIronSilver',
     );
     const editMultipleChoiceQuestion = () => {
-      cy.dataCy('edit').eq(4).click();
+      cy.dataCy('edit').eq(5).click();
       cy.get('textarea')
         .should('have.value', 'What minerals can you mine underground ?')
         .clear()
@@ -85,7 +93,7 @@ describe('rules questionnaire', () => {
 
     // Switch from single-choice to long and always include
     cy.dataCy('admin').should('contain.text', "Can you open someone else's tomb ?YesNo");
-    cy.dataCy('edit').eq(3).click();
+    cy.dataCy('edit').eq(4).click();
     cy.get('ul input').should('have.length', 3);
     cy.get('[role=radiogroup]').find('label').eq(1).click();
     cy.get('ul input').should('not.exist');
@@ -101,7 +109,7 @@ describe('rules questionnaire', () => {
 
     // Switch from long to multiple-choice, and change position type
     cy.dataCy('admin').should('contain.text', 'Do you think the rules are right ?');
-    cy.dataCy('edit').eq(2).click();
+    cy.dataCy('edit').eq(3).click();
     cy.get('[role=radiogroup]').find('label').eq(3).click();
     cy.dataCy('admin').find('select').select('beginning');
     cy.dataCy('new-option', 'input').type('Yes');
