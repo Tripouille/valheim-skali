@@ -54,7 +54,7 @@ const MyApplication = () => {
                 <DiscordButton
                   key="discord-invite"
                   data-cy="discord-invite"
-                  href="https://discord.gg/Bvs2HjgDN5"
+                  href="https://discord.gg/VXzCNmakT6"
                   label="Rejoins notre Discord"
                   isInvitation
                 />,
