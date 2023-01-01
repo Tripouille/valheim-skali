@@ -14,7 +14,7 @@ import {
   Application,
   ApplicationStatus,
   APPLICATION_STATUS_TO_LABEL,
-  APPLICATION_STATUS_TO_PERMISSIONS,
+  APPLICATION_STATUS_CHANGE_TO_PERMISSIONS,
   WithDiscordInfos,
 } from 'data/application';
 import useSetApplicationStatus from 'hooks/applications/useSetApplicationStatus';
@@ -58,7 +58,7 @@ const ApplicationModalStatusChoiceButton: React.FC<ApplicationModalStatusChoiceB
             <Stack>
               {Object.values(ApplicationStatus).map(status => {
                 const hasPermission = hasRequiredPermissions(
-                  APPLICATION_STATUS_TO_PERMISSIONS[status],
+                  APPLICATION_STATUS_CHANGE_TO_PERMISSIONS[status],
                 );
                 return (
                   <Radio key={status} value={status} isDisabled={!hasPermission}>

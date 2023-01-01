@@ -1,5 +1,4 @@
 import { ObjectId } from 'bson';
-import { DateTime } from 'luxon';
 import { NextApiRequest as Req, NextApiResponse as Res } from 'next';
 import { getSession } from 'next-auth/react';
 import { requirePermissions } from 'api-utils/auth';
@@ -8,11 +7,16 @@ import db from 'api-utils/db';
 import {
   ApplicationInDb,
   applicationsCollectionName,
+  ApplicationSystemComment,
   isCreateApplicationDataWithUserId,
 } from 'data/application';
 import { usersCollectionName } from 'data/user';
 import { PermissionCategory, applicationPrivilege } from 'utils/permissions';
-import { getApplicationUser, getCreateApplicationData } from './utils';
+import {
+  getApplicationCommentsWithNewOrEditedSystemComment,
+  getApplicationUser,
+  getCreateApplicationData,
+} from './utils';
 
 const editApplication = async (req: Req, res: Res) => {
   const { id } = req.query as { id: string };
@@ -32,9 +36,6 @@ const editApplication = async (req: Req, res: Res) => {
       { [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE },
       req,
     );
-
-  const lastComment = application.comments[0];
-  const lastCommentIsApplicationEdition = lastComment?.authorId === 'system';
 
   const applicationCreateData = getCreateApplicationData(req.body);
 
@@ -57,19 +58,10 @@ const editApplication = async (req: Req, res: Res) => {
     }
   }
 
-  const newComments = lastCommentIsApplicationEdition
-    ? application.comments.map(comment =>
-        comment?._id === lastComment._id ? { ...comment, edi: DateTime.now().toISO() } : comment,
-      )
-    : [
-        {
-          _id: new ObjectId(),
-          body: 'La candidature a été mise à jour.',
-          authorId: 'system' as const,
-          createdAt: DateTime.now().toISO(),
-        },
-        ...application.comments,
-      ];
+  const newComments = getApplicationCommentsWithNewOrEditedSystemComment(
+    application,
+    ApplicationSystemComment.APPLICATION_EDITED,
+  );
 
   const result = await db.updateOne<ApplicationInDb>(
     applicationsCollectionName,

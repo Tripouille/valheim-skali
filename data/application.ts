@@ -1,9 +1,59 @@
 import { ObjectId } from 'bson';
 import { applicationPrivilege, PermissionCategory, Permissions } from 'utils/permissions';
 import { isFilled } from 'utils/validation';
+import {
+  LongQuestion,
+  MultipleChoiceQuestion,
+  QuestionType,
+  SimpleQuestion,
+  SingleChoiceQuestion,
+} from './rulesQuestionnaire';
 import { User, UserInDb } from './user';
 
-/** Main types */
+/* Main questionnaire types */
+
+type OmittedFieldsInGeneratedQuestion = '_id' | 'alwaysIncluded' | 'positionType';
+
+export type GeneratedSimpleQuestionAndAnswer = Omit<
+  SimpleQuestion,
+  OmittedFieldsInGeneratedQuestion
+> & {
+  answer?: string;
+};
+
+export type GeneratedLongQuestionAndAnswer = Omit<
+  LongQuestion,
+  OmittedFieldsInGeneratedQuestion
+> & {
+  answer?: string;
+};
+
+export type GeneratedSingleChoiceQuestionAndAnswer = Omit<
+  SingleChoiceQuestion,
+  OmittedFieldsInGeneratedQuestion
+> & {
+  answer?: string;
+};
+
+export type GeneratedMultipleChoiceQuestionAndAnswer = Omit<
+  MultipleChoiceQuestion,
+  OmittedFieldsInGeneratedQuestion
+> & {
+  answer?: (string | number)[];
+};
+
+export type GeneratedQuestionAndAnswer =
+  | GeneratedSimpleQuestionAndAnswer
+  | GeneratedLongQuestionAndAnswer
+  | GeneratedSingleChoiceQuestionAndAnswer
+  | GeneratedMultipleChoiceQuestionAndAnswer;
+
+export interface GeneratedRulesQuestionnaire {
+  preamble: string;
+  questionsWithAnswers: GeneratedQuestionAndAnswer[];
+}
+
+/* Main application types */
 
 export interface ApplicationFormAnswer {
   nameInGame: string;
@@ -30,6 +80,7 @@ export type WithUserInfos<C extends ApplicationComment<string | ObjectId>> = C &
 };
 
 export enum ApplicationStatus {
+  FILLING_QUESTIONNAIRE = 'filling_questionnaire',
   WAITING_FOR_APPOINTMENT = 'waiting_for_appointment',
   SCHEDULED_APPOINTMENT = 'scheduled_appointment',
   WAITING_FOR_ANSWER = 'waiting_for_answer',
@@ -42,6 +93,7 @@ interface ApplicationBaseWithoutUser<T extends string | ObjectId> {
   comments: ApplicationComment<T>[];
   applicationFormAnswer: ApplicationFormAnswer;
   status: ApplicationStatus;
+  questionnaire?: GeneratedRulesQuestionnaire;
   createdAt: string;
 }
 
@@ -113,12 +165,18 @@ export const APPLICATION_FORM_KEY_TO_LABEL: Record<keyof ApplicationFormAnswer, 
 };
 
 export const APPLICATION_STATUS_TO_LABEL: Record<ApplicationStatus, string> = {
+  [ApplicationStatus.FILLING_QUESTIONNAIRE]: 'Remplit le questionnaire',
   [ApplicationStatus.WAITING_FOR_APPOINTMENT]: "En attente d'un entretien",
   [ApplicationStatus.SCHEDULED_APPOINTMENT]: 'Entretien programmé',
   [ApplicationStatus.WAITING_FOR_ANSWER]: 'En attente de réponse',
   [ApplicationStatus.PROMOTED]: 'Promu(e) Viking',
   [ApplicationStatus.REFUSED]: 'Refusé(e)',
 };
+
+export enum ApplicationSystemComment {
+  APPLICATION_EDITED = 'La candidature a été mise à jour.',
+  QUESTIONNAIRE_FILLED = 'Le questionnaire a été rempli.',
+}
 
 /** Form properties */
 
@@ -157,6 +215,17 @@ export const APPLICATION_DISCORD_NAME_MAX_LENGTH = 100;
 
 export const APPLICATION_COMMENT_MAX_LENGTH = 5000;
 
+export const getQuestionDefaultAnswer = <T extends GeneratedQuestionAndAnswer>(
+  question: T,
+): T['answer'] => {
+  return {
+    simple: '',
+    long: '',
+    'single-choice': '',
+    'multiple-choice': [],
+  }[question.type];
+};
+
 /** Validation */
 
 export const getApplicationValidationError = (
@@ -171,9 +240,26 @@ export const getApplicationValidationError = (
   return null;
 };
 
+export const isQuestionnaireValid = (questionsWithAnswers: GeneratedQuestionAndAnswer[]): boolean =>
+  questionsWithAnswers.every(question => {
+    if (
+      question.type === QuestionType.SIMPLE ||
+      question.type === QuestionType.LONG ||
+      question.type === QuestionType.SINGLE_CHOICE
+    ) {
+      return isFilled(question.answer);
+    } else if (question.type === QuestionType.MULTIPLE_CHOICE) {
+      return Array.isArray(question.answer) && question.answer.length > 0;
+    }
+    return false;
+  });
+
 /** Permissions */
 
-export const APPLICATION_STATUS_TO_PERMISSIONS: Record<ApplicationStatus, Permissions> = {
+export const APPLICATION_STATUS_CHANGE_TO_PERMISSIONS: Record<ApplicationStatus, Permissions> = {
+  [ApplicationStatus.FILLING_QUESTIONNAIRE]: {
+    [PermissionCategory.APPLICATION]: applicationPrivilege.SUPER_ADMIN,
+  },
   [ApplicationStatus.WAITING_FOR_APPOINTMENT]: {
     [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE,
   },
@@ -186,3 +272,9 @@ export const APPLICATION_STATUS_TO_PERMISSIONS: Record<ApplicationStatus, Permis
   [ApplicationStatus.PROMOTED]: { [PermissionCategory.APPLICATION]: applicationPrivilege.PROMOTE },
   [ApplicationStatus.REFUSED]: { [PermissionCategory.APPLICATION]: applicationPrivilege.PROMOTE },
 };
+
+/** Utils */
+
+export const hasFinishedApplication = (application: Application): boolean =>
+  Object.values(ApplicationStatus).indexOf(application.status) >=
+  Object.values(ApplicationStatus).indexOf(ApplicationStatus.WAITING_FOR_APPOINTMENT);

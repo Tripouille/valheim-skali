@@ -23,16 +23,32 @@ type QuestionCore<T extends string | ObjectId = string> = {
 };
 
 export type SimpleQuestion<T extends string | ObjectId = string> = QuestionCore<T> & {
-  type: 'simple' | 'long';
+  type: 'simple';
 };
-export type MCQQuestion<T extends string | ObjectId = string> = QuestionCore<T> & {
-  type: 'single-choice' | 'multiple-choice';
+export type LongQuestion<T extends string | ObjectId = string> = QuestionCore<T> & {
+  type: 'long';
+};
+export type SingleChoiceQuestion<T extends string | ObjectId = string> = QuestionCore<T> & {
+  type: 'single-choice';
   options: string[];
 };
+export type MultipleChoiceQuestion<T extends string | ObjectId = string> = QuestionCore<T> & {
+  type: 'multiple-choice';
+  options: string[];
+};
+export type MCQQuestion<T extends string | ObjectId = string> =
+  | SingleChoiceQuestion<T>
+  | MultipleChoiceQuestion<T>;
 
-export type Question<T extends string | ObjectId = string> = SimpleQuestion<T> | MCQQuestion<T>;
+export type Question<T extends string | ObjectId = string> =
+  | SimpleQuestion<T>
+  | LongQuestion<T>
+  | MCQQuestion<T>;
 
-export type CreateQuestionData = Omit<SimpleQuestion, '_id'> | Omit<MCQQuestion, '_id'>;
+export type CreateQuestionData =
+  | Omit<SimpleQuestion, '_id'>
+  | Omit<LongQuestion, '_id'>
+  | Omit<MCQQuestion, '_id'>;
 
 export interface RulesQuestionnaireConfigInDb {
   _id: ObjectId;

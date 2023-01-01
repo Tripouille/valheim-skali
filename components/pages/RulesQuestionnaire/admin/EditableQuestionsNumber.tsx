@@ -28,7 +28,7 @@ const EditableQuestionsNumber: React.FC<EditableQuestionsNumberProps> = ({ initi
           <Input
             type="number"
             value={value}
-            onChange={(newValue: string) => setValue(parseInt(newValue))}
+            onChange={(newValue: string) => parseInt(newValue) > 0 && setValue(parseInt(newValue))}
             width="16"
             height="9"
             p={3}

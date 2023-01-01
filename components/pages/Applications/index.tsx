@@ -7,6 +7,7 @@ import { Accordion } from 'components/core/Disclosure/Accordion';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
 import Button from 'components/core/Interactive/Button';
 import PageTitle from 'components/core/Typography/PageTitle';
+import { ApplicationStatus } from 'data/application';
 import useApplications from 'hooks/applications/useApplications';
 import useCreateApplication from 'hooks/applications/useCreateApplication';
 import { applicationPrivilege, PermissionCategory } from 'utils/permissions';
@@ -17,6 +18,9 @@ import ApplicationForm from './ApplicationForm';
 
 const Applications = () => {
   const applicationsQuery = useApplications();
+  const applications = applicationsQuery.data?.filter(
+    application => application.status !== ApplicationStatus.FILLING_QUESTIONNAIRE,
+  );
 
   const createModal = useDisclosure();
   const createApplication = useCreateApplication({
@@ -58,7 +62,7 @@ const Applications = () => {
           </Secured>
           <QueryHandler query={applicationsQuery}>
             <Accordion width="full" defaultIndex={[0]} allowMultiple>
-              {applicationsQuery.data?.map(application => (
+              {applications?.map(application => (
                 <ApplicationAccordionItem key={application._id} application={application} />
               ))}
             </Accordion>
