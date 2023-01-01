@@ -22,8 +22,8 @@ import {
 } from 'data/application';
 import theme from 'theme';
 import { getRoute, NavRoute } from 'utils/routes';
+import QuestionnaireModal from '../RulesQuestionnaire/QuestionnaireModal';
 import ApplicationAnswers from './ApplicationAnswers';
-import FilledQuestionnaireModal from './FilledQuestionnaireModal';
 
 interface MyApplicationProps {
   application: WithDiscordInfos<Application>;
@@ -86,8 +86,9 @@ const MyApplication: React.FC<MyApplicationProps> = ({ application }) => {
             {"J'ai rempli le questionnaire : Voir mes réponses"}
             <Icon as={BiLinkExternal} verticalAlign="text-bottom" marginStart={2} />
           </Link>
-          <FilledQuestionnaireModal
-            questionsWithAnswers={application.questionnaire.questionsWithAnswers}
+          <QuestionnaireModal
+            title="Mon questionnaire"
+            questionnaire={application.questionnaire}
             modal={questionnaireModal}
           />
         </>
