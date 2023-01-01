@@ -14,6 +14,7 @@ import {
   ModalHeaderProps as ChakraModalHeaderProps,
   ModalFooter as ChakraModalFooter,
   ModalFooterProps as ChakraModalFooterProps,
+  forwardRef,
 } from '@chakra-ui/react';
 import { CypressProps } from 'utils/types';
 
@@ -54,9 +55,9 @@ export const ModalCloseButton: React.FC<ModalCloseButtonProps> = chakraModalClos
 
 export type ModalBodyProps = ChakraModalBodyProps;
 
-export const ModalBody: React.FC<ModalBodyProps> = chakraModalBodyProps => (
-  <ChakraModalBody {...chakraModalBodyProps}></ChakraModalBody>
-);
+export const ModalBody = forwardRef<ModalBodyProps, 'div'>((chakraModalBodyProps, ref) => (
+  <ChakraModalBody ref={ref} {...chakraModalBodyProps}></ChakraModalBody>
+));
 
 export type ModalHeaderProps = ChakraModalHeaderProps;
 
