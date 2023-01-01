@@ -22,8 +22,8 @@ import {
 } from 'data/application';
 import theme from 'theme';
 import { getRoute, NavRoute } from 'utils/routes';
-import FilledQuestionnaireModal from '../RulesQuestionnaire/FilledQuestionnaireModal';
 import ApplicationAnswers from './ApplicationAnswers';
+import FilledQuestionnaireModal from './FilledQuestionnaireModal';
 
 interface MyApplicationProps {
   application: WithDiscordInfos<Application>;

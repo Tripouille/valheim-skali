@@ -49,7 +49,7 @@ const ApplicationModalStatus: React.FC<ApplicationModalStatusProps> = ({ applica
     hasRequiredPermissions(APPLICATION_STATUS_CHANGE_TO_PERMISSIONS[nextStatus]);
 
   return (
-    <Flex align="center" gap="3" marginTop="5">
+    <Flex align="center" gap="3">
       <chakra.span color="blue.200">Statut :</chakra.span>
       <Tag label={APPLICATION_STATUS_TO_LABEL[application.status]} />
       {canChangeActualStatus && (

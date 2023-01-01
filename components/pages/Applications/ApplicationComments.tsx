@@ -29,7 +29,7 @@ const ApplicationComments: React.FC<ApplicationCommentsProps> = ({ application }
   };
 
   return (
-    <Stack marginTop="9" spacing="8">
+    <Stack spacing="8" width="full">
       {application.comments.map(comment => (
         <Box key={comment._id} data-cy="comment" bgColor="#ffffff10" borderRadius="md">
           {comment.authorId === 'system' ? (
