@@ -41,7 +41,7 @@ const RulesQuestionnaireAdmin = () => {
           <Text marginTop={4} fontStyle="italic" textAlign="start">
             {`${
               questionsNumber ?? 'Des'
-            } questions seront choisies au hasard parmi celles ci-dessous. Le préambule ne fait pas partie des questions. Toutes les questions seront générées dans un ordre aléatoire, sauf celles "Au début" et "A la fin". Seules les questions marquées "Toujours incluse" (même celles de début et de fin) seront garanties d\'être dans le questionnaire.`}
+            } questions seront choisies au hasard parmi celles ci-dessous. Le préambule ne fait pas partie des questions. Toutes les questions seront générées dans un ordre aléatoire, sauf celles "Au début" et "A la fin". Seules les questions marquées "Toujours incluse" (même celles de début et de fin) seront garanties d\'être dans le questionnaire. Les changements ne seront pris en compte que pour les futures candidatures.`}
           </Text>
           <Button onClick={preview}>
             Voir un exemple de questionnaire avec cette configuration
@@ -56,16 +56,21 @@ const RulesQuestionnaireAdmin = () => {
           )}
         </Stack>
         <EditablePreamble initialValue={preamble} />
-        {Object.values(QuestionPositionType).map(position =>
-          questionsQuery.data?.[position]?.map((question, index) => (
+        {Object.values(QuestionPositionType).map((position: QuestionPositionType) => {
+          const questions = questionsQuery.data?.[position];
+          if (position === QuestionPositionType.RANDOM)
+            questions?.sort(
+              (q1, q2) => (q1.alwaysIncluded ? -1 : 1) - (q2.alwaysIncluded ? -1 : 1),
+            );
+          return questions?.map((question, index) => (
             <EditableQuestion
               key={question._id}
               question={question}
               questionIndex={index}
-              questionsLength={questionsQuery.data[position].length}
+              questionsLength={questions.length}
             />
-          )),
-        )}
+          ));
+        })}
         {isAddingQuestion && (
           <Flex gap={2}>
             <NewQuestionForm onQuestionCreated={setIsAddingQuestion.off} />
