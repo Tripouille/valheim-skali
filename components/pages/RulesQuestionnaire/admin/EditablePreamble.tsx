@@ -27,6 +27,7 @@ const EditablePreamble: React.FC<EditablePreambleProps> = ({ initialValue }) => 
       label="Préambule :"
       hint="Le préambule sera affiché en haut du questionnaire."
       vertical
+      fontStyle="italic"
     >
       <Flex gap={2}>
         {isEditing ? (
