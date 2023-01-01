@@ -32,3 +32,7 @@ export interface CypressProps {
   /** Cypress */
   'data-cy': string;
 }
+
+export const assertUnreachable = (x: never): never => {
+  throw new Error('Unexpected object: ' + x);
+};

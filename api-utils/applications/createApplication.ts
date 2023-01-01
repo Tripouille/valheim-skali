@@ -5,6 +5,7 @@ import { getSession } from 'next-auth/react';
 import { requirePermissions } from 'api-utils/auth';
 import { ServerException } from 'api-utils/common';
 import db from 'api-utils/db';
+import getGeneratedRulesQuestionnaire from 'api-utils/rules-questionnaire/generateRulesQuestionnaire';
 import {
   ApplicationInDb,
   applicationsCollectionName,
@@ -48,10 +49,13 @@ const createApplication = async (req: Req, res: Res) => {
   const newApplication: Omit<ApplicationInDb, '_id'> = {
     applicationFormAnswer: applicationCreateData.applicationFormAnswer,
     comments: [],
-    status: ApplicationStatus.WAITING_FOR_APPOINTMENT,
+    status: ApplicationStatus.FILLING_QUESTIONNAIRE,
     createdAt: DateTime.now().toISO(),
     ...(isDataWithUserId
-      ? { userId: new ObjectId(applicationCreateData.userId) }
+      ? {
+          userId: new ObjectId(applicationCreateData.userId),
+          questionnaire: await getGeneratedRulesQuestionnaire(),
+        }
       : { discordName: applicationCreateData.discordName }),
   };
 

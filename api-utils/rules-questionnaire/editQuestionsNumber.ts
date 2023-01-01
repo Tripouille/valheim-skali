@@ -15,7 +15,7 @@ const editQuestionsNumber = async (req: Req, res: Res) => {
   );
 
   const questionsNumber = req.body.number;
-  if (typeof questionsNumber !== 'number') throw new ServerException(400);
+  if (typeof questionsNumber !== 'number' || questionsNumber <= 0) throw new ServerException(400);
 
   const result = await db.updateOne<RulesQuestionnaireConfigInDb>(
     rulesQuestionnaireCollectionName,

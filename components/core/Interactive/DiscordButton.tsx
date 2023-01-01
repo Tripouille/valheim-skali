@@ -8,6 +8,7 @@ export interface DiscordButtonProps extends CypressProps {
   href: string;
   label?: string;
   isInvitation?: true;
+  title?: string;
 }
 
 const DiscordButton: React.FC<DiscordButtonProps> = ({
@@ -15,6 +16,7 @@ const DiscordButton: React.FC<DiscordButtonProps> = ({
   href,
   label = 'Lien discord',
   isInvitation,
+  title,
 }) => {
   const [isLoading, setLoading] = useBoolean();
 
@@ -56,6 +58,7 @@ const DiscordButton: React.FC<DiscordButtonProps> = ({
       onClick={openLink}
       lineHeight="1em"
       target="_blank"
+      title={title}
     >
       <chakra.span overflow="hidden" textOverflow="ellipsis">
         {label}

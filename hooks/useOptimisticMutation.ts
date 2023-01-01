@@ -16,7 +16,7 @@ const useOptimisticMutation = <T extends keyof QueryTypes, TVariables = void>(
   associatedQueryKey: T,
   mutationFn: MutationFunction<void, TVariables>,
   getNewData: (previousData: QueryTypes[T], variables: TVariables) => QueryTypes[T],
-  successMessage: string,
+  successMessage?: string,
   options?: Omit<
     UseMutationOptions<void, unknown, TVariables, UseOptimisticMutationContext<QueryTypes[T]>>,
     'mutationFn'
@@ -52,7 +52,7 @@ const useOptimisticMutation = <T extends keyof QueryTypes, TVariables = void>(
       if (options?.onError) options.onError(error, variables, context);
     },
     onSuccess: (data, variables, context) => {
-      displaySuccessToast({ title: successMessage });
+      if (successMessage) displaySuccessToast({ title: successMessage });
       if (options?.onSuccess) options.onSuccess(data, variables, context);
     },
     onSettled: (data, error, variables, context) => {

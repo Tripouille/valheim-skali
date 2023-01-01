@@ -34,7 +34,7 @@ const ApplicationComments: React.FC<ApplicationCommentsProps> = ({ application }
         <Box key={comment._id} data-cy="comment" bgColor="#ffffff10" borderRadius="md">
           {comment.authorId === 'system' ? (
             <Flex justify="space-between" align="center" borderRadius="md" padding="2">
-              <Text fontStyle="italic">La candidature a été mise à jour.</Text>
+              <Text fontStyle="italic">{comment.body}</Text>
               <ApplicationDate date={comment.createdAt} />{' '}
             </Flex>
           ) : (

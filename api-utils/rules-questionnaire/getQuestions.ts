@@ -27,7 +27,11 @@ const isQuestionObjectOfGivenPositionType =
     !isConfig(rulesQuestionnaireObjectInDb) &&
     rulesQuestionnaireObjectInDb.positionType === positionType;
 
-const getQuestions = async (req: Req, res: Res) => {
+export const getQuestions = async (): Promise<
+  Pick<RulesQuestionnaire, 'preamble' | 'questionsNumber'> & {
+    questionsByPositionType: Pick<RulesQuestionnaire<ObjectId>, QuestionPositionType>;
+  }
+> => {
   const questionObjects = await db.find<
     RulesQuestionnaireConfigInDb | RulesQuestionnaireQuestionTypeObjectInDb
   >(rulesQuestionnaireCollectionName);
@@ -36,7 +40,7 @@ const getQuestions = async (req: Req, res: Res) => {
   const preamble = configObject?.preamble ?? '';
   const questionsNumber = configObject?.questionsNumber ?? DEFAULT_QUESTIONS_NUMBER;
 
-  const questions = Object.values(QuestionPositionType).reduce<{
+  const questionsByPositionType = Object.values(QuestionPositionType).reduce<{
     [key in QuestionPositionType]: Question<ObjectId>[];
   }>(
     (acc, questionPositionType) => ({
@@ -49,8 +53,17 @@ const getQuestions = async (req: Req, res: Res) => {
     {} as { [key in QuestionPositionType]: Question<ObjectId>[] },
   );
 
-  const result: RulesQuestionnaire<ObjectId> = { preamble, questionsNumber, ...questions };
+  return { preamble, questionsNumber, questionsByPositionType };
+};
+
+const getQuestionsRequestHandler = async (req: Req, res: Res) => {
+  const { preamble, questionsNumber, questionsByPositionType } = await getQuestions();
+  const result: RulesQuestionnaire<ObjectId> = {
+    preamble,
+    questionsNumber,
+    ...questionsByPositionType,
+  };
   res.status(200).json(result);
 };
 
-export default getQuestions;
+export default getQuestionsRequestHandler;

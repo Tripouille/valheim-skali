@@ -1,10 +1,13 @@
 import { ObjectId } from 'bson';
+import { DateTime } from 'luxon';
 import { isRequiredObjectType, ServerException } from 'api-utils/common';
 import db from 'api-utils/db';
 import {
   ApplicationComment,
   ApplicationFormAnswer,
   applicationFormKeys,
+  ApplicationInDb,
+  ApplicationSystemComment,
   APPLICATION_DISCORD_NAME_MAX_LENGTH,
   APPLICATION_FORM_KEYS_TO_FORM_PROPERTIES,
   CreateApplicationData,
@@ -91,4 +94,30 @@ export const getApplicationUser = async (
     _id: new ObjectId(applicationCreateData.userId),
   });
   return user;
+};
+
+export const getApplicationCommentsWithNewOrEditedSystemComment = (
+  application: ApplicationInDb,
+  systemComment: ApplicationSystemComment,
+) => {
+  const lastComment = application.comments[0];
+  console.log({ lastComment, systemComment });
+  const lastCommentIsSameSystemComment =
+    lastComment?.authorId === 'system' && lastComment.body === systemComment;
+  if (lastCommentIsSameSystemComment)
+    return application.comments.map(comment =>
+      comment?._id === lastComment._id
+        ? { ...comment, createdAt: DateTime.now().toISO() }
+        : comment,
+    );
+
+  return [
+    {
+      _id: new ObjectId(),
+      body: systemComment,
+      authorId: 'system' as const,
+      createdAt: DateTime.now().toISO(),
+    },
+    ...application.comments,
+  ];
 };

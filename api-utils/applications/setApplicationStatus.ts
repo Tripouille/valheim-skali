@@ -7,7 +7,7 @@ import {
   ApplicationInDb,
   applicationsCollectionName,
   ApplicationStatus,
-  APPLICATION_STATUS_TO_PERMISSIONS,
+  APPLICATION_STATUS_CHANGE_TO_PERMISSIONS,
 } from 'data/application';
 import { RoleInDb, rolesCollectionName, SpecialRoleName } from 'data/role';
 import { UserInDb, usersCollectionName } from 'data/user';
@@ -64,13 +64,13 @@ const setApplicationStatus = async (req: Req, res: Res) => {
 
   if (!isUpdateStatusData(req.body)) throw new ServerException(400);
   const newStatus = req.body.status;
-  await requirePermissions(APPLICATION_STATUS_TO_PERMISSIONS[newStatus], req);
+  await requirePermissions(APPLICATION_STATUS_CHANGE_TO_PERMISSIONS[newStatus], req);
 
   const application = await db.findOne<ApplicationInDb>(applicationsCollectionName, {
     _id: new ObjectId(id),
   });
   if (!application) throw new ServerException(404);
-  await requirePermissions(APPLICATION_STATUS_TO_PERMISSIONS[application.status], req);
+  await requirePermissions(APPLICATION_STATUS_CHANGE_TO_PERMISSIONS[application.status], req);
 
   if (application.status === newStatus) throw new ServerException(409);
 

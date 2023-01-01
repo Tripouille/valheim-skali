@@ -10,7 +10,7 @@ import {
   Application,
   ApplicationStatus,
   APPLICATION_STATUS_TO_LABEL,
-  APPLICATION_STATUS_TO_PERMISSIONS,
+  APPLICATION_STATUS_CHANGE_TO_PERMISSIONS,
   WithDiscordInfos,
 } from 'data/application';
 import { SpecialRoleName } from 'data/role';
@@ -40,13 +40,13 @@ const ApplicationModalStatus: React.FC<ApplicationModalStatusProps> = ({ applica
   const setApplicationStatus = useSetApplicationStatus(application);
 
   const canChangeActualStatus = hasRequiredPermissions(
-    APPLICATION_STATUS_TO_PERMISSIONS[application.status],
+    APPLICATION_STATUS_CHANGE_TO_PERMISSIONS[application.status],
   );
   const nextStatus = getNextStatus(application.status);
   const canUpdateStatusToNext =
     canChangeActualStatus &&
     nextStatus &&
-    hasRequiredPermissions(APPLICATION_STATUS_TO_PERMISSIONS[nextStatus]);
+    hasRequiredPermissions(APPLICATION_STATUS_CHANGE_TO_PERMISSIONS[nextStatus]);
 
   return (
     <Flex align="center" gap="3" marginTop="5">
