@@ -1,36 +1,19 @@
-import { BsPlusLg } from 'react-icons/bs';
-import { useDisclosure } from '@chakra-ui/react';
 import Secured from 'components/core/Authentication/Secured';
 import Background from 'components/core/Containers/Background';
 import { VStack } from 'components/core/Containers/Stack';
 import { Accordion } from 'components/core/Disclosure/Accordion';
 import QueryHandler from 'components/core/Disclosure/QueryHandler';
-import Button from 'components/core/Interactive/Button';
 import PageTitle from 'components/core/Typography/PageTitle';
 import { ApplicationStatus } from 'data/application';
 import useApplications from 'hooks/applications/useApplications';
-import useCreateApplication from 'hooks/applications/useCreateApplication';
 import { applicationPrivilege, PermissionCategory } from 'utils/permissions';
-import { queryClient, QueryKeys } from 'utils/queryClient';
-import { displaySuccessToast } from 'utils/toast';
 import ApplicationAccordionItem from './ApplicationAccordionItem';
-import ApplicationForm from './ApplicationForm';
 
 const Applications = () => {
   const applicationsQuery = useApplications();
   const applications = applicationsQuery.data?.filter(
     application => application.status !== ApplicationStatus.FILLING_QUESTIONNAIRE,
   );
-
-  const createModal = useDisclosure();
-  const createApplication = useCreateApplication({
-    onSuccess: () => {
-      displaySuccessToast({ title: 'La candidature a bien été créée.' });
-      queryClient.invalidateQueries([QueryKeys.APPLICATIONS]);
-      queryClient.invalidateQueries([QueryKeys.APPLICATION_ASSOCIABLE_USERS]);
-      createModal.onClose();
-    },
-  });
 
   return (
     <Secured
@@ -40,26 +23,6 @@ const Applications = () => {
       <Background data-cy="applications" position="relative">
         <VStack spacing="7" position="relative">
           <PageTitle title="Candidatures" />
-          <Secured permissions={{ [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE }}>
-            <Button
-              data-cy="create-application"
-              position={{ md: 'absolute' }}
-              alignSelf={{ base: 'center', md: 'end' }}
-              mt="1rem !important"
-              leftIcon={<BsPlusLg />}
-              colorScheme="green"
-              size="sm"
-              onClick={createModal.onOpen}
-            >
-              Ajouter une candidature
-            </Button>
-            <ApplicationForm
-              display="modal"
-              isOpen={createModal.isOpen}
-              onClose={createModal.onClose}
-              onSubmit={createApplication}
-            />
-          </Secured>
           <QueryHandler query={applicationsQuery}>
             <Accordion width="full" defaultIndex={[0]} allowMultiple>
               {applications?.map(application => (
