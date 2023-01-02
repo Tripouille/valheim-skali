@@ -124,7 +124,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ application, isOpen
                   <Secured
                     permissions={{ [PermissionCategory.APPLICATION]: applicationPrivilege.MANAGE }}
                   >
-                    <Link onClick={questionnaireDisplay.onOpen}>
+                    <Link data-cy="questionnaire" onClick={questionnaireDisplay.onOpen}>
                       Voir le questionnaire
                       <Icon as={BiLinkExternal} verticalAlign="text-bottom" marginStart={2} />
                     </Link>

@@ -20,7 +20,34 @@
       "background": "I was a Viking..."
     },
     "status": "promoted",
-    "createdAt": "2000-01-01T13:00:00.000Z"
+    "createdAt": "2000-01-01T13:00:00.000Z",
+    "questionnaire": {
+      "preamble": "Preamble",
+      "questionsWithAnswers": [
+        {
+          "type": "simple",
+          "label": "Simple question 1",
+          "answer": "Simple answer 1"
+        },
+        {
+          "type": "long",
+          "label": "Long question 1",
+          "answer": "Long answer 1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi error sit tempora voluptatibus nulla fugit, labore totam ratione dolor magni! Excepturi earum culpa voluptate deserunt dolorum corrupti impedit numquam neque."
+        },
+        {
+          "type": "single-choice",
+          "label": "Single choice question 1",
+          "options": ["Option 1", "Option 2", "Option 3"],
+          "answer": "Option 2"
+        },
+        {
+          "type": "multiple-choice",
+          "label": "Multiple choice question 1",
+          "options": ["Option 1", "Option 2", "Option 3"],
+          "answer": ["Option 1", "Option 3"]
+        }
+      ]
+    }
   },
   {
     "_id": "abb0935d99a9ab9e2caaa9f2",

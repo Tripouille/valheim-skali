@@ -19,6 +19,13 @@ describe('rules questionnaire', () => {
     Action.visitRulesQuestionnairePage();
   });
 
+  it('should be able to preview the result', () => {
+    cy.dataCy('see-example').click();
+    cy.dataCy('questionnaire-modal')
+      .should('contain.text', 'Exemple de questionnairePreambleDo you think the rules are right ?')
+      .and('contain.text', 'A question at the end 1A question at the end 2A question at the end 3');
+  });
+
   it('should be able to edit the questions', () => {
     cy.dataCy('edit').should('have.length', 9);
 
@@ -32,11 +39,11 @@ describe('rules questionnaire', () => {
 
     // Preamble
     cy.dataCy('admin').should('contain.text', 'Preamble');
-    cy.dataCy('edit').eq(1).click();
+    cy.dataCy('preamble').dataCy('edit').click();
     cy.get('textarea').should('have.value', 'Preamble').clear().type('New preamble');
     cy.dataCy('cancel-edition').click();
     cy.dataCy('admin').should('contain.text', 'Preamble').and('not.contain.text', 'New preamble');
-    cy.dataCy('edit').eq(1).click();
+    cy.dataCy('preamble').dataCy('edit').click();
     cy.get('textarea').should('have.value', 'Preamble').clear().type('New preamble');
     cy.dataCy('submit-edition').click();
     cy.get('textarea').should('not.exist');
@@ -44,8 +51,7 @@ describe('rules questionnaire', () => {
     cy.get('body').should('contain.text', 'Le préambule a bien été modifié.');
 
     // Simple question
-    cy.dataCy('admin').should('contain.text', 'How many wards can you have ?');
-    cy.dataCy('edit').eq(2).click();
+    cy.contains('[data-cy=question]', 'How many wards can you have ?').dataCy('edit').click();
     cy.get('textarea')
       .should('have.value', 'How many wards can you have ?')
       .clear()
@@ -54,7 +60,7 @@ describe('rules questionnaire', () => {
     cy.dataCy('admin')
       .should('contain.text', 'How many wards can you have ?')
       .and('not.contain.text', 'How many beacons can you have ?');
-    cy.dataCy('edit').eq(2).click();
+    cy.contains('[data-cy=question]', 'How many wards can you have ?').dataCy('edit').click();
     cy.get('textarea')
       .should('have.value', 'How many wards can you have ?')
       .clear()
@@ -65,12 +71,13 @@ describe('rules questionnaire', () => {
     cy.get('body').should('contain.text', 'La question a bien été modifiée.');
 
     // Multiple choice question
-    cy.dataCy('admin').should(
-      'contain.text',
-      'What minerals can you mine underground ?CopperTinIronSilver',
-    );
     const editMultipleChoiceQuestion = () => {
-      cy.dataCy('edit').eq(5).click();
+      cy.contains(
+        '[data-cy=question]',
+        'What minerals can you mine underground ?CopperTinIronSilver',
+      )
+        .dataCy('edit')
+        .click();
       cy.get('textarea')
         .should('have.value', 'What minerals can you mine underground ?')
         .clear()
@@ -92,8 +99,9 @@ describe('rules questionnaire', () => {
     cy.get('body').should('contain.text', 'La question a bien été modifiée.');
 
     // Switch from single-choice to long and always include
-    cy.dataCy('admin').should('contain.text', "Can you open someone else's tomb ?YesNo");
-    cy.dataCy('edit').eq(4).click();
+    cy.contains('[data-cy=question]', "Can you open someone else's tomb ?YesNo")
+      .dataCy('edit')
+      .click();
     cy.get('ul input').should('have.length', 3);
     cy.get('[role=radiogroup]').find('label').eq(1).click();
     cy.get('ul input').should('not.exist');
@@ -108,8 +116,7 @@ describe('rules questionnaire', () => {
     cy.get('body').should('contain.text', 'La question a bien été modifiée.');
 
     // Switch from long to multiple-choice, and change position type
-    cy.dataCy('admin').should('contain.text', 'Do you think the rules are right ?');
-    cy.dataCy('edit').eq(3).click();
+    cy.contains('[data-cy=question]', 'Do you think the rules are right ?').dataCy('edit').click();
     cy.get('[role=radiogroup]').find('label').eq(3).click();
     cy.dataCy('admin').find('select').select('beginning');
     cy.dataCy('new-option', 'input').type('Yes');
@@ -166,32 +173,29 @@ describe('rules questionnaire', () => {
     cy.dataCy('delete').should('have.length', 7);
     cy.dataCy('delete').first().click();
     cy.dataCy('confirm-delete').first().click();
-    cy.dataCy('admin').should('not.contain.text', 'How many wards can you have ?');
+    cy.dataCy('admin').should('not.contain.text', 'Do you think the rules are right ?');
     cy.get('body').should('contain.text', 'La question a bien été supprimée.');
   });
 
   it("should be able to change a non-random question's position", () => {
     // Can't move a random position type question
     cy.dataCy('admin')
-      .contains('How many wards can you have ?')
-      .closest('[data-cy=question]')
+      .contains('[data-cy=question]', 'How many wards can you have ?')
       .dataCy('move-up')
       .should('not.exist');
     cy.dataCy('admin')
-      .contains('How many wards can you have ?')
-      .closest('[data-cy=question]')
+      .contains('[data-cy=question]', 'How many wards can you have ?')
       .dataCy('move-down')
       .should('not.exist');
 
     // Can't move up the first question
     cy.dataCy('admin')
-      .contains('end 1')
-      .closest('[data-cy=question]')
+      .contains('[data-cy=question]', 'end 1')
       .dataCy('move-up')
       .should('not.exist');
 
     // Move down the first question
-    cy.dataCy('admin').contains('end 1').closest('[data-cy=question]').dataCy('move-down').click();
+    cy.dataCy('admin').contains('[data-cy=question]', 'end 1').dataCy('move-down').click();
     cy.dataCy('admin')
       .invoke('text')
       .should('match', /end 2.*end 1/);
@@ -199,13 +203,12 @@ describe('rules questionnaire', () => {
 
     // Can't move down the last question
     cy.dataCy('admin')
-      .contains('end 3')
-      .closest('[data-cy=question]')
+      .contains('[data-cy=question]', 'end 3')
       .dataCy('move-down')
       .should('not.exist');
 
     // Move up the last question
-    cy.dataCy('admin').contains('end 3').closest('[data-cy=question]').dataCy('move-up').click();
+    cy.dataCy('admin').contains('[data-cy=question]', 'end 3').dataCy('move-up').click();
     cy.dataCy('admin')
       .invoke('text')
       .should('match', /end 2.*end 3.*end 1/);

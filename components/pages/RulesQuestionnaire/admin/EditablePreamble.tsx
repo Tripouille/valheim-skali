@@ -24,6 +24,7 @@ const EditablePreamble: React.FC<EditablePreambleProps> = ({ initialValue }) => 
 
   return (
     <FormElement
+      data-cy="preamble"
       label="Préambule :"
       hint="Le préambule sera affiché en haut du questionnaire."
       vertical

@@ -1,10 +1,10 @@
 import { chakra } from '@chakra-ui/react';
 import { Grid } from 'components/core/Containers/Grid';
-import { Children } from 'utils/types';
+import { Children, CypressProps } from 'utils/types';
 import FromMarkup from '../DataDisplay/FromMarkup';
 import { FormControl, FormHelperText, FormLabel } from './FormControl';
 
-export interface FormElementProps {
+export interface FormElementProps extends Partial<CypressProps> {
   label: string;
   withMarkup?: boolean;
   hint?: string;
@@ -20,6 +20,7 @@ export interface FormElementProps {
 
 /** A label and an input (provided as child) for a line in a classic form */
 const FormElement: React.FC<FormElementProps> = ({
+  'data-cy': dataCy,
   label,
   withMarkup,
   hint,
@@ -32,6 +33,7 @@ const FormElement: React.FC<FormElementProps> = ({
   children,
 }) => (
   <FormControl
+    data-cy={dataCy}
     isDisabled={isDisabled}
     isInvalid={isInvalid}
     isReadOnly={isReadOnly}
