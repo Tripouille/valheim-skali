@@ -207,7 +207,7 @@ export const APPLICATION_FORM_KEYS_TO_FORM_PROPERTIES: Record<
   background: {
     inputType: 'textarea',
     maxLength: 20000,
-    hint: "On n'est pas un serveur 100% RP, si ce n'est pas ton truc, pas de souci. On demande juste de faire une présentation un minimum RP (~20% de la communauté est RP et on demande au reste de ne pas être anti-RP).",
+    hint: "Décris ton personnage : quel est son caractère, son histoire, comment est-il mort ? On n'est pas un serveur 100% RP, si ce n'est pas ton truc, pas de souci. On demande juste de faire une présentation un minimum RP (~20% de la communauté est RP et on demande au reste de ne pas être anti-RP).",
   },
 };
 
