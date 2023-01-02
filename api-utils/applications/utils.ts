@@ -101,7 +101,6 @@ export const getApplicationCommentsWithNewOrEditedSystemComment = (
   systemComment: ApplicationSystemComment,
 ) => {
   const lastComment = application.comments[0];
-  console.log({ lastComment, systemComment });
   const lastCommentIsSameSystemComment =
     lastComment?.authorId === 'system' && lastComment.body === systemComment;
   if (lastCommentIsSameSystemComment)

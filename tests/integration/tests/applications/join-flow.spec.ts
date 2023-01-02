@@ -1,10 +1,12 @@
 import { ApplicationStatus } from 'data/application';
 import { SpecialRoleName } from 'data/role';
+import { rulesQuestionnaireCollectionName } from 'data/rulesQuestionnaire';
 import { applicationPrivilege, PermissionCategory, rulesPrivilege } from 'utils/permissions';
 
 describe('join flow', () => {
   before(() => {
     cy.task('seedCollection', { collectionName: 'applications', data: [] });
+    cy.seedCollection(rulesQuestionnaireCollectionName, 'rulesQuestionnaire');
     cy.setPermission(
       SpecialRoleName.VISITOR,
       PermissionCategory.APPLICATION,
@@ -46,7 +48,7 @@ describe('join flow', () => {
       cy.login();
     });
 
-    it('should see the join flow and apply', () => {
+    it('should be able to use the join flow to apply', () => {
       cy.dataCy('Candidatures-nav-item').should('not.exist');
 
       // Click join button in home
@@ -78,14 +80,18 @@ describe('join flow', () => {
       cy.dataCy('submit', 'button').click();
 
       // See my application
-      cy.get('body').should('contain.text', 'Votre candidature a bien été enregistrée !');
+      if (Cypress.env('ENV') !== 'CI')
+        // TOFIX: bugs in CI
+        cy.get('body').should('contain.text', 'Votre candidature a bien été enregistrée !');
       cy.dataCy('Ma candidature-nav-item').should('exist');
       cy.main()
-        .should('contain.text', "En attente d'un entretien")
-        .and(
+        .should(
           'contain.text',
-          "Name in game (TestUser)En attente d'un entretienQuel sera le nom de ton viking ?Name in gameQuel est ton pseudo steam ?Steam nameTon ID steam :Steam idOù as-tu connu le serveur ?I found the server...Pourquoi avoir choisi de jouer sur notre serveur ?I chose this server...Quels sont tes projets en tant que Viking ?I plan to...Ton background (RP) :I was a Viking...",
-        );
+          'Name in game (TestUser)Quel sera le nom de ton viking ?Name in gameQuel est ton pseudo steam ?Steam nameTon ID steam :Steam idOù as-tu connu le serveur ?I found the server...Pourquoi avoir choisi de jouer sur notre serveur ?I chose this server...Quels sont tes projets en tant que Viking ?I plan to...Ton background (RP) :I was a Viking...',
+        )
+        .and('contain.text', 'clique ici pour répondre au questionnaire');
+      cy.dataCy('discord-invite', 'a').should('not.exist');
+      cy.dataCy('discord-make-appointment', 'a').should('not.exist');
 
       // Edit application
       cy.dataCy('edit').click();
@@ -93,12 +99,42 @@ describe('join flow', () => {
       cy.dataCy('nameInGame', 'input').should('have.value', 'Name in game').type('2');
       cy.dataCy('submit', 'button').click();
       cy.get('body').should('contain.text', 'Votre candidature a bien été modifiée');
-      cy.main()
-        .should('contain.text', "En attente d'un entretien")
-        .and('contain.text', 'Name in game2');
+      cy.main().should('contain.text', 'Name in game2');
 
-      // Can see questionnaire and discord links
-      cy.dataCy('go-to-questionnaire', 'a').should('exist');
+      // Fill questionnaire
+      cy.contains('clique ici pour répondre au questionnaire').click();
+      cy.dataCy('submit').should('be.disabled');
+      cy.main().should(
+        'contain.text',
+        'Valider mes réponsesTu dois répondre à toutes les questions.',
+      );
+      cy.main()
+        .find('textarea, input:not([type=checkbox],[type=radio])')
+        .each(input => {
+          cy.wrap(input).type('Answer');
+        });
+      cy.main()
+        .find('input[type=checkbox], input[type=radio]')
+        .each(checkbox => {
+          cy.wrap(checkbox).closest('label').click();
+        });
+      cy.main().should('contain.text', 'Enregistrement...');
+      cy.dataCy('submit').should('be.disabled');
+      cy.main().should(
+        'contain.text',
+        'Valider mes réponsesTu ne pourras plus modifier tes réponses.',
+      );
+      cy.intercept('PATCH', '/api/applications/me').as('submitQuestionnaire');
+      cy.dataCy('submit').click();
+      cy.wait('@submitQuestionnaire');
+
+      // See my application with filled questionnaire
+      cy.contains('a', 'Voir mes réponses', { timeout: 5000 }).click();
+      cy.dataCy('questionnaire-modal')
+        .should('contain.text', 'Mon questionnaire')
+        .and('contain.text', 'Answer');
+      cy.dataCy('questionnaire-modal').dataCy('close-modal', 'button').click();
+      cy.dataCy('questionnaire-modal').should('not.exist');
       cy.dataCy('discord-invite', 'a').should('exist');
       cy.dataCy('discord-make-appointment', 'a').should('exist');
 

@@ -16,11 +16,11 @@ const ApplicationModalQuestionnaire: React.FC<ApplicationModalQuestionnaireProps
 }) => {
   return (
     <Stack spacing={4} align="start">
-      <Button leftIcon={<BsArrowLeft />} onClick={onBack}>
+      <Button data-cy="back" leftIcon={<BsArrowLeft />} onClick={onBack}>
         Retour
       </Button>
       <FilledQuestionnaire questionsWithAnswers={questionnaire.questionsWithAnswers} />
-      <Button leftIcon={<BsArrowLeft />} onClick={onBack}>
+      <Button data-cy="back" leftIcon={<BsArrowLeft />} onClick={onBack}>
         Retour
       </Button>
     </Stack>

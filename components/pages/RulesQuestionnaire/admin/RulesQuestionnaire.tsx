@@ -43,7 +43,7 @@ const RulesQuestionnaireAdmin = () => {
               questionsNumber ?? 'Des'
             } questions seront choisies au hasard parmi celles ci-dessous. Le préambule ne fait pas partie des questions. Toutes les questions seront générées dans un ordre aléatoire, sauf celles "Au début" et "A la fin". Seules les questions marquées "Toujours incluse" (même celles de début et de fin) seront garanties d\'être dans le questionnaire. Les changements ne seront pris en compte que pour les futures candidatures.`}
           </Text>
-          <Button onClick={preview}>
+          <Button data-cy="see-example" onClick={preview}>
             Voir un exemple de questionnaire avec cette configuration
           </Button>
           {previewQuestionnaire && (
