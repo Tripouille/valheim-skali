@@ -4,22 +4,30 @@ import Link from 'components/core/Interactive/Link';
 import useFindWikiPages from 'hooks/wiki/useFindWikiPages';
 import { getRoute, NavRoute } from 'utils/routes';
 import { CypressProps } from 'utils/types';
+import ExternalLink from './ExternalLink';
 
-interface WikiInternalLinkProps extends CypressProps {
+interface WikiLinkProps extends CypressProps {
   pageName: string;
   label: string;
+  external?: boolean;
 }
 
-const WikiInternalLink: React.FC<WikiInternalLinkProps> = ({ pageName, label }) => {
+const WikiLink: React.FC<WikiLinkProps> = ({ pageName, label, external }) => {
   const findWikiPagesQuery = useFindWikiPages(pageName, 3);
   const firstWikiPageSlug = findWikiPagesQuery.data?.[0]?.slug;
 
   return (
     <QueryHandler query={findWikiPagesQuery} loadingComponent={<Link color="white">{label}</Link>}>
       {firstWikiPageSlug ? (
-        <NextLink href={getRoute(`${NavRoute.WIKI}/${firstWikiPageSlug}`)} passHref>
-          <Link>{label}</Link>
-        </NextLink>
+        external ? (
+          <ExternalLink href={getRoute(`${NavRoute.WIKI}/${firstWikiPageSlug}`)} withIcon>
+            {label}
+          </ExternalLink>
+        ) : (
+          <NextLink href={getRoute(`${NavRoute.WIKI}/${firstWikiPageSlug}`)} passHref>
+            <Link>{label}</Link>
+          </NextLink>
+        )
       ) : (
         <Link color="red.600">{label}</Link>
       )}
@@ -27,4 +35,4 @@ const WikiInternalLink: React.FC<WikiInternalLinkProps> = ({ pageName, label }) 
   );
 };
 
-export default WikiInternalLink;
+export default WikiLink;

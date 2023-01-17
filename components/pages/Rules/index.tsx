@@ -22,8 +22,8 @@ import Preambule from './Preambule';
 
 const ruleParts: Record<string, JSX.Element> = {
   Préambule: <Preambule />,
-  'Règles discord': <DiscordRules />,
-  'Règles de jeu': <GameRules />,
+  'Règlement discord': <DiscordRules />,
+  'Règlement de jeu': <GameRules />,
   'Guides de jeu': <GameGuides />,
 };
 
