@@ -7,7 +7,7 @@ import DynamicIcon from 'components/core/Images/DynamicIcon';
 import ZoomableImage from 'components/core/Images/ZoomableImage';
 import DiscordButton from 'components/core/Interactive/DiscordButton';
 import Link from 'components/core/Interactive/Link';
-import WikiInternalLink from 'components/core/Interactive/WikiInternalLink';
+import WikiLink from 'components/core/Interactive/WikiLink';
 import Heading from 'components/core/Typography/Heading';
 import Spoiler from 'components/core/Typography/Spoiler';
 import {
@@ -155,14 +155,7 @@ export const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
   component = reactStringReplace(component, /(\[\[(?:.+?)(?:\|(?:.*?))?\]\](?:\S+)?)/g, match => {
     const { pageName, label, labelSuffix } = getInternalLinkProperties(match);
     const linkLabel = (label ?? pageName) + (labelSuffix ?? '');
-    return (
-      <WikiInternalLink
-        key={++key.value}
-        data-cy={linkLabel}
-        pageName={pageName}
-        label={linkLabel}
-      />
-    );
+    return <WikiLink key={++key.value} data-cy={linkLabel} pageName={pageName} label={linkLabel} />;
   });
 
   component = reactStringReplace(

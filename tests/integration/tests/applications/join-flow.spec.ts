@@ -34,7 +34,7 @@ describe('join flow', () => {
       cy.main().dataCy('next').click();
       cy.dataCy('next').click();
       cy.dataCy('next').click();
-      cy.main().should('contain.text', 'Toute action PvP');
+      cy.main().should('contain.text', 'Les quêtes');
       cy.dataCy('signin').should('exist');
 
       // Test application page

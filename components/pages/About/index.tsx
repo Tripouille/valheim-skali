@@ -1,13 +1,12 @@
-import { BiLinkExternal } from 'react-icons/bi';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import Background from 'components/core/Containers/Background';
 import { VStack } from 'components/core/Containers/Stack';
 import { UnorderedList, ListItem } from 'components/core/DataDisplay/List';
 import Icon from 'components/core/Images/Icon';
+import ExternalLink from 'components/core/Interactive/ExternalLink';
 import PageTitle from 'components/core/Typography/PageTitle';
 import Text from 'components/core/Typography/Text';
 import { MenuRoute, ROUTES_TO_LABEL } from 'utils/routes';
-import ExternalLink from './ExternalLink';
 
 const About = () => (
   <Background w="4xl">
@@ -76,13 +75,13 @@ const About = () => (
         <ExternalLink href="https://next-auth.js.org/">NextAuth.js</ExternalLink>.
       </Text>
       <Text>
-        <ExternalLink href="https://github.com/Tripouille/valheim-skali">
-          Le dépôt est public sur Github. <Icon as={BiLinkExternal} verticalAlign="text-bottom" />
+        <ExternalLink href="https://github.com/Tripouille/valheim-skali" withIcon>
+          Le dépôt est public sur Github.
         </ExternalLink>
       </Text>
       <Text>
-        Si vous constatez le moindre bug ou souhaitez proposer une amélioration, contactez Hedda
-        l&apos;Itinérante (Chinimala#5652) sur Discord.
+        Si vous constatez le moindre bug ou souhaitez proposer une amélioration, contactez
+        Hedda&nbsp;(Chinimala#5652) sur Discord.
       </Text>
     </VStack>
   </Background>
