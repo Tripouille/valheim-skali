@@ -6,13 +6,20 @@ import nextConfig from 'next.config';
 
 export type ImageProps = NextImageProps & { src: string };
 
+const getNativeImgProps = (imageProps: ImageProps) => {
+  const { objectFit, objectPosition, ...rest } = imageProps;
+  return rest;
+};
+
 const Image: React.FC<ImageProps> = imageProps =>
-  nextConfig.images?.domains?.some(
-    domain => imageProps.src.startsWith('/') || imageProps.src.includes(domain),
-  ) ? (
+  imageProps.src.startsWith('/') ||
+  nextConfig.images?.domains?.some(domain => imageProps.src.includes(domain)) ? (
     <NextImage {...imageProps} />
   ) : (
-    <img {...imageProps} />
+    <img
+      {...getNativeImgProps(imageProps)}
+      style={{ objectFit: imageProps.objectFit, objectPosition: imageProps.objectPosition }}
+    />
   );
 
 /** Any other props will be interpreted by Chakra (for css) */
