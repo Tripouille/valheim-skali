@@ -74,6 +74,13 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ application, isOpen
     [questionnaireDisplay.isOpen],
   );
 
+  useEffect(
+    function closeQuestionnaireOnClose() {
+      if (!isOpen) questionnaireDisplay.onClose();
+    },
+    [isOpen, questionnaireDisplay],
+  );
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
