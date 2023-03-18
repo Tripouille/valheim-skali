@@ -29,6 +29,8 @@ const ImageModal: React.FC<ImageModalProps> = ({ 'data-cy': dataCy, src, alt, on
   return (
     <Portal>
       <Center
+        data-cy={`${dataCy}-modal`}
+        zIndex="var(--chakra-zIndices-popover)"
         position="absolute"
         top="0"
         height="full"
@@ -39,7 +41,6 @@ const ImageModal: React.FC<ImageModalProps> = ({ 'data-cy': dataCy, src, alt, on
           e.stopPropagation();
           onClose();
         }}
-        data-cy={`${dataCy}-modal`}
       >
         <Box pos="relative" cursor="pointer" w="95%" h="95%" display="flex" justifyContent="center">
           <Image layout="fill" objectFit="scale-down" src={src} alt={alt} borderRadius="xl" />
