@@ -35,7 +35,10 @@ const ImageModal: React.FC<ImageModalProps> = ({ 'data-cy': dataCy, src, alt, on
         width="full"
         bgColor="overlay"
         cursor="pointer"
-        onClick={onClose}
+        onClick={e => {
+          e.stopPropagation();
+          onClose();
+        }}
         data-cy={`${dataCy}-modal`}
       >
         <Box pos="relative" cursor="pointer" w="95%" h="95%" display="flex" justifyContent="center">
