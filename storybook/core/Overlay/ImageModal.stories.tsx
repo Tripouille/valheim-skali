@@ -24,5 +24,5 @@ export const Default = StoryFactory({
   'data-cy': '',
   src: '/images/valheim-background-q60.jpg',
   alt: 'Valheim background',
-  onClick: action('clicked'),
+  onClose: action('closed'),
 } as ImageModalProps);

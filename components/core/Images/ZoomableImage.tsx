@@ -55,7 +55,7 @@ const ZoomableImage: React.FC<ZoomableImageProps> = ({
           <chakra.figcaption whiteSpace="pre-wrap">{legend}</chakra.figcaption>
         </chakra.figure>
       </Button>
-      {isZoomed && <ImageModal data-cy={dataCy} src={src} alt={alt} onClick={setZoomed.off} />}
+      {isZoomed && <ImageModal data-cy={dataCy} src={src} alt={alt} onClose={setZoomed.off} />}
     </>
   );
 };
