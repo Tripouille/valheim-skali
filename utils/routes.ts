@@ -22,6 +22,7 @@ export enum NavRoute {
   APPLICATIONS = 'applications',
   EVENTS = 'events',
   WIKI = 'wiki',
+  PHOTOS = 'photos',
 }
 export enum OldNavRoute {
   TRADE = 'trade',
@@ -59,6 +60,7 @@ export const ROUTES_TO_LABEL: Record<Route, string> = {
   [OldNavRoute.MODS]: 'Mods',
   [OldNavRoute.WORLD]: 'Monde',
   [NavRoute.WIKI]: 'Wiki',
+  [NavRoute.PHOTOS]: 'Photos',
   [AdminNavRoute.MEMBERS]: 'Vikings',
   [AdminNavRoute.NON_MEMBERS]: 'Âmes perdues',
   [AdminNavRoute.ROLES]: 'Rôles',
