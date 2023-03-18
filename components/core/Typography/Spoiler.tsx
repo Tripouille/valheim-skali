@@ -24,7 +24,10 @@ const Spoiler: React.FC<SpoilerProps> = ({ children }) => {
       borderRadius="sm"
       cursor="pointer"
       _hover={{ backgroundColor: hoverColor }}
-      onClick={onToggle}
+      onClick={e => {
+        e.stopPropagation();
+        onToggle();
+      }}
     >
       {children}
     </Text>
