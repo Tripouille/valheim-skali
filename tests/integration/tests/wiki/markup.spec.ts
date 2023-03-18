@@ -90,6 +90,12 @@ describe('markup', () => {
       .should('include.html', 'wiki-page-2')
       .and('include.text', 'Bananas and the suite')
       .and('include.html', '</a> and the suite');
+    cy.dataCy('content', 'textarea').clear().type('*[[Wiki page 2]] in italic*');
+    cy.dataCy('content', 'div')
+      .should('include.html', 'wiki-page-2')
+      .and('include.html', '<em>')
+      .and('not.include.html', '[')
+      .and('not.include.html', ']');
   });
 
   it('Icon', () => {

@@ -79,15 +79,6 @@ const simpleMarkups: SimpleMarkupProperties[] = [
     endSymbol: '}}',
     getComponent: (content, _, key) => <DynamicIcon key={++key.value} iconName={content} />,
   },
-  {
-    startSymbol: '\\[',
-    endSymbol: '\\]',
-    getComponent: (content, _, key) => (
-      <Link key={++key.value} href={content} isExternal>
-        {content}
-      </Link>
-    ),
-  },
 ];
 
 const simpleMarkupsRegex = new RegExp(
@@ -152,12 +143,6 @@ export const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
     return <DiscordButton key={++key.value} data-cy={label ?? url} href={url} label={label} />;
   });
 
-  component = reactStringReplace(component, /(\[\[(?:.+?)(?:\|(?:.*?))?\]\](?:\S+)?)/g, match => {
-    const { pageName, label, labelSuffix } = getInternalLinkProperties(match);
-    const linkLabel = (label ?? pageName) + (labelSuffix ?? '');
-    return <WikiLink key={++key.value} data-cy={linkLabel} pageName={pageName} label={linkLabel} />;
-  });
-
   component = reactStringReplace(
     component,
     /(<<.+?>>(?:\d+x\d+)?(?:[trhbgd])*(?:\(.*\))?)/g,
@@ -191,6 +176,18 @@ export const convertMarkup: ConvertMarkupFunction = (markupContent, key) => {
     }
     console.error("Couldn't find simple markup");
   });
+
+  component = reactStringReplace(component, /(\[\[(?:.+?)(?:\|(?:.*?))?\]\](?:\S+)?)/g, match => {
+    const { pageName, label, labelSuffix } = getInternalLinkProperties(match);
+    const linkLabel = (label ?? pageName) + (labelSuffix ?? '');
+    return <WikiLink key={++key.value} data-cy={linkLabel} pageName={pageName} label={linkLabel} />;
+  });
+
+  component = reactStringReplace(component, /\[((?:.+?))\]/g, match => (
+    <Link key={++key.value} href={match} isExternal>
+      {match}
+    </Link>
+  ));
 
   component = reactStringReplace(component, /(\r\n|\r|\n)/g, () => <br key={++key.value} />);
 
