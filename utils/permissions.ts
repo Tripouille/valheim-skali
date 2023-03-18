@@ -195,6 +195,7 @@ export const ROUTES_TO_PERMISSIONS: Record<Route, Permissions | Permissions[]> =
   [NavRoute.APPLICATIONS]: { [PermissionCategory.APPLICATION]: applicationPrivilege.READ },
   [NavRoute.EVENTS]: { [PermissionCategory.EVENT]: eventPrivilege.READ },
   [NavRoute.WIKI]: {},
+  [NavRoute.PHOTOS]: {},
   [OldNavRoute.TRADE]: {},
   [OldNavRoute.MODS]: {},
   [OldNavRoute.WORLD]: {},

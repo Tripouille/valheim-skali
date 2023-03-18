@@ -9,6 +9,7 @@ interface WikiHomePageProps {
 }
 
 const WikiHomePage: React.FC<WikiHomePageProps> = ({ SSRFeaturedWikiPages }) => {
+  console.log('SSRFeaturedWikiPages', SSRFeaturedWikiPages);
   const { data: featuredWikiPages } = useFeaturedWikiPages({
     placeholderData: JSON.parse(SSRFeaturedWikiPages),
   });
