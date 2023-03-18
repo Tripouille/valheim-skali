@@ -36,7 +36,10 @@ const ZoomableImage: React.FC<ZoomableImageProps> = ({
       <Button
         data-cy={dataCy}
         variant="unstyled"
-        onClick={setZoomed.on}
+        onClick={e => {
+          e.stopPropagation();
+          setZoomed.on();
+        }}
         height="unset"
         minWidth="unset"
         fontWeight="normal"
