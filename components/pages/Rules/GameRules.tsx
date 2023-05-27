@@ -1,11 +1,9 @@
 import React from 'react';
-import { chakra } from '@chakra-ui/system';
 import Box from 'components/core/Containers/Box';
 import { VStack } from 'components/core/Containers/Stack';
 import IconList from 'components/core/DataDisplay/IconList';
 import { Accordion, TitleAccordionItem } from 'components/core/Disclosure/Accordion';
 import ExternalLink from 'components/core/Interactive/ExternalLink';
-import WikiLink from 'components/core/Interactive/WikiLink';
 import Heading from 'components/core/Typography/Heading';
 import Text from 'components/core/Typography/Text';
 import { getRoute, NavRoute } from 'utils/routes';
@@ -21,7 +19,7 @@ const gameRulesParts = [
   { title: 'PvP', content: <PvPRules /> },
   { title: 'Les instances', content: <InstancesRules /> },
   { title: 'Modification de terrain', content: <TerrainRules /> },
-  { title: 'Bases et multijoueurs', content: <BasesRules /> },
+  { title: 'Bases et multijoueur', content: <BasesRules /> },
   { title: 'Streaming', content: <StreamingRules /> },
 ];
 
@@ -44,19 +42,6 @@ const GameRules: React.FC = () => (
             </Text>,
             '9500 instances max par base',
             'Pas de modification de terrain hors de la base principale',
-            <Text key="zone-0">
-              <chakra.span mr={1.5}>
-                Pas d’installation définitive dans la zone de départ (les 2500 premiers mètres du
-                serveur,
-              </chakra.span>
-              <WikiLink
-                data-cy="framfafir"
-                label="voir l’article wiki Le framfafir"
-                pageName="le-framfarir"
-                external
-              />
-              )
-            </Text>,
             'Pas d’exploitation abusive des mécaniques du jeu',
             'Politesse et bienveillance envers les autres joueurs <3',
             <ExternalLink key="wiki" href={getRoute(NavRoute.WIKI)} withIcon>

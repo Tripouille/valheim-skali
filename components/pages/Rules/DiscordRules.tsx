@@ -24,7 +24,7 @@ const DiscordRules: React.FC = () => (
     </Heading>
     <IconList
       list={[
-        'Soyez respectueux et utilisez votre tête, dans 95% ça suffira (mais lisez quand même la suite !).',
+        'Soyez respectueux et utilisez votre tête, dans 95% du temps ça suffira (mais lisez quand même la suite !).',
         'Évitez le spam et le flood ! [Le spam et le flood consistent à monopoliser seul ou à plusieurs un canal par des messages sans réel intérêt pour les autres joueurs]',
         'Le troll, harcèlement ou tout comportement blessant sera banni (dans le doute, ce sera un ban si ça se répète).',
         'Racisme, xénophobie, homophobie, sexisme ou tout type de discrimination sera banni.',

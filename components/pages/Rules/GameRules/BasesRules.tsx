@@ -7,12 +7,12 @@ const BasesRules = () => {
     <>
       <Paragraphs
         paragraphs={[
-          'Le serveur est gros et a beaucoup de joueurs, c’est ce qui est chouette, mais c’est aussi un risque. Au Valhabba, vous pouvez (devez) construire des balises dans votre base pour la protéger. Une balise désactivée permet à n’importe qui de s’inscrire dessus. Une balise activée vous permet de privatiser un cercle de 40 mètres de diamètre. Pour faire quoique ce soit dans cette limite, un joueur doit obligatoirement être inscrit sur la balise. Si ce n’est pas le cas, il ne peut pas prendre de portail, ouvrir des coffres, utiliser les ateliers, ramasser des objets, etc., etc. Ça vous permettra de sécuriser les installations de vous et votre équipe.',
+          'Le serveur est gros et a beaucoup de joueurs, c’est ce qui est chouette, mais c’est aussi un risque. Au Valhabba, vous pouvez (devez) construire des balises dans votre base pour la protéger. Une balise désactivée permet à n’importe qui de s’inscrire dessus. Une balise activée vous permet de privatiser un cercle de 64 mètres de diamètre. Pour faire quoique ce soit dans cette limite, un joueur doit obligatoirement être inscrit sur la balise. Si ce n’est pas le cas, il ne peut pas prendre de portail, ouvrir des coffres, utiliser les ateliers, ramasser des objets, etc., etc. Ça vous permettra de sécuriser les installations de vous et votre équipe.',
           'En plus de tout ça, si personne de votre équipe n’est connecté, les balises rendent invincibles toutes les constructions qu’elles couvrent. Vous pouvez donc vous déconnecter l’esprit tranquille.',
         ]}
       />
       <Text>
-        Chaque joueur a le droit à <strong>3 balises maximum</strong> dans le serveur. Par contre,
+        Chaque joueur a le droit à <strong>5 balises maximum</strong> dans le serveur. Par contre,
         si aucun joueur n’interagit avec la balise durant un mois, elle se désactivera d’elle-même
         et vous en perdrez ses bénéfices.
       </Text>
@@ -21,7 +21,7 @@ const BasesRules = () => {
       </Text>
       <IconList
         list={[
-          'Si vous placez une balise quelque part, n’oubliez pas que vous bloquerez la zone pour les autres. Donc faites attention au lieu public et aux détroits.',
+          'Si vous placez une balise quelque part, n’oubliez pas que vous bloquerez la zone pour les autres. Donc faites attention aux lieux publics et aux détroits.',
           'Si vous utilisez le portail d’un autre joueur, assurez-vous d’avoir son accord avant. Sinon, vous risquez d’atterrir dans une base et de ne pas pouvoir faire machine arrière à cause de la balise.',
         ]}
       />

@@ -5,8 +5,8 @@ import Text from 'components/core/Typography/Text';
 const LongVersion: React.FC = () => (
   <VStack align="start">
     <Text>
-      Bienvenue sur le site du serveur Valhabba, vous trouverez ici nos règles (règles “Discord”,
-      règles “En Jeu”), quelques guides de jeu et SURTOUT notre wiki.
+      Bienvenue sur le site du serveur Valhabba, vous trouverez ici nos règles (pour notre Discord
+      et pour &quot;En jeu&quot;), quelques guides de jeu et SURTOUT notre wiki.
     </Text>
 
     <Text>
