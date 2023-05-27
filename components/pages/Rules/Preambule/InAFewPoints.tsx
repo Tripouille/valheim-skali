@@ -14,8 +14,8 @@ const invalidRules = [
 ];
 
 const validRules = [
-  `Une belle communauté, active dans le jeu (25 joueurs différents par jour, une dizaine le soir).`,
-  `Beaucoup de contenu supplémentaire intégré et équilibré pour prolonger le jeu (+ de constructions, monstres, artisanats, mécanique de jeu, quêtes RP, PNJs)`,
+  `Une belle communauté, active dans le jeu (10 à 15 joueurs différents par jour).`,
+  `Beaucoup de contenu supplémentaire intégré et équilibré pour prolonger le jeu (+ de constructions, monstres, artisanats, mécaniques de jeu, quêtes RP, PNJs)`,
   `Des événements réguliers organisés par les joueurs et les admins.`,
 ];
 
