@@ -70,7 +70,6 @@ const JoinIntroduction = () => {
             "T'annoncer sur notre Discord, pour nous rencontrer et donner tes disponibilités pour un rendez-vous",
             "Discuter quelques minutes avec un Viking du Valhabba pour s'assurer que tu es prêt à rejoindre ce nouveau monde",
             'Installer nos mods et venir jouer !',
-            'Choisir un clan (🔵Est ou 🟢Ouest) pour avoir accès à ses canaux du Discord et à ta zone de clan',
           ]}
         />
         {session && !session.isNonMember ? (
