@@ -92,7 +92,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
       - name: Publish to Chromatic
         uses: chromaui/action@v1
         with:
@@ -117,7 +117,7 @@ jobs:
       - name: Setup NodeJS
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '18'
       - run: yarn build
         env:
           MONGODB_URI: ${{ secrets.CYPRESS_MONGODB_URI }}
@@ -131,7 +131,6 @@ jobs:
   cypress-integration:
     timeout-minutes: 15
     runs-on: ubuntu-latest
-    container: cypress/browsers:node14.17.0-chrome88-ff89
     needs: build
     steps:
       - name: Checkout
@@ -168,7 +167,6 @@ jobs:
   cypress-unit:
     timeout-minutes: 15
     runs-on: ubuntu-latest
-    container: cypress/browsers:node14.17.0-chrome88-ff89
     needs: build
     steps:
       - name: Checkout
