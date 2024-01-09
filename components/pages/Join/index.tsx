@@ -1,5 +1,6 @@
 import NextLink from 'next/link';
 import { GiFeather, GiOpenBook } from 'react-icons/gi';
+import { Alert } from '@chakra-ui/react';
 import Secured from 'components/core/Authentication/Secured';
 import SigninButton from 'components/core/Authentication/SigninButton';
 import Background from 'components/core/Containers/Background';
@@ -51,6 +52,11 @@ const JoinIntroduction = () => {
     <Background data-cy="join-introduction">
       <VStack spacing="7">
         <PageTitle title={ROUTES_TO_LABEL[HiddenRoute.JOIN]} />
+        <Alert status="error" fontSize="xl">
+          {
+            "Bonjour à toutes et à tous, nous sommes heureux de vous accueillir sur notre site dédié au jeu Valheim et à notre communauté. Cependant, nous sommes au regret de ne plus pouvoir accepter les recrutements pour le moment. En effet, nous subissons des incompatibilités logiciel sur nos mods du jeu, liées aux dernières versions de Valheim. Cela nous prend un temps considérable et le serveur est ainsi en maintenance. Nous supprimerons ce message une fois la situation rétablie. D'ici-là, il faudra s'armer de patience. Au plaisir de se retrouver prochainement en jeu, autour d'une bonne chope d'hydromel au Valhabba, SKÖLL!"
+          }
+        </Alert>
         <Text>Pour rejoindre le Valhabba, tu devras:</Text>
         <IconList
           list={[

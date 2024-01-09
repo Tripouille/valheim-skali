@@ -34,11 +34,17 @@ const RulesEndButton = () => {
     return <SigninButton label="Fini de lire ? Clique ici pour te connecter !" />;
   } else if (session && session.isNonMember && !session.hasApplication) {
     return (
-      <NextLink href={getRoute(`${NavRoute.APPLICATIONS}/new`)}>
-        <Button data-cy="write-application" rightIcon={<GiFeather />}>
-          Fini de lire ? Clique ici pour écrire ta candidature !
-        </Button>
-      </NextLink>
+      <>
+        <NextLink href={getRoute(`${NavRoute.APPLICATIONS}/new`)}>
+          <Button data-cy="write-application" rightIcon={<GiFeather />} disabled>
+            Fini de lire ? Clique ici pour écrire ta candidature !
+          </Button>
+        </NextLink>
+        <chakra.span fontSize="sm">
+          Les candidatures sont fermées pour le moment, nous vous tiendrons informés de leur
+          réouverture.
+        </chakra.span>
+      </>
     );
   } else {
     return null;
